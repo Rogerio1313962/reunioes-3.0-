@@ -1,24 +1,9 @@
-# REUNIÕES 3.0 — MVP 1 (prévia local)
+# REUNIÕES 3.0 — Prévia 2
 
-Primeira implementação independente, não usa o código antigo.
+Atualização visual híbrida (azul-marinho + áreas claras), relógio, identificação do responsável, cronograma por dia e prévia local do telão. Controle de volume do vídeo em passos de 1%, incluindo silenciar, comunicado à janela local de projeção.
 
-## Incluído
-- Painel responsivo para PC, celular e iPad (navegador)
-- Cronograma separado por sete dias; criar, editar, apagar e reorganizar itens
-- Versículos digitados com referência e tradução identificada
-- Adicionar imagens, vídeos e PDFs do dispositivo (armazenamento local sujeito a limites do navegador)
-- Janela de telão e envio local pelo BroadcastChannel (mesmo navegador/origem)
-- Prévia, limpar telão e configuração simples de aparência
+## Publicar no GitHub Pages
+No repositório reunioes-3.0-, substitua na raiz os arquivos `index.html`, `style.css`, `app.js`, `telao.html`, `manifest.webmanifest` e `README.md`. Não envie apenas o ZIP, pois GitHub Pages não extrai automaticamente.
 
-## Ainda NÃO incluído
-- Servidor na nuvem, contas e autenticação
-- Sincronização entre dispositivos e controle pela internet
-- Aplicativo Android APK / instalador Windows
-- Base de dados bíblica e direitos de traduções
-- Modo offline robusto para vídeos grandes
-- Reprodutor PDF com controle de páginas e controle avançado de vídeo
-
-## Executar
-Em computador com Python 3: abra um terminal nesta pasta e execute `python -m http.server 8080`. Acesse `http://localhost:8080`. Clique em **Abrir telão** e mova a janela para a segunda tela. A janela de telão precisa estar na mesma origem e navegador do painel.
-
-Não use esta prévia em reunião real sem testar. Não contém sincronização na nuvem.
+## Limitações importantes
+Este é um protótipo, não um produto final. Dados ficam no armazenamento local do navegador, com limite de 2 MB por arquivo. Não há sincronização na nuvem, autenticação, Bíblia completa, controle remoto pela internet ou garantia de funcionamento offline. A janela de telão usa BroadcastChannel no mesmo navegador/origem. O controle de volume age no elemento de vídeo, não no áudio geral do Windows. Não utilizar em reuniões reais até testes completos.
