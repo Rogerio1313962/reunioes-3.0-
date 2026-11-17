@@ -1,19 +1,14 @@
-# REUNIÕES 3.0 — Prévia 7 (iPad, Android, iPhone e PC)
+# REUNIÕES 3.0 — Prévia 9
 
-Esta é uma prévia local, sem sincronização entre aparelhos ou controle remoto pela internet.
+## Novidade: Músicas
+- Pastas Segunda, Quarta, Sexta, Sábado, Domingo, Fundos de Busca, Fundos de Clamor e Fundos de Descarrego.
+- Upload de MP3 e reprodução local com controle de volume de 1 em 1%.
+- Inclusão de músicas no cronograma; tocar em "Apresentar" em uma música reproduz o áudio sem alterar o telão.
+- Os arquivos MP3 são salvos em IndexedDB no navegador deste dispositivo, não no GitHub nem na nuvem.
+- Para conectar caixas Bluetooth, pareie a caixa no dispositivo que reproduzirá o áudio. Controle remoto entre dispositivos ainda não implementado.
+- Bíblia ACF/ARA ainda depende de importação autorizada de JSON.
 
-## Bíblia
-- Navegação por quadradinhos e seleção individual.
-- Seleção de tradução limitada a ACF e ARA.
-- Importação de base JSON ACF/ARA fornecida pelo usuário; o texto aparece automaticamente após a importação, sem colar versículo por versículo.
-- O ZIP **não contém textos ACF ou ARA**. Não foi identificada uma fonte gratuita autorizada e confiável para distribuir ambas as traduções.
-- A base importada fica na memória da sessão e deve ser importada novamente após recarregar; não é sincronizada.
+## Instalação no iPad
+Descompacte este ZIP no app Arquivos, envie os seis arquivos na raiz do repositório GitHub, substituindo os anteriores, e abra a URL do GitHub Pages.
 
-## Exemplo de estrutura de base JSON
-```json
-{"translation":"ACF","books":{"Gênesis":{"1":{"1":"No princípio..."}}}}
-```
-O texto acima é apenas um exemplo estrutural abreviado.
-
-## Atualização no GitHub Pages
-Extraia o ZIP no aplicativo Arquivos, envie os seis arquivos para a raiz do repositório GitHub e confirme o commit. Depois abra o endereço do GitHub Pages.
+**Esta é uma prévia para testes, não uma solução de produção para reuniões.**
