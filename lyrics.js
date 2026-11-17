@@ -10,56 +10,40 @@ const box=document.createElement('section');box.id='lyricsPanel';box.hidden=true
 box.innerHTML='<div class="lyrics-head"><strong>Letra da música</strong><button type="button" id="lyricsHide">Ocultar letra</button></div><div id="lyricsScroll" tabindex="0" aria-label="Letra da música, deslize para ler"></div>';
 float.appendChild(box);
 $('lyricsHide').onclick=()=>{box.hidden=true;};
-const edit=document.createElement('dialog');edit.id='lyricsEditor';edit.innerHTML='<form method="dialog" id="lyricsForm"><div class="lyrics-head"><h2>Editar letra da música</h2><button type="button" id="lyricsCancel" aria-label="Fechar">✕</button></div><p id="lyricsSongName"></p><label for="lyricsText">Cole ou digite a letra da música</label><div class="lyrics-toolbar"><button type="button" id="lyricsMarkChorus">B  Destacar refrão</button><span>Se a letra tiver Refrão, [REFRÃO], 2x ou x2, o destaque é automático. Você também pode selecionar trechos manualmente.</span></div><textarea id="lyricsText" rows="15" spellcheck="true" placeholder="Digite a letra aqui..."></textarea><div class="lyrics-actions"><button type="button" id="lyricsClear">Apagar letra</button><button type="submit" class="primary">Salvar letra</button></div></form>';
+const edit=document.createElement('dialog');edit.id='lyricsEditor';edit.innerHTML='<form method="dialog" id="lyricsForm"><div class="lyrics-head"><h2>Editar letra da música</h2><button type="button" id="lyricsCancel" aria-label="Fechar">✕</button></div><p id="lyricsSongName"></p><label for="lyricsText">Cole ou digite a letra da música</label><p class="lyrics-auto-hint">O refrão é destacado automaticamente quando a letra contém uma indicação como [Refrão], (Refrão), REFRAO ou Refrão 2x.</p><textarea id="lyricsText" rows="15" spellcheck="true" placeholder="Digite a letra aqui..."></textarea><div class="lyrics-actions"><button type="button" id="lyricsClear">Apagar letra</button><button type="submit" class="primary">Salvar letra</button></div></form>';
 document.body.appendChild(edit);
 let editingId=null;
 $('lyricsCancel').onclick=()=>edit.close();
 $('lyricsClear').onclick=()=>{if(confirm('Apagar a letra desta música?'))$('lyricsText').value='';};
 async function getTrack(id){const db=await musicDb();try{return await new Promise((res,rej)=>{const r=db.transaction('tracks','readonly').objectStore('tracks').get(id);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}finally{db.close()}}
-// Renderiza texto simples com marcadores de refrão; nunca interpreta HTML digitado.
+// Formatação apenas visual: o texto original salvo não é modificado nem interpretado como HTML.
+// Aceita indicadores isolados com símbolos/emoji e repetição 2x, x2 etc.
+function isChorusMarker(line){
+ const clean=String(line).normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+  .replace(/\[\[\/?REFRAO\]\]/gi,'')
+  .replace(/[^a-zA-Z0-9\s]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
+ return /^refrao(?:\s+(?:x\s*\d+|\d+\s*x))?$/.test(clean);
+}
 function renderLyrics(target, raw){
  target.replaceChildren();
- // Aceita Refrão, [Refrão], REFRAO, com 1x/x1, 2x/x2 etc.
- // A identificação precisa ocupar a linha inteira para evitar falsos positivos.
- const marker=/^\s*\[?\s*refr[aã]o\s*\]?\s*(?:(?:x\s*\d+)|(?:\d+\s*x))?\s*[:：-]?\s*$/i;
  const lines=String(raw).replace(/\r\n?/g,'\n').split('\n');
- let autoChorus=false, hasChorusText=false, manual=false;
+ let chorus=false, hasVerse=false;
  for(let i=0;i<lines.length;i++){
-  const line=lines[i];
-  // Preserva também os marcadores manuais já existentes na Prévia 22.
-  const chunks=line.split(/(\[\[REFRAO\]\]|\[\[\/REFRAO\]\])/gi);
-  for(const chunk of chunks){
-   if(/^\[\[REFRAO\]\]$/i.test(chunk)){manual=true;continue;}
-   if(/^\[\[\/REFRAO\]\]$/i.test(chunk)){manual=false;continue;}
-   if(!chunk)continue;
-   if(!manual && marker.test(chunk)){
-    autoChorus=true;hasChorusText=false;
-    const strong=document.createElement('strong');strong.className='lyrics-chorus';strong.textContent=chunk;target.appendChild(strong);
-   }else if(!manual && autoChorus && !chunk.trim() && hasChorusText){
-    autoChorus=false;target.appendChild(document.createTextNode(chunk));
-   }else if(manual || autoChorus){
-    const strong=document.createElement('strong');strong.className='lyrics-chorus';strong.textContent=chunk;target.appendChild(strong);
-    if(chunk.trim())hasChorusText=true;
-   }else target.appendChild(document.createTextNode(chunk));
-  }
+  // Remove marcadores de edição manual antigos sem apagar a letra.
+  const original=lines[i];
+  const line=original.replace(/\[\[\/?REFRAO\]\]/gi,'');
+  const marker=isChorusMarker(line);
+  if(marker){chorus=true;hasVerse=false;}
+  else if(!line.trim() && chorus && hasVerse){chorus=false;}
+  if(chorus && line.trim()){
+   const strong=document.createElement('strong');
+   strong.className='lyrics-chorus';strong.textContent=line;target.appendChild(strong);
+   if(!marker)hasVerse=true;
+  }else target.appendChild(document.createTextNode(line));
   if(i<lines.length-1)target.appendChild(document.createTextNode('\n'));
  }
 }
 
-const chorusButton=$('lyricsMarkChorus');
-if(chorusButton){
- chorusButton.addEventListener('pointerdown',e=>e.preventDefault());
- chorusButton.addEventListener('click',()=>{
-  const field=$('lyricsText'),a=field.selectionStart,b=field.selectionEnd;
-  if(a===b){field.focus();return;}
-  const selected=field.value.slice(a,b);
-  const open='[[REFRAO]]',close='[[/REFRAO]]';
-  let replacement;
-  if(selected.startsWith(open)&&selected.endsWith(close))replacement=selected.slice(open.length,-close.length);
-  else replacement=open+selected+close;
-  field.setRangeText(replacement,a,b,'select');field.focus();
- });
-}
 async function refreshLyrics(id){if(!id){box.hidden=true;return;}const track=await getTrack(id);if(!track||isBackground(track.folder)){box.hidden=true;return;}const scroll=$('lyricsScroll');renderLyrics(scroll,track.lyrics?.trim()||'Esta música ainda não tem letra cadastrada. Use “Editar letra” na página Músicas.');scroll.scrollTop=0;box.hidden=false;}
 $('lyricsForm').onsubmit=async e=>{e.preventDefault();const id=editingId;if(!id)return;const track=await getTrack(id);if(!track)return;track.lyrics=$('lyricsText').value;await musicPut(track);edit.close();if(activeTrackId===id)await refreshLyrics(id);};
 function addEditButtons(){music.querySelectorAll('.music-track').forEach(row=>{const id=row.querySelector('[data-play]')?.dataset.play;if(!id||row.querySelector('[data-edit-lyrics]'))return;const meta=musicIndex.find(m=>m.id===id);if(!meta||isBackground(meta.folder))return;const btn=document.createElement('button');btn.type='button';btn.textContent='✎ Editar letra';btn.dataset.editLyrics=id;btn.onclick=async()=>{const track=await getTrack(id);if(!track)return;editingId=id;$('lyricsSongName').textContent=track.name;$('lyricsText').value=track.lyrics||'';edit.showModal();};row.appendChild(btn);});}

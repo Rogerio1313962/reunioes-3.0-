@@ -1,1 +1,10 @@
-Aplicativo Reuniões 3.0 — Prévia 23\n\nRefrão automático: reconhece Refrão/REFRÃO/[Refrão], 1x/x1, 2x/x2, 3x/x3 etc, sem distinção entre maiúsculas e minúsculas, inclusive REFRAO sem acento. O destaque termina na próxima estrofe após uma linha vazia. Preserva os destaques manuais da Prévia 22. Não modifica as letras salvas.\n
+# REUNIÕES 3.0 — PRÉVIA 24
+
+Atualização baseada na Prévia 23.
+
+- Reconhece automaticamente linhas identificadoras de refrão, com colchetes, parênteses, símbolos musicais, maiúsculas/minúsculas, acentos opcionais e repetições como 2x/x2.
+- O destaque em negrito termina na primeira linha vazia após os versos do refrão.
+- Remove o botão de marcação manual; não altera as letras salvas no iPad.
+- Marcadores antigos [[REFRAO]] são ocultados visualmente; para delimitar estrofes, use uma linha em branco.
+
+Esta é uma prévia local, sem sincronização remota.
