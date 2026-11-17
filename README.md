@@ -1,1 +1,1 @@
-REUNIÕES 3.0 — Prévia 31. Ajuste de pastas discretas, destaque de títulos e seleção de versões no player quando aberto pelo cronograma. Dados permanecem locais. Testar no Safari antes de uso real.
+Reuniões 3.0 — Prévia 32. Ao abrir música no cronograma, o áudio fica pausado para seleção de versão. Alternar versões preserva o player aberto. A biblioteca utiliza o player flutuante compartilhado. Prévia local, sem sincronização remota.

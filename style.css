@@ -214,3 +214,13 @@
 .cron-music-tracks button{font-weight:750!important;font-size:16px!important;padding:13px!important}.cron-music-tracks button.selected{border:2px solid #2563eb!important;background:#dbeafe!important}
 .group-version-bar:not([hidden]){display:block!important}.group-version-buttons button{font-size:15px;min-height:43px}
 @media(max-width:650px){.music-folders{grid-template-columns:repeat(2,minmax(0,1fr))!important}.music-folder{min-height:110px!important}}
+
+/* Prévia 32: player da biblioteca igual ao player do cronograma, sem controles duplicados */
+.music-player{background:#101e36!important;border-radius:20px!important;border:1px solid #354e70!important;padding:18px!important}
+.music-player audio{display:none!important}
+.music-player-bottom{display:none!important}
+.music-player small{display:none!important}
+.music-player-title{font-size:18px!important}
+.group-version-bar{background:#101e36;border-bottom:1px solid #354e70}
+.group-version-buttons button{transition:background-color .12s ease,border-color .12s ease!important}
+.floating-music{transition:none!important;animation:none!important}
