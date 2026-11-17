@@ -1,5 +1,3 @@
-REUNIÕES 3.0 — Prévia 14
+REUNIÕES 3.0 — Prévia 14 corrigida
 
-Novidades: letra por música MP3, editar e salvar letra na aba Músicas, leitura por rolagem manual sem seleção azul, letra no player do cronograma, player minimizável sem interromper áudio. Pastas Fundos de Busca, Fundos de Clamor e Fundos de Descarrego não exibem letra.
-
-Armazenamento local do navegador: arquivos e letras não sincronizam entre dispositivos.
+Correção de travamento no Safari causado por observador de mudanças no botão Repetir do player. Mantém arquivos e dados locais; substitua os oito arquivos no GitHub.

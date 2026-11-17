@@ -28,5 +28,18 @@ const oldPlay=playMusic;playMusic=async function(id){activeTrackId=id;await oldP
 const oldClose=$('floatingMusicClose').onclick;
 $('floatingMusicClose').onclick=function(e){oldClose?.call(this,e);};
 // Repetição visual simples e acessível.
-const repeat=$('floatingRepeat');if(repeat){repeat.title='Repetir música';repeat.setAttribute('aria-label','Ativar ou desativar repetição');const obs=new MutationObserver(()=>{repeat.classList.toggle('is-on',audio.loop);repeat.textContent=audio.loop?'↻ Repetir ligado':'↻ Repetir desligado';});obs.observe(repeat,{childList:true,characterData:true,subtree:true});repeat.classList.toggle('is-on',audio.loop);}
+const repeat=$('floatingRepeat');
+if(repeat){
+  repeat.title='Repetir música';
+  repeat.setAttribute('aria-label','Ativar ou desativar repetição');
+  // Não observar alterações de texto feitas pelo próprio observador: isso causava loop infinito no Safari.
+  function syncRepeat(){
+    const label=audio.loop?'↻ Repetir ligado':'↻ Repetir desligado';
+    repeat.classList.toggle('is-on',audio.loop);
+    if(repeat.textContent!==label)repeat.textContent=label;
+  }
+  repeat.addEventListener('click',()=>requestAnimationFrame(syncRepeat));
+  $('musicRepeatButton')?.addEventListener('click',()=>requestAnimationFrame(syncRepeat));
+  syncRepeat();
+}
 })();
