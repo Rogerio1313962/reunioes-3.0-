@@ -52,3 +52,15 @@
 #floatingRepeat.is-on{background:#147d55!important;color:#fff!important;border-color:#47d69a!important}
 .floating-music{max-height:min(80vh,650px);overflow-y:auto}
 @media(max-width:700px){.floating-music{width:min(340px,calc(100vw - 20px));max-height:72vh}#lyricsScroll{max-height:28vh}}
+/* Prévia 15 — player móvel com letra completa no iPad */
+.floating-music{max-height:calc(100dvh - 20px);overflow:hidden;display:flex;flex-direction:column;width:min(350px,calc(100vw - 20px));}
+.floating-music.with-lyrics{width:min(490px,calc(100vw - 20px));height:min(780px,calc(100dvh - 20px));max-height:calc(100dvh - 20px)}
+.floating-music-head{touch-action:none;cursor:grab;flex-shrink:0;user-select:none;-webkit-user-select:none;min-height:36px}
+.floating-music-head:active{cursor:grabbing}
+.floating-music-controls,.floating-music-progress,.floating-music-volume{flex-shrink:0}
+#lyricsPanel{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;background:#fff;color:#111;border-radius:10px;padding:12px}
+#lyricsPanel[hidden],#lyricsShow[hidden]{display:none!important}
+#lyricsPanel .lyrics-head{flex-shrink:0}
+#lyricsScroll{flex:1;min-height:0;max-height:none!important;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;font-size:clamp(19px,2.1vw,25px);line-height:1.55;white-space:pre-wrap;user-select:text;-webkit-user-select:text;padding:8px 4px;color:#111}
+#lyricsShow{align-self:flex-start;margin-bottom:7px}
+@media(max-width:700px){.floating-music.with-lyrics{width:min(490px,calc(100vw - 16px));height:min(740px,calc(100dvh - 16px))}}

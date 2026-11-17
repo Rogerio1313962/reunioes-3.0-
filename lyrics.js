@@ -43,3 +43,32 @@ if(repeat){
   syncRepeat();
 }
 })();
+
+// Prévia 15: painel de letra expansível, reversível e arrastável por toque.
+(function(){
+'use strict';
+const player=document.getElementById('floatingMusic');
+const lyrics=document.getElementById('lyricsPanel');
+const hide=document.getElementById('lyricsHide');
+const head=player?.querySelector('.floating-music-head');
+if(!player||!lyrics||!hide||!head)return;
+const toggle=document.createElement('button');toggle.type='button';toggle.id='lyricsShow';toggle.textContent='Mostrar letra';toggle.hidden=true;
+player.querySelector('.floating-music-controls')?.after(toggle);
+function update(){const available=!!document.getElementById('lyricsScroll')?.textContent?.trim()&&document.getElementById('lyricsScroll').textContent.indexOf('ainda não tem letra cadastrada')===-1;
+ player.classList.toggle('with-lyrics',!lyrics.hidden);
+ toggle.hidden=!lyrics.hidden||!available;
+ hide.textContent='Ocultar letra';
+ constrain();}
+hide.addEventListener('click',()=>requestAnimationFrame(update));
+toggle.addEventListener('click',()=>{lyrics.hidden=false;update();});
+// Preserva a ação original de tocar, que preenche o painel assincronamente.
+const watcher=new MutationObserver(()=>update());watcher.observe(lyrics,{attributes:true,attributeFilter:['hidden']});
+head.setAttribute('aria-label','Arraste esta barra para mover o player');head.title='Segure e arraste para mover';
+let moving=null;
+function constrain(){if(!player.style.left)return;const r=player.getBoundingClientRect();const x=Math.max(0,Math.min(innerWidth-r.width,parseFloat(player.style.left)||0));const y=Math.max(0,Math.min(innerHeight-r.height,parseFloat(player.style.top)||0));player.style.left=x+'px';player.style.top=y+'px';}
+head.addEventListener('pointerdown',e=>{if(e.target.closest('button')||e.button!==0)return;const r=player.getBoundingClientRect();moving={id:e.pointerId,dx:e.clientX-r.left,dy:e.clientY-r.top};head.setPointerCapture(e.pointerId);player.style.left=r.left+'px';player.style.top=r.top+'px';player.style.right='auto';player.style.bottom='auto';e.preventDefault();});
+head.addEventListener('pointermove',e=>{if(!moving||moving.id!==e.pointerId)return;const x=Math.max(0,Math.min(innerWidth-player.offsetWidth,e.clientX-moving.dx));const y=Math.max(0,Math.min(innerHeight-player.offsetHeight,e.clientY-moving.dy));player.style.left=x+'px';player.style.top=y+'px';});
+const end=()=>{moving=null;};head.addEventListener('pointerup',end);head.addEventListener('pointercancel',end);
+window.addEventListener('resize',constrain);
+update();
+})();
