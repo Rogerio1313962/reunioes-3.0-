@@ -18,7 +18,7 @@ $('groupFileSlots').innerHTML=roles.map(([key,label])=>`<div class="group-file-s
 function cleanName(file){return file.name.replace(/\.mp3$/i,'')}
 function guessedName(file){return cleanName(file).replace(/\s*[\(\[\{]\s*(?:T|R|F|C|trecho|refr[aã]o|fundo|completa)\s*[\)\]\}]\s*$/i,'').trim()||cleanName(file)}
 function selectedFiles(){return roles.map(([role])=>({role,files:[...$('groupFile_'+role).files]}))}
-function updateSelected(){for(const {role,files} of selectedFiles()){$('groupSelected_'+role).textContent=files.length?files.map(f=>f.name).join(' · '):'Nenhum MP3 escolhido'}const first=selectedFiles().flatMap(x=>x.files)[0];$('groupDetectedName').textContent=editing?'Os MP3 serão adicionados ao conjunto: '+(editing.groupTitle||'Música'):(first?'Nome sugerido: '+guessedName(first):'O nome será obtido automaticamente do primeiro MP3 escolhido.');$('groupError').hidden=true}
+function updateSelected(){for(const {role,files} of selectedFiles()){$('groupSelected_'+role).textContent=files.length?files.map(f=>'✓ '+f.name).join('  |  '):'Nenhum MP3 escolhido';$('groupSelected_'+role).classList.toggle('has-files',!!files.length)}const first=selectedFiles().flatMap(x=>x.files)[0];$('groupDetectedName').textContent=editing?'Os MP3 serão adicionados ao conjunto: '+(editing.groupTitle||'Música'):(first?'Nome sugerido: '+guessedName(first):'O nome será obtido automaticamente do primeiro MP3 escolhido.');$('groupError').hidden=true}
 for(const [role] of roles)$('groupFile_'+role).addEventListener('change',updateSelected);
 function openGroup(group){editing=group||null;$('songGroupForm').reset();$('groupDialogTitle').textContent=group?'Adicionar versões à música':'Adicionar música';$('groupLyrics').value=group?.lyrics||'';chooseFolder(group?.folder||musicFolder||folderNames[0]);updateSelected();dlg.showModal()}
 $('newSongGroup').onclick=()=>openGroup(null);$('groupClose').onclick=$('groupCancel').onclick=()=>dlg.close();
@@ -34,9 +34,19 @@ $('musicManage').textContent='+ Importar MP3 avulso';
 async function drawGroups(){let all;try{all=await musicAll()}catch(err){folderContent.textContent='Não foi possível carregar músicas.';return}
 const groups=new Map();for(const t of all){if(!t.groupId||t.folder!==musicFolder)continue;if(!groups.has(t.groupId))groups.set(t.groupId,[]);groups.get(t.groupId).push(t)}
 let target=$('folderGroups');if(!target){target=document.createElement('div');target.id='folderGroups';folderContent.insertBefore(target,nativeHead)}target.replaceChildren();
-for(const [id,tracks] of groups){const first=tracks[0],card=document.createElement('div');card.className='song-group-card';const head=document.createElement('div');head.className='song-group-head';const name=document.createElement('strong');name.textContent=first.groupTitle||'Música';const add=document.createElement('button');add.textContent='+ Versões';add.onclick=()=>openGroup(first);head.append(name,add);card.append(head);
-if(first.lyrics){const edit=document.createElement('button');edit.textContent='✎ Editar letra';edit.onclick=async()=>{const updated=prompt('Edite a letra desta música:',first.lyrics);if(updated===null)return;for(const track of tracks){track.lyrics=updated;await musicPut(track)}await drawGroups()};card.append(edit)}
-for(const [key,label] of roles){const matches=tracks.filter(t=>t.role===key);if(!matches.length)continue;const row=document.createElement('div');row.className='song-group-role';const b=document.createElement('b');b.textContent=label;row.append(b);for(const t of matches){const line=document.createElement('div');line.className='song-group-track';const span=document.createElement('span');span.textContent=t.name;const play=document.createElement('button');play.textContent='▶ Ouvir';play.onclick=()=>playMusic(t.id);const del=document.createElement('button');del.textContent='Remover';del.onclick=async()=>{if(!confirm('Remover este MP3?'))return;await musicRemove(t.id);await loadMusic()};line.append(span,play,del);row.append(line)}card.append(row)}target.append(card)}
+for(const [id,tracks] of groups){
+ const first=tracks[0],card=document.createElement('div');card.className='song-group-card song-group-compact';
+ const title=first.groupTitle||first.name||'Música';
+ const head=document.createElement('div');head.className='song-group-head';
+ const info=document.createElement('div');info.className='group-main-info';
+ const name=document.createElement('strong');name.textContent='♫ '+title;
+ const sub=document.createElement('small');sub.textContent=roles.filter(([r])=>tracks.some(t=>t.role===r)).map(([,label])=>label).join(' · ');
+ info.append(name,sub);head.append(info);
+ const play=document.createElement('button');play.className='primary';play.textContent='▶ Abrir';play.onclick=()=>{folderDialog.close();playMusic((tracks.find(t=>t.role==='completa')||tracks[0]).id)};
+ const add=document.createElement('button');add.textContent='+ Cronograma';add.onclick=()=>{const main=tracks.find(t=>t.role==='completa')||tracks[0];state.days[state.day].push({id:uid(),type:'musica',title,musicId:main.id,groupId:id});save();drawItems();folderDialog.close();setTab('agenda')};
+ const edit=document.createElement('button');edit.textContent='✎ Editar';edit.onclick=()=>openGroup(first);
+ head.append(play,add,edit);card.append(head);target.append(card)
+}
 // Arquivos agrupados aparecem apenas no conjunto, sem duplicação na lista comum.
 nativeList.querySelectorAll('.music-track').forEach(el=>{const btn=el.querySelector('[data-play]');if(btn&&all.some(t=>t.id===btn.dataset.play&&t.groupId))el.remove()});
 $('folderModalTitle').textContent=musicFolder;

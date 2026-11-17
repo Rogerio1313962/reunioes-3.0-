@@ -176,3 +176,18 @@
 @media(max-width:450px){.group-folder-cards{grid-template-columns:1fr 1fr}.group-folder-choice{font-size:12px;padding:9px;}}
 
 #musicFolderDialog{width:min(760px,94vw);max-height:88vh;border:0;border-radius:20px;padding:22px;background:white;color:#183253;overflow:auto}#musicFolderDialog::backdrop{background:rgba(7,18,37,.62)}.folder-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.folder-modal-head h2{margin:0}#folderModalClose{background:#edf3fb;color:#173456;border:1px solid #d4e1f1;border-radius:10px;padding:10px 14px}.group-lyrics-label{display:block;margin:16px 0;color:#183456;font-weight:700}.group-lyrics-label textarea{width:100%;box-sizing:border-box;display:block;margin-top:8px;padding:12px;border:1px solid #cad8eb;border-radius:12px;resize:vertical;font:inherit}.group-folder-choice{background:#f4f7fc!important;color:#173456!important}.group-folder-choice.selected{background:#dceaff!important;border-color:#225b9c!important}.song-group-card{background:#f8faff}#folderModalContent .music-list-head{margin-top:18px}#folderModalContent .music-track{background:#fff}#musicFolders button{cursor:pointer}
+
+/* Prévia 29: nome do MP3 mais destacado do que o botão de importação */
+.group-file-selected.has-files{background:#e7f0ff;border:2px solid #3974bc;border-radius:12px;padding:13px 15px;color:#12345b;font-size:17px;font-weight:800;line-height:1.5;overflow-wrap:anywhere;margin-top:8px}
+.group-pick-label{font-size:14px!important;font-weight:600!important}
+.song-group-compact{padding:16px!important;margin-bottom:10px}
+.song-group-compact .song-group-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.group-main-info{flex:1;min-width:190px;display:flex;flex-direction:column;gap:6px}
+.group-main-info strong{font-size:20px;color:#17365d}
+.group-main-info small{color:#627792;font-size:13px}
+.group-version-bar{padding:10px 16px 5px;border-bottom:1px solid #38506e}
+.group-version-bar[hidden]{display:none!important}
+.group-version-heading{font-size:12px;color:#cad7e9;font-weight:700;margin-bottom:8px}
+.group-version-buttons{display:flex;gap:7px;flex-wrap:wrap}
+.group-version-buttons button{background:#253e60;border:1px solid #6380a5;color:white;border-radius:9px;padding:10px 12px;font-size:14px;font-weight:700}
+.group-version-buttons button.selected{background:#dceaff;color:#12345b;border-color:#dceaff}

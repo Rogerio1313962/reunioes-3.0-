@@ -1,3 +1,3 @@
-# REUNIÕES 3.0 — PRÉVIA 28
+REUNIÕES 3.0 — PRÉVIA 29
 
-Biblioteca única com pastas que abrem janela, cadastro de letra, confirmação ao salvar sem letra (exceto Fundos de Busca, Clamor e Descarrego), seleção manual de versões e botões claros. Os dados existentes no navegador são preservados.
+Biblioteca e cronograma: uma música principal com versões vinculadas. Player: seleção Completa, Trecho, Refrão, Fundo. Cadastro: nomes de MP3 selecionados em destaque. Arquivos e letras existentes preservados no navegador.
