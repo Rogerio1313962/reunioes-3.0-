@@ -1,1 +1,3 @@
-Reuniões 3.0 — Prévia 32. Ao abrir música no cronograma, o áudio fica pausado para seleção de versão. Alternar versões preserva o player aberto. A biblioteca utiliza o player flutuante compartilhado. Prévia local, sem sincronização remota.
+Reuniões 3.0 — Prévia 30
+Correção: troca de versões sem ocultar, reposicionar ou reinicializar a janela flutuante.
+Teste no Safari do iPad após atualizar os arquivos.
