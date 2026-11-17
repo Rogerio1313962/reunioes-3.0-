@@ -1,3 +1,5 @@
-REUNIÕES 3.0 — Prévia 13
-Corrige seleção azul durante o arraste de etapas e conteúdos, mantém adição somente dentro das etapas no modo edição e permite recolher/restaurar o player MP3 sem parar o áudio.
-Publique os 7 arquivos na raiz do repositório GitHub Pages.
+REUNIÕES 3.0 — Prévia 14
+
+Novidades: letra por música MP3, editar e salvar letra na aba Músicas, leitura por rolagem manual sem seleção azul, letra no player do cronograma, player minimizável sem interromper áudio. Pastas Fundos de Busca, Fundos de Clamor e Fundos de Descarrego não exibem letra.
+
+Armazenamento local do navegador: arquivos e letras não sincronizam entre dispositivos.

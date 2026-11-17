@@ -36,3 +36,19 @@
 #floatingMusicRestore{position:fixed;right:12px;bottom:12px;z-index:999;border-radius:30px;background:#12203c;color:#fff;border:1px solid #6682ad;padding:12px 16px;box-shadow:0 6px 18px #0005}
 #floatingMusicRestore[hidden]{display:none!important}
 @media(min-width:1151px){.floating-music{right:18px;bottom:18px}}
+
+/* Prévia 14: player e letras */
+#lyricsPanel{border-top:1px solid #49607b;margin-top:10px;padding-top:9px;min-width:0}
+#lyricsPanel[hidden]{display:none!important}
+.lyrics-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.lyrics-head button{flex-shrink:0}
+#lyricsScroll{white-space:pre-wrap;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;max-height:min(35vh,300px);min-height:100px;padding:16px 12px;background:#1b2d49;color:#f4f8ff;border-radius:12px;text-align:center;font-size:16px;line-height:1.75;-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}
+#lyricsScroll *{-webkit-user-select:none!important;user-select:none!important}
+#lyricsEditor{width:min(650px,calc(100vw - 24px));max-height:90vh;overflow:auto;border-radius:16px;padding:20px;border:1px solid #7a90aa;background:#15233a;color:#fff}
+#lyricsEditor::backdrop{background:#0009}
+#lyricsEditor form{display:flex;flex-direction:column;gap:12px}
+#lyricsEditor textarea{width:100%;min-height:250px;resize:vertical;box-sizing:border-box;padding:12px;font-size:16px;line-height:1.5;-webkit-user-select:text!important;user-select:text!important}
+.lyrics-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+#floatingRepeat.is-on{background:#147d55!important;color:#fff!important;border-color:#47d69a!important}
+.floating-music{max-height:min(80vh,650px);overflow-y:auto}
+@media(max-width:700px){.floating-music{width:min(340px,calc(100vw - 20px));max-height:72vh}#lyricsScroll{max-height:28vh}}
