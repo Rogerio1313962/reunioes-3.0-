@@ -64,3 +64,12 @@
 #lyricsScroll{flex:1;min-height:0;max-height:none!important;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;font-size:clamp(19px,2.1vw,25px);line-height:1.55;white-space:pre-wrap;user-select:text;-webkit-user-select:text;padding:8px 4px;color:#111}
 #lyricsShow{align-self:flex-start;margin-bottom:7px}
 @media(max-width:700px){.floating-music.with-lyrics{width:min(490px,calc(100vw - 16px));height:min(740px,calc(100dvh - 16px))}}
+
+/* Prévia 16 — leitura clara, como referência enviada */
+.floating-music.with-lyrics{left:12px;right:auto;width:min(560px,calc(100vw - 24px));height:min(820px,calc(100dvh - 24px));}
+#lyricsPanel{background:#fff!important;color:#111!important;border:1px solid #e2e6ec;border-radius:14px;padding:14px;}
+#lyricsPanel .lyrics-head{color:#15243e;background:#fff;}
+#lyricsScroll{background:#fff!important;color:#111!important;text-align:left!important;border-radius:8px;padding:14px 10px!important;font-family:Arial,Helvetica,sans-serif;font-size:clamp(20px,2.3vw,29px)!important;line-height:1.55!important;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;}
+#lyricsScroll *{color:#111!important;background:transparent!important;text-align:left!important;}
+.floating-music-head{min-height:44px;}
+@media(max-width:700px){.floating-music.with-lyrics{left:8px;width:calc(100vw - 16px);height:calc(100dvh - 16px)}}

@@ -1,3 +1,5 @@
-REUNIÕES 3.0 — Prévia 14 corrigida
+REUNIÕES 3.0 — PRÉVIA 16 (teste iPad)
 
-Correção de travamento no Safari causado por observador de mudanças no botão Repetir do player. Mantém arquivos e dados locais; substitua os oito arquivos no GitHub.
+Mudanças: fundo branco e texto preto na área da letra; alinhamento à esquerda; fonte maior; player expandido inicialmente à esquerda, com rolagem de letra. Mantidos controles, ocultar/mostrar letra e arraste.
+
+Publique os 8 arquivos na raiz do repositório GitHub Pages. Dados de músicas armazenados localmente no navegador não são transferidos entre dispositivos.
