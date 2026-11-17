@@ -1,5 +1,5 @@
-# REUNIÕES 3.0 — PRÉVIA 20
+REUNIÕES 3.0 — PRÉVIA 21
 
-Player premium: Play/Pause central com anel azul-marinho, reiniciar, repetir, volume compacto e centralizado com ajuste de 1%, silenciar. Mantidas as funções da Prévia 18.
+Ajustes: símbolo Play levemente menor e visualmente centralizado; barra de progresso do áudio com trilho e marcador alinhados ao início em 0:00, preenchimento proporcional e reinício sincronizado.
 
-Prévia local: sem sincronização entre dispositivos.
+Prévia local, sem sincronização remota.

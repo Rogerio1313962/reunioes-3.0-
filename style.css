@@ -136,3 +136,12 @@
 #floatingVolume::-moz-range-track{height:6px;border-radius:99px;background:#d8e0eb}
 #floatingVolume::-moz-range-progress{height:6px;border-radius:99px;background:#b9d5ff}
 #floatingVolume::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid #a9c8ff}
+
+/* Prévia 21: ajuste óptico do Play e início preciso da barra de progresso */
+#floatingPause svg.play-glyph{width:39px!important;height:39px!important;transform:translateX(-2px)}
+#floatingSeek{-webkit-appearance:none!important;appearance:none!important;box-sizing:border-box!important;height:30px!important;padding:0!important;margin:0!important;border:0!important;background:transparent!important;outline:none!important;touch-action:none!important;min-width:0!important}
+#floatingSeek::-webkit-slider-runnable-track{height:6px!important;border-radius:99px!important;background:linear-gradient(to right,#b9d5ff 0%,#b9d5ff var(--seek-fill,0%),#d8e0eb var(--seek-fill,0%),#d8e0eb 100%)!important;border:0!important}
+#floatingSeek::-webkit-slider-thumb{-webkit-appearance:none!important;appearance:none!important;width:18px!important;height:18px!important;margin-top:-6px!important;border-radius:50%!important;background:#fff!important;border:2px solid #fff!important;box-shadow:0 1px 4px #0005!important}
+#floatingSeek::-moz-range-track{height:6px;border-radius:99px;background:#d8e0eb}
+#floatingSeek::-moz-range-progress{height:6px;border-radius:99px;background:#b9d5ff}
+#floatingSeek::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:0}
