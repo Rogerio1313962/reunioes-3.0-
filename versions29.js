@@ -30,10 +30,11 @@ $('floatingMusic')?.querySelector('.floating-music-head')?.after(bar);
 const oldPlay=playMusic;
 playMusic=async function(id){await scan();const track=trackMap.get(id);const group=track?.groupId?groupCache.get(track.groupId):null;
 currentGroup=group||null;
-bar.hidden=true; // Player independente da biblioteca: sem seletor de versões
+bar.hidden=!(group && $('agenda')?.classList.contains('active')); // Versões apenas no cronograma
 buttons.replaceChildren();
 if(group){for(const [role,label] of [['completa','Completa'],['trecho','Trecho'],['refrao','Refrão'],['fundo','Fundo']]){const versions=group.filter(t=>t.role===role);for(let i=0;i<versions.length;i++){const t=versions[i];const b=document.createElement('button');b.type='button';b.textContent=label+(versions.length>1?' '+(i+1):'');b.className=t.id===id?'selected':'';b.title=t.name;b.onclick=()=>playMusic(t.id);buttons.append(b)}}}
 await oldPlay(id);
+bar.hidden=!(group && $('agenda')?.classList.contains('active'));
 if(group){$('floatingMusicTitle').textContent='♫ '+(group[0].groupTitle||group[0].name);$('musicNow').textContent='♫ '+(group[0].groupTitle||group[0].name);}
 };
 // Biblioteca de pastas: atualiza contagens para contar músicas e não versões.
