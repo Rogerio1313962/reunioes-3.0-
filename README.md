@@ -10,3 +10,6 @@ Este é um protótipo, não um produto final. Dados ficam no armazenamento local
 
 
 Prévia 4: seletor visual de livros, capítulos e versículos. Limite provisório de 40 versículos exibidos por capítulo; contagens e textos automáticos dependem da futura biblioteca bíblica. Sem nuvem e sem controle remoto nesta prévia.
+
+
+Prévia 5: Bíblia em quadradinhos com abreviações e nomes, cores por grupos, navegação por etapas e seleção individual. Ainda sem base de textos bíblicos, contagem exata de versículos ou sincronização na nuvem.
