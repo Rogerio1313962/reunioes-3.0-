@@ -1,10 +1,5 @@
-# REUNIÕES 3.0 — PRÉVIA 24
+# REUNIÕES 3.0 — PRÉVIA 25
 
-Atualização baseada na Prévia 23.
+Baseada na Prévia 24. Letra do Media Player aproximadamente 10% menor, entrelinhas mais compactas. Título identificado no começo da letra pela comparação com o nome da música cadastrada; não inventa título quando não existe. Título e refrão azul-marinho com traço reforçado, no MESMO tamanho das demais estrofes. Refrão automático preservado. Letras originais não são alteradas.
 
-- Reconhece automaticamente linhas identificadoras de refrão, com colchetes, parênteses, símbolos musicais, maiúsculas/minúsculas, acentos opcionais e repetições como 2x/x2.
-- O destaque em negrito termina na primeira linha vazia após os versos do refrão.
-- Remove o botão de marcação manual; não altera as letras salvas no iPad.
-- Marcadores antigos [[REFRAO]] são ocultados visualmente; para delimitar estrofes, use uma linha em branco.
-
-Esta é uma prévia local, sem sincronização remota.
+Atualize todos os arquivos no GitHub Pages. A página publicada pode demorar para atualizar por cache do Safari.

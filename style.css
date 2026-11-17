@@ -153,3 +153,7 @@
 .lyrics-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
 .lyrics-toolbar button{background:#e9f0fa;color:#172f54;border:1px solid #a8c0e2;border-radius:9px;padding:10px 12px;font-weight:800;min-height:44px;}
 .lyrics-toolbar span{font-size:12px;line-height:1.35;color:#d5e2f7;}
+
+/* Prévia 25 — letra mais compacta; título e refrão com mesma fonte e tamanho */
+#lyricsScroll{font-size:clamp(18px,2.05vw,26px)!important;line-height:1.36!important;padding:10px 8px!important;}
+#lyricsScroll .lyrics-chorus,#lyricsScroll .lyrics-song-title{font-family:Arial,Helvetica,sans-serif!important;font-size:inherit!important;line-height:inherit!important;font-weight:900!important;color:#102b53!important;-webkit-text-stroke:0.55px #102b53;paint-order:stroke fill;background:transparent!important;letter-spacing:0!important;}

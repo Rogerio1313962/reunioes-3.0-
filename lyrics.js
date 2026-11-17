@@ -24,10 +24,17 @@ function isChorusMarker(line){
   .replace(/[^a-zA-Z0-9\s]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
  return /^refrao(?:\s+(?:x\s*\d+|\d+\s*x))?$/.test(clean);
 }
-function renderLyrics(target, raw){
+function normalizedTitle(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\.[a-z0-9]{2,5}$/,'').replace(/[^a-z0-9]+/g,' ').trim();}
+function titleMatches(line, name){
+ const a=normalizedTitle(line), b=normalizedTitle(name);
+ if(!a||!b||a.length<4)return false;
+ // Aceita nome exato ou nome seguido por identificador entre parênteses, como (P)/(T).
+ return a===b || (b.startsWith(a+' ') && b.slice(a.length+1).split(' ').length<=2 && /^[a-z0-9 ]+$/.test(b.slice(a.length+1)));
+}
+function renderLyrics(target, raw, trackName){
  target.replaceChildren();
  const lines=String(raw).replace(/\r\n?/g,'\n').split('\n');
- let chorus=false, hasVerse=false;
+ let chorus=false, hasVerse=false, nonEmptyBefore=0;
  for(let i=0;i<lines.length;i++){
   // Remove marcadores de edição manual antigos sem apagar a letra.
   const original=lines[i];
@@ -35,7 +42,11 @@ function renderLyrics(target, raw){
   const marker=isChorusMarker(line);
   if(marker){chorus=true;hasVerse=false;}
   else if(!line.trim() && chorus && hasVerse){chorus=false;}
-  if(chorus && line.trim()){
+  const isTitle=!chorus && !marker && nonEmptyBefore<2 && titleMatches(line,trackName);
+  if(line.trim())nonEmptyBefore++;
+  if(isTitle){
+   const strong=document.createElement('strong');strong.className='lyrics-song-title';strong.textContent=line;target.appendChild(strong);
+  }else if(chorus && line.trim()){
    const strong=document.createElement('strong');
    strong.className='lyrics-chorus';strong.textContent=line;target.appendChild(strong);
    if(!marker)hasVerse=true;
@@ -44,7 +55,7 @@ function renderLyrics(target, raw){
  }
 }
 
-async function refreshLyrics(id){if(!id){box.hidden=true;return;}const track=await getTrack(id);if(!track||isBackground(track.folder)){box.hidden=true;return;}const scroll=$('lyricsScroll');renderLyrics(scroll,track.lyrics?.trim()||'Esta música ainda não tem letra cadastrada. Use “Editar letra” na página Músicas.');scroll.scrollTop=0;box.hidden=false;}
+async function refreshLyrics(id){if(!id){box.hidden=true;return;}const track=await getTrack(id);if(!track||isBackground(track.folder)){box.hidden=true;return;}const scroll=$('lyricsScroll');renderLyrics(scroll,track.lyrics?.trim()||'Esta música ainda não tem letra cadastrada. Use “Editar letra” na página Músicas.',track.name);scroll.scrollTop=0;box.hidden=false;}
 $('lyricsForm').onsubmit=async e=>{e.preventDefault();const id=editingId;if(!id)return;const track=await getTrack(id);if(!track)return;track.lyrics=$('lyricsText').value;await musicPut(track);edit.close();if(activeTrackId===id)await refreshLyrics(id);};
 function addEditButtons(){music.querySelectorAll('.music-track').forEach(row=>{const id=row.querySelector('[data-play]')?.dataset.play;if(!id||row.querySelector('[data-edit-lyrics]'))return;const meta=musicIndex.find(m=>m.id===id);if(!meta||isBackground(meta.folder))return;const btn=document.createElement('button');btn.type='button';btn.textContent='✎ Editar letra';btn.dataset.editLyrics=id;btn.onclick=async()=>{const track=await getTrack(id);if(!track)return;editingId=id;$('lyricsSongName').textContent=track.name;$('lyricsText').value=track.lyrics||'';edit.showModal();};row.appendChild(btn);});}
 // drawMusic é invocado pela aba, carregamentos e alterações de pastas.
