@@ -73,3 +73,27 @@
 #lyricsScroll *{color:#111!important;background:transparent!important;text-align:left!important;}
 .floating-music-head{min-height:44px;}
 @media(max-width:700px){.floating-music.with-lyrics{left:8px;width:calc(100vw - 16px);height:calc(100dvh - 16px)}}
+
+/* Prévia 17 — media player premium para toque no iPad */
+.floating-music{background:#101e36;border:1px solid #344c6c;border-radius:24px;padding:16px;box-shadow:0 22px 65px #09152b66;gap:10px;overflow:hidden}
+.floating-music.with-lyrics{width:min(570px,calc(100vw - 24px));height:min(830px,calc(100dvh - 24px))}
+.floating-music-head{display:flex;align-items:center;gap:12px;min-height:58px;margin:0;padding:3px 2px 12px;border-bottom:1px solid #ffffff1c}
+.floating-music-head::before{content:'♫';display:grid;place-items:center;flex:0 0 44px;height:44px;border-radius:13px;background:#294b7a;color:#fff;font-size:25px}
+.floating-music-head span{font-size:16px;line-height:1.35;white-space:normal;max-height:3em;overflow:hidden}
+.floating-music-head button{font-size:22px!important;min-width:44px;min-height:44px;border-radius:12px!important}
+.floating-music-controls{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:4px 0}
+.floating-music-controls button{min-height:46px;padding:10px 14px!important;font-size:14px!important;border-radius:13px!important;background:#233c61!important;border-color:#48638b!important;font-weight:650}
+#floatingPause{background:#fff!important;color:#13223b!important;border-color:#fff!important;font-size:16px!important;min-width:115px}
+#floatingRepeat.is-on{background:#176e55!important;color:white!important}
+.floating-music-progress{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;margin:3px 0;align-items:center;color:#c4d2e6;font-size:12px}
+.floating-music-volume{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;margin:0 0 4px;color:#c4d2e6}
+.floating-music-progress input,.floating-music-volume input{width:100%;min-height:34px;accent-color:#a9c8ff;touch-action:pan-x}
+#lyricsPanel{margin-top:3px!important;border:0!important;border-radius:18px!important;padding:15px!important;box-shadow:inset 0 0 0 1px #e6ebf2}
+#lyricsPanel .lyrics-head{border-bottom:1px solid #e7edf5;padding-bottom:12px;margin-bottom:4px;gap:8px}
+#lyricsPanel .lyrics-head strong{font-size:16px}
+#lyricsHide,#lyricsShow{background:#e9f0fa!important;color:#203c64!important;border:1px solid #d6e3f5!important;border-radius:11px!important;padding:11px 13px!important;min-height:44px}
+#lyricsScroll{font-size:clamp(21px,2.25vw,29px)!important;line-height:1.57!important;padding:15px 10px!important}
+#lyricsShow{margin:0!important;align-self:stretch;text-align:center}
+#floatingMusicRestore{min-height:48px;border-radius:16px;font-weight:700;background:#142643}
+@media(max-width:700px){.floating-music.with-lyrics{width:calc(100vw - 16px);height:calc(100dvh - 16px)}.floating-music{padding:12px}.floating-music-controls{gap:6px}.floating-music-controls button{font-size:12px!important;padding:9px!important}}
+@media(prefers-reduced-motion:no-preference){.floating-music{transition:box-shadow .18s ease,border-color .18s ease}.floating-music button:active{transform:scale(.97)}}

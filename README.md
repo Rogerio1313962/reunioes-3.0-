@@ -1,5 +1,5 @@
-REUNIÕES 3.0 — PRÉVIA 16 (teste iPad)
+REUNIÕES 3.0 — PRÉVIA 17 (teste iPad)
 
-Mudanças: fundo branco e texto preto na área da letra; alinhamento à esquerda; fonte maior; player expandido inicialmente à esquerda, com rolagem de letra. Mantidos controles, ocultar/mostrar letra e arraste.
+Media Player com visual moderno: cabeçalho compacto, botões maiores, reprodução em destaque, progresso e volume com controles de toque e painel de letra branco. Preservados arraste, minimizar, ocultar/mostrar letra, repetição, edição de letras e cronograma.
 
-Publique os 8 arquivos na raiz do repositório GitHub Pages. Dados de músicas armazenados localmente no navegador não são transferidos entre dispositivos.
+Publique os oito arquivos na raiz do repositório. Não remova arquivos ou dados locais do navegador.
