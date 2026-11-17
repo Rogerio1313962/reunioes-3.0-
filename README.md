@@ -1,14 +1,12 @@
-# REUNIÕES 3.0 — Prévia 9
+# REUNIÕES 3.0 — Prévia 10
 
-## Novidade: Músicas
-- Pastas Segunda, Quarta, Sexta, Sábado, Domingo, Fundos de Busca, Fundos de Clamor e Fundos de Descarrego.
-- Upload de MP3 e reprodução local com controle de volume de 1 em 1%.
-- Inclusão de músicas no cronograma; tocar em "Apresentar" em uma música reproduz o áudio sem alterar o telão.
-- Os arquivos MP3 são salvos em IndexedDB no navegador deste dispositivo, não no GitHub nem na nuvem.
-- Para conectar caixas Bluetooth, pareie a caixa no dispositivo que reproduzirá o áudio. Controle remoto entre dispositivos ainda não implementado.
-- Bíblia ACF/ARA ainda depende de importação autorizada de JSON.
+Atualização incremental sobre a Prévia 9.
 
-## Instalação no iPad
-Descompacte este ZIP no app Arquivos, envie os seis arquivos na raiz do repositório GitHub, substituindo os anteriores, e abra a URL do GitHub Pages.
+- Cronograma: recados em folha amarela, com símbolo de anotação e prévia do texto; não são projetados.
+- Miniaturas no cronograma: fotos usam a própria imagem; vídeos usam o quadro inicial quando suportado pelo navegador; PDFs tentam exibir a primeira página no visualizador embutido (Safari pode mostrar apenas o ícone PDF).
+- Reordenação por arrastar em navegadores com suporte e botões de subir/descer como alternativa no iPad.
+- Músicas MP3 continuam podendo ser adicionadas pelo Cronograma, com reprodução separada do telão.
 
-**Esta é uma prévia para testes, não uma solução de produção para reuniões.**
+Limitações: arquivos de mídia grandes e sincronização remota não estão implementados; esta é uma prévia local. ACF/ARA completas não estão incluídas, exigindo base importada.
+
+Para publicar: extraia os seis arquivos na raiz do repositório GitHub Pages, substituindo os anteriores.
