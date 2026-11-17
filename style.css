@@ -124,3 +124,15 @@
 #floatingVolume{flex:0 1 155px!important;width:155px!important;max-width:155px!important;min-width:70px!important;touch-action:pan-x;accent-color:#b9d5ff}
 #floatingVolumeLabel{min-width:37px;text-align:right;font-size:12px;color:#fff}
 @media(max-width:390px){.floating-music-controls{gap:18px!important}#floatingVolume{max-width:125px!important}}
+
+/* Prévia 20: centralização real e controle de volume alinhado */
+.floating-music-controls{display:grid!important;grid-template-columns:46px 56px 46px!important;justify-content:center!important;align-items:center!important;column-gap:25px!important;width:100%!important}
+#floatingStop{grid-column:1;grid-row:1}
+#floatingPause{grid-column:2;grid-row:1}
+#floatingRepeat{grid-column:3;grid-row:1}
+#floatingVolume{-webkit-appearance:none!important;appearance:none!important;height:34px!important;border:0!important;background:transparent!important;padding:0!important;margin:0!important;outline:none!important;touch-action:none!important}
+#floatingVolume::-webkit-slider-runnable-track{height:6px;border-radius:99px;background:linear-gradient(to right,#b9d5ff 0%,#b9d5ff var(--volume-fill,50%),#d8e0eb var(--volume-fill,50%),#d8e0eb 100%);border:0}
+#floatingVolume::-webkit-slider-thumb{-webkit-appearance:none!important;appearance:none!important;width:18px;height:18px;margin-top:-6px;border-radius:50%;background:#fff;border:2px solid #a9c8ff;box-shadow:0 1px 4px #0004}
+#floatingVolume::-moz-range-track{height:6px;border-radius:99px;background:#d8e0eb}
+#floatingVolume::-moz-range-progress{height:6px;border-radius:99px;background:#b9d5ff}
+#floatingVolume::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid #a9c8ff}
