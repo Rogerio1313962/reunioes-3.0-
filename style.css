@@ -97,3 +97,13 @@
 #floatingMusicRestore{min-height:48px;border-radius:16px;font-weight:700;background:#142643}
 @media(max-width:700px){.floating-music.with-lyrics{width:calc(100vw - 16px);height:calc(100dvh - 16px)}.floating-music{padding:12px}.floating-music-controls{gap:6px}.floating-music-controls button{font-size:12px!important;padding:9px!important}}
 @media(prefers-reduced-motion:no-preference){.floating-music{transition:box-shadow .18s ease,border-color .18s ease}.floating-music button:active{transform:scale(.97)}}
+
+/* Prévia 18 — saída acessível da ampliação e reforço do player premium */
+#previewExit{position:fixed;top:max(18px,env(safe-area-inset-top));right:max(18px,env(safe-area-inset-right));z-index:10020;background:#fff;color:#10213b;border:2px solid #203b65;border-radius:14px;padding:13px 19px;font-size:17px;font-weight:750;box-shadow:0 7px 28px #0008;min-height:52px;cursor:pointer}
+#previewExit[hidden]{display:none!important}
+.preview-expanded{z-index:10000!important;inset:9vh 3vw 4vh!important;width:94vw!important;height:87vh!important;max-height:87vh!important}
+.floating-music{background:#101e36!important;border-radius:24px!important;box-shadow:0 22px 65px #09152b66!important}
+.floating-music-head{border-bottom:1px solid #ffffff26!important}
+#floatingPause{background:#fff!important;color:#13223b!important;font-weight:750!important}
+#lyricsPanel,#lyricsScroll{background:#fff!important;color:#111!important}
+@media(max-width:700px){#previewExit{top:max(12px,env(safe-area-inset-top));right:12px;font-size:15px}.preview-expanded{inset:9vh 2vw 3vh!important;width:96vw!important;height:88vh!important}}

@@ -54,7 +54,14 @@ $('floatingVolume').oninput=e=>{audio.volume=Number(e.target.value)/100;$('music
 $('floatingMusicClose').onclick=()=>{playerCollapsed=!playerCollapsed;syncPlayer()};
 ['play','pause','timeupdate','durationchange','ended','volumechange'].forEach(ev=>audio.addEventListener(ev,syncPlayer));
 $('musicRepeat').onchange=()=>{audio.loop=$('musicRepeat').checked;syncPlayer()};
-$('expandPreview').onclick=()=>{const screen=$('preview');screen.classList.toggle('preview-expanded');$('expandPreview').textContent=screen.classList.contains('preview-expanded')?'✕ Reduzir prévia':'⛶ Ampliar prévia'};
+// Prévia 18: botão de saída fora da área ampliada, sempre acessível.
+const previewExit=document.createElement('button');
+previewExit.type='button';previewExit.id='previewExit';previewExit.textContent='✕ Fechar prévia';previewExit.hidden=true;
+document.body.appendChild(previewExit);
+function closeExpandedPreview(){const screen=$('preview');screen.classList.remove('preview-expanded');previewExit.hidden=true;$('expandPreview').textContent='⛶ Ampliar prévia';}
+$('expandPreview').onclick=()=>{const screen=$('preview');if(screen.classList.contains('preview-expanded')){closeExpandedPreview();return;}screen.classList.add('preview-expanded');previewExit.hidden=false;$('expandPreview').textContent='✕ Reduzir prévia'};
+previewExit.onclick=closeExpandedPreview;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('preview').classList.contains('preview-expanded'))closeExpandedPreview()});
 $('musicUploadForm').addEventListener('submit',e=>{if(e.submitter?.value==='cancel')return;if([...$('musicFiles').files].some(f=>!/\.mp3$/i.test(f.name))){e.preventDefault();e.stopImmediatePropagation();alert('Selecione somente arquivos MP3.')}},true);
 const videoRepeat=document.createElement('button');videoRepeat.type='button';videoRepeat.id='videoRepeat';videoRepeat.textContent='↻ Repetir vídeo: não';$('muteVideo').parentElement.appendChild(videoRepeat);let repeatVideo=false;videoRepeat.onclick=()=>{repeatVideo=!repeatVideo;videoRepeat.textContent=repeatVideo?'↻ Repetir vídeo: sim':'↻ Repetir vídeo: não';const v=$('preview').querySelector('video');if(v)v.loop=repeatVideo};const oldPresent=present;present=function(x){oldPresent(x);const v=$('preview').querySelector('video');if(v)v.loop=repeatVideo};
 const oldMusicDraw=drawMusic;drawMusic=function(){oldMusicDraw();$('musicList').querySelectorAll('.music-track').forEach(row=>{const id=row.querySelector('[data-play]')?.dataset.play;if(!id)return;const b=document.createElement('button');b.textContent='Mover pasta';b.onclick=async()=>{const m=musicIndex.find(v=>v.id===id);const target=prompt('Mover para qual pasta?\n'+MUSIC_FOLDERS.map((x,i)=>`${i+1}. ${x}`).join('\n'),'1');const n=Number(target);if(!Number.isInteger(n)||n<1||n>MUSIC_FOLDERS.length)return;const tracks=await musicAll(),full=tracks.find(x=>x.id===id);if(!full)return;full.folder=MUSIC_FOLDERS[n-1];await musicPut(full);await loadMusic()};row.appendChild(b)})};

@@ -1,5 +1,5 @@
-REUNIÕES 3.0 — PRÉVIA 17 (teste iPad)
+REUNIÕES 3.0 — PRÉVIA 18 (teste iPad)
 
-Media Player com visual moderno: cabeçalho compacto, botões maiores, reprodução em destaque, progresso e volume com controles de toque e painel de letra branco. Preservados arraste, minimizar, ocultar/mostrar letra, repetição, edição de letras e cronograma.
+Corrigido carregamento da folha de estilos (v=18), identificação de versão e botão sempre visível para fechar a prévia ampliada. Preservados player moderno, letras, músicas, cronograma e arquivos locais.
 
-Publique os oito arquivos na raiz do repositório. Não remova arquivos ou dados locais do navegador.
+Publique os 8 arquivos na raiz do repositório. O conteúdo salvo no Safari não é transferido entre dispositivos.
