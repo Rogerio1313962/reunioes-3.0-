@@ -7,3 +7,6 @@ No repositório reunioes-3.0-, substitua na raiz os arquivos `index.html`, `styl
 
 ## Limitações importantes
 Este é um protótipo, não um produto final. Dados ficam no armazenamento local do navegador, com limite de 2 MB por arquivo. Não há sincronização na nuvem, autenticação, Bíblia completa, controle remoto pela internet ou garantia de funcionamento offline. A janela de telão usa BroadcastChannel no mesmo navegador/origem. O controle de volume age no elemento de vídeo, não no áudio geral do Windows. Não utilizar em reuniões reais até testes completos.
+
+
+Prévia 4: seletor visual de livros, capítulos e versículos. Limite provisório de 40 versículos exibidos por capítulo; contagens e textos automáticos dependem da futura biblioteca bíblica. Sem nuvem e sem controle remoto nesta prévia.
