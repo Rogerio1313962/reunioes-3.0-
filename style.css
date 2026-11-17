@@ -145,3 +145,11 @@
 #floatingSeek::-moz-range-track{height:6px;border-radius:99px;background:#d8e0eb}
 #floatingSeek::-moz-range-progress{height:6px;border-radius:99px;background:#b9d5ff}
 #floatingSeek::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:0}
+
+/* Prévia 22 — painel compacto ao ocultar letra; refrão destacado */
+.floating-music:not(.with-lyrics){height:auto!important;min-height:0!important;max-height:calc(100dvh - 24px)!important;align-self:flex-start!important;}
+.floating-music:not(.with-lyrics) #lyricsShow{flex:0 0 auto!important;}
+#lyricsScroll .lyrics-chorus{font-weight:800!important;color:#050b17!important;background:transparent!important;}
+.lyrics-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.lyrics-toolbar button{background:#e9f0fa;color:#172f54;border:1px solid #a8c0e2;border-radius:9px;padding:10px 12px;font-weight:800;min-height:44px;}
+.lyrics-toolbar span{font-size:12px;line-height:1.35;color:#d5e2f7;}

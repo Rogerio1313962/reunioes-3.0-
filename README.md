@@ -1,5 +1,1 @@
-REUNIÕES 3.0 — PRÉVIA 21
-
-Ajustes: símbolo Play levemente menor e visualmente centralizado; barra de progresso do áudio com trilho e marcador alinhados ao início em 0:00, preenchimento proporcional e reinício sincronizado.
-
-Prévia local, sem sincronização remota.
+Aplicativo Reuniões 3.0 — Prévia 23\n\nRefrão automático: reconhece Refrão/REFRÃO/[Refrão], 1x/x1, 2x/x2, 3x/x3 etc, sem distinção entre maiúsculas e minúsculas, inclusive REFRAO sem acento. O destaque termina na próxima estrofe após uma linha vazia. Preserva os destaques manuais da Prévia 22. Não modifica as letras salvas.\n
