@@ -1,5 +1,5 @@
-REUNIÕES 3.0 — PRÉVIA 18 (teste iPad)
+# REUNIÕES 3.0 — PRÉVIA 19
 
-Corrigido carregamento da folha de estilos (v=18), identificação de versão e botão sempre visível para fechar a prévia ampliada. Preservados player moderno, letras, músicas, cronograma e arquivos locais.
+Player premium: Play/Pause central com anel azul-marinho, reiniciar, repetir, volume compacto e centralizado com ajuste de 1%, silenciar. Mantidas as funções da Prévia 18.
 
-Publique os 8 arquivos na raiz do repositório. O conteúdo salvo no Safari não é transferido entre dispositivos.
+Prévia local: sem sincronização entre dispositivos.

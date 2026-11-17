@@ -107,3 +107,20 @@
 #floatingPause{background:#fff!important;color:#13223b!important;font-weight:750!important}
 #lyricsPanel,#lyricsScroll{background:#fff!important;color:#111!important}
 @media(max-width:700px){#previewExit{top:max(12px,env(safe-area-inset-top));right:12px;font-size:15px}.preview-expanded{inset:9vh 2vw 3vh!important;width:96vw!important;height:88vh!important}}
+
+/* Prévia 19 — controles premium com anel azul-marinho interno */
+.floating-music-controls{gap:28px!important;flex-wrap:nowrap!important;margin:8px 0 3px!important}
+.floating-music-controls button{display:flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;box-sizing:border-box!important;cursor:pointer!important;box-shadow:none!important}
+#floatingPause{width:56px!important;height:56px!important;min-width:56px!important;min-height:56px!important;padding:4px!important;border-radius:50%!important;border:0!important;background:#fff!important;color:#0c1425!important;position:relative!important;isolation:isolate}
+#floatingPause::before{content:'';position:absolute;inset:4px;border:2.2px solid #0c1425;border-radius:50%;pointer-events:none}
+#floatingPause svg{width:42px;height:42px;display:block;position:relative;z-index:1}
+#floatingStop,#floatingRepeat{width:46px!important;height:46px!important;min-width:46px!important;min-height:46px!important;padding:10px!important;border:0!important;background:transparent!important;color:#c4d5ec!important;border-radius:50%!important;font-size:31px!important;line-height:1!important}
+#floatingRepeat svg{width:27px;height:27px;display:block}
+#floatingRepeat.is-on{background:#253c5a!important;color:#81c5ff!important;box-shadow:inset 0 0 0 1px #5d91c4!important}
+#floatingStop:active,#floatingRepeat:active,#floatingPause:active{transform:scale(.94)}
+.floating-music-volume{display:flex!important;justify-content:center!important;align-items:center!important;gap:11px!important;margin:0 auto 4px!important;width:100%!important}
+#floatingMute{display:grid;place-items:center;background:transparent;border:0;color:#c4d5ec;padding:0;min-width:30px;height:36px;cursor:pointer}
+#floatingMute svg{width:23px;height:23px}
+#floatingVolume{flex:0 1 155px!important;width:155px!important;max-width:155px!important;min-width:70px!important;touch-action:pan-x;accent-color:#b9d5ff}
+#floatingVolumeLabel{min-width:37px;text-align:right;font-size:12px;color:#fff}
+@media(max-width:390px){.floating-music-controls{gap:18px!important}#floatingVolume{max-width:125px!important}}

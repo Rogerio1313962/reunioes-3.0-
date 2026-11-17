@@ -36,7 +36,7 @@ if(repeat){
   function syncRepeat(){
     const label=audio.loop?'↻ Repetir ligado':'↻ Repetir desligado';
     repeat.classList.toggle('is-on',audio.loop);
-    if(repeat.textContent!==label)repeat.textContent=label;
+    // Ícone premium controlado pelo sincronizador; não substituir por texto.
   }
   repeat.addEventListener('click',()=>requestAnimationFrame(syncRepeat));
   $('musicRepeatButton')?.addEventListener('click',()=>requestAnimationFrame(syncRepeat));
