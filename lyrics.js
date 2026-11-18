@@ -55,7 +55,7 @@ function renderLyrics(target, raw, trackName){
  }
 }
 
-async function refreshLyrics(id){if(!id){box.hidden=true;return;}const track=await getTrack(id);if(!track||isBackground(track.folder)){box.hidden=true;return;}const scroll=$('lyricsScroll');renderLyrics(scroll,track.lyrics?.trim()||'Esta música ainda não tem letra cadastrada. Use “Editar letra” na página Músicas.',track.name);scroll.scrollTop=0;box.hidden=false;}
+async function refreshLyrics(id){if(!id){box.hidden=true;return;}const track=await getTrack(id);if(!track||isBackground(track.folder)||!track.lyrics?.trim()){box.hidden=true;return;}const scroll=$('lyricsScroll');renderLyrics(scroll,track.lyrics.trim(),track.name);scroll.scrollTop=0;box.hidden=false;}
 $('lyricsForm').onsubmit=async e=>{e.preventDefault();const id=editingId;if(!id)return;const track=await getTrack(id);if(!track)return;track.lyrics=$('lyricsText').value;await musicPut(track);edit.close();if(activeTrackId===id)await refreshLyrics(id);};
 function addEditButtons(){music.querySelectorAll('.music-track').forEach(row=>{const id=row.querySelector('[data-play]')?.dataset.play;if(!id||row.querySelector('[data-edit-lyrics]'))return;const meta=musicIndex.find(m=>m.id===id);if(!meta||isBackground(meta.folder))return;const btn=document.createElement('button');btn.type='button';btn.textContent='✎ Editar letra';btn.dataset.editLyrics=id;btn.onclick=async()=>{const track=await getTrack(id);if(!track)return;editingId=id;$('lyricsSongName').textContent=track.name;$('lyricsText').value=track.lyrics||'';edit.showModal();};row.appendChild(btn);});}
 // drawMusic é invocado pela aba, carregamentos e alterações de pastas.
