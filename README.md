@@ -35,3 +35,7 @@ Prévia 62: cores das caixas da biblioteca aplicadas ao app; frase Biblioteca de
 
 ## Prévia 64 — Biblioteca de Mídias
 Aba Mídias com categorias Vídeos, Fotos e PDFs; pastas por dia; pesquisa, edição do nome, exclusão, prévia e cadastro em painel à direita. Arquivos guardados localmente em IndexedDB (`reunioes3-midias-v64`) e não sincronizados entre dispositivos. Ao usar no cronograma, esta prévia conserva a restrição de 2 MB por arquivo devido ao armazenamento existente no aplicativo. Não remover arquivos da versão anterior de maneira isolada sem revisar as referências.
+
+
+## Prévia 65 — Correção da 64
+Restaura o botão `libraryAdd` invisível de compatibilidade, que havia sido removido na 64 e causava interrupção do `app.js` (prejudicando Cronograma, Bíblia e Músicas). Biblioteca de Mídias com retorno explícito a Mídias, pesquisador compacto, pastas menores, e prévia sem cartão branco vazio até a escolha de um arquivo.

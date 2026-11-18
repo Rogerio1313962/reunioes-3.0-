@@ -1045,3 +1045,33 @@ body[data-player56="folder"] #musicas.page.active #music56Right #lyricsPanel,
 #biblioteca .m64modalbox footer{display:flex;justify-content:flex-end;gap:10px}
 @media(max-width:800px){#biblioteca .media64{padding:12px;min-height:calc(100dvh - 115px)}#biblioteca .m64categories{grid-template-columns:repeat(3,minmax(0,1fr))}#biblioteca .m64tile{min-height:90px;padding:12px;gap:6px}#biblioteca .m64tile strong{font-size:13px}#biblioteca .m64workspace{grid-template-columns:minmax(0,43%) minmax(0,57%);height:calc(100dvh - 115px);min-height:440px}#biblioteca .m64left,#biblioteca .m64right{padding:9px}#biblioteca .m64action{height:35px;width:35px;min-width:35px}#biblioteca .m64filename{font-size:12px}}
 @media(max-width:480px){#biblioteca .m64categories{grid-template-columns:1fr}#biblioteca .m64workspace{grid-template-columns:1fr;min-height:650px;height:auto}#biblioteca .m64left{border-right:0;border-bottom:1px solid #bfd3e5;max-height:300px}#biblioteca .m64right{min-height:375px}#biblioteca .m64grid{gap:8px}}
+
+/* Prévia 65: reparo de layout da Biblioteca de Mídias, sem tocar nos módulos existentes. */
+#biblioteca #libraryAdd[hidden]{display:none!important}
+#biblioteca .media64{min-height:0!important;padding:15px!important}
+#biblioteca .m64titlebar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+#biblioteca .m64titlebar .m64heading{margin:0}
+#biblioteca .m64grid{gap:10px}
+#biblioteca .m64tile{min-height:95px;padding:13px 16px;gap:6px}
+#biblioteca .m64tile .m64ico{font-size:23px}
+#biblioteca .m64tile strong{font-size:15px}
+#biblioteca .m64toolbar{justify-content:flex-start;align-items:center;gap:10px;flex-wrap:wrap}
+#biblioteca .m64searchwrap{flex:0 1 260px!important;max-width:260px!important;width:260px;min-width:0!important;min-height:42px;padding:0 9px!important}
+#biblioteca .m64searchwrap svg{width:19px;height:19px}
+#biblioteca input.m64search{min-height:40px!important;height:40px!important;line-height:20px!important;font-size:14px!important;padding:7px 0!important}
+#biblioteca .m64add,#biblioteca .m64gold{min-height:42px;padding:9px 13px}
+#biblioteca .m64workspace{height:min(740px,calc(100dvh - 125px));min-height:460px}
+#biblioteca .m64left{gap:10px}
+#biblioteca .m64left .m64searchwrap{width:100%;max-width:100%!important;flex:0 0 auto!important}
+#biblioteca .m64left .m64toolbar{margin:0;justify-content:center}
+#biblioteca .m64folderheading{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#biblioteca .m64folderheading h3{font-size:19px}
+#biblioteca .m64rootback{color:#315d85;background:transparent;border:0;text-decoration:underline;font-size:12px;font-weight:800;padding:7px 2px;white-space:nowrap}
+#biblioteca .m64right{background:#527a9f;gap:12px}
+#biblioteca .m64preview{padding:0;background:transparent;color:#f0f5fa;border:0;border-radius:11px}
+#biblioteca .m64preview.m64hasfile{background:#eaf2f9;padding:8px;color:#1d3958}
+#biblioteca .m64emptypreview{color:#e5eef7;font-size:14px}
+#biblioteca .m64preview.m64hasfile .m64emptypreview{color:#526e88}
+#biblioteca .m64file{min-height:54px}
+@media(max-width:800px){#biblioteca .m64workspace{height:calc(100dvh - 110px);min-height:410px}#biblioteca .m64tile{min-height:78px;padding:10px 12px}#biblioteca .m64searchwrap{max-width:230px!important;width:230px}#biblioteca .m64left .m64toolbar{gap:6px}#biblioteca .m64left .m64add,#biblioteca .m64left .m64back{padding:9px 9px;font-size:12px}}
+@media(max-width:480px){#biblioteca .m64searchwrap{width:100%;max-width:none!important;flex:1 1 100%!important}#biblioteca .m64folderheading h3{font-size:16px}#biblioteca .m64workspace{height:auto;min-height:0}#biblioteca .m64left{min-height:240px}#biblioteca .m64right{min-height:300px}}
