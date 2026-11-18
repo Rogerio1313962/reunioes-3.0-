@@ -352,3 +352,20 @@
 #floatingSeek::-moz-range-thumb,#floatingVolume::-moz-range-thumb{background:#fff!important;width:18px!important;height:18px!important;border:2px solid #dbe4f0!important;border-radius:50%!important}
 #lyricsPanel{background:#fff!important;border-radius:13px!important}
 @media(max-width:390px){#groupVersionBar .group-version-buttons{gap:5px!important}#groupVersionBar .version-choice{font-size:10px!important;padding:8px 3px 10px!important}}
+
+/* Prévia 50 — somente UM ícone na cabeça do player; nota dupla em pausa e barras douradas ao tocar */
+.floating-music-head::before{display:none!important;content:none!important}
+.floating-music-head .gold-equalizer{display:none!important}
+.floating-music-head .gold-music-badge{display:flex!important;align-items:center!important;justify-content:center!important;flex:0 0 48px!important;width:48px!important;height:48px!important;min-width:48px!important;border-radius:11px!important;background:#304d70!important;color:#eac96f!important;margin:0!important;overflow:hidden!important}
+.gold-music-badge .gold-music-note{display:block}
+.gold-music-badge .gold-music-waves{display:none;align-items:center;justify-content:center;gap:3px;height:30px}
+.gold-music-badge .gold-music-waves i{display:block;width:4px;height:11px;border-radius:3px;background:#eac96f;animation:gold-wave .65s ease-in-out infinite alternate}
+.gold-music-badge .gold-music-waves i:nth-child(2){height:20px;animation-delay:-.27s}
+.gold-music-badge .gold-music-waves i:nth-child(3){height:9px;animation-delay:-.48s}
+.gold-music-badge .gold-music-waves i:nth-child(4){height:25px;animation-delay:-.17s}
+.gold-music-badge .gold-music-waves i:nth-child(5){height:14px;animation-delay:-.39s}
+.floating-music.audio-is-playing .gold-music-note{display:none!important}
+.floating-music.audio-is-playing .gold-music-waves{display:flex!important}
+#groupVersionBar .version-choice.is-playing .playing-bars i{animation-play-state:running!important}
+#groupVersionBar .version-choice:not(.is-playing) .playing-bars i{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){.gold-music-waves i{animation:none!important}}
