@@ -1,9 +1,5 @@
-REUNIÕES 3.0 — PRÉVIA 43
-Pastas em ordem: Domingo, Segunda-feira, Terça-feira, Quarta-feira, Quinta-feira, Sexta-feira, Sábado; depois Fundos de Busca, Clamor e Descarrego.
-Base: ZIP da Prévia 42 enviado pelo usuário. Sem alterações nos arquivos MP3 armazenados no Safari.
+REUNIÕES 3.0 — PRÉVIA 53
 
-Preview 50: icone unico de nota dupla dourada em pausa, equalizador dourado quando toca, animacao automatica na variante ativa. Mantem layout 49.
+A biblioteca de músicas e o Media Player usam um único painel, com rolagem separada e sem cabeçalho superior na tela Músicas. Pastas sem prévias; pesquisas geral e por pasta; linhas compactas com edição e exclusão; controle do áudio e das letras preservado.
 
-Prévia 51: título Letra, botão de edição apenas lápis azul sem fundo, Ocultar, fonte e espaçamento reduzidos.
-
-Prévia 52: pastas sem prévia, pesquisa global e pesquisa na coluna esquerda, painel de músicas sem janela modal e player fixo à direita.
+Abra index.html no ambiente de hospedagem usado nas prévias anteriores. Os MP3 salvos permanecem armazenados no navegador de origem. Teste no Safari do iPad antes de usar em reunião real.

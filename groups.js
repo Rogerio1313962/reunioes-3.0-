@@ -66,23 +66,21 @@ for(const [id,tracks] of groups){
  const first=tracks[0],card=document.createElement('div');card.className='song-group-card song-group-compact';
  const title=first.groupTitle||first.name||'Música';
  const head=document.createElement('div');head.className='song-group-head';
- const info=document.createElement('div');info.className='group-main-info';
- const name=document.createElement('strong');name.textContent='♫ '+title;
- const sub=document.createElement('small');sub.textContent=roles.filter(([r])=>tracks.some(t=>t.role===r)).map(([,label])=>label).join(' · ');
- info.append(name,sub);head.append(info);
- const play=document.createElement('button');play.className='primary';play.textContent='▶ Reproduzir';play.onclick=()=>{playMusic((tracks.find(t=>t.role==='completa')||tracks[0]).id)};
- const removeGroup=document.createElement('button');removeGroup.textContent='🗑 Excluir';removeGroup.className='group-delete-button';removeGroup.onclick=async()=>{if(!confirm('Excluir definitivamente a música “'+title+'” e todas as suas '+tracks.length+' versões MP3 deste aparelho? Esta ação não pode ser desfeita.'))return;removeGroup.disabled=true;try{for(const track of tracks)await musicRemove(track.id);await loadMusic();}catch(error){alert('Não foi possível excluir a música: '+(error?.message||String(error)));removeGroup.disabled=false}};
- const edit=document.createElement('button');edit.textContent='✎ Editar';edit.onclick=()=>openGroup(first);
+ const play=document.createElement('button');play.type='button';play.className='song-row-play';play.title='Abrir música no Media Player';
+ const label=document.createElement('span');label.textContent='♫ '+title;
+ play.append(label);play.onclick=()=>playMusic((tracks.find(t=>t.role==='completa')||tracks[0]).id);
+ const removeGroup=document.createElement('button');removeGroup.type='button';removeGroup.textContent='▤';removeGroup.setAttribute('aria-label','Excluir música');removeGroup.title='Excluir música';removeGroup.className='song-row-action song-row-delete';removeGroup.onclick=async()=>{if(!confirm('Excluir definitivamente a música “'+title+'” e todas as suas '+tracks.length+' versões MP3 deste aparelho? Esta ação não pode ser desfeita.'))return;removeGroup.disabled=true;try{for(const track of tracks)await musicRemove(track.id);await loadMusic();}catch(error){alert('Não foi possível excluir a música: '+(error?.message||String(error)));removeGroup.disabled=false}};
+ const edit=document.createElement('button');edit.type='button';edit.className='song-row-action';edit.textContent='✎';edit.setAttribute('aria-label','Editar música');edit.title='Editar música';edit.onclick=()=>openGroup(first);
  head.append(play,edit,removeGroup);card.append(head);target.append(card)
 }
 // Arquivos agrupados aparecem apenas no conjunto, sem duplicação na lista comum.
-nativeList.querySelectorAll('.music-track').forEach(el=>{const btn=el.querySelector('[data-play]');if(!btn)return;const track=all.find(t=>t.id===btn.dataset.play);if(track?.groupId){el.remove();return}if(folderSearch.value.trim()&&!track.name.toLocaleLowerCase('pt-BR').includes(folderSearch.value.trim().toLocaleLowerCase('pt-BR'))){el.hidden=true;return}const addButton=el.querySelector('[data-add]');if(addButton)addButton.remove();btn.textContent='▶ Reproduzir';const editButton=document.createElement('button');editButton.type='button';editButton.textContent='✎ Editar';editButton.onclick=()=>openGroup(track);const removeButton=el.querySelector('[data-remove]');if(removeButton){removeButton.before(editButton);removeButton.textContent='🗑 Excluir';}});
+nativeList.querySelectorAll('.music-track').forEach(el=>{const btn=el.querySelector('[data-play]');if(!btn)return;const track=all.find(t=>t.id===btn.dataset.play);if(track?.groupId){el.remove();return}if(folderSearch.value.trim()&&!track.name.toLocaleLowerCase('pt-BR').includes(folderSearch.value.trim().toLocaleLowerCase('pt-BR'))){el.hidden=true;return}const addButton=el.querySelector('[data-add]');if(addButton)addButton.remove();btn.textContent='♫ '+track.name;const editButton=document.createElement('button');editButton.type='button';editButton.textContent='✎';editButton.className='song-row-action';editButton.title='Editar música';editButton.onclick=()=>openGroup(track);const removeButton=el.querySelector('[data-remove]');if(removeButton){removeButton.before(editButton);removeButton.textContent='▤';removeButton.classList.add('song-row-action','song-row-delete');removeButton.title='Excluir música';}});
 // Contar conjuntos, e não arquivos MP3 individuais.
 const uniqueMusicCount=folder=>new Set(all.filter(t=>t.folder===folder).map(t=>t.groupId?'grupo:'+t.groupId:'avulso:'+t.id)).size;
 const countLabel=folder=>{const n=uniqueMusicCount(folder);const isFundos=['Fundos de Busca','Fundos de Clamor','Fundos de Descarrego'].includes(folder);return n+' '+(isFundos?(n===1?'fundo':'fundos'):(n===1?'música':'músicas'));};
 $('musicFolders').querySelectorAll('.music-folder').forEach((b,i)=>{const count=b.querySelector('small');if(count)count.textContent=countLabel(MUSIC_FOLDERS[i])});
 $('musicCount').textContent=countLabel(musicFolder);
-const q=mainSearch.value.trim().toLocaleLowerCase('pt-BR');mainResults.replaceChildren();$('musicFolders').hidden=!!q;if(q){const seen=new Set();const matched=all.filter(t=>{const id=t.groupId||t.id;if(seen.has(id))return false;seen.add(id);return ((t.groupTitle||t.name||'')+' '+(t.artist||'')).toLocaleLowerCase('pt-BR').includes(q)});if(!matched.length){mainResults.textContent=''}for(const t of matched){const card=document.createElement('div');card.className='music-search-result';const label=document.createElement('div');const name=document.createElement('strong');name.textContent='♫ '+(t.groupTitle||t.name);const folder=document.createElement('small');folder.textContent='📁 '+t.folder.toLocaleUpperCase('pt-BR');label.append(name,folder);const actions=document.createElement('div');actions.className='music-result-actions';const play=document.createElement('button');play.className='primary';play.textContent='▶ Reproduzir';play.onclick=()=>{section.classList.add('library-expanded');playMusic((all.find(x=>x.groupId===(t.groupId||t.id)&&x.role==='completa')||t).id)};const edit=document.createElement('button');edit.textContent='✎ Editar';edit.onclick=()=>{musicFolder=t.folder;openGroup(t)};actions.append(play,edit);card.append(label,actions);mainResults.append(card)}}
+const q=mainSearch.value.trim().toLocaleLowerCase('pt-BR');mainResults.replaceChildren();$('musicFolders').hidden=!!q;if(q){const seen=new Set();const matched=all.filter(t=>{const id=t.groupId||t.id;if(seen.has(id))return false;seen.add(id);return ((t.groupTitle||t.name||'')+' '+(t.artist||'')).toLocaleLowerCase('pt-BR').includes(q)});if(!matched.length){mainResults.textContent=''}for(const t of matched){const card=document.createElement('div');card.className='music-search-result';const label=document.createElement('div');const name=document.createElement('strong');name.textContent='♫ '+(t.groupTitle||t.name);const folder=document.createElement('small');folder.textContent='📁 '+t.folder.toLocaleUpperCase('pt-BR');label.append(name,folder);const actions=document.createElement('div');actions.className='music-result-actions';const play=document.createElement('button');play.className='primary';play.textContent='♫ '+(t.groupTitle||t.name);play.className='song-row-play';play.onclick=()=>{section.classList.add('library-expanded');playMusic((all.find(x=>x.groupId===t.groupId&&x.role==='completa')||t).id)};const edit=document.createElement('button');edit.textContent='✎';edit.className='song-row-action';edit.title='Editar música';edit.onclick=()=>{musicFolder=t.folder;openGroup(t)};actions.append(play,edit);card.append(label,actions);mainResults.append(card)}}
 $('folderModalTitle').textContent=musicFolder.toLocaleUpperCase('pt-BR');
 }
 // Um toque abre a pasta diretamente. O manipulador em captura impede que
@@ -102,6 +100,45 @@ $('musicFolders').addEventListener('click',async event=>{
  await drawGroups();
 },true);
 const originalLoad=loadMusic;loadMusic=async function(){await originalLoad();await drawGroups()};drawMusic();drawGroups();
+
+// Prévia 53: um único painel com biblioteca na esquerda e player real na direita.
+const workspace=document.createElement('div');workspace.id='musicIntegratedWorkspace';
+const library=document.createElement('div');library.id='musicLibraryColumn';
+const dock=document.createElement('div');dock.id='musicPlayerColumn';
+const dockPlaceholder=document.createElement('div');dockPlaceholder.className='music-player-empty';dockPlaceholder.textContent='Selecione uma música na coluna esquerda.';
+dock.append(dockPlaceholder);
+const sectionChildren=[...section.children].filter(n=>n!==folderDialog);
+for(const child of sectionChildren)library.append(child);
+library.append(folderDialog);
+workspace.append(library,dock);section.prepend(workspace);
+const floating=$('floatingMusic');
+const savedParent=floating?.parentNode;
+const restoreAnchor=document.createComment('local original do Media Player');
+if(floating&&savedParent)savedParent.insertBefore(restoreAnchor,floating);
+function syncMusicLayout(){
+ const inLibrary=$('musicas').classList.contains('active');
+ if(!floating)return;
+ if(inLibrary){
+  if(floating.parentNode!==dock)dock.append(floating);
+  dockPlaceholder.hidden=!!(window.currentMusicId||!floating.hidden);
+ }else if(savedParent&&floating.parentNode===dock){
+  savedParent.insertBefore(floating,restoreAnchor.nextSibling);
+ }
+ document.body.classList.toggle('music-integrated-active',inLibrary);
+}
+// O player continua operacional fora da biblioteca (cronograma).
+const musicNav=document.querySelector('[data-tab="musicas"]');
+document.querySelectorAll('.nav[data-tab]').forEach(b=>b.addEventListener('click',()=>requestAnimationFrame(syncMusicLayout)));
+syncMusicLayout();
+const oldOpenDialog=folderDialog.showModal;
+folderDialog.showModal=()=>{oldOpenDialog();syncMusicLayout()};
+const oldCloseDialog=folderDialog.close;
+folderDialog.close=()=>{oldCloseDialog();syncMusicLayout()};
+// Ocultar o botão de ocultar letra sem remover o botão do lápis.
+const hideLyrics=$('lyricsHide');if(hideLyrics)hideLyrics.hidden=true;
+const showLyrics=$('lyricsShow');if(showLyrics)showLyrics.hidden=true;
+if($('lyricsPanel'))$('lyricsPanel').hidden=false;
+
 // Usa gravação direta para evitar duplicação de áudios no armazenamento.
 
 })();
