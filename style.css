@@ -1107,3 +1107,8 @@ body[data-player56="folder"] #musicas.page.active #music56Right #lyricsPanel,
 #biblioteca .m66form .m64footer{display:flex;justify-content:flex-end;gap:8px}
 @media(max-width:960px){#biblioteca .m66gallery{gap:7px}#biblioteca .m66filebody{padding:5px}#biblioteca .m66btn{font-size:9px}#biblioteca .m66icon{min-width:26px}}
 @media(max-width:560px){#biblioteca .m66gallery{grid-template-columns:repeat(2,minmax(0,1fr))}#biblioteca .m66formfields{grid-template-columns:1fr}#biblioteca .m66folderpage{min-height:0}}
+
+/* Prévia 67: Voltar ao lado esquerdo do botão Adicionar nas categorias de Mídias */
+#biblioteca .m67navbuttons{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:nowrap}
+#biblioteca .m67navbuttons .m64back,#biblioteca .m67navbuttons .m64add{white-space:nowrap;min-height:44px}
+@media(max-width:860px){#biblioteca .m64toolbar:has(.m67navbuttons){justify-content:center}#biblioteca .m67navbuttons{gap:8px}}

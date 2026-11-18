@@ -47,3 +47,6 @@ Restaura o botão `libraryAdd` invisível de compatibilidade, que havia sido rem
 - Arquivos novos aparecem primeiro na pasta (data de cadastro).
 - Vídeos reproduzidos no próprio cartão; imagens visíveis; PDFs com miniatura incorporada quando o Safari permitir e botão Abrir.
 - Músicas agrupadas e avulsas em ordem alfabética na pasta.
+
+
+Prévia 67: botão Voltar à esquerda de Adicionar nas categorias de Vídeos, Fotos e PDFs.
