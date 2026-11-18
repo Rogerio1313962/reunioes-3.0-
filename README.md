@@ -1,1 +1,1 @@
-Prévia 37 — remove o player fixo da biblioteca e adiciona pesquisa geral com retorno à pesquisa após edição. Os arquivos MP3 permanecem no armazenamento do Safari. Faça backup antes de atualizar.
+Prévia 38: baseada diretamente na Prévia 36 enviada pelo usuário. Oculta o player fixo da biblioteca sem retirar o áudio; edição aberta pela pesquisa retorna à pesquisa preservando a consulta. Mantém as melhorias e o visual da Prévia 36.
