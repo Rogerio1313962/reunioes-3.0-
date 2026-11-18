@@ -25,3 +25,9 @@ PRÉVIA 61: alivia fundos e cartões da biblioteca e do cadastro de músicas; re
 
 
 Prévia 62: cores das caixas da biblioteca aplicadas ao app; frase Biblioteca de Áudio removida; letra do player da pasta rolável por toque.
+
+
+## Prévia 63
+- Ajuste de grade do Media Player nas pastas: área branca da letra ocupa o restante da altura do player; rolagem vertical com um dedo, sem deslocar controles.
+- Botões de edição (lápis) e exclusão (lixeira) maiores e alinhados nas linhas de música.
+- Sem alterações intencionais em funções de áudio, biblioteca, cronograma ou Bíblia.
