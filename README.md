@@ -12,3 +12,6 @@ Limpeza segura:
 
 ATENÇÃO GITHUB: carregar este ZIP descompactado no repositório não apaga automaticamente arquivos anteriores. É necessário excluir layout54.js e layout55.js manualmente no GitHub, após validar esta versão.
 Dados MP3 do IndexedDB não estão incluídos no ZIP.
+
+
+PRÉVIA 58: (1) Oculta aviso de sincronização no cronograma; (2) botão amarelo fixo no canto inferior direito ao minimizar player do cronograma; (3) player integrado à pasta carrega a primeira música sem autoplay; (4) fundo branco quando pasta vazia e cantos mais suaves; (5) títulos longos deslizam automaticamente uma vez.

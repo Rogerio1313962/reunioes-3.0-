@@ -646,3 +646,26 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize{display:in
 #music56Workspace.folder-open #music56Actions{display:flex!important}
 #music56Workspace.folder-open #music56Actions #newSongGroup{display:inline-flex!important}
 #music56Workspace.folder-open #music56Right #music56Empty{flex:0 0 auto!important;min-height:0!important}
+
+/* PRÉVIA 58 — somente ajustes solicitados para cronograma e biblioteca. */
+/* A mensagem de sincronização do rodapé do cronograma deixa de aparecer. */
+#agenda .panel.tips{display:none!important}
+/* Reabertura do player: atalho amarelo fixo no canto inferior direito. */
+#agenda56Reopen{display:none!important;position:fixed!important;right:max(18px,env(safe-area-inset-right))!important;bottom:max(18px,env(safe-area-inset-bottom))!important;left:auto!important;top:auto!important;z-index:9999!important;align-items:center!important;justify-content:center!important;gap:8px!important;background:#eac96f!important;color:#172a44!important;border:1px solid #d5ab4e!important;border-radius:13px!important;min-height:48px!important;padding:10px 16px!important;font-size:13px!important;font-weight:800!important;box-shadow:0 5px 18px rgba(9,22,40,.25)!important;cursor:pointer!important}
+body[data-player56="none"] #agenda56Reopen{display:none!important}
+body:not([data-player56="agenda"]) #agenda56Reopen:not([hidden]){display:flex!important}
+body:has(#agenda.page.active) #agenda56Reopen:not([hidden]){display:flex!important}
+#agenda56Reopen[hidden]{display:none!important}
+/* Nas pastas o player fica preparado com a primeira música, arredondado e integrado. */
+#music56Right{background:#fff!important}
+#music56Workspace.folder-open #music56Right{background:#fff!important;padding:10px!important}
+#music56Right #floatingMusic{border-radius:16px!important;overflow:hidden!important;box-shadow:0 2px 13px rgba(18,39,66,.10)!important}
+#music56Empty{background:#fff!important;color:#54708e!important;border-radius:15px!important}
+#music56Empty .music57-minihead strong{color:#27496c!important}
+#music56Empty .music57-minicontrols>span{color:#6b829b!important}
+/* Título longo: um deslocamento suave, da direita para a esquerda, só uma vez. */
+body[data-player56] #floatingMusic .floating-music-head{min-width:0!important}
+#floatingMusicTitle{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;opacity:0!important;pointer-events:none!important}
+#preview58TitleViewport{display:block;flex:1 1 0!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important;position:relative!important;mask-image:linear-gradient(to right,#000 96%,transparent 100%)}
+#preview58TitleText{display:inline-block;white-space:nowrap;font-weight:800;will-change:transform;transform:translateX(0)}
+@media (prefers-reduced-motion:reduce){#preview58TitleText{transition:none!important;transform:none!important}}

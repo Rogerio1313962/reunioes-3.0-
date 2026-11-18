@@ -29,10 +29,10 @@
  const minimize=document.createElement('button');minimize.type='button';minimize.id='agenda56Minimize';minimize.textContent='−';minimize.title='Minimizar player e mostrar telão';minimize.setAttribute('aria-label','Minimizar player e mostrar telão');
  float.querySelector('.floating-music-head')?.append(minimize);
  const reopen=document.createElement('button');reopen.type='button';reopen.id='agenda56Reopen';reopen.textContent='♫ Mostrar player';reopen.title='Reabrir player de música';
- preview.querySelector('.panelhead')?.append(reopen);
+ document.body.append(reopen);
  minimize.onclick=()=>{agendaMinimized=true;refresh()};
  reopen.onclick=()=>{agendaMinimized=false;refresh()};
- let lastTab='';
+ let lastTab='';let folderOpenToken=0;
  const activeTab=()=>document.querySelector('.page.active')?.id||'';
  function clearSearch(){for(const el of [search,localSearch]){if(el&&el.value){el.value='';el.dispatchEvent(new Event('input'))}}}
  function resetTrack(){selected=false;agendaSong=false;agendaMinimized=false;audio.pause();}
@@ -58,11 +58,30 @@
  }
  const originalFolderShow=folder.showModal.bind(folder);
  const originalFolderClose=folder.close.bind(folder);
- folder.showModal=function(){clearSearch();selected=false;agendaSong=false;audio.pause();originalFolderShow();refresh()};
- folder.close=function(){originalFolderClose();clearSearch();resetTrack();refresh()};
+ folder.showModal=function(){
+  const token=++folderOpenToken;
+  clearSearch();selected=false;agendaSong=false;audio.pause();originalFolderShow();refresh();
+  // Preparar a primeira música da pasta, sem reproduzi-la automaticamente.
+  // A flag evita o play(), mas preserva versões, controles e letra da música.
+  (async()=>{
+   try{
+    const all=await musicAll();
+    if(token!==folderOpenToken||!folder.open||activeTab()!=='musicas')return;
+    const found=all.find(t=>t.folder===musicFolder);
+    if(!found){selected=false;refresh();return;}
+    const group=found.groupId?all.filter(t=>t.groupId===found.groupId&&t.folder===musicFolder):[found];
+    const first=group.find(t=>t.role==='completa')||group[0];
+    window.__preview58PrepareOnly=true;
+    try{await playMusic(first.id)}finally{window.__preview58PrepareOnly=false;audio.pause();}
+    if(token===folderOpenToken&&folder.open&&activeTab()==='musicas')refresh();
+   }catch(error){window.__preview58PrepareOnly=false;console.warn('Não foi possível preparar a primeira música da pasta',error)}
+  })();
+ };
+ folder.close=function(){++folderOpenToken;originalFolderClose();clearSearch();resetTrack();refresh()};
  back.onclick=()=>folder.close();
  const originalPlay=playMusic;
  playMusic=async function(id){
+  if(!window.__preview58PrepareOnly)++folderOpenToken;
   const tab=activeTab();
   if(tab==='musicas'){
    if(!folder.open){
