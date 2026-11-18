@@ -305,3 +305,50 @@
 #groupVersionBar .playing-bars i{height:5px!important}
 .floating-music.with-lyrics #lyricsPanel{min-height:0!important}
 @media(max-width:390px){.floating-music{column-gap:5px!important;padding:9px!important}.floating-music-controls{gap:3px!important}#floatingStop,#floatingRepeat{width:28px!important;min-width:28px!important}#floatingPause{width:46px!important;min-width:46px!important;height:46px!important;min-height:46px!important}#floatingMute{width:25px!important;min-width:25px!important}}
+
+/* Preview 48 — consistent golden active versions, original round play and animated header */
+.floating-music-head .gold-equalizer{display:flex;align-items:center;justify-content:center;gap:3px;flex:0 0 40px;width:40px;height:40px;background:#304d70;border-radius:11px;margin-right:7px}
+.gold-equalizer i{display:block;width:3px;height:11px;border-radius:3px;background:#eac96f;animation:gold-wave .65s ease-in-out infinite alternate;animation-play-state:paused}
+.gold-equalizer i:nth-child(2){height:19px;animation-delay:-.27s}.gold-equalizer i:nth-child(3){height:8px;animation-delay:-.48s}.gold-equalizer i:nth-child(4){height:22px;animation-delay:-.17s}.gold-equalizer i:nth-child(5){height:12px;animation-delay:-.39s}
+.floating-music.audio-is-playing .gold-equalizer i{animation-play-state:running}
+@keyframes gold-wave{from{transform:scaleY(.45)}to{transform:scaleY(1.2)}}
+#groupVersionBar .version-choice,#groupVersionBar .version-choice.version-completa,#groupVersionBar .version-choice.version-trecho,#groupVersionBar .version-choice.version-refrao,#groupVersionBar .version-choice.version-fundo,#groupVersionBar .version-choice.version-piano_bateria,#groupVersionBar .version-choice.version-trecho_bateria,#groupVersionBar .version-choice.version-refrao_bateria{background:#344a66!important;color:#f0f4fa!important;border:1px solid #526780!important;filter:none!important;box-shadow:0 2px 4px #0002!important}
+#groupVersionBar .version-choice.selected,#groupVersionBar .version-choice.selected.version-completa,#groupVersionBar .version-choice.selected.version-trecho,#groupVersionBar .version-choice.selected.version-refrao,#groupVersionBar .version-choice.selected.version-fundo,#groupVersionBar .version-choice.selected.version-piano_bateria,#groupVersionBar .version-choice.selected.version-trecho_bateria,#groupVersionBar .version-choice.selected.version-refrao_bateria{background:#eac96f!important;color:#25354b!important;border-color:#f5da91!important;box-shadow:0 3px 8px #0003!important;outline:0!important;filter:none!important}
+#groupVersionBar .version-choice .playing-bars{position:absolute!important;bottom:2px!important;left:50%!important;transform:translateX(-50%)!important;display:flex!important;align-items:end!important;gap:2px!important;height:7px!important}
+#groupVersionBar .version-choice .playing-bars i{display:block!important;width:3px!important;background:currentColor!important;border-radius:2px!important;animation:music-bar-pulse .6s ease-in-out infinite alternate!important}
+#groupVersionBar .version-choice.selected:not(.is-playing) .playing-bars i{animation-play-state:paused!important}
+#floatingPause{background:#fff!important;color:#142944!important;border:3px solid #fff!important;border-radius:50%!important;width:58px!important;min-width:58px!important;height:58px!important;min-height:58px!important;box-shadow:0 2px 7px #0004!important;position:relative!important;display:grid!important;place-items:center!important}
+#floatingPause:before{content:"";position:absolute;inset:6px;border:3px solid #142944;border-radius:50%;pointer-events:none}
+#floatingPause svg{width:29px!important;height:29px!important;position:relative;z-index:1}
+#floatingPause svg.play-glyph{width:29px!important;height:29px!important}
+.floating-music-controls{gap:5px!important}
+#floatingSeek,#floatingVolume{-webkit-appearance:none!important;appearance:none!important;background:transparent!important;min-height:30px!important;box-shadow:none!important}
+#floatingSeek::-webkit-slider-runnable-track,#floatingVolume::-webkit-slider-runnable-track{background:#ffffff!important;height:6px!important;border-radius:99px!important}
+#floatingSeek::-webkit-slider-thumb,#floatingVolume::-webkit-slider-thumb{-webkit-appearance:none!important;appearance:none!important;background:#fff!important;border:2px solid #dbe4f0!important;width:20px!important;height:20px!important;border-radius:50%!important;margin-top:-7px!important;box-shadow:0 1px 4px #0004!important}
+@media(prefers-reduced-motion:reduce){.gold-equalizer i{animation:none!important}}
+
+/* Preview 49 — visual aprovado integral, mantendo minimizar original */
+.floating-music{background:#192d47!important;border:1px solid #52657e!important;border-radius:17px!important;box-shadow:0 15px 34px #09182b55!important;row-gap:9px!important}
+.floating-music-head .gold-equalizer{background:#304d70!important;border-radius:10px!important;flex-basis:42px!important;width:42px!important;height:42px!important}
+.floating-music.audio-is-playing .gold-equalizer i{animation:gold-wave .65s ease-in-out infinite alternate!important;animation-play-state:running!important}
+#groupVersionBar .group-version-buttons{gap:8px!important}
+#groupVersionBar .version-choice{min-height:46px!important;height:auto!important;padding:10px 5px 12px!important;font-size:11px!important;border-radius:10px!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:5px!important}
+#groupVersionBar .version-choice.selected{background:#eac96f!important;color:#25354b!important}
+#groupVersionBar .version-choice .playing-bars{position:static!important;transform:none!important;left:auto!important;bottom:auto!important;height:17px!important;align-items:center!important;flex-shrink:0!important}
+#groupVersionBar .version-choice .playing-bars i{height:12px!important;width:3px!important;animation:gold-wave .6s ease-in-out infinite alternate!important;animation-play-state:paused!important}
+#groupVersionBar .version-choice.is-playing .playing-bars i{animation-play-state:running!important}
+#groupVersionBar .version-choice .playing-bars i:nth-child(2){height:17px!important;animation-delay:-.2s!important}
+#groupVersionBar .version-choice .playing-bars i:nth-child(3){height:9px!important;animation-delay:-.4s!important}
+.floating-music-controls{gap:8px!important;justify-content:center!important}
+#floatingStop{order:0!important}#floatingPause{order:1!important}#floatingRepeat{order:2!important}
+#floatingPause{width:52px!important;min-width:52px!important;height:52px!important;min-height:52px!important;background:#eac96f!important;border:1px solid #f8df9d!important;color:#192d47!important;border-radius:11px!important;box-shadow:0 3px 8px #0003!important}
+#floatingPause:before{display:none!important}
+#floatingPause svg{width:29px!important;height:29px!important}
+#floatingStop,#floatingRepeat{background:transparent!important;border:0!important;color:#fff!important;width:35px!important;min-width:35px!important}
+#floatingSeek,#floatingVolume{-webkit-appearance:none!important;appearance:none!important;background:transparent!important;border:0!important;box-shadow:none!important;min-height:26px!important}
+#floatingSeek::-webkit-slider-runnable-track,#floatingVolume::-webkit-slider-runnable-track{background:#fff!important;height:5px!important;border-radius:99px!important}
+#floatingSeek::-webkit-slider-thumb,#floatingVolume::-webkit-slider-thumb{-webkit-appearance:none!important;appearance:none!important;width:18px!important;height:18px!important;margin-top:-6.5px!important;background:#fff!important;border:2px solid #dbe4f0!important;border-radius:50%!important;box-shadow:0 1px 4px #0004!important}
+#floatingSeek::-moz-range-track,#floatingVolume::-moz-range-track{background:#fff!important;height:5px!important;border-radius:99px!important}
+#floatingSeek::-moz-range-thumb,#floatingVolume::-moz-range-thumb{background:#fff!important;width:18px!important;height:18px!important;border:2px solid #dbe4f0!important;border-radius:50%!important}
+#lyricsPanel{background:#fff!important;border-radius:13px!important}
+@media(max-width:390px){#groupVersionBar .group-version-buttons{gap:5px!important}#groupVersionBar .version-choice{font-size:10px!important;padding:8px 3px 10px!important}}
