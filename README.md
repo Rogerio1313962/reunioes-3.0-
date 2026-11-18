@@ -1,1 +1,2 @@
-Prévia 40 — baseada na Prévia 39. Somente correção dos contadores: pastas Fundos de Busca, Clamor e Descarrego exibem 0 fundos, 1 fundo ou N fundos; pastas de dias exibem 0 músicas, 1 música ou N músicas. Sem mudanças nos MP3 ou dados armazenados.
+REUNIÕES 3.0 — PRÉVIA 41
+Base: Prévia 40. Corrigido clique único nas pastas, abrindo diretamente a janela. Contagens atualizadas sem alternância de estado.

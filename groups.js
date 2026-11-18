@@ -85,7 +85,20 @@ $('musicCount').textContent=countLabel(musicFolder);
 const q=mainSearch.value.trim().toLocaleLowerCase('pt-BR');mainResults.replaceChildren();$('musicFolders').hidden=!!q;if(q){const seen=new Set();const matched=all.filter(t=>{const id=t.groupId||t.id;if(seen.has(id))return false;seen.add(id);return ((t.groupTitle||t.name||'')+' '+(t.artist||'')).toLocaleLowerCase('pt-BR').includes(q)});if(!matched.length){mainResults.textContent='Nenhuma música encontrada.'}for(const t of matched){const card=document.createElement('div');card.className='music-search-result';const label=document.createElement('div');const name=document.createElement('strong');name.textContent='♫ '+(t.groupTitle||t.name);const folder=document.createElement('small');folder.textContent='📁 '+t.folder.toLocaleUpperCase('pt-BR');label.append(name,folder);const actions=document.createElement('div');actions.className='music-result-actions';const play=document.createElement('button');play.className='primary';play.textContent='▶ Reproduzir';play.onclick=()=>playMusic((all.find(x=>x.groupId===(t.groupId||t.id)&&x.role==='completa')||t).id);const edit=document.createElement('button');edit.textContent='✎ Editar';edit.onclick=()=>{musicFolder=t.folder;openGroup(t)};actions.append(play,edit);card.append(label,actions);mainResults.append(card)}}
 $('folderModalTitle').textContent=musicFolder.toLocaleUpperCase('pt-BR');
 }
-const oldDrawMusic=drawMusic;drawMusic=function(){oldDrawMusic();$('musicFolders').querySelectorAll('button').forEach(b=>b.onclick=async()=>{musicFolder=MUSIC_FOLDERS[+b.dataset.folder];oldDrawMusic();folderSearch.value='';await drawGroups();folderDialog.showModal()})};
+// Um toque abre a pasta diretamente. O manipulador em captura impede que
+// o clique antigo apenas selecione a pasta e redesenhe os botões.
+const oldDrawMusic=drawMusic;
+drawMusic=function(){oldDrawMusic();void drawGroups()};
+$('musicFolders').addEventListener('click',async event=>{
+ const button=event.target.closest('button.music-folder');
+ if(!button||!$('musicFolders').contains(button))return;
+ event.preventDefault();event.stopImmediatePropagation();
+ musicFolder=MUSIC_FOLDERS[Number(button.dataset.folder)];
+ folderSearch.value='';
+ oldDrawMusic();
+ await drawGroups();
+ if(!folderDialog.open)folderDialog.showModal();
+},true);
 const originalLoad=loadMusic;loadMusic=async function(){await originalLoad();await drawGroups()};drawMusic();drawGroups();
 // Usa gravação direta para evitar duplicação de áudios no armazenamento.
 
