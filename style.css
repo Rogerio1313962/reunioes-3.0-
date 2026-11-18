@@ -873,3 +873,47 @@ body:has(#musicas.page.active) #musicas .music-panel{
 #music56Right #songGroupDialog .group-existing-row{
   background:#537699!important;border-color:#8babc4!important;
 }
+
+
+/* PREVIA 62 - usar a paleta azul medio das pastas da biblioteca no aplicativo.
+   Mantem cores semanticas: vermelho das etapas e cores dos livros da Biblia. */
+:root{--blue62:#4b7195;--blue62-light:#e7f0f9;--blue62-mid:#6388ab;--gold62:#e8bf67}
+body,main{background:#e8f0f8!important}
+.sidebar{background:linear-gradient(175deg,#294767,#203a59)!important;border-right:1px solid #6387a8!important}
+.sidebar .nav.active{background:#52779b!important;border:1px solid #89a8c4!important;color:#fff!important}
+.sidebar .mark{background:#527aa0!important;color:#efcd7c!important}
+body:not(:has(#musicas.page.active)) .panel:not(.preview),
+#biblia .bible-panel,#ajustes .panel,#biblioteca .panel{
+ background:linear-gradient(145deg,#f4f8fc,#e4eef8)!important;
+ border:1px solid #c4d7e8!important;box-shadow:0 3px 13px #32577913!important;
+}
+body:not(:has(#musicas.page.active)) .panelhead h2,
+#biblia h2,#biblioteca h2,#ajustes h2{color:#234566!important}
+#agenda .days button:not(.selected),#agenda .item,
+#biblioteca .panel,#ajustes input,#ajustes select{
+ background:#f1f6fb!important;border-color:#c7d9e8!important;color:#254968!important;
+}
+#agenda .days button.selected{background:#52789c!important;border-color:#52789c!important;color:#fff!important}
+#agenda .item button[data-act="show"],#agenda .section-toolbar .primary,
+#biblia .bible-actions .primary,#biblioteca .primary{
+ background:#527ba0!important;border-color:#527ba0!important;color:#fff!important;
+}
+#agenda .preview{background:#f4f8fd!important;border-color:#c5d7e8!important}
+#agenda .preview .screen{background:#0a1427!important}
+#biblia .bible-stage{background:#e7f0f9!important;border-color:#c9dbeb!important}
+#biblia .bible-step-nav button:not(.active){background:#edf4fa!important;color:#2f547a!important;border-color:#bdd3e7!important}
+#biblia .bible-step-nav button.active{background:#527ba0!important;color:white!important}
+#ajustes input,#ajustes select,#biblia input,#biblia select,#biblia textarea{border-color:#c0d3e4!important}
+/* Pasta aberta e player: manter o azul suave das caixas, branco para letras. */
+#music56Workspace.folder-open #music56Left{background:linear-gradient(145deg,#edf4fa,#dce8f4)!important}
+#music56Workspace.folder-open #music56Right{background:#e5eef7!important;border-left:0!important}
+#music56Workspace.folder-open #floatingMusic{border-radius:19px!important;box-shadow:0 3px 12px #24476622!important}
+#music56Workspace.folder-open #lyricsPanel{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+#music56Workspace.folder-open #lyricsScroll{
+ display:block!important;flex:1 1 auto!important;min-height:0!important;height:0!important;
+ max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;
+ touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;
+ overscroll-behavior-y:contain!important;user-select:text;-webkit-user-select:text;
+}
+/* A frase acima do titulo da biblioteca deve desaparecer. */
+#musicas .panelhead .eyebrow{display:none!important}

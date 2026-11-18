@@ -22,3 +22,6 @@ PRÉVIA 59: Responsividade para Safari no iPad. Ajuste de altura de página, esp
 Prévia 60: cores navy/dourado da biblioteca e pastas; busca menor; cadastro de MP3 encaixado na coluna direita, mantendo formulário e seleção de arquivos originais.
 
 PRÉVIA 61: alivia fundos e cartões da biblioteca e do cadastro de músicas; remove bordas claras excessivas. Bloqueia gesto de pinça/zoom no Safari do iPad para uso do aplicativo, mantendo rolagem de um dedo. Não modifica o Media Player do cronograma nem os dados locais.
+
+
+Prévia 62: cores das caixas da biblioteca aplicadas ao app; frase Biblioteca de Áudio removida; letra do player da pasta rolável por toque.
