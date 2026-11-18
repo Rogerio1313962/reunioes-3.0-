@@ -613,3 +613,36 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize{display:in
 #agenda56Reopen{display:none!important;}
 #agenda.page.active .preview:not(.player56-on) #agenda56Reopen:not([hidden]){display:inline-flex!important;margin-left:auto!important;background:#21588e!important;color:#fff!important;font-weight:700!important;border-radius:9px!important;padding:9px 12px!important;}
 #music56Right #agenda56Minimize{display:none!important;}
+
+
+/* PRÉVIA 57 — APENAS ajustes solicitados na biblioteca da Prévia 56. */
+#music57TopTools{display:flex!important;align-items:center!important;gap:10px!important;width:100%!important;min-width:0!important}
+#music57TopTools #allMusicSearch{flex:1 1 0!important;min-width:0!important;width:auto!important;height:42px!important;min-height:42px!important;max-height:42px!important;margin:0!important;padding:8px 12px 8px 39px!important;font-size:14px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='21' height='21' viewBox='0 0 24 24' fill='none' stroke='%23416b99' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='10.7' cy='10.7' r='7.2'/%3E%3Cpath d='m16 16 5 5'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:11px center!important;background-size:20px!important}
+#music57TopTools #newSongGroup{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;width:auto!important;max-width:45%!important;min-height:42px!important;padding:8px 12px!important;font-size:12px!important;border-radius:10px!important;white-space:nowrap!important;margin:0!important}
+#music56Workspace.folder-open #music57TopTools{display:none!important}
+#music56Workspace.folder-open #musicFolderDialog #folderMusicSearch{flex:0 0 auto!important;width:100%!important;min-height:42px!important;max-height:42px!important;height:42px!important;margin:0 0 9px!important;padding:8px 12px 8px 39px!important;font-size:14px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='21' height='21' viewBox='0 0 24 24' fill='none' stroke='%23416b99' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='10.7' cy='10.7' r='7.2'/%3E%3Cpath d='m16 16 5 5'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:11px center!important;background-size:20px!important}
+#music56Actions{width:100%!important;justify-content:center!important;align-items:center!important;gap:8px!important;margin:0 0 10px!important}
+#music56Workspace.folder-open #music56Actions #music56Back,#music56Workspace.folder-open #music56Actions #newSongGroup{flex:0 1 auto!important;width:auto!important;max-width:49%!important;min-height:36px!important;padding:8px 12px!important;font-size:12px!important;font-weight:700!important;border-radius:10px!important;box-shadow:0 1px 3px #233b5717!important;white-space:normal!important;text-align:center!important}
+#music56Workspace.folder-open #music56Actions #newSongGroup{background:#21578f!important;color:#fff!important}
+#music56Empty{flex:0 0 auto!important;display:flex!important;align-items:stretch!important;justify-content:flex-start!important;gap:12px!important;min-height:0!important;padding:9px 8px 13px!important;background:#192d47!important;color:#fff!important;text-align:left!important;border-radius:11px!important}
+#music56Empty[hidden]{display:none!important}
+#music56Empty .music57-minihead{display:flex!important;align-items:center!important;gap:10px!important;font-size:14px!important}
+#music56Empty .music57-note{width:38px!important;height:38px!important;display:grid!important;place-items:center!important;background:#2b496d!important;color:#e9c96f!important;font-size:25px!important;border-radius:10px!important}
+#music56Empty .music57-minicontrols{display:flex!important;align-items:center!important;gap:11px!important;color:#d2ddec!important;font-size:12px!important}
+#music56Empty #music57Play{width:43px!important;height:43px!important;min-width:43px!important;border:0!important;border-radius:10px!important;background:#eac96f!important;color:#192d47!important;font-size:22px!important;opacity:.75!important}
+@media(max-width:800px){#music57TopTools{gap:5px!important}#music57TopTools #newSongGroup{padding:8px 7px!important;font-size:10px!important}#music56Workspace.folder-open #music56Actions #music56Back,#music56Workspace.folder-open #music56Actions #newSongGroup{padding:7px 6px!important;font-size:10px!important}#music56Empty .music57-minicontrols{font-size:10px!important;gap:6px!important}}
+#music56Empty .music57-minicontrols>span{font-size:12px!important;color:#d2ddec!important;line-height:1.5!important}
+@media(max-width:800px){#music56Empty .music57-minicontrols>span{font-size:10px!important}}
+
+/* Correções de integração da Prévia 57 — preserva o código e os controles da 56. */
+/* O CSS legado força display:grid nas pastas; respeitar o atributo hidden durante a busca. */
+#music56Left #musicFolders[hidden]{display:none!important}
+/* Com a pasta aberta a barra de pesquisa principal já está aninhada nas ferramentas. */
+#music56Workspace.folder-open #music56Left #allMusicResults,
+#music56Workspace.folder-open #music56Left #musicFolders{display:none!important}
+#music56Workspace.folder-open #musicFolderDialog #folderMusicSearch{background-color:#f5f8fc!important;background-size:20px 20px!important}
+#music56Workspace:not(.folder-open) #music57TopTools{display:flex!important}
+#music56Workspace:not(.folder-open) #music57TopTools #newSongGroup{display:inline-flex!important}
+#music56Workspace.folder-open #music56Actions{display:flex!important}
+#music56Workspace.folder-open #music56Actions #newSongGroup{display:inline-flex!important}
+#music56Workspace.folder-open #music56Right #music56Empty{flex:0 0 auto!important;min-height:0!important}

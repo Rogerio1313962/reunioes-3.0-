@@ -12,13 +12,15 @@
  const left=document.createElement('div');left.id='music56Left';
  const right=document.createElement('div');right.id='music56Right';
  const empty=document.createElement('div');empty.id='music56Empty';
- empty.innerHTML='<span aria-hidden="true">♫</span><p>Selecione uma música à esquerda.</p>';
+ empty.innerHTML='<div class="music57-minihead"><span class="music57-note" aria-hidden="true">♫</span><strong>Media Player</strong></div><div class="music57-minicontrols"><button type="button" id="music57Play" aria-label="Reproduzir música selecionada" disabled>▶</button><span>Selecione uma música para reproduzir</span></div>';
  const actions=document.createElement('div');actions.id='music56Actions';
+ const topTools=document.createElement('div');topTools.id='music57TopTools';
  const back=document.createElement('button');back.type='button';back.id='music56Back';back.textContent='← Voltar às pastas';
  actions.append(back);right.append(empty);workspace.append(left,right);panel.prepend(workspace);
- left.append(header,search,results,folders,folder);
- const folderHead=folder.querySelector('.folder-modal-head');
- folderHead?.after(actions);
+ topTools.append(search,add);
+ left.append(header,topTools,results,folders,folder);
+ // Dentro da pasta, a pesquisa fica acima de Voltar / Adicionar música.
+ localSearch?.after(actions);
  const parking=document.createElement('div');parking.id='music56Parking';parking.hidden=true;document.body.append(parking);
  parking.append(float);
  const restore=$('floatingMusicRestore');if(restore)restore.hidden=true;
@@ -43,7 +45,7 @@
    if(selected){if(float.parentElement!==right)right.append(float)}else if(float.parentElement!==parking)parking.append(float);
    empty.hidden=selected;
   }else{
-   if(add&&add.parentElement!==header)header.append(add);
+   if(add&&add.parentElement!==topTools)topTools.append(add);
    if(agendaVisible){if(float.parentElement!==preview)preview.prepend(float)}
    else if(float.parentElement!==parking)parking.append(float);
    empty.hidden=false;

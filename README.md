@@ -1,5 +1,14 @@
-REUNIÕES 3.0 — PRÉVIA 56
+REUNIÕES 3.0 — PRÉVIA 57 RECONSTRUÍDA E CORRIGIDA (BASE 56)
 
-Correções de visibilidade dos players: um painel integrado no Cronograma e nas pastas de músicas, sem sobreposições em Bíblia, Mídias ou Configurações. No Cronograma, o botão − minimiza o player para revelar o telão preto; Mostrar player permite restaurá-lo. Na biblioteca de Músicas não há botão de minimizar.
+Alterações somente de 56 para 57:
+- Busca principal compacta com lupa e botão Adicionar música na mesma linha.
+- Busca dentro da pasta acima dos botões Voltar e Adicionar música, menores e centralizados.
+- Área compacta do Media Player à direita quando abre pasta, mantendo o original ao selecionar música.
+- Correção da busca para ocultar as caixas de pastas durante resultados.
 
-Os arquivos MP3 guardados no navegador de origem não são incluídos no ZIP. Teste no Safari do iPad antes de uso real.
+Limpeza segura:
+- layout54.js e layout55.js não são carregados pelo index.html atual e foram excluídos desta distribuição.
+- Os demais arquivos são mantidos, pois são carregados ou usados.
+
+ATENÇÃO GITHUB: carregar este ZIP descompactado no repositório não apaga automaticamente arquivos anteriores. É necessário excluir layout54.js e layout55.js manualmente no GitHub, após validar esta versão.
+Dados MP3 do IndexedDB não estão incluídos no ZIP.
