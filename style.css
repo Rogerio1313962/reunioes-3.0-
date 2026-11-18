@@ -729,3 +729,60 @@ main{min-width:0;max-width:100%;}
  #music56Right{overflow:hidden!important}
  #music56Right #floatingMusic{max-height:100%!important;overflow-y:auto!important}
 }
+
+
+/* PRÉVIA 60 — Tema do Media Player para biblioteca, pastas e cadastro encaixado. */
+body:has(#musicas.page.active) #musicas .music-panel{background:#10243d!important;border-color:#355675!important;box-shadow:inset 0 1px 0 #ffffff17!important;}
+#music56Left{background:linear-gradient(148deg,#142e4e,#0e2038)!important;color:#f5f8fd!important;border-right:1px solid #53718a!important;}
+#music56Left .panelhead .eyebrow{color:#e9c36e!important;}
+#music56Left .panelhead h2,#music56Left .folder-modal-head h2,#music56Left .music-list-head h3{color:#f8faff!important;}
+#music57TopTools{align-items:center!important;gap:11px!important;justify-content:flex-start!important;}
+#music57TopTools #allMusicSearch{flex:0 1 340px!important;max-width:340px!important;width:min(100%,340px)!important;height:43px!important;min-height:43px!important;max-height:43px!important;color:#fff!important;background-color:#213f60!important;border:1px solid #6e92b8!important;border-radius:11px!important;box-shadow:inset 0 1px 7px #0a1c3040!important;}
+#music57TopTools #allMusicSearch::placeholder,#music56Left #folderMusicSearch::placeholder{color:#c2d1e1!important;}
+#music57TopTools #newSongGroup,#music56Actions #newSongGroup{background:linear-gradient(#f4d88a,#e6b34c)!important;color:#16283d!important;border:1px solid #f3d98e!important;border-radius:11px!important;box-shadow:0 3px 10px #0003!important;font-weight:800!important;white-space:nowrap!important;min-height:43px!important;}
+#music56Left #musicFolders .music-folder{position:relative!important;min-height:79px!important;padding:11px 14px!important;border-radius:15px!important;background:linear-gradient(135deg,#27496d 0%,#183553 55%,#112b49 100%)!important;border:1px solid #7497bc!important;color:#f7f9fd!important;box-shadow:inset 0 1px 0 #ffffff25,0 3px 8px #020b1840!important;transition:transform .2s,border-color .2s,box-shadow .2s!important;overflow:hidden!important;}
+#music56Left #musicFolders .music-folder::after{content:"";position:absolute;bottom:-20px;right:-25px;width:54%;height:57px;border-radius:100%;transform:rotate(-16deg);border-top:1px solid #a5cdfa55;background:linear-gradient(180deg,#79a5d82d,transparent);pointer-events:none;}
+#music56Left #musicFolders .music-folder:hover,#music56Left #musicFolders .music-folder:focus-visible{border-color:#efc76d!important;box-shadow:0 0 0 2px #e8be5d55,0 5px 14px #0005!important;transform:translateY(-1px);}
+#music56Left #musicFolders .music-folder.chosen{border:2px solid #efc66b!important;background:linear-gradient(140deg,#32567e,#182f4e)!important;box-shadow:0 0 0 2px #edc56b2f,0 5px 15px #0005!important;}
+#music56Left #musicFolders .music-folder span{color:#efc66c!important;font-size:23px!important;line-height:1!important;}
+#music56Left #musicFolders .music-folder b{color:#fff!important;font-size:14px!important;letter-spacing:.025em!important;}
+#music56Left #musicFolders .music-folder small{color:#c1d0e2!important;font-size:11px!important;opacity:1!important;}
+#music56Workspace.folder-open #musicFolderDialog{background:transparent!important;color:#f4f8fe!important;}
+#music56Workspace.folder-open #music56Left #folderMusicSearch{background-color:#203d5e!important;border:1px solid #6b91b7!important;color:#fff!important;}
+#music56Workspace.folder-open #music56Actions #music56Back{background:#213b59!important;color:#f4f8ff!important;border:1px solid #6685a4!important;}
+#music56Workspace.folder-open #music56Left .song-group-card,#music56Workspace.folder-open #music56Left .music-track{background:linear-gradient(130deg,#26476a,#19334f)!important;color:#f4f8fc!important;border:1px solid #6383a6!important;}
+#music56Workspace.folder-open #music56Left .song-group-head strong,#music56Workspace.folder-open #music56Left .song-row-play,#music56Workspace.folder-open #music56Left .music-track button[data-play]{color:#f5f8ff!important;}
+#music56Workspace.folder-open #music56Left .song-row-action{background:#294765!important;color:#f0c772!important;border:1px solid #7391ad!important;}
+#music56Workspace.folder-open #music56Right{background:#fff!important;}
+/* Cadastro encaixado na mesma coluna/dimensões do player, sem backdrop. */
+#music56Workspace.music60-adding{grid-template-columns:minmax(0,43%) minmax(0,57%)!important;}
+#music56Workspace.music60-adding #music56Right{display:flex!important;flex-direction:column!important;padding:0!important;min-height:0!important;overflow:hidden!important;background:#132c49!important;}
+#music56Workspace.music60-adding #music56Right>#floatingMusic,#music56Workspace.music60-adding #music56Right>#music56Empty{display:none!important;}
+#music56Right #songGroupDialog[open]{display:block!important;position:relative!important;inset:auto!important;top:auto!important;left:auto!important;transform:none!important;margin:0!important;width:100%!important;max-width:100%!important;max-height:100%!important;height:100%!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain!important;border:0!important;border-radius:0!important;padding:14px!important;box-shadow:none!important;background:linear-gradient(155deg,#203d5d,#10233d)!important;color:#f8faff!important;}
+#music56Right #songGroupDialog .dialoghead{position:sticky;top:-14px;z-index:3;background:#172f4d!important;padding:10px 2px!important;margin-top:-5px!important;}
+#music56Right #songGroupDialog .dialoghead h2{font-size:20px!important;color:#fff!important;margin:0!important;}
+#music56Right #songGroupDialog .dialoghead button{border:1px solid #eac56f!important;background:#1c3857!important;color:#eac56f!important;border-radius:9px!important;padding:8px 12px!important;}
+#music56Right #songGroupDialog .muted,#music56Right #songGroupDialog #groupDetectedName{color:#bccde0!important;font-size:12px!important;}
+#music56Right #songGroupDialog .group-folder-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;margin:9px 0!important;}
+#music56Right #songGroupDialog .group-folder-choice,#music56Right #songGroupDialog .group-move-choice{min-height:42px!important;padding:7px 9px!important;background:linear-gradient(#294866,#1b3552)!important;color:#f7f9fd!important;border:1px solid #7191b0!important;border-radius:10px!important;font-size:12px!important;box-shadow:inset 0 1px #ffffff20!important;}
+#music56Right #songGroupDialog .group-folder-choice.selected{background:linear-gradient(#31547a,#213a58)!important;color:#ffecbd!important;border:2px solid #eac56f!important;box-shadow:0 0 10px #e9bc5550!important;}
+#music56Right #songGroupDialog #groupFolderConfirm{color:#f1d389!important;}
+#music56Right #songGroupDialog .group-add-details{background:transparent!important;border:0!important;color:#f4f8ff!important;}
+#music56Right #songGroupDialog .group-add-details summary{background:#284666!important;color:#fff!important;border-radius:10px!important;padding:10px!important;}
+#music56Right #songGroupDialog .group-file-slot{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:center!important;gap:7px!important;margin:5px 0!important;padding:8px!important;background:linear-gradient(135deg,#274563,#182f4c)!important;border:1px solid #6383a6!important;border-radius:10px!important;color:#fff!important;}
+#music56Right #songGroupDialog .group-file-slot[hidden]{display:none!important;}
+#music56Right #songGroupDialog .group-slot-head{flex:1 1 95px!important;min-width:0!important;}
+#music56Right #songGroupDialog .group-slot-head b{font-size:12px!important;color:#fff!important;}
+#music56Right #songGroupDialog .group-slot-head small{display:none!important;}
+#music56Right #songGroupDialog .group-pick-label{flex:0 0 auto!important;padding:8px 9px!important;margin:0!important;font-size:11px!important;background:#203956!important;color:#f2cc71!important;border:1px solid #f0c86e!important;border-radius:9px!important;}
+#music56Right #songGroupDialog .group-file-selected{flex:1 1 100%!important;font-size:11px!important;color:#bed0e3!important;overflow-wrap:anywhere!important;}
+#music56Right #songGroupDialog .group-file-selected.has-files{color:#f5d480!important;}
+#music56Right #songGroupDialog .group-lyrics-label{color:#fff!important;font-size:12px!important;}
+#music56Right #songGroupDialog .group-lyrics-label textarea{background:#203b5a!important;color:#fff!important;border:1px solid #688aab!important;min-height:85px!important;max-height:170px!important;resize:vertical!important;font-size:13px!important;}
+#music56Right #songGroupDialog .group-lyrics-label textarea::placeholder{color:#afc1d5!important;}
+#music56Right #songGroupDialog .dialogactions{display:flex!important;justify-content:flex-end!important;gap:7px!important;flex-wrap:wrap!important;}
+#music56Right #songGroupDialog #groupCancel{background:#203a59!important;color:#fff!important;border:1px solid #6b8ba9!important;}
+#music56Right #songGroupDialog #groupSave{background:linear-gradient(#f5d98b,#e8b94f)!important;color:#172c45!important;border:1px solid #f6da90!important;white-space:normal!important;font-weight:800!important;}
+#music56Right #songGroupDialog .group-existing-row{background:#203d5d!important;color:#fff!important;border-color:#6884a7!important;}
+@media(max-width:850px){#music56Workspace.music60-adding{grid-template-columns:minmax(0,44%) minmax(0,56%)!important}#music57TopTools #allMusicSearch{flex:1 1 0!important;max-width:340px!important}#music56Right #songGroupDialog[open]{padding:8px!important}#music56Right #songGroupDialog .group-folder-choice{font-size:10px!important;padding:6px!important}#music56Right #songGroupDialog .group-file-slot{padding:6px!important}#music57TopTools #newSongGroup{font-size:11px!important;padding:8px!important}}
+@media(prefers-reduced-motion:reduce){#music56Left #musicFolders .music-folder{transition:none!important;transform:none!important}}

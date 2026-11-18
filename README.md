@@ -18,3 +18,5 @@ PRÉVIA 58: (1) Oculta aviso de sincronização no cronograma; (2) botão amarel
 
 
 PRÉVIA 59: Responsividade para Safari no iPad. Ajuste de altura de página, espaços, cartões de pastas e rolagens internas do cronograma, Bíblia e biblioteca. Preserva o funcionamento da Prévia 58.
+
+Prévia 60: cores navy/dourado da biblioteca e pastas; busca menor; cadastro de MP3 encaixado na coluna direita, mantendo formulário e seleção de arquivos originais.
