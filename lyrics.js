@@ -7,7 +7,7 @@ if(!music||!float||!audio)return;
 const isBackground=f=>['Fundos de Busca','Fundos de Clamor','Fundos de Descarrego'].includes(f);
 let activeTrackId=null;
 const box=document.createElement('section');box.id='lyricsPanel';box.hidden=true;
-box.innerHTML='<div class="lyrics-head"><strong>Letra da música</strong><div class="lyrics-head-actions"><button type="button" id="lyricsEditInline">✎ Editar</button><button type="button" id="lyricsHide">Ocultar letra</button></div></div><div id="lyricsScroll" tabindex="0" aria-label="Letra da música, deslize para ler"></div>';
+box.innerHTML='<div class="lyrics-head"><strong>Letra</strong><div class="lyrics-head-actions"><button type="button" id="lyricsEditInline" aria-label="Editar letra" title="Editar letra">✎</button><button type="button" id="lyricsHide">Ocultar</button></div></div><div id="lyricsScroll" tabindex="0" aria-label="Letra da música, deslize para ler"></div>';
 float.appendChild(box);
 $('lyricsHide').onclick=()=>{box.hidden=true;};
 const edit=document.createElement('dialog');edit.id='lyricsEditor';edit.innerHTML='<form method="dialog" id="lyricsForm"><div class="lyrics-head"><h2>Editar letra da música</h2><button type="button" id="lyricsCancel" aria-label="Fechar">✕</button></div><p id="lyricsSongName"></p><label for="lyricsText">Cole ou digite a letra da música</label><p class="lyrics-auto-hint">O refrão é destacado automaticamente quando a letra contém uma indicação como [Refrão], (Refrão), REFRAO ou Refrão 2x.</p><textarea id="lyricsText" rows="15" spellcheck="true" placeholder="Digite a letra aqui..."></textarea><div class="lyrics-edit-tools"><button type="button" id="lyricsHighlight">Destacar seleção</button><button type="button" id="lyricsUnhighlight">Retirar destaque</button><small>Selecione o texto na caixa acima e toque em Destacar. O destaque ficará igual ao refrão.</small></div><div class="lyrics-actions"><button type="button" id="lyricsClear">Apagar letra</button><button type="submit" class="primary">Salvar letra</button></div></form>';
@@ -108,7 +108,7 @@ player.querySelector('.floating-music-controls')?.after(toggle);
 function update(){const available=!!document.getElementById('lyricsScroll')?.textContent?.trim()&&document.getElementById('lyricsScroll').textContent.indexOf('ainda não tem letra cadastrada')===-1;
  player.classList.toggle('with-lyrics',!lyrics.hidden);
  toggle.hidden=!lyrics.hidden||!available;
- hide.textContent='Ocultar letra';
+ hide.textContent='Ocultar';
  constrain();}
 hide.addEventListener('click',()=>requestAnimationFrame(update));
 toggle.addEventListener('click',()=>{lyrics.hidden=false;update();});

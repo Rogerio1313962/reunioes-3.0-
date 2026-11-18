@@ -369,3 +369,12 @@
 #groupVersionBar .version-choice.is-playing .playing-bars i{animation-play-state:running!important}
 #groupVersionBar .version-choice:not(.is-playing) .playing-bars i{animation-play-state:paused!important}
 @media(prefers-reduced-motion:reduce){.gold-music-waves i{animation:none!important}}
+
+/* Prévia 51: cabeçalho e tipografia compactos da letra */
+#lyricsPanel .lyrics-head{gap:8px!important;padding-bottom:8px!important;margin-bottom:2px!important}
+#lyricsPanel .lyrics-head strong{font-size:16px!important}
+#lyricsEditInline{background:transparent!important;border:0!important;box-shadow:none!important;color:#173a65!important;padding:4px 7px!important;min-width:36px!important;min-height:36px!important;font-size:25px!important;line-height:1!important;border-radius:6px!important;cursor:pointer!important}
+#lyricsEditInline:focus-visible{outline:2px solid #173a65!important;outline-offset:2px!important}
+#lyricsHide{padding:8px 12px!important;min-height:36px!important}
+#lyricsScroll{font-size:clamp(16px,1.75vw,21px)!important;line-height:1.34!important;padding:8px 7px!important}
+#lyricsScroll .lyrics-song-title,#lyricsScroll .lyrics-chorus,#lyricsScroll .lyrics-manual-highlight{font-size:inherit!important;line-height:inherit!important}
