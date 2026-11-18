@@ -244,3 +244,33 @@
 #lyricsScroll .lyrics-song-title,#lyricsScroll .lyrics-chorus{color:#102b53!important;font-weight:900!important;-webkit-text-stroke:.45px #102b53!important}
 .floating-music.library-fixed{left:auto!important;right:8px!important}
 @media(max-width:700px){.floating-music,.floating-music.with-lyrics{width:min(410px,calc(100vw - 16px))!important}.floating-music-controls{gap:18px!important}}
+
+/* Prévia 45: versões com relevo, contorno branco e indicador da versão ativa */
+#groupVersionBar{padding:9px 0 5px!important;border:0!important}
+#groupVersionBar .group-version-heading{display:none!important}
+#groupVersionBar .group-version-buttons{display:flex!important;flex-wrap:nowrap!important;justify-content:center!important;gap:3px!important;width:100%!important}
+#groupVersionBar .version-choice{position:relative;flex:1 1 0!important;min-width:0!important;max-width:58px!important;height:49px!important;padding:3px 1px 10px!important;border:1.5px solid #fff!important;border-radius:7px!important;color:white!important;font-family:Arial,Helvetica,sans-serif!important;font-size:9px!important;font-weight:700!important;line-height:1.13!important;letter-spacing:-.1px!important;overflow-wrap:anywhere!important;text-align:center!important;box-shadow:0 4px 7px #0009,inset 0 2px 2px #ffffff66,inset 0 -3px 3px #0005!important;transition:filter .15s,transform .15s!important}
+#groupVersionBar .version-choice.version-completa, #groupVersionBar .version-choice.version-trecho, #groupVersionBar .version-choice.version-refrao{background:linear-gradient(160deg,#dd6a76,#ae3947 60%,#892939)!important}
+#groupVersionBar .version-choice.version-fundo{background:linear-gradient(160deg,#ffe69e,#e6b641 60%,#b87e23)!important;color:#33240c!important}
+#groupVersionBar .version-choice.version-piano_bateria, #groupVersionBar .version-choice.version-trecho_bateria, #groupVersionBar .version-choice.version-refrao_bateria{background:linear-gradient(160deg,#789cc4,#365a83 60%,#203c60)!important}
+#groupVersionBar .version-choice.selected{outline:2px solid white!important;outline-offset:1px!important;filter:brightness(1.2)!important;box-shadow:0 0 13px #cfe7ffbb,0 4px 8px #0009,inset 0 2px 2px #ffffff80!important}
+#groupVersionBar .version-choice:active{transform:translateY(2px)!important}
+#groupVersionBar .version-choice .playing-bars{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);height:8px;display:flex;gap:2px;align-items:end}
+#groupVersionBar .playing-bars i{width:2px;height:6px;background:currentColor;border-radius:2px;animation:music-bar-pulse .6s ease-in-out infinite alternate}
+#groupVersionBar .playing-bars i:nth-child(2){height:8px;animation-delay:.2s}
+#groupVersionBar .playing-bars i:nth-child(3){height:4px;animation-delay:.4s}
+#groupVersionBar.is-paused .playing-bars i{animation-play-state:paused}
+@keyframes music-bar-pulse{to{height:2px}}
+.floating-music-progress{width:78%!important;max-width:320px!important;margin-left:auto!important;margin-right:auto!important}
+#lyricsScroll .lyrics-song-title{display:block;color:#102b53!important;font-weight:900!important;-webkit-text-stroke:.4px #102b53!important}
+@media(prefers-reduced-motion:reduce){#groupVersionBar .playing-bars i{animation:none!important}}
+
+/* Prévia 46: edição e destaque manual diretamente no player */
+#lyricsPanel .lyrics-head-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+#lyricsPanel .lyrics-head-actions button{padding:9px 10px;font-size:12px;min-height:36px;border-radius:9px}
+#lyricsEditInline{background:#173a65!important;color:#fff!important;border:1px solid #173a65!important;font-weight:700}
+.lyrics-edit-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.lyrics-edit-tools button{padding:10px 12px;background:#173a65;color:white;border:0;border-radius:9px;font-weight:700;cursor:pointer}
+.lyrics-edit-tools button+button{background:#e8eef6;color:#173a65}
+.lyrics-edit-tools small{display:block;flex-basis:100%;color:#54657d;line-height:1.4}
+#lyricsScroll .lyrics-manual-highlight{color:#102b53!important;font-weight:900!important;-webkit-text-stroke:.4px #102b53!important}

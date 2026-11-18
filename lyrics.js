@@ -7,13 +7,18 @@ if(!music||!float||!audio)return;
 const isBackground=f=>['Fundos de Busca','Fundos de Clamor','Fundos de Descarrego'].includes(f);
 let activeTrackId=null;
 const box=document.createElement('section');box.id='lyricsPanel';box.hidden=true;
-box.innerHTML='<div class="lyrics-head"><strong>Letra da música</strong><button type="button" id="lyricsHide">Ocultar letra</button></div><div id="lyricsScroll" tabindex="0" aria-label="Letra da música, deslize para ler"></div>';
+box.innerHTML='<div class="lyrics-head"><strong>Letra da música</strong><div class="lyrics-head-actions"><button type="button" id="lyricsEditInline">✎ Editar</button><button type="button" id="lyricsHide">Ocultar letra</button></div></div><div id="lyricsScroll" tabindex="0" aria-label="Letra da música, deslize para ler"></div>';
 float.appendChild(box);
 $('lyricsHide').onclick=()=>{box.hidden=true;};
-const edit=document.createElement('dialog');edit.id='lyricsEditor';edit.innerHTML='<form method="dialog" id="lyricsForm"><div class="lyrics-head"><h2>Editar letra da música</h2><button type="button" id="lyricsCancel" aria-label="Fechar">✕</button></div><p id="lyricsSongName"></p><label for="lyricsText">Cole ou digite a letra da música</label><p class="lyrics-auto-hint">O refrão é destacado automaticamente quando a letra contém uma indicação como [Refrão], (Refrão), REFRAO ou Refrão 2x.</p><textarea id="lyricsText" rows="15" spellcheck="true" placeholder="Digite a letra aqui..."></textarea><div class="lyrics-actions"><button type="button" id="lyricsClear">Apagar letra</button><button type="submit" class="primary">Salvar letra</button></div></form>';
+const edit=document.createElement('dialog');edit.id='lyricsEditor';edit.innerHTML='<form method="dialog" id="lyricsForm"><div class="lyrics-head"><h2>Editar letra da música</h2><button type="button" id="lyricsCancel" aria-label="Fechar">✕</button></div><p id="lyricsSongName"></p><label for="lyricsText">Cole ou digite a letra da música</label><p class="lyrics-auto-hint">O refrão é destacado automaticamente quando a letra contém uma indicação como [Refrão], (Refrão), REFRAO ou Refrão 2x.</p><textarea id="lyricsText" rows="15" spellcheck="true" placeholder="Digite a letra aqui..."></textarea><div class="lyrics-edit-tools"><button type="button" id="lyricsHighlight">Destacar seleção</button><button type="button" id="lyricsUnhighlight">Retirar destaque</button><small>Selecione o texto na caixa acima e toque em Destacar. O destaque ficará igual ao refrão.</small></div><div class="lyrics-actions"><button type="button" id="lyricsClear">Apagar letra</button><button type="submit" class="primary">Salvar letra</button></div></form>';
 document.body.appendChild(edit);
 let editingId=null;
 $('lyricsCancel').onclick=()=>edit.close();
+async function openActiveLyricsEditor(){if(!activeTrackId)return;const track=await getTrack(activeTrackId);if(!track||isBackground(track.folder))return;editingId=activeTrackId;$('lyricsSongName').textContent=track.groupTitle||track.name;$('lyricsText').value=track.lyrics||'';edit.showModal();}
+$('lyricsEditInline').onclick=openActiveLyricsEditor;
+function wrapSelectedHighlight(){const field=$('lyricsText');const a=field.selectionStart,b=field.selectionEnd;if(a===b){alert('Primeiro selecione o título, refrão ou trecho da letra que deseja destacar.');field.focus();return;}const selected=field.value.slice(a,b);field.setRangeText('[[DESTAQUE]]'+selected+'[[/DESTAQUE]]',a,b,'select');field.focus();}
+$('lyricsHighlight').onclick=wrapSelectedHighlight;
+$('lyricsUnhighlight').onclick=()=>{const field=$('lyricsText');const a=field.selectionStart,b=field.selectionEnd;const raw=field.value;const selected=raw.slice(a,b);if(a!==b){field.setRangeText(selected.replace(/\[\[\/?DESTAQUE\]\]/gi,''),a,b,'select');}else{field.value=raw.replace(/\[\[\/?DESTAQUE\]\]/gi,'');}field.focus();};
 $('lyricsClear').onclick=()=>{if(confirm('Apagar a letra desta música?'))$('lyricsText').value='';};
 async function getTrack(id){const db=await musicDb();try{return await new Promise((res,rej)=>{const r=db.transaction('tracks','readonly').objectStore('tracks').get(id);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}finally{db.close()}}
 // Formatação apenas visual: o texto original salvo não é modificado nem interpretado como HTML.
@@ -31,31 +36,38 @@ function titleMatches(line, name){
  // Aceita nome exato ou nome seguido por identificador entre parênteses, como (P)/(T).
  return a===b || (b.startsWith(a+' ') && b.slice(a.length+1).split(' ').length<=2 && /^[a-z0-9 ]+$/.test(b.slice(a.length+1)));
 }
-function renderLyrics(target, raw, trackName){
+function renderLyrics(target, raw, trackName, groupTitle){
  target.replaceChildren();
  const lines=String(raw).replace(/\r\n?/g,'\n').split('\n');
- let chorus=false, hasVerse=false, nonEmptyBefore=0;
+ let chorus=false, hasVerse=false, nonEmptyBefore=0, manual=false;
+ const firstNonEmpty=lines.findIndex(x=>x.trim());
  for(let i=0;i<lines.length;i++){
-  // Remove marcadores de edição manual antigos sem apagar a letra.
   const original=lines[i];
   const line=original.replace(/\[\[\/?REFRAO\]\]/gi,'');
-  const marker=isChorusMarker(line);
+  const plain=line.replace(/\[\[\/?DESTAQUE\]\]/gi,'');
+  const marker=isChorusMarker(plain);
   if(marker){chorus=true;hasVerse=false;}
-  else if(!line.trim() && chorus && hasVerse){chorus=false;}
-  const isTitle=!chorus && !marker && nonEmptyBefore<2 && titleMatches(line,trackName);
-  if(line.trim())nonEmptyBefore++;
-  if(isTitle){
-   const strong=document.createElement('strong');strong.className='lyrics-song-title';strong.textContent=line;target.appendChild(strong);
-  }else if(chorus && line.trim()){
-   const strong=document.createElement('strong');
-   strong.className='lyrics-chorus';strong.textContent=line;target.appendChild(strong);
-   if(!marker)hasVerse=true;
-  }else target.appendChild(document.createTextNode(line));
+  else if(!plain.trim()&&chorus&&hasVerse){chorus=false;}
+  const trimmed=plain.trim();
+  const isFirst=i===firstNonEmpty;
+  const obviousHeading=isFirst&&trimmed.length>=3&&trimmed.length<=80&&/^[^a-záàâãéêíóôõúç]*[A-ZÁÀÂÃÉÊÍÓÔÕÚÇ][^a-záàâãéêíóôõúç]*$/.test(trimmed)&&!/[.!?]$/.test(trimmed);
+  const isTitle=!chorus&&!marker&&nonEmptyBefore<2&&(titleMatches(plain,groupTitle||'')||titleMatches(plain,trackName)||obviousHeading);
+  if(trimmed)nonEmptyBefore++;
+  const defaultHighlight=isTitle||(chorus&&!!trimmed);
+  const parts=line.split(/(\[\[\/?DESTAQUE\]\])/gi);
+  for(const part of parts){
+   if(/^\[\[DESTAQUE\]\]$/i.test(part)){manual=true;continue;}
+   if(/^\[\[\/DESTAQUE\]\]$/i.test(part)){manual=false;continue;}
+   if(!part)continue;
+   if(manual||defaultHighlight){const el=document.createElement('strong');el.className=manual?'lyrics-manual-highlight':isTitle?'lyrics-song-title':'lyrics-chorus';el.textContent=part;target.appendChild(el);}
+   else target.appendChild(document.createTextNode(part));
+  }
+  if(chorus&&!marker&&trimmed)hasVerse=true;
   if(i<lines.length-1)target.appendChild(document.createTextNode('\n'));
  }
 }
 
-async function refreshLyrics(id){if(!id){box.hidden=true;return;}const track=await getTrack(id);if(!track||isBackground(track.folder)||!track.lyrics?.trim()){box.hidden=true;return;}const scroll=$('lyricsScroll');renderLyrics(scroll,track.lyrics.trim(),track.name);scroll.scrollTop=0;box.hidden=false;}
+async function refreshLyrics(id){if(!id){box.hidden=true;return;}const track=await getTrack(id);if(!track||isBackground(track.folder)||!track.lyrics?.trim()){box.hidden=true;return;}const scroll=$('lyricsScroll');renderLyrics(scroll,track.lyrics.trim(),track.name,track.groupTitle);scroll.scrollTop=0;box.hidden=false;}
 $('lyricsForm').onsubmit=async e=>{e.preventDefault();const id=editingId;if(!id)return;const track=await getTrack(id);if(!track)return;track.lyrics=$('lyricsText').value;await musicPut(track);edit.close();if(activeTrackId===id)await refreshLyrics(id);};
 function addEditButtons(){music.querySelectorAll('.music-track').forEach(row=>{const id=row.querySelector('[data-play]')?.dataset.play;if(!id||row.querySelector('[data-edit-lyrics]'))return;const meta=musicIndex.find(m=>m.id===id);if(!meta||isBackground(meta.folder))return;const btn=document.createElement('button');btn.type='button';btn.textContent='✎ Editar letra';btn.dataset.editLyrics=id;btn.onclick=async()=>{const track=await getTrack(id);if(!track)return;editingId=id;$('lyricsSongName').textContent=track.name;$('lyricsText').value=track.lyrics||'';edit.showModal();};row.appendChild(btn);});}
 // drawMusic é invocado pela aba, carregamentos e alterações de pastas.
