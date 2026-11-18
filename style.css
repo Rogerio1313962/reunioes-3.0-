@@ -191,3 +191,6 @@
 .group-version-buttons{display:flex;gap:7px;flex-wrap:wrap}
 .group-version-buttons button{background:#253e60;border:1px solid #6380a5;color:white;border-radius:9px;padding:10px 12px;font-size:14px;font-weight:700}
 .group-version-buttons button.selected{background:#dceaff;color:#12345b;border-color:#dceaff}
+
+/* Prévia 32: edição segura de arquivos já cadastrados */
+#groupExistingTracks{margin:12px 0}#groupExistingTracks h3{font-size:1rem;margin:8px 0}.group-existing-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;border:1px solid #cbd5e1;border-radius:10px;margin:6px 0;overflow-wrap:anywhere}.group-existing-row span{flex:1;min-width:0}.group-existing-row button{flex-shrink:0;background:#fff1f2;color:#9f1239;border:1px solid #fecdd3;border-radius:8px;padding:8px}
