@@ -88,16 +88,18 @@ $('folderModalTitle').textContent=musicFolder.toLocaleUpperCase('pt-BR');
 // Um toque abre a pasta diretamente. O manipulador em captura impede que
 // o clique antigo apenas selecione a pasta e redesenhe os botões.
 const oldDrawMusic=drawMusic;
-drawMusic=function(){oldDrawMusic();void drawGroups()};
+drawMusic=function(){const labels=[...$('musicFolders').querySelectorAll('.music-folder small')].map(n=>n.textContent);oldDrawMusic();const buttons=$('musicFolders').querySelectorAll('.music-folder');buttons.forEach((b,i)=>{if(labels[i])b.querySelector('small').textContent=labels[i]});void drawGroups()};
 $('musicFolders').addEventListener('click',async event=>{
  const button=event.target.closest('button.music-folder');
  if(!button||!$('musicFolders').contains(button))return;
  event.preventDefault();event.stopImmediatePropagation();
  musicFolder=MUSIC_FOLDERS[Number(button.dataset.folder)];
  folderSearch.value='';
+ // Abrir a janela ANTES de redesenhar a lista: impede o flash da contagem
+ // temporária de arquivos e da escrita antiga atrás do modal.
+ if(!folderDialog.open)folderDialog.showModal();
  oldDrawMusic();
  await drawGroups();
- if(!folderDialog.open)folderDialog.showModal();
 },true);
 const originalLoad=loadMusic;loadMusic=async function(){await originalLoad();await drawGroups()};drawMusic();drawGroups();
 // Usa gravação direta para evitar duplicação de áudios no armazenamento.

@@ -1,2 +1,1 @@
-REUNIÕES 3.0 — PRÉVIA 41
-Base: Prévia 40. Corrigido clique único nas pastas, abrindo diretamente a janela. Contagens atualizadas sem alternância de estado.
+Prévia 42: adiciona Terça-feira à biblioteca de músicas e abre o modal antes de atualizar a lista, evitando o flash dos contadores temporários. Base: Prévia 41.
