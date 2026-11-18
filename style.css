@@ -459,3 +459,45 @@ body:has(#musicas.page.active) #musicas.page.active{flex:1;min-height:0;display:
 body:has(#musicas.page.active) #floatingMusicRestore{display:none!important}
 @media(max-width:900px){#musicIntegratedWorkspace{grid-template-columns:minmax(0,41fr) minmax(0,59fr)}#musicLibraryColumn{padding:9px 7px!important}#musicPlayerColumn #floatingMusic{padding:9px!important}#musicLibraryColumn>.panelhead h2{font-size:15px!important}#musicLibraryColumn>.panelhead #newSongGroup{font-size:10px!important;padding:7px!important}#musicLibraryColumn #allMusicSearch,#musicFolderDialog #folderMusicSearch{font-size:15px!important;min-height:51px!important}#musicFolderDialog .song-row-play{font-size:12px!important}}
 @media(max-width:640px){body:has(#musicas.page.active) main{padding:5px!important}#musicas .music-panel{height:calc(100dvh - 10px)}#musicIntegratedWorkspace{grid-template-columns:minmax(0,40fr) minmax(0,60fr)}.song-row-action{width:25px!important;min-width:25px!important;height:27px!important;font-size:14px!important}#musicLibraryColumn>.panelhead{align-items:start}#musicLibraryColumn>.panelhead h2{font-size:12px!important}#musicLibraryColumn .music-folder{min-height:72px!important;padding:8px!important}#musicLibraryColumn .music-folder b{font-size:11px!important}#musicLibraryColumn .music-folder span{font-size:19px!important}}
+
+/* Prévia 54 — limpeza, relógio lateral, cronograma sem sobreposição */
+main{padding:22px 24px!important}
+main>header{display:none!important}
+#agenda .hero{display:none!important}
+.sidebar .sidefoot{padding:12px 2px 0!important;margin-top:auto!important}
+.sidebar .clock-box{display:block!important;background:#213955!important;border:1px solid #47658b!important;color:white!important;box-shadow:none!important;border-radius:15px!important;text-align:center!important;padding:13px 7px!important;min-width:0!important;width:100%!important}
+.sidebar #liveClock{font-size:29px!important;font-weight:800!important;line-height:1.2!important}
+.sidebar #liveDate{display:block;font-size:11px!important;color:#dce8fa!important;line-height:1.5!important}
+#agenda .layout{grid-template-columns:minmax(0,1fr) minmax(0,.96fr)!important;align-items:start!important}
+#agenda .preview{position:relative;min-width:0!important}
+#agenda .preview .panelhead .chip{display:none!important}
+#agenda .preview .actions{display:flex!important;gap:8px!important;flex-wrap:wrap!important}
+#agenda #openProjector2{order:-1;flex:1 1 100%;background:#21588e!important;color:white!important;border-color:#21588e!important;font-weight:750!important;min-height:47px!important}
+#agenda .preview.music-on-right .panelhead,#agenda .preview.music-on-right .screen,#agenda .preview.music-on-right .actions,#agenda .preview.music-on-right .volume-panel{display:none!important}
+#agenda .preview.music-on-right{padding:0!important;background:#192d47!important;overflow:hidden!important}
+#agenda .preview.music-on-right #floatingMusic{display:flex!important;position:relative!important;inset:auto!important;width:100%!important;max-width:100%!important;height:auto!important;min-height:480px!important;max-height:calc(100dvh - 115px)!important;border:0!important;border-radius:15px!important;box-shadow:none!important;transform:none!important;margin:0!important;padding:16px!important;overflow:auto!important}
+#agenda .preview.music-on-right #lyricsScroll{max-height:360px!important;overflow:auto!important}
+#agenda .preview.music-on-right #floatingSeek,#agenda .preview.music-on-right #floatingVolume{max-width:330px!important}
+/* Músicas: pastas em toda a área, sem player/telão fixo */
+body:has(#musicas.page.active) main{padding:16px 22px!important;display:block!important;min-height:100dvh}
+body:has(#musicas.page.active) #musicas.page.active{display:block!important}
+#musicas .music-panel{height:auto!important;min-height:calc(100dvh - 36px)!important;padding:22px!important;overflow:visible!important}
+#musicas .music-folders{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;margin:14px 0!important;max-height:none!important;overflow:visible!important}
+#musicas .music-folder{min-height:107px!important;padding:14px!important}
+#musicas .music-folder b{text-transform:uppercase!important}
+#musicas .music-list-head,#musicas #musicList{display:none!important}
+#musicas .music-player{display:none!important}
+#musicas .library-expanded .music-list-head,#musicas .library-expanded #musicList{display:flex!important}
+#musicFolderDialog{position:relative!important;display:flex!important;flex-direction:column!important;overflow:visible!important;margin:0!important;padding:0!important;background:transparent!important;box-shadow:none!important}
+#musicFolderDialog[hidden]{display:none!important}
+#musicFolderDialog #musicList{display:grid!important}
+#musicas .music-panel.library-expanded{padding-right:22px!important}
+#musicas #allMusicSearch,#musicas #folderMusicSearch{min-height:52px!important;padding:11px 14px!important;width:100%!important;max-width:100%!important}
+#musicas #allMusicResults:empty{display:none!important}
+/* Player opcional somente após selecionar música da biblioteca */
+body:has(#musicas.page.active) #floatingMusic{position:fixed!important;inset:12% 3% auto auto!important;width:min(485px,calc(100vw - 285px))!important;max-width:calc(100vw - 285px)!important;height:auto!important;max-height:82dvh!important;padding:15px!important;border-radius:16px!important;z-index:1500!important;overflow:auto!important;transform:none!important}
+body:has(#musicas.page.active) #floatingMusic[hidden]{display:none!important}
+body:has(#musicas.page.active) #floatingMusicRestore{display:none!important}
+body:has(#musicas.page.active) #floatingSeek,body:has(#musicas.page.active) #floatingVolume{max-width:320px!important}
+@media(max-width:1000px){#agenda .layout{grid-template-columns:minmax(0,1fr) minmax(0,.93fr)!important}#musicas .music-folders{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:700px){main{padding:12px!important}#agenda .layout{grid-template-columns:1fr!important}#musicas .music-folders{grid-template-columns:repeat(2,minmax(0,1fr))!important}body:has(#musicas.page.active) #floatingMusic{inset:10% 3% auto 3%!important;width:94vw!important;max-width:94vw!important}}

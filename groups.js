@@ -101,39 +101,13 @@ $('musicFolders').addEventListener('click',async event=>{
 },true);
 const originalLoad=loadMusic;loadMusic=async function(){await originalLoad();await drawGroups()};drawMusic();drawGroups();
 
-// Prévia 53: um único painel com biblioteca na esquerda e player real na direita.
-const workspace=document.createElement('div');workspace.id='musicIntegratedWorkspace';
-const library=document.createElement('div');library.id='musicLibraryColumn';
-const dock=document.createElement('div');dock.id='musicPlayerColumn';
-const dockPlaceholder=document.createElement('div');dockPlaceholder.className='music-player-empty';dockPlaceholder.textContent='Selecione uma música na coluna esquerda.';
-dock.append(dockPlaceholder);
-const sectionChildren=[...section.children].filter(n=>n!==folderDialog);
-for(const child of sectionChildren)library.append(child);
-library.append(folderDialog);
-workspace.append(library,dock);section.prepend(workspace);
-const floating=$('floatingMusic');
-const savedParent=floating?.parentNode;
-const restoreAnchor=document.createComment('local original do Media Player');
-if(floating&&savedParent)savedParent.insertBefore(restoreAnchor,floating);
-function syncMusicLayout(){
- const inLibrary=$('musicas').classList.contains('active');
- if(!floating)return;
- if(inLibrary){
-  if(floating.parentNode!==dock)dock.append(floating);
-  dockPlaceholder.hidden=!!(window.currentMusicId||!floating.hidden);
- }else if(savedParent&&floating.parentNode===dock){
-  savedParent.insertBefore(floating,restoreAnchor.nextSibling);
- }
- document.body.classList.toggle('music-integrated-active',inLibrary);
-}
-// O player continua operacional fora da biblioteca (cronograma).
+// Prévia 54: biblioteca inicia somente com pastas; player aparece sob demanda.
+// Mantém a pesquisa e o editor existentes, mas remove a coluna de player permanente.
 const musicNav=document.querySelector('[data-tab="musicas"]');
-document.querySelectorAll('.nav[data-tab]').forEach(b=>b.addEventListener('click',()=>requestAnimationFrame(syncMusicLayout)));
-syncMusicLayout();
 const oldOpenDialog=folderDialog.showModal;
-folderDialog.showModal=()=>{oldOpenDialog();syncMusicLayout()};
+folderDialog.showModal=()=>{oldOpenDialog()};
 const oldCloseDialog=folderDialog.close;
-folderDialog.close=()=>{oldCloseDialog();syncMusicLayout()};
+folderDialog.close=()=>{oldCloseDialog()};
 // Ocultar o botão de ocultar letra sem remover o botão do lápis.
 const hideLyrics=$('lyricsHide');if(hideLyrics)hideLyrics.hidden=true;
 const showLyrics=$('lyricsShow');if(showLyrics)showLyrics.hidden=true;
