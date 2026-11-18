@@ -31,3 +31,7 @@ Prévia 62: cores das caixas da biblioteca aplicadas ao app; frase Biblioteca de
 - Ajuste de grade do Media Player nas pastas: área branca da letra ocupa o restante da altura do player; rolagem vertical com um dedo, sem deslocar controles.
 - Botões de edição (lápis) e exclusão (lixeira) maiores e alinhados nas linhas de música.
 - Sem alterações intencionais em funções de áudio, biblioteca, cronograma ou Bíblia.
+
+
+## Prévia 64 — Biblioteca de Mídias
+Aba Mídias com categorias Vídeos, Fotos e PDFs; pastas por dia; pesquisa, edição do nome, exclusão, prévia e cadastro em painel à direita. Arquivos guardados localmente em IndexedDB (`reunioes3-midias-v64`) e não sincronizados entre dispositivos. Ao usar no cronograma, esta prévia conserva a restrição de 2 MB por arquivo devido ao armazenamento existente no aplicativo. Não remover arquivos da versão anterior de maneira isolada sem revisar as referências.

@@ -997,3 +997,51 @@ body[data-player56="folder"] #musicas.page.active #music56Right #lyricsPanel,
     height:40px!important;min-height:40px!important;font-size:21px!important;
   }
 }
+
+/* Biblioteca de Mídias — Prévia 64. Estilos isolados para não alterar Músicas. */
+#biblioteca .media64{--m64blue:#527a9f;--m64border:#aec8df;color:#203d5b;background:#e9f2fa;border:1px solid #c5d9eb;border-radius:18px;padding:20px;min-height:calc(100dvh - 130px);box-sizing:border-box}
+#biblioteca .m64crumb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;font-size:13px;font-weight:700;color:#315d85}
+#biblioteca .m64crumb button{border:0;background:none;color:#315d85;font-size:13px;font-weight:700;padding:5px 0}
+#biblioteca .m64heading{font-size:24px;font-weight:800;margin:0 0 16px}
+#biblioteca .m64grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#biblioteca .m64categories{grid-template-columns:repeat(3,minmax(0,1fr))}
+#biblioteca .m64tile{min-height:116px;padding:17px;display:flex;align-items:flex-start;justify-content:center;flex-direction:column;gap:10px;text-align:left;border:1px solid #6e9dc2;border-radius:14px;background:linear-gradient(125deg,#5882a8,#3b658a);color:#fff;box-shadow:0 4px 10px #25496d19;transition:transform .2s,box-shadow .2s,border-color .2s}
+#biblioteca .m64tile:active{transform:scale(.985)}
+#biblioteca .m64tile:hover,#biblioteca .m64tile:focus-visible{border-color:#edc76c;box-shadow:0 0 0 2px #eac66d77}
+#biblioteca .m64tile .m64ico{font-size:26px;color:#edc76c}
+#biblioteca .m64tile strong{font-size:16px}
+#biblioteca .m64tile small{font-size:13px;color:#e0eafa}
+#biblioteca .m64toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px;flex-wrap:wrap}
+#biblioteca .m64searchwrap{display:flex;align-items:center;gap:8px;max-width:310px;flex:1;min-width:130px;background:#fff;border:1px solid #bed0e2;border-radius:12px;padding:0 12px}
+#biblioteca .m64searchwrap svg{width:22px;height:22px;flex-shrink:0;color:#3e6b94}
+#biblioteca input.m64search{width:100%;font-size:16px;min-height:47px;border:0!important;background:transparent!important;color:#1c3858;outline:0!important;box-shadow:none!important;padding:9px 0!important;margin:0!important}
+#biblioteca .m64add,#biblioteca .m64gold{background:#eac66d;color:#172d49;border:1px solid #d8ae50;box-shadow:0 3px 8px #6b4f1830;font-weight:800;border-radius:10px;padding:12px 15px;font-size:14px}
+#biblioteca .m64back{background:#fff;color:#315d84;border:1px solid #c4d6e5;border-radius:9px;padding:10px 12px;font-size:13px;font-weight:700}
+#biblioteca .m64workspace{display:grid;grid-template-columns:minmax(0,42%) minmax(0,58%);border:1px solid #bfd2e3;border-radius:15px;overflow:hidden;min-height:550px;height:min(730px,calc(100dvh - 145px));background:#f2f7fc}
+#biblioteca .m64left{padding:14px;border-right:1px solid #bfd3e5;min-width:0;display:flex;flex-direction:column;gap:11px;min-height:0}
+#biblioteca .m64left h3{font-size:20px;margin:0}
+#biblioteca .m64list{min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;flex:1}
+#biblioteca .m64file{display:flex;align-items:center;gap:7px;border:1px solid #c9d8e9;border-radius:10px;background:#fff;padding:7px 8px;margin-bottom:7px}
+#biblioteca .m64file.m64selected{background:#dce9f8;border-color:#7ca3c9}
+#biblioteca .m64filename{min-width:0;flex:1;border:0;background:none;display:flex;align-items:center;gap:6px;text-align:left;color:#244c73;font-weight:700;font-size:13px;overflow-wrap:anywhere;padding:8px 0}
+#biblioteca .m64action{width:39px;height:39px;min-width:39px;border:1px solid #b9cce0;border-radius:9px;background:#fff;color:#355f85;display:grid;place-items:center;font-size:18px}
+#biblioteca .m64action.danger{color:#aa4456}
+#biblioteca .m64right{background:#507a9e;min-width:0;display:flex;flex-direction:column;padding:16px;gap:15px;color:#fff;min-height:0}
+#biblioteca .m64right h3{color:#fff;margin:0;font-size:19px;overflow-wrap:anywhere}
+#biblioteca .m64preview{flex:1;min-height:0;border-radius:12px;background:#fff;color:#254564;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:14px}
+#biblioteca .m64preview img,#biblioteca .m64preview video,#biblioteca .m64preview iframe{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;border:0}
+#biblioteca .m64preview video{background:#101b2b}
+#biblioteca .m64emptypreview{text-align:center;font-size:15px;color:#6e849b}
+#biblioteca .m64right .m64add{width:100%}
+#biblioteca .m64form{display:flex;flex-direction:column;gap:14px;height:100%;min-height:0}
+#biblioteca .m64form label{display:flex;flex-direction:column;gap:7px;color:#eff5ff;font-size:14px;font-weight:700}
+#biblioteca .m64form input[type=text],#biblioteca .m64form input[type=file],#biblioteca .m64form select{width:100%;background:#fff;color:#1a3654;border:1px solid #b7cde0;padding:12px;border-radius:10px;max-width:100%;font-size:15px}
+#biblioteca .m64form .m64footer{margin-top:auto;display:flex;gap:8px;justify-content:flex-end}
+#biblioteca .m64error{font-size:13px;color:#ffe0a0}
+#biblioteca .m64info{font-size:12px;color:#e0eaf7}
+#biblioteca .m64modal{position:fixed;inset:0;background:#08182b94;z-index:600;display:flex;align-items:center;justify-content:center;padding:18px}
+#biblioteca .m64modalbox{background:#fff;color:#1b3655;width:min(460px,95vw);border-radius:15px;padding:20px;box-shadow:0 16px 55px #0005;display:flex;flex-direction:column;gap:15px}
+#biblioteca .m64modalbox input{font-size:16px;border:1px solid #bdcee0;border-radius:9px;padding:11px;width:100%}
+#biblioteca .m64modalbox footer{display:flex;justify-content:flex-end;gap:10px}
+@media(max-width:800px){#biblioteca .media64{padding:12px;min-height:calc(100dvh - 115px)}#biblioteca .m64categories{grid-template-columns:repeat(3,minmax(0,1fr))}#biblioteca .m64tile{min-height:90px;padding:12px;gap:6px}#biblioteca .m64tile strong{font-size:13px}#biblioteca .m64workspace{grid-template-columns:minmax(0,43%) minmax(0,57%);height:calc(100dvh - 115px);min-height:440px}#biblioteca .m64left,#biblioteca .m64right{padding:9px}#biblioteca .m64action{height:35px;width:35px;min-width:35px}#biblioteca .m64filename{font-size:12px}}
+@media(max-width:480px){#biblioteca .m64categories{grid-template-columns:1fr}#biblioteca .m64workspace{grid-template-columns:1fr;min-height:650px;height:auto}#biblioteca .m64left{border-right:0;border-bottom:1px solid #bfd3e5;max-height:300px}#biblioteca .m64right{min-height:375px}#biblioteca .m64grid{gap:8px}}
