@@ -1112,3 +1112,10 @@ body[data-player56="folder"] #musicas.page.active #music56Right #lyricsPanel,
 #biblioteca .m67navbuttons{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:nowrap}
 #biblioteca .m67navbuttons .m64back,#biblioteca .m67navbuttons .m64add{white-space:nowrap;min-height:44px}
 @media(max-width:860px){#biblioteca .m64toolbar:has(.m67navbuttons){justify-content:center}#biblioteca .m67navbuttons{gap:8px}}
+
+/* Prévia 69: arquivos abertos diretamente em cartões da biblioteca */
+#biblioteca .m66btn.m69open{display:inline-flex;align-items:center;justify-content:center;padding:5px 9px;border:1px solid #bdd0e3;border-radius:7px;background:#f5f9ff;color:#315c82;text-decoration:none;font-size:12px;font-weight:700;min-height:31px}
+#biblioteca .m69photoLink{display:block;width:100%;height:100%}
+#biblioteca .m69photoLink img{display:block;width:100%;height:100%;object-fit:contain}
+#biblioteca .m69pdfCover{position:absolute;inset:0;z-index:2;display:flex;align-items:end;justify-content:center;padding:8px;color:#274d70;font-size:12px;font-weight:800;text-decoration:none;background:linear-gradient(transparent 75%,rgba(230,239,249,.93) 100%)}
+#biblioteca .m66thumb iframe{pointer-events:none}

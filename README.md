@@ -56,3 +56,11 @@ Prévia 67: botão Voltar à esquerda de Adicionar nas categorias de Vídeos, Fo
 - Corrigida a função `validFile`, ausente na versão 67, que interrompia o salvamento antes da gravação.
 - Validação de formatos para vídeo, foto e PDF; confirmação de gravação local após salvar; mensagem de erro explícita.
 - Mantidos os layouts, as pastas e os demais recursos da 67.
+
+
+## Prévia 69 — Abertura e cronograma
+- Corrige a ação de abrir PDFs e fotos com links gerados previamente ao toque (compatibilidade Safari).
+- Mantém prévias integradas nos cartões de Mídias.
+- Cronograma oferece a seleção de vídeos, fotos e PDFs já armazenados na Biblioteca de Mídias.
+- Itens do cronograma guardam referência ao IndexedDB, sem duplicar vídeos grandes no localStorage.
+- Não apague os dados do site no Safari; arquivos armazenados são locais a esse navegador.

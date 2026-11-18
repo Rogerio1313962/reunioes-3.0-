@@ -17,6 +17,9 @@ async function dbGet(id){const db=await dbOpen();return new Promise((ok,no)=>{co
 async function dbChange(operation,val){const db=await dbOpen();return new Promise((ok,no)=>{const tx=db.transaction('files','readwrite');const store=tx.objectStore('files');if(operation==='put')store.put(val);else store.delete(val);tx.oncomplete=()=>{db.close();ok()};tx.onerror=()=>{db.close();no(tx.error)}})}
 function release(){if(url){URL.revokeObjectURL(url);url=null}for(const u of cardUrls.splice(0))URL.revokeObjectURL(u)}
 function config(){return categories.find(c=>c.id===cat)}
+// API local: permite ao cronograma escolher arquivos já guardados na biblioteca, sem copiar blobs para localStorage.
+window.ReunioesMediaLibrary={all:dbAll,get:dbGet,put:record=>dbChange('put',record)};
+
 // Validar arquivos antes de gravar no IndexedDB; a Preview 67 invocava validFile sem defini-la.
 function validFile(file){
  if(!file||!file.name||!file.size)return false;
@@ -42,7 +45,7 @@ function cardHTML(f){
  '<div class="m66thumb" data-thumb="'+esc(f.id)+'" aria-label="Prévia de '+esc(f.name)+'"><span class="m66placeholder">'+typeIcon+'</span></div>'+
  '<div class="m66filebody"><div class="m66filetitle" title="'+esc(f.name)+'">'+esc(f.name)+'</div>'+
  '<div class="m66actions">'+
- (cat==='pdf'?'<button type="button" class="m66btn" data-open="'+esc(f.id)+'" title="Abrir PDF">Abrir</button>':'')+
+ '<a class="m66btn m69open" data-open="'+esc(f.id)+'" href="#" target="_blank" rel="noopener" title="Abrir arquivo">Abrir</a>'+
  '<button type="button" class="m66btn m66schedule" data-schedule="'+esc(f.id)+'" title="Usar no cronograma">+ Cronograma</button>'+
  '<button type="button" class="m66icon" data-edit="'+esc(f.id)+'" title="Editar nome" aria-label="Editar nome">✎</button>'+
  '<button type="button" class="m66icon m66danger" data-delete="'+esc(f.id)+'" title="Excluir" aria-label="Excluir arquivo">✕</button>'+
@@ -54,21 +57,24 @@ function renderListOnly(){
  root.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editName(b.dataset.edit));
  root.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>deleteItem(b.dataset.delete));
  root.querySelectorAll('[data-schedule]').forEach(b=>b.onclick=()=>{const f=rows.find(x=>x.id===b.dataset.schedule);if(f)addToSchedule(f)});
- root.querySelectorAll('[data-open]').forEach(b=>b.onclick=async()=>{const r=await dbGet(b.dataset.open);if(!r)return;const link=URL.createObjectURL(r.blob);cardUrls.push(link);window.open(link,'_blank','noopener,noreferrer')});
+ // Links recebem a URL antes do toque: Safari bloqueia window.open após operações assíncronas.
+ root.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',e=>{if(a.getAttribute('href')==='#'){e.preventDefault();alert('Aguarde o carregamento da prévia e tente novamente.')}}));
  document.getElementById('m64Count').textContent=list.length+' arquivo(s)';
  void loadCardPreviews(list);
 }
 async function loadCardPreviews(list){
  const cards=await Promise.all(list.map(async f=>({id:f.id,record:await dbGet(f.id).catch(()=>null)})));
  for(const {id,record} of cards){const slot=document.querySelector('#m64List [data-thumb="'+CSS.escape(id)+'"]');if(!slot||!record?.blob)continue;
- const objectURL=URL.createObjectURL(record.blob);cardUrls.push(objectURL);
- slot.replaceChildren();
+ const pdfBlob=cat==='pdf' && record.blob.type!=='application/pdf'?new Blob([record.blob],{type:'application/pdf'}):record.blob;
+  const objectURL=URL.createObjectURL(pdfBlob);cardUrls.push(objectURL);
+  const openLink=document.querySelector('#m64List [data-open="'+CSS.escape(id)+'"]');if(openLink)openLink.href=objectURL;
+  slot.replaceChildren();
  if(cat==='video'){
    const video=document.createElement('video');video.src=objectURL;video.controls=true;video.playsInline=true;video.preload='metadata';video.setAttribute('aria-label','Reproduzir '+record.name);video.addEventListener('loadedmetadata',()=>{if(Number.isFinite(video.duration)&&video.duration>0){try{video.currentTime=Math.min(0.1,video.duration/4)}catch(e){}}},{once:true});slot.append(video);
  }else if(cat==='imagem'){
-   const img=document.createElement('img');img.src=objectURL;img.alt=record.name;img.loading='lazy';slot.append(img);
+   const link=document.createElement('a');link.href=objectURL;link.target='_blank';link.rel='noopener';link.className='m69photoLink';const img=document.createElement('img');img.src=objectURL;img.alt='Abrir foto: '+record.name;img.loading='lazy';link.append(img);slot.append(link);
  }else{
-   const frame=document.createElement('iframe');frame.src=objectURL+'#page=1&toolbar=0&navpanes=0';frame.title='Miniatura da primeira página de '+record.name;frame.loading='lazy';frame.tabIndex=-1;slot.append(frame);
+   const frame=document.createElement('iframe');frame.src=objectURL+'#page=1&toolbar=0&navpanes=0';frame.title='Miniatura da primeira página de '+record.name;frame.loading='lazy';frame.tabIndex=-1;slot.append(frame);const open=document.createElement('a');open.href=objectURL;open.target='_blank';open.rel='noopener';open.className='m69pdfCover';open.setAttribute('aria-label','Abrir PDF '+record.name);open.textContent='Abrir PDF';slot.append(open);
  }
  }
 }
@@ -109,8 +115,15 @@ function popup(title,inner,confirmLabel,onConfirm){if(modal)modal.remove();modal
 function closePopup(){if(modal){modal.remove();modal=null}}
 function editName(id){const f=rows.find(x=>x.id===id);if(!f)return;popup('Editar nome','<input id="m64Rename" aria-label="Nome do arquivo" value="'+esc(f.name)+'">','Salvar',async()=>{const name=modal.querySelector('#m64Rename').value.trim();if(!name)return;const rec=await dbGet(id);rec.name=name;await dbChange('put',rec);rows=orderedAll(await dbAll());closePopup();render()})}
 function deleteItem(id){const f=rows.find(x=>x.id===id);if(!f)return;popup('Excluir arquivo?','<p>'+esc(f.name)+'</p>','Excluir',async()=>{await dbChange('delete',id);rows=orderedAll(await dbAll());if(selected===id){release();selected=rows.find(r=>r.type===cat&&r.day===day)?.id||null}closePopup();render()})}
-async function addToSchedule(f){const index=days.indexOf(f.day);if(index<0)return;const record=await dbGet(f.id);if(!record)return;if(record.size>2*1024*1024){alert('Esta prévia permite inserir no cronograma arquivos de até 2 MB. O arquivo continua salvo na biblioteca; para vídeos grandes será necessária a integração de armazenamento.');return}
- try{const data=await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=()=>no(r.error);r.readAsDataURL(record.blob)});const section=state.sections?.[index]?.[0]?.id||'default-'+index;const item={id:uid(),type:f.type,title:f.name,fileUrl:data,sectionId:section,reference:'',translation:'',content:''};state.days[index].push(item);try{save()}catch(err){state.days[index].pop();throw err}alert('Arquivo adicionado ao cronograma de '+f.day+'.');state.day=index;drawDays();drawItems();setTab('agenda')}catch(err){alert('Não foi possível incluir no cronograma por falta de espaço neste navegador. O arquivo continua salvo na biblioteca.')}}
+async function addToSchedule(f){
+ const index=days.indexOf(f.day);if(index<0)return;
+ const record=await dbGet(f.id).catch(()=>null);if(!record?.blob){alert('Arquivo não encontrado na biblioteca deste iPad.');return}
+ const section=state.sections?.[index]?.[0]?.id||'default-'+index;
+ const item={id:uid(),type:f.type,title:f.name,mediaLibraryId:f.id,fileUrl:null,sectionId:section,reference:'',translation:'',content:''};
+ state.days[index].push(item);
+ try{save()}catch(err){state.days[index].pop();alert('Não foi possível salvar o item no cronograma.');return}
+ state.day=index;drawDays();drawItems();setTab('agenda');alert('Arquivo incluído no cronograma de '+f.day+'. Ele permanece guardado nesta biblioteca do iPad.');
+}
 function render(){release();crumbs();if(!cat)categoriesView();else if(!day)daysView();else folderView()}
 (async()=>{try{rows=orderedAll(await dbAll())}catch(e){body.textContent='Este navegador não permitiu acessar o armazenamento local. Verifique o modo privado e as permissões.';return}render()})();
 })();
