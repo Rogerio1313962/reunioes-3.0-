@@ -64,3 +64,18 @@ Prévia 67: botão Voltar à esquerda de Adicionar nas categorias de Vídeos, Fo
 - Cronograma oferece a seleção de vídeos, fotos e PDFs já armazenados na Biblioteca de Mídias.
 - Itens do cronograma guardam referência ao IndexedDB, sem duplicar vídeos grandes no localStorage.
 - Não apague os dados do site no Safari; arquivos armazenados são locais a esse navegador.
+
+
+## Prévia 70
+- Vídeos do cronograma agora abrem pausados no Media Player da direita, sem substituir cronograma nem enviar automaticamente ao telão.
+- Media Player próprio para vídeo com progresso, play/pause, repetição e volume compacto.
+- Seleção para adicionar mídia ao cronograma por pastas e arquivos, preservando seletor antigo internamente.
+- PDFs abrem grade de três páginas por linha na área do cronograma, com exclusão temporária e restauração, seleção e navegação.
+- Botões Apresentar/Encerrar e transições Fade/Merge/Wipe/Corte com duração padrão de 300 ms na engrenagem.
+- Limitações: a contagem de páginas PDFs complexos pode variar no Safari; miniprêvias de PDF dependem do visualizador do navegador. O canal BroadcastChannel funciona apenas entre janelas do mesmo navegador/origem e não sincroniza iPad com PC.
+
+
+## Prévia 71 — Minimizar grade PDF
+- Botão “− Minimizar” na janela da grade do PDF, que devolve o cronograma à esquerda sem fechar o PDF ou interromper a apresentação.
+- Botão dourado fixo no canto inferior direito, no mesmo lugar do player de música minimizado, para reabrir a grade sem perder página escolhida nem exclusões temporárias.
+- Mantidas as demais mudanças da Prévia 70.
