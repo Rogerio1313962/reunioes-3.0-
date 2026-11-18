@@ -1075,3 +1075,35 @@ body[data-player56="folder"] #musicas.page.active #music56Right #lyricsPanel,
 #biblioteca .m64file{min-height:54px}
 @media(max-width:800px){#biblioteca .m64workspace{height:calc(100dvh - 110px);min-height:410px}#biblioteca .m64tile{min-height:78px;padding:10px 12px}#biblioteca .m64searchwrap{max-width:230px!important;width:230px}#biblioteca .m64left .m64toolbar{gap:6px}#biblioteca .m64left .m64add,#biblioteca .m64left .m64back{padding:9px 9px;font-size:12px}}
 @media(max-width:480px){#biblioteca .m64searchwrap{width:100%;max-width:none!important;flex:1 1 100%!important}#biblioteca .m64folderheading h3{font-size:16px}#biblioteca .m64workspace{height:auto;min-height:0}#biblioteca .m64left{min-height:240px}#biblioteca .m64right{min-height:300px}}
+
+
+/* Prévia 66 — galeria compacta nas pastas de Vídeos, Fotos e PDFs. */
+#biblioteca .m66folderpage{min-height:calc(100dvh - 170px);padding:5px 3px 10px;display:flex;flex-direction:column;gap:13px}
+#biblioteca .m66folderhead h3{font-size:20px;color:#254a70;margin:0}
+#biblioteca .m66tools{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:5px}
+#biblioteca .m66tools .m64back,#biblioteca .m66tools .m64add{min-height:42px}
+#biblioteca .m66gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;align-content:start}
+#biblioteca .m66card{min-width:0;overflow:hidden;background:#fff;border:1px solid #b9d0e5;border-radius:12px;box-shadow:0 2px 7px #29476b16}
+#biblioteca .m66thumb{height:auto;aspect-ratio:16 / 10;background:#dce8f3;display:flex;justify-content:center;align-items:center;overflow:hidden;position:relative}
+#biblioteca .m66thumb img,#biblioteca .m66thumb video,#biblioteca .m66thumb iframe{height:100%;width:100%;display:block;border:0;object-fit:contain}
+#biblioteca .m66thumb video{background:#17273b;object-fit:contain}
+#biblioteca .m66thumb iframe{pointer-events:none;background:#fff}
+#biblioteca .m66placeholder{color:#426d93;font-size:30px}
+#biblioteca .m66filebody{padding:7px;display:flex;flex-direction:column;gap:6px}
+#biblioteca .m66filetitle{font-size:12px;font-weight:800;color:#244969;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#biblioteca .m66actions{display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+#biblioteca .m66actions button{cursor:pointer;min-height:31px;border-radius:7px}
+#biblioteca .m66btn{border:1px solid #bcd0e3;background:#eef5fb;color:#2e567a;padding:5px 6px;font-size:10px;font-weight:800}
+#biblioteca .m66schedule{flex:1}
+#biblioteca .m66icon{border:1px solid #c4d5e6;background:#fff;color:#3c6287;padding:3px 5px;min-width:29px;font-size:14px}
+#biblioteca .m66danger{color:#a04458}
+#biblioteca .m66count{color:#607e9e;margin-top:auto}
+#biblioteca .m66formhost[hidden]{display:none!important}
+#biblioteca .m66form{background:#527a9f;color:#fff;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:9px;margin-bottom:5px}
+#biblioteca .m66form h3{color:#fff;margin:0;font-size:18px}
+#biblioteca .m66formfields{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:10px}
+#biblioteca .m66form label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;min-width:0}
+#biblioteca .m66form input,#biblioteca .m66form select{width:100%;min-width:0;background:#fff;color:#244969;border:1px solid #c4d5e6;border-radius:8px;padding:9px;font-size:14px}
+#biblioteca .m66form .m64footer{display:flex;justify-content:flex-end;gap:8px}
+@media(max-width:960px){#biblioteca .m66gallery{gap:7px}#biblioteca .m66filebody{padding:5px}#biblioteca .m66btn{font-size:9px}#biblioteca .m66icon{min-width:26px}}
+@media(max-width:560px){#biblioteca .m66gallery{grid-template-columns:repeat(2,minmax(0,1fr))}#biblioteca .m66formfields{grid-template-columns:1fr}#biblioteca .m66folderpage{min-height:0}}

@@ -39,3 +39,11 @@ Aba Mídias com categorias Vídeos, Fotos e PDFs; pastas por dia; pesquisa, edi�
 
 ## Prévia 65 — Correção da 64
 Restaura o botão `libraryAdd` invisível de compatibilidade, que havia sido removido na 64 e causava interrupção do `app.js` (prejudicando Cronograma, Bíblia e Músicas). Biblioteca de Mídias com retorno explícito a Mídias, pesquisador compacto, pastas menores, e prévia sem cartão branco vazio até a escolha de um arquivo.
+
+
+## Prévia 66
+- Mídias: pastas com miniaturas em até quatro colunas, sem painel lateral e sem pesquisa interna.
+- Botões Voltar à esquerda e Adicionar à direita, centralizados.
+- Arquivos novos aparecem primeiro na pasta (data de cadastro).
+- Vídeos reproduzidos no próprio cartão; imagens visíveis; PDFs com miniatura incorporada quando o Safari permitir e botão Abrir.
+- Músicas agrupadas e avulsas em ordem alfabética na pasta.
