@@ -17,6 +17,16 @@ async function dbGet(id){const db=await dbOpen();return new Promise((ok,no)=>{co
 async function dbChange(operation,val){const db=await dbOpen();return new Promise((ok,no)=>{const tx=db.transaction('files','readwrite');const store=tx.objectStore('files');if(operation==='put')store.put(val);else store.delete(val);tx.oncomplete=()=>{db.close();ok()};tx.onerror=()=>{db.close();no(tx.error)}})}
 function release(){if(url){URL.revokeObjectURL(url);url=null}for(const u of cardUrls.splice(0))URL.revokeObjectURL(u)}
 function config(){return categories.find(c=>c.id===cat)}
+// Validar arquivos antes de gravar no IndexedDB; a Preview 67 invocava validFile sem defini-la.
+function validFile(file){
+ if(!file||!file.name||!file.size)return false;
+ const extension=file.name.split('.').pop().toLowerCase();
+ const mime=(file.type||'').toLowerCase();
+ if(cat==='video')return ['mp4','mov','m4v'].includes(extension)||(mime==='video/mp4'||mime==='video/quicktime'||mime==='video/x-m4v');
+ if(cat==='imagem')return ['jpg','jpeg','png','webp'].includes(extension)||['image/jpeg','image/png','image/webp'].includes(mime);
+ if(cat==='pdf')return extension==='pdf'||mime==='application/pdf';
+ return false;
+}
 function counter(c,d){return rows.filter(f=>f.type===c&&(!d||f.day===d)).length}
 function crumbs(){crumb.innerHTML='<button type="button" data-go="home">Mídias</button>'+(cat?' <span>›</span> <button type="button" data-go="type">'+esc(config().label)+'</button>':'')+(day?' <span>›</span> <strong>'+esc(day)+'</strong>':'');crumb.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{if(b.dataset.go==='home'){cat=null;day=null}else day=null;selected=null;search='';mode='preview';release();render()})}
 function magnify(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16 16 5 5"/></svg>'}
@@ -76,7 +86,25 @@ function renderRight(){
  host.innerHTML='<form class="m66form" id="m64Form"><h3>Adicionar '+esc(config().single)+'</h3><div class="m66formfields"><label>Pasta<select id="m64Dest">'+days.map(d=>'<option '+(d===day?'selected':'')+'>'+esc(d)+'</option>').join('')+'</select></label><label>Escolher arquivo<input id="m64File" type="file" accept="'+config().accept+'" required></label><label>Nome (opcional)<input type="text" id="m64Name" placeholder="Usar nome do arquivo"></label></div><p class="m64error" id="m64Error" role="status"></p><div class="m64footer"><button type="button" class="m64back" id="m64Cancel">Cancelar</button><button class="m64gold" type="submit" id="m64Save">Salvar arquivo</button></div></form>';
  document.getElementById('m64Cancel').onclick=()=>{mode='preview';renderRight()};document.getElementById('m64Form').onsubmit=saveFile;
 }
-async function saveFile(e){e.preventDefault();const file=document.getElementById('m64File').files[0],msg=document.getElementById('m64Error');if(!file||!validFile(file)){msg.textContent='Escolha um arquivo do tipo correto.';return}const dest=document.getElementById('m64Dest').value;const name=document.getElementById('m64Name').value.trim()||file.name;const saveBtn=document.getElementById('m64Save');saveBtn.disabled=true;try{const id=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random());await dbChange('put',{id,name,type:cat,day:dest,blob:file,size:file.size,addedAt:Date.now()});rows=orderedAll(await dbAll());day=dest;selected=id;mode='preview';search='';render()}catch(err){msg.textContent='Não foi possível salvar. Confira o espaço disponível no Safari.';saveBtn.disabled=false}}
+async function saveFile(e){
+ e.preventDefault();
+ const input=document.getElementById('m64File'),msg=document.getElementById('m64Error'),saveBtn=document.getElementById('m64Save');
+ const file=input?.files?.[0];
+ if(!file||!validFile(file)){msg.textContent='Selecione um arquivo válido para esta categoria.';return}
+ const dest=document.getElementById('m64Dest').value;
+ const name=document.getElementById('m64Name').value.trim()||file.name;
+ saveBtn.disabled=true;saveBtn.textContent='Salvando…';msg.textContent='Gravando arquivo neste iPad…';
+ try{
+   const id=(typeof crypto!=='undefined'&&typeof crypto.randomUUID==='function'?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(36).slice(2));
+   await dbChange('put',{id,name,type:cat,day:dest,blob:file,size:file.size,addedAt:Date.now()});
+   const saved=await dbGet(id);
+   if(!saved||!saved.blob)throw new Error('O arquivo não foi encontrado após salvar.');
+   rows=orderedAll(await dbAll());day=dest;selected=id;mode='preview';search='';render();
+ }catch(err){
+   msg.textContent=err?.name==='QuotaExceededError'?'Sem espaço de armazenamento neste iPad. Libere espaço e tente novamente.':'Não foi possível salvar o arquivo no Safari. '+(err?.message||'Tente novamente.');
+   saveBtn.disabled=false;saveBtn.textContent='Salvar arquivo';
+ }
+}
 function popup(title,inner,confirmLabel,onConfirm){if(modal)modal.remove();modal=document.createElement('div');modal.className='m64modal';modal.innerHTML='<div class="m64modalbox"><strong>'+title+'</strong>'+inner+'<footer><button type="button" class="m64back" id="m64No">Cancelar</button><button type="button" class="m64gold" id="m64Yes">'+confirmLabel+'</button></footer></div>';app.append(modal);modal.querySelector('#m64No').onclick=closePopup;modal.querySelector('#m64Yes').onclick=onConfirm}
 function closePopup(){if(modal){modal.remove();modal=null}}
 function editName(id){const f=rows.find(x=>x.id===id);if(!f)return;popup('Editar nome','<input id="m64Rename" aria-label="Nome do arquivo" value="'+esc(f.name)+'">','Salvar',async()=>{const name=modal.querySelector('#m64Rename').value.trim();if(!name)return;const rec=await dbGet(id);rec.name=name;await dbChange('put',rec);rows=orderedAll(await dbAll());closePopup();render()})}
