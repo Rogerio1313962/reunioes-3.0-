@@ -1,1 +1,3 @@
-Prévia 42: adiciona Terça-feira à biblioteca de músicas e abre o modal antes de atualizar a lista, evitando o flash dos contadores temporários. Base: Prévia 41.
+REUNIÕES 3.0 — PRÉVIA 43
+Pastas em ordem: Domingo, Segunda-feira, Terça-feira, Quarta-feira, Quinta-feira, Sexta-feira, Sábado; depois Fundos de Busca, Clamor e Descarrego.
+Base: ZIP da Prévia 42 enviado pelo usuário. Sem alterações nos arquivos MP3 armazenados no Safari.
