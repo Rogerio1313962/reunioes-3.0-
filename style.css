@@ -546,3 +546,70 @@ body:has(#musicas.page.active) #music55Player #floatingMusic,body:has(#musicas.p
 #music55Workspace.music55-open:not(.music55-selected) #music55Player #floatingMusic{display:none!important}
 #music55Workspace.music55-open.music55-selected #music55Player #floatingMusic{display:flex!important}
 #music55Workspace.music55-selected #music55Empty{display:none!important}
+/* PREVIA 56 - isolamento forte: nunca há player flutuando sobre páginas. */
+#floatingMusic,#floatingMusicRestore,#music56Parking{display:none!important}
+body[data-player56="agenda"] #agenda.page.active .preview #floatingMusic,
+body[data-player56="folder"] #musicas.page.active #music56Right #floatingMusic{
+ display:grid!important;position:relative!important;inset:auto!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;
+ transform:none!important;width:100%!important;max-width:100%!important;height:auto!important;max-height:none!important;
+ margin:0!important;z-index:1!important;visibility:visible!important;opacity:1!important;
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-content:start!important;overflow:auto!important;
+ border-radius:15px!important;box-shadow:none!important;background:#192d47!important;padding:15px!important;
+}
+#floatingMusicClose{display:none!important}
+body:has(#musicas.page.active) main{padding:12px 14px!important}
+#musicas .music-panel{padding:0!important;overflow:hidden!important;min-height:calc(100dvh - 140px)!important;height:auto!important}
+#music56Workspace{display:grid!important;grid-template-columns:minmax(0,1fr)!important;min-height:calc(100dvh - 145px)!important;width:100%!important}
+#music56Workspace.folder-open{grid-template-columns:minmax(0,43%) minmax(0,57%)!important}
+#music56Left{min-width:0!important;min-height:0!important;overflow:auto!important;background:#fff!important;padding:16px!important;display:flex!important;flex-direction:column!important;gap:9px!important}
+#music56Left>.panelhead{display:flex!important;align-items:center!important;justify-content:space-between!important;margin:0!important}
+#music56Left>.panelhead h2{font-size:19px!important}
+#music56Left>.panelhead #newSongGroup{display:inline-flex!important;flex:0 0 auto!important;font-size:13px!important;padding:10px!important}
+#music56Workspace.folder-open #music56Left>.panelhead{display:none!important}
+#music56Workspace.folder-open #music56Left>#allMusicSearch,#music56Workspace.folder-open #music56Left>#allMusicResults,#music56Workspace.folder-open #music56Left>#musicFolders{display:none!important}
+#music56Left #musicFolders{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;flex:1 1 auto!important;align-content:start!important;overflow:auto!important}
+#music56Left #musicFolders .music-folder{min-height:90px!important}
+#music56Workspace:not(.folder-open) #musicFolderDialog{display:none!important}
+#music56Workspace.folder-open #musicFolderDialog{display:flex!important;flex-direction:column!important;position:relative!important;inset:auto!important;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;background:#fff!important;overflow:visible!important;width:100%!important;max-width:100%!important;max-height:none!important;flex:1!important}
+#music56Left #folderModalClose{display:none!important}
+#music56Left .folder-modal-head{margin:0!important;padding:0!important}
+#music56Left .folder-modal-head h2{font-size:19px!important}
+#music56Actions{display:none!important;gap:7px!important;flex-wrap:nowrap!important;margin:0 0 6px!important}
+#music56Workspace.folder-open #music56Actions{display:flex!important}
+#music56Actions #music56Back,#music56Actions #newSongGroup{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:0!important;flex:1 1 0!important;white-space:nowrap!important;padding:10px 4px!important;font-size:12px!important;border-radius:9px!important}
+#music56Back{color:#173456!important;background:#edf3f9!important;border:1px solid #cbd9e8!important}
+#music56Left #allMusicSearch,#music56Left #folderMusicSearch{box-sizing:border-box!important;width:100%!important;min-height:44px!important;height:44px!important;max-height:44px!important;flex:0 0 auto!important;background-image:none!important;background-color:#f5f8fc!important;padding:9px 13px!important;margin:0!important;font-size:15px!important;border:1px solid #c5d7eb!important;border-radius:11px!important}
+#music56Right{display:none!important;min-width:0!important;min-height:0!important;background:#192d47!important;overflow:auto!important;padding:10px!important}
+#music56Workspace.folder-open #music56Right{display:flex!important;flex-direction:column!important}
+#music56Empty{display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;color:#cbd5e1;text-align:center;gap:9px;min-height:250px}
+#music56Empty[hidden]{display:none!important}
+#music56Empty span{font-size:37px;color:#eac96f}
+#music56Right #floatingMusic{min-height:0!important;flex:1 1 auto!important}
+#music56Right #lyricsPanel{grid-column:1/-1!important;grid-row:5!important;min-height:220px!important;display:block!important}
+#music56Right #lyricsScroll{max-height:45dvh!important;overflow:auto!important}
+#music56Left #folderModalContent{min-height:0!important;overflow:auto!important;flex:1!important}
+#music56Left .music-track{display:flex!important}
+#music56Left .song-group-head{display:flex!important;flex-direction:row!important;align-items:center!important}
+#music56Left .song-row-action{flex:0 0 auto!important}
+body[data-player56="agenda"] #agenda .preview.player56-on{display:flex!important;flex-direction:column!important}
+body[data-player56="agenda"] #agenda .preview.player56-on #floatingMusic{flex:1 0 auto!important}
+body[data-player56="agenda"] #agenda .preview.player56-on .screen{display:none!important}
+/* O mesmo padrão aprovado nos dois contextos: ícone + título, trilho, controles à esquerda e volume à direita. */
+body[data-player56] #floatingMusic .floating-music-head{grid-column:1/-1!important;grid-row:1!important;display:flex!important;align-items:center!important;gap:8px!important}
+body[data-player56] #floatingMusic #groupVersionBar{grid-column:1/-1!important;grid-row:2!important}
+body[data-player56] #floatingMusic .floating-music-progress{grid-column:1/-1!important;grid-row:3!important;width:100%!important;max-width:410px!important;justify-self:center!important;margin:0!important}
+body[data-player56] #floatingMusic .floating-music-controls{grid-column:1!important;grid-row:4!important;display:flex!important;justify-content:flex-start!important;align-items:center!important;gap:8px!important}
+body[data-player56] #floatingMusic .floating-music-volume{grid-column:2!important;grid-row:4!important;display:flex!important;align-items:center!important;gap:6px!important}
+body[data-player56] #floatingMusic #floatingPause{width:54px!important;min-width:54px!important;height:54px!important;min-height:54px!important;background:#eac96f!important;border:0!important;border-radius:12px!important;color:#172a44!important}
+body[data-player56] #floatingMusic #floatingStop,body[data-player56] #floatingMusic #floatingRepeat{width:35px!important;min-width:35px!important;height:42px!important;min-height:42px!important}
+body[data-player56] #floatingMusic #floatingSeek,body[data-player56] #floatingMusic #floatingVolume{max-width:300px!important;min-width:20px!important}
+body[data-player56] #floatingMusic .gold-music-badge{flex:0 0 43px!important}
+body[data-player56] #floatingMusic #lyricsPanel{grid-column:1/-1!important;grid-row:5!important}
+@media(max-width:800px){#music56Workspace.folder-open{grid-template-columns:minmax(0,45%) minmax(0,55%)!important}#music56Left{padding:10px!important}#music56Right{padding:6px!important}#music56Actions #music56Back,#music56Actions #newSongGroup{font-size:10px!important;padding:9px 3px!important}body[data-player56] #floatingMusic{padding:9px!important}}
+
+/* Prévia 56: somente o player do Cronograma permite minimizar. */
+#agenda56Minimize{display:none!important;}
+body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize{display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-left:auto!important;width:40px!important;height:40px!important;min-width:40px!important;border:1px solid #6a87a9!important;border-radius:10px!important;background:#294a70!important;color:#fff!important;font-size:26px!important;cursor:pointer!important;}
+#agenda56Reopen{display:none!important;}
+#agenda.page.active .preview:not(.player56-on) #agenda56Reopen:not([hidden]){display:inline-flex!important;margin-left:auto!important;background:#21588e!important;color:#fff!important;font-weight:700!important;border-radius:9px!important;padding:9px 12px!important;}
+#music56Right #agenda56Minimize{display:none!important;}
