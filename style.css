@@ -378,3 +378,28 @@
 #lyricsHide{padding:8px 12px!important;min-height:36px!important}
 #lyricsScroll{font-size:clamp(16px,1.75vw,21px)!important;line-height:1.34!important;padding:8px 7px!important}
 #lyricsScroll .lyrics-song-title,#lyricsScroll .lyrics-chorus,#lyricsScroll .lyrics-manual-highlight{font-size:inherit!important;line-height:inherit!important}
+
+/* Prévia 52: biblioteca com pastas sem prévia, busca dupla e player fixo lateral. */
+#musicas .music-panel{position:relative;min-height:580px;overflow:visible}
+#musicas .music-panel.library-expanded{padding-right:calc(min(410px, 58%) + 16px);transition:padding-right .38s cubic-bezier(.22,1,.36,1)}
+#musicFolderDialog{position:relative!important;inset:auto!important;display:block!important;width:100%!important;max-width:none!important;max-height:none!important;margin:12px 0 0!important;padding:12px!important;box-shadow:none!important;border:1px solid #d4e0ee!important;border-radius:14px!important;background:#f7faff!important;overflow:visible!important}
+#musicFolderDialog[hidden]{display:none!important}
+#musicFolderDialog::backdrop{display:none!important}
+#musicas .library-expanded #musicFolders{display:none!important}
+#musicas .library-expanded #allMusicSearch{display:none!important}
+#musicas .library-expanded #allMusicResults{display:none!important}
+#musicFolderDialog .folder-modal-head{margin-bottom:10px;gap:7px;flex-wrap:wrap}
+#musicFolderDialog .folder-modal-head h2{font-size:15px;overflow-wrap:anywhere}
+#folderModalClose{font-size:12px;padding:8px!important}
+#musicFolderDialog .music-search-input{font-size:14px!important;min-height:46px!important;padding-left:45px!important;background-position:12px center!important;background-size:22px!important;margin:8px 0!important}
+#musicFolderDialog .song-group-card{padding:9px!important;margin:7px 0!important}
+#musicFolderDialog .song-group-head{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:7px!important}
+#musicFolderDialog .song-group-head button{font-size:11px!important;padding:8px!important}
+#musicFolderDialog .group-main-info{min-width:0;overflow-wrap:anywhere}
+#musicFolderDialog .group-main-info small{display:none!important}
+#musicas .library-expanded ~ .floating-music{display:none}
+body:has(#musicas.page.active .library-expanded) #floatingMusic{position:fixed!important;top:8px!important;bottom:8px!important;right:8px!important;left:auto!important;width:min(410px,calc((100vw - 250px)*.56))!important;max-width:58vw!important;height:calc(100dvh - 16px)!important;max-height:calc(100dvh - 16px)!important;transform:none!important;transition:opacity .35s,transform .38s!important;z-index:800!important}
+body:has(#musicas.page.active .library-expanded) #floatingMusic[hidden]{display:flex!important;visibility:visible!important;opacity:1!important}
+body:has(#musicas.page.active .library-expanded) #floatingMusic:not(.with-lyrics){display:flex!important;flex-direction:column!important}
+body:has(#musicas.page.active .library-expanded) #lyricsPanel{flex:1 1 auto!important;min-height:0!important}
+@media(max-width:760px){#musicas .music-panel.library-expanded{padding-right:calc(62% + 4px)}body:has(#musicas.page.active .library-expanded) #floatingMusic{width:61vw!important;max-width:61vw!important;right:4px!important;padding:8px!important}#musicFolderDialog{padding:7px!important}#musicFolderDialog .folder-modal-head h2{font-size:12px}}
