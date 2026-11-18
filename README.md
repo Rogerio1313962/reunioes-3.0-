@@ -1,5 +1,5 @@
-REUNIÕES 3.0 — PRÉVIA 31
+REUNIÕES 3.0 — PRÉVIA 34
 
-Correção: carregamento do módulo versions29.js que havia ficado fora do index.html na Prévia 30. Restaura os botões Completa/Trecho/Refrão/Fundo em músicas agrupadas e mantém a proteção contra piscar durante a troca. Botões não aparecem em MP3 avulsos sem grupo.
+Alterações: contagem por música principal, não por MP3; versões existentes visíveis; adicionar versões recolhido e sem contador; nas pastas, Reproduzir / Editar / Excluir, com confirmação para exclusão completa.
 
-Substitua todos os arquivos no GitHub Pages. Teste no iPad.
+Atenção: dados MP3 são locais ao navegador. Faça backup antes de atualizar.

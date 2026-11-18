@@ -204,3 +204,8 @@
 .group-add-details>p,.group-add-details>#groupFileSlots{margin:10px 14px}
 .group-file-slot[hidden],.group-add-details[hidden]{display:none!important}
 .group-existing-row{background:white}
+
+/* Prévia 34 */
+.group-delete-button{color:#a91e28!important;border:1px solid #e8b9bd!important;background:#fff4f4!important}
+#groupExistingTracks:not(:empty){margin:14px 0}
+#groupExistingTracks .group-existing-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
