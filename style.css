@@ -194,3 +194,13 @@
 
 /* Prévia 32: edição segura de arquivos já cadastrados */
 #groupExistingTracks{margin:12px 0}#groupExistingTracks h3{font-size:1rem;margin:8px 0}.group-existing-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;border:1px solid #cbd5e1;border-radius:10px;margin:6px 0;overflow-wrap:anywhere}.group-existing-row span{flex:1;min-width:0}.group-existing-row button{flex-shrink:0;background:#fff1f2;color:#9f1239;border:1px solid #fecdd3;border-radius:8px;padding:8px}
+
+/* Prévia 33 — arquivos existentes visíveis; importação recolhida */
+.group-add-details{border:1px solid #d5e1f0;border-radius:13px;margin:14px 0;background:#f7faff;overflow:hidden}
+.group-add-details>summary{cursor:pointer;padding:15px;font-weight:750;color:#173d68;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.group-add-details>summary::-webkit-details-marker{display:none}
+.group-add-details>summary:after{content:'⌄';margin-left:8px}
+.group-add-details[open]>summary:after{content:'⌃'}
+.group-add-details>p,.group-add-details>#groupFileSlots{margin:10px 14px}
+.group-file-slot[hidden],.group-add-details[hidden]{display:none!important}
+.group-existing-row{background:white}
