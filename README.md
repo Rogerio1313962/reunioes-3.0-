@@ -15,3 +15,6 @@ Dados MP3 do IndexedDB não estão incluídos no ZIP.
 
 
 PRÉVIA 58: (1) Oculta aviso de sincronização no cronograma; (2) botão amarelo fixo no canto inferior direito ao minimizar player do cronograma; (3) player integrado à pasta carrega a primeira música sem autoplay; (4) fundo branco quando pasta vazia e cantos mais suaves; (5) títulos longos deslizam automaticamente uma vez.
+
+
+PRÉVIA 59: Responsividade para Safari no iPad. Ajuste de altura de página, espaços, cartões de pastas e rolagens internas do cronograma, Bíblia e biblioteca. Preserva o funcionamento da Prévia 58.

@@ -669,3 +669,63 @@ body[data-player56] #floatingMusic .floating-music-head{min-width:0!important}
 #preview58TitleViewport{display:block;flex:1 1 0!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important;position:relative!important;mask-image:linear-gradient(to right,#000 96%,transparent 100%)}
 #preview58TitleText{display:inline-block;white-space:nowrap;font-weight:800;will-change:transform;transform:translateX(0)}
 @media (prefers-reduced-motion:reduce){#preview58TitleText{transition:none!important;transform:none!important}}
+
+
+/* PRÉVIA 59 — correção de responsividade iPad: somente dimensões e rolagem.
+   Mantém o comportamento e a aparência dos players da Prévia 58. */
+html,body{max-width:100%;overflow-x:hidden}
+.app{min-height:100dvh;max-width:100%;min-width:0}
+.sidebar{min-height:100dvh;position:sticky;top:0;align-self:flex-start;height:100dvh;overflow-y:auto;overscroll-behavior:contain}
+main{min-width:0;max-width:100%;}
+/* iPad / tablet no Safari: barra lateral e área principal com altura da tela útil.
+   Rolagem somente no conteúdo que realmente ultrapassar o espaço. */
+@media (min-width:700px) and (max-width:1400px){
+ .app{height:100dvh;min-height:0;overflow:hidden}
+ .sidebar{height:100dvh;min-height:0;position:relative;top:auto;flex:0 0 220px;padding:19px 12px}
+ .sidebar .brand{padding-bottom:20px}
+ .sidebar .nav{padding:11px;margin:3px 0}
+ main{height:100dvh;min-height:0;overflow:hidden;padding:13px 16px!important;display:flex;flex-direction:column}
+ main>header{flex:0 0 auto;margin-bottom:10px!important}
+ main>.page.active{min-height:0;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ #agenda .days{padding-bottom:9px;margin-bottom:0}
+ #agenda .layout{grid-template-columns:minmax(0,1fr) minmax(0,.96fr)!important;gap:12px}
+ #agenda .panel{padding:15px!important;margin-bottom:10px}
+ #agenda .panelhead{margin-bottom:12px}
+ #agenda .item{padding:9px!important;gap:9px}
+ #agenda .preview.music-on-right #floatingMusic{min-height:0!important;max-height:calc(100dvh - 115px)!important;overflow-y:auto!important}
+ #biblia .bible-panel{max-width:none;padding:15px!important;margin:0!important}
+ #biblia .bible-stage{margin:10px 0;padding:11px}
+ #biblia .bible-books-grid{max-height:min(33dvh,300px)!important;overflow-y:auto!important;grid-template-columns:repeat(auto-fill,minmax(87px,1fr));gap:6px}
+ #biblia .bible-book-tile{min-height:46px;padding:6px 4px;font-size:12px}
+ #biblia .bible-stage-head{margin:10px 0 7px}
+ #biblia textarea#bibleText{min-height:95px;max-height:22dvh;resize:vertical}
+ body:has(#musicas.page.active) main{min-height:0!important;height:100dvh!important;overflow:hidden!important;padding:9px 12px!important;display:flex!important;flex-direction:column!important}
+ body:has(#musicas.page.active) #musicas.page.active{flex:1 1 auto!important;display:flex!important;min-height:0!important;overflow:hidden!important}
+ #musicas .music-panel{display:flex!important;flex:1 1 auto!important;min-height:0!important;height:100%!important;max-height:100%!important;overflow:hidden!important;padding:0!important;margin:0!important}
+ #music56Workspace{height:100%!important;min-height:0!important;max-height:100%!important;overflow:hidden!important}
+ #music56Left{overflow:hidden!important;min-height:0!important;padding:11px!important;gap:7px!important}
+ #music56Left #musicFolders{overflow-y:auto!important;overscroll-behavior:contain;gap:8px!important;min-height:0!important}
+ #music56Left #musicFolders .music-folder{min-height:77px!important;padding:9px!important}
+ #music56Workspace.folder-open #musicFolderDialog{overflow:hidden!important;min-height:0!important}
+ #music56Left #folderModalContent{overflow-y:auto!important;min-height:0!important;overscroll-behavior:contain}
+ #music56Right{overflow:hidden!important;min-height:0!important}
+ #music56Right #floatingMusic{min-height:0!important;max-height:100%!important;overflow-y:auto!important}
+ #music56Right #lyricsPanel{min-height:0!important}
+ #music56Right #lyricsScroll{overflow-y:auto!important;max-height:none!important}
+}
+/* Pequenos tablets e telefone: sem largura excedente, caixas reduzidas. */
+@media(max-width:699px){
+ .sidebar{height:100dvh;min-height:100dvh}
+ main{padding:10px 8px!important}
+ #biblia .bible-books-grid{max-height:36dvh!important;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:5px}
+ #biblia .bible-book-tile{min-height:44px;padding:5px 3px}
+ body:has(#musicas.page.active) main{padding:6px!important;min-height:0!important}
+ #musicas .music-panel{min-height:calc(100dvh - 12px)!important;height:calc(100dvh - 12px)!important}
+ #music56Workspace{min-height:0!important;height:100%!important;max-height:100%!important;overflow:hidden!important}
+ #music56Left{overflow:hidden!important;min-height:0!important}
+ #music56Left #musicFolders{overflow-y:auto!important;min-height:0!important}
+ #music56Workspace.folder-open #musicFolderDialog{overflow:hidden!important;min-height:0!important}
+ #music56Left #folderModalContent{overflow-y:auto!important;min-height:0!important}
+ #music56Right{overflow:hidden!important}
+ #music56Right #floatingMusic{max-height:100%!important;overflow-y:auto!important}
+}
