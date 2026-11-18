@@ -1,5 +1,1 @@
-REUNIÕES 3.0 — PRÉVIA 34
-
-Alterações: contagem por música principal, não por MP3; versões existentes visíveis; adicionar versões recolhido e sem contador; nas pastas, Reproduzir / Editar / Excluir, com confirmação para exclusão completa.
-
-Atenção: dados MP3 são locais ao navegador. Faça backup antes de atualizar.
+Prévia 37 — remove o player fixo da biblioteca e adiciona pesquisa geral com retorno à pesquisa após edição. Os arquivos MP3 permanecem no armazenamento do Safari. Faça backup antes de atualizar.
