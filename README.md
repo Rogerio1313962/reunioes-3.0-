@@ -292,3 +292,11 @@ PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do 
 - Destaque dourado do slide apresentado, combinando com AO VIVO.
 - Moldura dourada única envolvendo Telão Santuário e grade de PDF.
 - Dimensões e rolagem estáveis na troca de slides para reduzir saltos no Safari do iPad.
+
+
+### PRÉVIA 110 — Estabilidade do PDF e troca segura de reunião
+- Usa o dia atual do iPad como seleção inicial.
+- Antes de mudar de dia enquanto houver conteúdo ao vivo ou música tocando, pede confirmação.
+- Na troca, fecha a grade do PDF e o player musical, interrompe a mídia e carrega a imagem de apoio do novo dia.
+- Telão e grade do PDF com dimensões estáveis, bordas invariáveis e rolagem somente nas miniaturas para reduzir deslocamentos.
+- Os arquivos locais e os demais recursos não são apagados.

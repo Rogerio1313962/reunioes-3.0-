@@ -1876,3 +1876,18 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
  font-size:21px!important;font-weight:900!important;
 }
 @media(max-width:700px){#agenda .right>.r109PresentationFrame>#r70PageWorkspace:not([hidden]){max-height:min(40dvh,330px)!important}}
+
+
+/* Prévia 110: PDF sem tremores / medidas fixas ao renderizar / rolagem isolada. */
+@media(min-width:701px){
+ #agenda .layout>.right>.r109PresentationFrame{contain:layout!important;overflow:hidden!important;min-height:0!important;align-self:start!important;transform:none!important;transition:none!important;}
+ #agenda .right>.r109PresentationFrame>.preview{height:auto!important;min-height:0!important;flex-shrink:0!important;}
+ #agenda .right>.r109PresentationFrame #preview{aspect-ratio:16/9!important;height:auto!important;min-height:0!important;max-height:none!important;position:relative!important;overflow:hidden!important;transform:none!important;}
+ #agenda .right>.r109PresentationFrame>#r70PageWorkspace:not([hidden]){height:clamp(220px,36dvh,355px)!important;max-height:clamp(220px,36dvh,355px)!important;min-height:220px!important;flex:0 0 clamp(220px,36dvh,355px)!important;overflow:hidden!important;}
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70grid{overflow-y:auto!important;overflow-x:hidden!important;scroll-behavior:auto!important;overscroll-behavior:contain!important;overflow-anchor:none!important;scrollbar-gutter:stable!important;min-height:0!important;contain:layout paint!important;}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70page{box-sizing:border-box!important;contain:layout paint!important;transition:none!important;border-width:2px!important;transform:none!important;}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70page.on-screen{border-width:2px!important;transform:none!important;}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70pageThumb{width:100%!important;aspect-ratio:16/9!important;contain:layout paint!important;overflow:hidden!important;}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70pageThumb canvas{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;}
+#agenda .right>.r109PresentationFrame #preview>img,#agenda .right>.r109PresentationFrame #preview>video,#agenda .right>.r109PresentationFrame #preview>canvas{max-height:100%!important;}
