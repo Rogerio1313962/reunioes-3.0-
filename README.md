@@ -143,3 +143,9 @@ Prévia 82: a paleta agora muda visivelmente a cor de destaque e o fundo suave d
 
 ## Prévia 83
 Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones menores à esquerda, sem bordas grossas ou degradês; duas colunas no iPad, uma no celular; nomes em maiúsculas. Sem alteração dos arquivos musicais salvos.
+
+
+## Prévia 84 — Modelo 1 e retorno à biblioteca inicial
+- Pastas em blocos compactos para Músicas e Mídias, com aparência padronizada.
+- Ao sair da aba Mídias e retornar, o aplicativo mostra novamente VÍDEOS, FOTOS e PDFs.
+- Arquivos salvos continuam preservados no IndexedDB original.

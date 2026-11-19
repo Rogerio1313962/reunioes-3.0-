@@ -1338,3 +1338,32 @@ body,main{background:#f0f5f9!important;color:#294862!important}
  background:#edf5fb!important;box-shadow:none!important;transform:none!important
 }
 @media(max-width:630px){#music56Left #musicFolders{grid-template-columns:1fr!important}}
+
+
+/* PRÉVIA 84 — Modelo 1: pastas em blocos compactos e uniformes */
+#music56Left #musicFolders{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;align-content:start!important}
+#music56Left #musicFolders .music-folder{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;
+ text-align:left!important;min-height:112px!important;padding:15px 16px!important;gap:7px!important;
+ background:#fff!important;border:1px solid #d9e4ed!important;border-radius:14px!important;box-shadow:0 2px 7px #244c7210!important;
+ transition:background .15s,border-color .15s!important;outline:0!important;
+}
+#music56Left #musicFolders .music-folder span{display:block!important;width:35px!important;height:33px!important;flex:none!important;background-size:contain!important}
+#music56Left #musicFolders .music-folder b{font-size:12px!important;letter-spacing:.035em!important;text-transform:uppercase!important;line-height:1.2!important;color:#2b526f!important}
+#music56Left #musicFolders .music-folder small{font-size:11px!important;color:#7a91a4!important}
+#music56Left #musicFolders .music-folder.chosen,#music56Left #musicFolders .music-folder:hover{background:#edf5fb!important;border:1px solid #92b6d1!important;box-shadow:none!important}
+#music56Left #musicFolders .music-folder:focus-visible{outline:2px solid #6f9fc0!important;outline-offset:2px!important}
+#biblioteca .m64categories{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
+#biblioteca .m64categories .m64tile{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;
+ text-align:left!important;min-height:124px!important;padding:15px 17px!important;gap:7px!important;
+ background:#fff!important;border:1px solid #d9e4ed!important;border-radius:14px!important;
+ box-shadow:0 2px 7px #244c7210!important;color:#2b526f!important;outline:0!important;
+}
+#biblioteca .m64categories .m77folder-icon{display:block!important;width:49px!important;height:37px!important}
+#biblioteca .m64categories .m77folder-glyph{font-size:13px!important;top:20px!important}
+#biblioteca .m64categories .m64tile strong{font-size:13px!important;line-height:1.2!important;letter-spacing:.035em!important;color:#2b526f!important}
+#biblioteca .m64categories .m64tile small{font-size:11px!important;color:#7a91a4!important}
+#biblioteca .m64categories .m64tile:active,#biblioteca .m64categories .m64tile:hover{background:#edf5fb!important;border:1px solid #92b6d1!important;box-shadow:none!important}
+#biblioteca .m64categories .m64tile:focus-visible{outline:2px solid #6f9fc0!important;outline-offset:2px!important}
+@media(max-width:640px){#music56Left #musicFolders{grid-template-columns:repeat(2,minmax(0,1fr))!important}#biblioteca .m64categories{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}#biblioteca .m64categories .m64tile{padding:10px!important;min-height:106px!important}}

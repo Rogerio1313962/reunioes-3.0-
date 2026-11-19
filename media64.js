@@ -125,5 +125,20 @@ async function addToSchedule(f){
  state.day=index;drawDays();drawItems();setTab('agenda');alert('Arquivo incluído no cronograma. Ele permanece guardado nesta biblioteca do iPad.');
 }
 function render(){release();crumbs();if(!cat)categoriesView();else if(!day)daysView();else folderView()}
+// Sempre retornar à tela com as três categorias quando a aba Mídias for reaberta.
+// Não mexer nos arquivos salvos no IndexedDB, somente no estado da navegação.
+const mediaPage=document.getElementById('biblioteca');
+if(mediaPage){
+ let wasActive=mediaPage.classList.contains('active');
+ new MutationObserver(()=>{
+   const active=mediaPage.classList.contains('active');
+   if(active&&!wasActive){
+      cat=null;day=null;selected=null;mode='preview';search='';
+      release();render();
+   }
+   wasActive=active;
+ }).observe(mediaPage,{attributes:true,attributeFilter:['class']});
+}
+
 (async()=>{try{rows=orderedAll(await dbAll())}catch(e){body.textContent='Este navegador não permitiu acessar o armazenamento local. Verifique o modo privado e as permissões.';return}render()})();
 })();
