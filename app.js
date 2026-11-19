@@ -1,0 +1,169 @@
+const DAYS=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];const KEY='reunioes3-local-v1';let state=JSON.parse(localStorage.getItem(KEY)||'null')||{day:0,days:Array.from({length:7},()=>[]),pastor:'',accent:'#a7c5ff'};let current=null;/* Prévia 110: abrir o cronograma no dia atual do aparelho. */state.day=new Date().getDay(),editId=null,channel=new BroadcastChannel('reunioes3-projetor');const $=id=>document.getElementById(id);const save=()=>localStorage.setItem(KEY,JSON.stringify(state));const uid=()=>crypto.randomUUID();const escapeHtml=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function setTab(tab){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===tab));document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab))}document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));function drawDays(){$('days').innerHTML=DAYS.map((d,i)=>`<button class="${state.day===i?'selected':''}" data-day="${i}">${d}</button>`).join('');$('days').querySelectorAll('button').forEach(b=>b.onclick=()=>{state.day=+b.dataset.day;save();drawDays();drawItems()});$('dayTitle').textContent=DAYS[state.day]}function itemThumb(x){
+  if(x.type==='texto')return '<div class="item-thumb note-icon" aria-hidden="true">▤</div>';
+  if(x.type==='musica')return '<div class="item-thumb audio-icon" aria-hidden="true">♫</div>';
+  if(x.type==='versiculo')return '<div class="item-thumb verse-icon" aria-hidden="true">✝</div>';
+  if(!x.fileUrl)return '<div class="item-thumb file-icon" aria-hidden="true">▣</div>';
+  if(x.type==='imagem')return `<img class="item-thumb" src="${x.fileUrl}" alt="Miniatura da imagem">`;
+  if(x.type==='video')return `<video class="item-thumb" src="${x.fileUrl}#t=0.1" preload="metadata" muted playsinline aria-label="Miniatura do vídeo"></video>`;
+  if(x.type==='pdf')return `<div class="item-thumb pdf-thumb"><iframe src="${x.fileUrl}#page=1&toolbar=0&navpanes=0" title="Prévia da primeira página do PDF" tabindex="-1"></iframe><span>PDF</span></div>`;
+  return '<div class="item-thumb file-icon">▣</div>';
+}
+function drawItems(){
+ const arr=state.days[state.day];
+ $('items').innerHTML=arr.length?arr.map((x,i)=>`<div class="item ${x.type==='texto'?'item-recado':''}" data-item-id="${x.id}" draggable="true">
+  <span class="num">${i+1}</span>${itemThumb(x)}
+  <div class="iteminfo"><b>${x.type==='texto'?'▤ ':''}${escapeHtml(x.title)}</b><small>${{versiculo:'Bíblia',imagem:'Imagem',video:'Vídeo',pdf:'PDF',texto:'Recado · não vai ao telão',musica:'♫ Música MP3'}[x.type]||''} ${x.reference?'· '+escapeHtml(x.reference):''}</small>${x.type==='texto'?`<p class="recado-excerpt">${escapeHtml(x.content)}</p>`:''}</div>
+  ${x.type==='texto'?'':`<button data-act="show" data-id="${x.id}">${x.type==='musica'?'♫ Tocar':'▶ Apresentar'}</button>`}
+  <button data-act="edit" data-id="${x.id}">Editar</button><button data-act="up" data-id="${x.id}" aria-label="Mover para cima">↑</button><button data-act="down" data-id="${x.id}" aria-label="Mover para baixo">↓</button><button data-act="delete" data-id="${x.id}" aria-label="Excluir">✕</button><span class="drag-handle" title="Arraste para mudar a ordem">⠿</span></div>`).join(''):'<div class="empty">Nenhum item neste dia.<br>Adicione o primeiro conteúdo.</div>';
+ $('items').querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{const arr=state.days[state.day],i=arr.findIndex(x=>x.id===b.dataset.id),x=arr[i];switch(b.dataset.act){case 'show':if(x.type!=='pdf'&&x.type!=='musica'&&window.R70?.isPdfOpen?.())window.R70.close();if(x.type==='musica'){playMusic(x.musicId);return}if(x.type==='texto')return;if(['video','imagem','pdf'].includes(x.type)&&window.R70){window.R70.open(x);return}present(x);return;case 'edit':openEditor(x);return;case 'delete':if(confirm('Excluir este item?'))arr.splice(i,1);break;case 'up':if(i>0)[arr[i-1],arr[i]]=[arr[i],arr[i-1]];break;case 'down':if(i<arr.length-1)[arr[i+1],arr[i]]=[arr[i],arr[i+1]];break}save();drawItems()});
+ let dragged=null;
+ $('items').querySelectorAll('.item[draggable]').forEach(el=>{el.addEventListener('dragstart',e=>{dragged=el.dataset.itemId;el.classList.add('dragging');e.dataTransfer.effectAllowed='move'});el.addEventListener('dragend',()=>{el.classList.remove('dragging');dragged=null});el.addEventListener('dragover',e=>e.preventDefault());el.addEventListener('drop',e=>{e.preventDefault();if(!dragged||dragged===el.dataset.itemId)return;const from=arr.findIndex(x=>x.id===dragged),to=arr.findIndex(x=>x.id===el.dataset.itemId);if(from<0||to<0)return;arr.splice(to,0,arr.splice(from,1)[0]);save();drawItems()})});
+}
+function renderContent(x){if(!x)return '<div class="placeholder">✦<p>Nenhum conteúdo na tela</p></div>';if(x.type==='versiculo')return `<div class="verse">${escapeHtml(x.content)}<small>${escapeHtml(x.reference)} · ${escapeHtml(x.translation)}</small></div>`;if(x.type==='texto')return '<div class="placeholder">Recado não é projetado</div>';if(x.type==='imagem')return `<img alt="Imagem" src="${x.fileUrl}">`;if(x.type==='video')return `<video src="${x.fileUrl}" controls autoplay playsinline></video>`;if(x.type==='pdf')return `<iframe title="PDF" src="${x.fileUrl}"></iframe>`;return ''}let mediaPresentToken=0;const mediaPresentationUrls=[];
+async function present(x){
+ const token=++mediaPresentToken;
+ if(!x){current=null;$('preview').innerHTML=renderContent(null);channel.postMessage({kind:'present',item:null});return}
+ let toShow=x;
+ if(x.mediaLibraryId){
+  $('preview').innerHTML='<div class="placeholder"><p>Carregando arquivo da biblioteca…</p></div>';
+  try{const record=await window.ReunioesMediaLibrary.get(x.mediaLibraryId);
+   if(token!==mediaPresentToken)return;
+   if(!record?.blob)throw Error('Arquivo não encontrado neste iPad.');
+   const blob=x.type==='pdf'&&record.blob.type!=='application/pdf'?new Blob([record.blob],{type:'application/pdf'}):record.blob;
+   const blobURL=URL.createObjectURL(blob);mediaPresentationUrls.push(blobURL);
+   toShow={...x,fileUrl:blobURL};
+  }catch(err){if(token===mediaPresentToken){$('preview').innerHTML='<div class="placeholder"><p>Arquivo indisponível neste aparelho. Abra a aba Mídias e confira o arquivo salvo.</p></div>';alert('Não foi possível abrir este arquivo da biblioteca.')}return}
+ }
+ if(token!==mediaPresentToken)return;
+ current=toShow;$('preview').innerHTML=renderContent(toShow);channel.postMessage({kind:'present',item:toShow});
+}
+function openProjector(){window.open('telao.html','reunioes3-telao','width=1280,height=720')}$('openProjector').onclick=openProjector;$('openProjector2').onclick=openProjector;$('clearScreen').onclick=()=>present(null);async function refreshStoredMedia(type,chosenId){
+ const selector=$('storedMediaSelect');if(!selector||!['imagem','video','pdf'].includes(type))return;
+ const requested=chosenId||selector.value;
+ selector.innerHTML='<option value="">Carregando arquivos salvos…</option>';
+ try{
+  const api=window.ReunioesMediaLibrary;
+  if(!api)throw Error('Biblioteca indisponível');
+  const entries=(await api.all()).filter(f=>f.type===type).sort((a,b)=>(b.addedAt||0)-(a.addedAt||0));
+  selector.innerHTML='<option value="">Escolher arquivo da biblioteca…</option>'+entries.map(f=>'<option value="'+escapeHtml(f.id)+'">'+escapeHtml(f.day+' · '+f.name)+'</option>').join('');
+  if(requested&&entries.some(f=>f.id===requested))selector.value=requested;
+  $('storedMediaCount').textContent=entries.length?entries.length+' arquivo(s) disponível(is).':'Nenhum arquivo desse tipo. Adicione primeiro na aba Mídias ou escolha um novo arquivo abaixo.';
+ }catch(err){selector.innerHTML='<option value="">Não foi possível acessar a biblioteca</option>';$('storedMediaCount').textContent='Tente novamente ou selecione um arquivo novo.'}
+}
+function fields(){let t=$('type').value;$('verseFields').hidden=t!=='versiculo';$('fileFields').hidden=!['imagem','video','pdf'].includes(t);$('itemTitle').required=!['imagem','video','pdf'].includes(t);if(['imagem','video','pdf'].includes(t))void refreshStoredMedia(t);$('textFields').hidden=t!=='texto';$('musicFields').hidden=t!=='musica';if(t==='musica')refreshMusicSelect();$('file').accept=t==='imagem'?'image/*':t==='video'?'video/*':'.pdf,application/pdf'}$('type').onchange=fields;function openEditor(x){editId=x?.id||null;$('modalTitle').textContent=x?'Editar item':'Adicionar item';$('editForm').reset();$('type').value=x?.type||'versiculo';$('itemTitle').value=x?.title||'';$('reference').value=x?.reference||'';$('translation').value=x?.translation||'ACF';$('content').value=x?.content||'';$('freeText').value=x?.type==='texto'?x.content:'';fields();if(x?.type==='musica')$('musicSelect').value=x.musicId||'';$('editor').showModal();if(x?.mediaLibraryId)void refreshStoredMedia(x.type,x.mediaLibraryId)}$('addItem').onclick=()=>openEditor();$('libraryAdd').onclick=()=>{setTab('agenda');openEditor()};function blobToDataUrl(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}$('editForm').onsubmit=async e=>{if(e.submitter?.value==='cancel')return;e.preventDefault();const type=$('type').value;let title=$('itemTitle').value.trim();if(type==='musica'&&!title){const entry=musicIndex.find(m=>m.id===$('musicSelect').value);title=entry?.name||'';}if(!title&&['imagem','video','pdf'].includes(type)){const id=$('storedMediaSelect')?.value;const api=window.ReunioesMediaLibrary;if(id&&api){const entry=await api.get(id).catch(()=>null);title=entry?.name||''}else if($('file').files[0])title=$('file').files[0].name}if(!title){alert('Informe o título.');return}const arr=state.days[state.day];const old=arr.find(x=>x.id===editId);let fileUrl=old?.fileUrl||null;let mediaLibraryId=old?.mediaLibraryId||null;
+ if(['imagem','video','pdf'].includes(type)){
+  const file=$('file').files[0];const librarySelection=$('storedMediaSelect')?.value;
+  if(file){
+   try{const api=window.ReunioesMediaLibrary;if(!api)throw Error('Biblioteca indisponível');
+    const id=uid();await api.put({id,name:file.name,type,day:DAYS[state.day],blob:file,size:file.size,addedAt:Date.now()});
+    mediaLibraryId=id;fileUrl=null;
+   }catch(err){alert('Não foi possível salvar o novo arquivo na biblioteca. '+(err?.message||''));return}
+  }else if(librarySelection){mediaLibraryId=librarySelection;fileUrl=null}
+  if(!fileUrl&&!mediaLibraryId){alert('Escolha um arquivo da Biblioteca de Mídias ou selecione um novo arquivo.');return}
+ }else{mediaLibraryId=null}
+ let item={id:editId||uid(),type,title,mediaLibraryId,reference:$('reference').value,translation:$('translation').value,content:type==='texto'?$('freeText').value:$('content').value,fileUrl,musicId:type==='musica'?$('musicSelect').value:null,sectionId:$('itemSection').value};if(type==='musica'&&!item.musicId){alert('Escolha uma música da biblioteca.');return}if(old)arr[arr.indexOf(old)]=item;else arr.push(item);try{save()}catch(err){alert('Espaço do navegador insuficiente para salvar este arquivo. Para vídeos grandes, será necessário armazenamento na nuvem.');if(old)arr[arr.indexOf(item)]=old;else arr.pop();return}$('editor').close();drawItems()};$('pastor').value=state.pastor;$('pastor').oninput=e=>{state.pastor=e.target.value;save()};$('accent').value=state.accent;document.documentElement.style.setProperty('--accent',state.accent);$('accent').onchange=e=>{state.accent=e.target.value;document.documentElement.style.setProperty('--accent',state.accent);save()};drawDays();drawItems();
+
+// Audio: ajuste de 1%, com atualização imediata da prévia local.
+let videoVolume=25,videoMuted=false;const clamp=v=>Math.max(0,Math.min(100,v));
+function syncVolume(){const shown=videoMuted?0:videoVolume;$('videoVolume').value=videoVolume;$('volumeValue').textContent=shown+'%';$('muteVideo').textContent=videoMuted?'Ativar som':'Silenciar';const video=$('preview').querySelector('video');if(video){video.volume=videoVolume/100;video.muted=videoMuted}channel.postMessage({kind:'volume',volume:videoVolume/100,muted:videoMuted})}
+$('videoVolume').addEventListener('input',e=>{videoVolume=clamp(Number(e.target.value));videoMuted=false;syncVolume()});$('volumeDown').onclick=()=>{videoVolume=clamp(videoVolume-1);videoMuted=false;syncVolume()};$('volumeUp').onclick=()=>{videoVolume=clamp(videoVolume+1);videoMuted=false;syncVolume()};$('muteVideo').onclick=()=>{videoMuted=!videoMuted;syncVolume()};
+const originalPresent=present;present=function(item){originalPresent(item);syncVolume()};
+function tick(){const now=new Date();$('liveClock').textContent=now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});$('liveDate').textContent=now.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'short'})}tick();setInterval(tick,15000);
+function pastorBadge(){$('pastorBadge').textContent=state.pastor||'Responsável não definido'}pastorBadge();$('pastor').addEventListener('input',pastorBadge);
+
+// Seletor bíblico independente do editor e da projeção.
+const BIBLE_BOOKS=[['Gênesis',50],['Êxodo',40],['Levítico',27],['Números',36],['Deuteronômio',34],['Josué',24],['Juízes',21],['Rute',4],['1 Samuel',31],['2 Samuel',24],['1 Reis',22],['2 Reis',25],['1 Crônicas',29],['2 Crônicas',36],['Esdras',10],['Neemias',13],['Ester',10],['Jó',42],['Salmos',150],['Provérbios',31],['Eclesiastes',12],['Cânticos',8],['Isaías',66],['Jeremias',52],['Lamentações',5],['Ezequiel',48],['Daniel',12],['Oseias',14],['Joel',3],['Amós',9],['Obadias',1],['Jonas',4],['Miqueias',7],['Naum',3],['Habacuque',3],['Sofonias',3],['Ageu',2],['Zacarias',14],['Malaquias',4],['Mateus',28],['Marcos',16],['Lucas',24],['João',21],['Atos',28],['Romanos',16],['1 Coríntios',16],['2 Coríntios',13],['Gálatas',6],['Efésios',6],['Filipenses',4],['Colossenses',4],['1 Tessalonicenses',5],['2 Tessalonicenses',3],['1 Timóteo',6],['2 Timóteo',4],['Tito',3],['Filemom',1],['Hebreus',13],['Tiago',5],['1 Pedro',5],['2 Pedro',3],['1 João',5],['2 João',1],['3 João',1],['Judas',1],['Apocalipse',22]];
+$('bibleBook').innerHTML=BIBLE_BOOKS.map((b,i)=>`<option value="${i}">${b[0]}</option>`).join('');
+function bibleChapters(){const count=BIBLE_BOOKS[Number($('bibleBook').value)][1];$('bibleChapter').innerHTML=Array.from({length:count},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('')}
+bibleChapters();
+// Prévia 5: navegação em três etapas, quadradinhos por grupos de cores.
+const BIBLE_ABBR=['Gn','Ex','Lv','Nm','Dt','Js','Jz','Rt','1Sm','2Sm','1Rs','2Rs','1Cr','2Cr','Ed','Ne','Et','Jó','Sl','Pv','Ec','Ct','Is','Jr','Lm','Ez','Dn','Os','Jl','Am','Ob','Jn','Mq','Na','Hc','Sf','Ag','Zc','Ml','Mt','Mc','Lc','Jo','At','Rm','1Co','2Co','Gl','Ef','Fp','Cl','1Ts','2Ts','1Tm','2Tm','Tt','Fm','Hb','Tg','1Pe','2Pe','1Jo','2Jo','3Jo','Jd','Ap'];
+const BIBLE_GROUPS=[5,17,22,27,39,43,44,57,65,66];
+let bibleStep='book', selectedVerses=[];
+let bibleLoadedKey='',bibleLoadedText='',bibleCredit='',bibleFetchSerial=0;
+const BIBLE_SLUGS=['genesis','exodus','leviticus','numbers','deuteronomy','joshua','judges','ruth','1-samuel','2-samuel','1-kings','2-kings','1-chronicles','2-chronicles','ezra','nehemiah','esther','job','psalms','proverbs','ecclesiastes','song-of-solomon','isaiah','jeremiah','lamentations','ezekiel','daniel','hosea','joel','amos','obadiah','jonah','micah','nahum','habakkuk','zephaniah','haggai','zechariah','malachi','matthew','mark','luke','john','acts','romans','1-corinthians','2-corinthians','galatians','ephesians','philippians','colossians','1-thessalonians','2-thessalonians','1-timothy','2-timothy','titus','philemon','hebrews','james','1-peter','2-peter','1-john','2-john','3-john','jude','revelation'];
+const bibleCache=new Map();
+function resetBibleText(){bibleLoadedKey='';bibleLoadedText='';$('bibleText').value='';$('bibleCredit').textContent='';}
+// Prévia 7: textos somente de bases ACF/ARA fornecidas pelo usuário.
+// Formato JSON: {"translation":"ACF", "books":{"Gênesis":{"1":{"1":"Texto..."}}}}
+// ou {"translation":"ARA", "books":{"0":{"1":{"1":"Texto..."}}}}.
+const importedBibles={};
+// Armazenamento local das bases autorizadas, para não exigir nova importação a cada abertura.
+function bibleDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('reunioes3-biblias',1);req.onupgradeneeded=()=>req.result.createObjectStore('translations');req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function storeBible(version,data){const db=await bibleDB();return new Promise((resolve,reject)=>{const tx=db.transaction('translations','readwrite');tx.objectStore('translations').put(data,version);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+// Prévia 118: ACF e ARA já acompanham o aplicativo. Carrega os JSONs locais automaticamente,
+// e guarda cópia no IndexedDB para que também funcionem depois de carregados sem rede.
+async function restoreBibles(){
+  const versions=['ACF','ARA'];
+  $('bibleImportStatus').textContent='Carregando ACF e ARA inclusas no aplicativo...';
+  // Restaurar bases da memória do navegador primeiro (inclusive em modo offline).
+  try{
+    const db=await bibleDB();
+    for(const version of versions){
+      const data=await new Promise((resolve,reject)=>{
+        const tx=db.transaction('translations','readonly');
+        const req=tx.objectStore('translations').get(version);
+        req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+      });
+      if(data&&data.books)importedBibles[version]=data;
+    }
+    db.close();
+    drawBiblePicker();loadBibleText();
+  }catch(error){console.warn('Bíblias em cache indisponíveis:',error)}
+  // Bases entregues junto com o app: não precisa escolher arquivos no iPad.
+  const outcome=await Promise.all(versions.map(async version=>{
+    try{
+      const response=await fetch('./Biblia_'+version+'.json?v=118',{cache:'force-cache'});
+      if(!response.ok)throw Error('HTTP '+response.status);
+      const data=await response.json();
+      if(data.translation!==version||!data.books||Object.keys(data.books).length!==66)throw Error('Base bíblica incompleta');
+      importedBibles[version]=data;
+      try{await storeBible(version,data)}catch(error){console.warn('Não foi possível guardar Bíblia para uso offline:',error)}
+      return true;
+    }catch(error){console.warn('Bíblia '+version+' não carregou do pacote:',error);return false}
+  }));
+  const ready=versions.filter(v=>!!importedBibles[v]);
+  if(ready.length===2){$('bibleImportStatus').textContent='ACF e ARA prontas para usar — já incluídas no aplicativo.'}
+  else if(ready.length){$('bibleImportStatus').textContent='Disponível: '+ready.join(', ')+'. Para completar, abra o aplicativo com o servidor ativo.'}
+  else{$('bibleImportStatus').textContent='Não foi possível carregar as Bíblias. Abra o aplicativo pelo endereço do servidor e recarregue.'}
+  drawBiblePicker();loadBibleText();
+}
+function importedVerseCount(bi,ch){const data=importedBibles[$('bibleTranslation').value];if(!data)return 40;let n=0;for(let v=1;v<=180;v++){if(getImportedVerse(data,bi,ch,v))n=v;else if(n)break}return n||40}
+
+function normalizeBookKey(k){return String(k).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
+function getImportedVerse(data,bi,ch,n){const books=data.books||data.livros||{};const bookName=BIBLE_BOOKS[bi][0];let book=books[bookName]||books[String(bi)]||books[String(bi+1)];if(!book){const wanted=normalizeBookKey(bookName);const key=Object.keys(books).find(k=>normalizeBookKey(k)===wanted);book=books[key]}const chapters=book?.chapters||book?.capitulos||book;const chapter=chapters?.[String(ch)]|| (Array.isArray(chapters)?chapters[ch-1]:null);const verses=chapter?.verses||chapter?.versiculos||chapter;const entry=verses?.[String(n)]??(Array.isArray(verses)?verses[n-1]:null);return typeof entry==='string'?entry:entry?.text||entry?.texto||''}
+async function loadBibleText(){const serial=++bibleFetchSerial;resetBibleText();if(!selectedVerses.length){$('bibleLoadStatus').textContent='Toque nos versículos para selecionar.';return;}const bi=Number($('bibleBook').value),ch=Number($('bibleChapter').value),version=$('bibleTranslation').value;const data=importedBibles[version];if(!data){$('bibleLoadStatus').textContent=`Bíblia ${version} ainda não carregada. Aguarde ou recarregue o aplicativo.`;return;}const selected=[...selectedVerses].sort((a,b)=>a-b);const found=selected.map(n=>getImportedVerse(data,bi,ch,n));if(found.some(t=>!t)){ $('bibleLoadStatus').textContent='Um ou mais versículos não estão presentes na base importada.';return;}if(serial!==bibleFetchSerial)return;bibleLoadedText=found.map((t,i)=>`${selected[i]}. ${t}`).join('\n\n');bibleLoadedKey=[version,bi,ch,selected.join(',')].join('/');$('bibleText').value=bibleLoadedText;bibleCredit=data.credit||data.fonte||'';$('bibleCredit').textContent=bibleCredit;$('bibleLoadStatus').textContent=`Texto ${version} pronto para apresentação.`;}
+$('bibleImport').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>15*1024*1024)throw Error('Arquivo maior que 15 MB.');const data=JSON.parse(await file.text());const translation=String(data.translation||data.traducao||'').toUpperCase();if(!['ACF','ARA'].includes(translation))throw Error('O JSON deve indicar translation: ACF ou ARA.');if(!data.books&&!data.livros)throw Error('O JSON precisa conter books ou livros.');importedBibles[translation]=data;await storeBible(translation,data);$('bibleTranslation').value=translation;$('bibleImportStatus').textContent=`Base ${translation} salva neste aparelho. Não é sincronizada entre aparelhos.`;drawBiblePicker();loadBibleText();}catch(err){$('bibleImportStatus').textContent='Erro na importação: '+err.message;}});
+$('bibleTranslation').addEventListener('change',loadBibleText);
+function bibleGroup(i){return BIBLE_GROUPS.findIndex(n=>i<n)}
+function bibleRef(){const name=BIBLE_BOOKS[Number($('bibleBook').value)][0],ch=Number($('bibleChapter').value)||1;const vs=[...selectedVerses].sort((a,b)=>a-b);const ref=`${name} ${ch}${vs.length?':'+vs.join(', '):''}`;$('bibleReferencePreview').textContent='Referência: '+ref;return ref}
+function drawBiblePicker(){const bi=Number($('bibleBook').value),book=BIBLE_BOOKS[bi],ch=Number($('bibleChapter').value)||1;
+ $('bibleSelectedBook').textContent=book[0];$('bibleSelectedChapter').textContent='Capítulo '+ch;$('bibleSelectedVerses').textContent=selectedVerses.length?selectedVerses.slice().sort((a,b)=>a-b).join(', '):'Selecionar';
+ ['book','chapter','verse'].forEach(step=>{const b=$('bibleStep'+step[0].toUpperCase()+step.slice(1));b.classList.toggle('active',step===bibleStep);b.setAttribute('aria-pressed',step===bibleStep)});
+ $('bibleBooksGrid').hidden=bibleStep!=='book';$('bibleChaptersGrid').hidden=bibleStep!=='chapter';$('bibleVersesGrid').hidden=bibleStep!=='verse';
+ if(bibleStep==='book'){$('bibleBooksGrid').innerHTML=BIBLE_BOOKS.map(([name],i)=>`<button type="button" class="bible-book-tile group-${bibleGroup(i)} ${i===bi?'chosen':''}" data-book="${i}"><strong>${BIBLE_ABBR[i]}</strong><small>${escapeHtml(name)}</small></button>`).join('');$('bibleBooksGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('bibleBook').value=b.dataset.book;bibleChapters();selectedVerses=[];bibleStep='chapter';drawBiblePicker();loadBibleText()})}
+ if(bibleStep==='chapter'){$('bibleChaptersGrid').innerHTML=Array.from({length:book[1]},(_,i)=>`<button type="button" data-chapter="${i+1}" class="${ch===i+1?'chosen':''}">${i+1}</button>`).join('');$('bibleChaptersGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('bibleChapter').value=b.dataset.chapter;selectedVerses=[];bibleStep='verse';drawBiblePicker();loadBibleText()})}
+ if(bibleStep==='verse'){const max=importedVerseCount(bi,ch); // Usa a quantidade da base importada quando disponível.
+ $('bibleVersesGrid').innerHTML=Array.from({length:max},(_,i)=>`<button type="button" data-verse="${i+1}" class="${selectedVerses.includes(i+1)?'chosen':''}" aria-pressed="${selectedVerses.includes(i+1)}">${i+1}</button>`).join('');$('bibleVersesGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{const v=Number(b.dataset.verse);selectedVerses=selectedVerses.includes(v)?selectedVerses.filter(x=>x!==v):[...selectedVerses,v];drawBiblePicker();loadBibleText()})}
+ bibleRef();}
+['book','chapter','verse'].forEach(step=>{$('bibleStep'+step[0].toUpperCase()+step.slice(1)).onclick=()=>{bibleStep=step;drawBiblePicker()}});
+// A referência lista apenas os versículos tocados; nunca cria um intervalo.
+function bibleItem(){const content=bibleLoadedText.trim();const key=[$('bibleTranslation').value,Number($('bibleBook').value),Number($('bibleChapter').value),selectedVerses.slice().sort((a,b)=>a-b).join(',')].join('/');if(!selectedVerses.length){alert('Escolha pelo menos um versículo.');return null}if(!content||bibleLoadedKey!==key){alert('Aguarde o carregamento do texto bíblico antes de continuar.');return null}const reference=bibleRef();return {id:uid(),type:'versiculo',title:$('bibleTitle').value.trim()||reference,reference,translation:$('bibleTranslation').selectedOptions[0].textContent,content,credit:bibleCredit,fileUrl:null}}
+$('bibleAdd').onclick=()=>{const item=bibleItem();if(!item)return;state.days[state.day].push(item);try{save()}catch(e){state.days[state.day].pop();alert('Não foi possível salvar no aparelho.');return}drawItems();setTab('agenda');alert('Adicionado ao cronograma. Nada foi projetado.')};
+$('biblePresent').onclick=()=>{const item=bibleItem();if(item){present(item);setTab('agenda')}};
+drawBiblePicker();
+restoreBibles();
+
+// Prévia 9: biblioteca de MP3 com armazenamento local em IndexedDB.
+const MUSIC_FOLDERS=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Fundos de Busca','Fundos de Clamor','Fundos de Descarrego'];
+let musicIndex=[],musicFolder=MUSIC_FOLDERS[0],musicObjectUrl=null;
+function musicDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open('reunioes3-mp3-v1',1);req.onupgradeneeded=()=>req.result.createObjectStore('tracks',{keyPath:'id'});req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function musicAll(){const db=await musicDb();return new Promise((resolve,reject)=>{const req=db.transaction('tracks').objectStore('tracks').getAll();req.onsuccess=()=>{db.close();resolve(req.result)};req.onerror=()=>{db.close();reject(req.error)}})}
+async function musicPut(track){const db=await musicDb();return new Promise((resolve,reject)=>{const tx=db.transaction('tracks','readwrite');tx.objectStore('tracks').put(track);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+async function musicRemove(id){const db=await musicDb();return new Promise((resolve,reject)=>{const tx=db.transaction('tracks','readwrite');tx.objectStore('tracks').delete(id);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+function refreshMusicSelect(){const sel=$('musicSelect');const prev=sel.value;sel.innerHTML=musicIndex.map(m=>`<option value="${m.id}">${escapeHtml(m.folder)} · ${escapeHtml(m.name)}</option>`).join('');if(musicIndex.some(m=>m.id===prev))sel.value=prev}
+function drawMusic(){const folders=$('musicFolders');folders.innerHTML=MUSIC_FOLDERS.map((f,i)=>`<button type="button" class="music-folder ${f===musicFolder?'chosen':''}" data-folder="${i}"><span>${i>6?'♫':'▦'}</span><b>${escapeHtml(f)}</b><small>${musicIndex.filter(m=>m.folder===f).length} arquivo(s)</small></button>`).join('');folders.querySelectorAll('button').forEach(b=>b.onclick=()=>{musicFolder=MUSIC_FOLDERS[+b.dataset.folder];drawMusic()});$('musicFolderTitle').textContent=musicFolder;const tracks=musicIndex.filter(m=>m.folder===musicFolder);$('musicCount').textContent=tracks.length+' arquivo(s)';$('musicList').innerHTML=tracks.length?tracks.map(m=>`<div class="music-track"><span>♫</span><div><b>${escapeHtml(m.name)}</b><small>MP3 · ${(m.size/1024/1024).toFixed(1)} MB</small></div><button data-play="${m.id}">▶ Ouvir</button><button data-add="${m.id}">+ Cronograma</button><button data-remove="${m.id}">Excluir</button></div>`).join(''):'<div class="empty">Esta pasta está vazia. Toque em “Gerenciar MP3” para adicionar músicas.</div>';$('musicList').querySelectorAll('[data-play]').forEach(b=>b.onclick=()=>playMusic(b.dataset.play));$('musicList').querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const m=musicIndex.find(x=>x.id===b.dataset.add);state.days[state.day].push({id:uid(),type:'musica',title:m.name,musicId:m.id});save();drawItems();setTab('agenda')});$('musicList').querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{if(!confirm('Excluir este MP3 da biblioteca deste aparelho?'))return;await musicRemove(b.dataset.remove);await loadMusic()})}
+async function loadMusic(){try{const all=await musicAll();musicIndex=all.map(({id,name,folder,size})=>({id,name,folder,size}));drawMusic();refreshMusicSelect()}catch(err){$('musicList').textContent='Não foi possível acessar o armazenamento de músicas neste navegador.'}}
+async function playMusic(id){try{const db=await musicDb();const m=await new Promise((resolve,reject)=>{const r=db.transaction('tracks').objectStore('tracks').get(id);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});db.close();if(!m){alert('Este MP3 não está salvo neste aparelho. Adicione-o novamente na aba Músicas.');return}const player=$('musicAudio');player.pause();if(musicObjectUrl)URL.revokeObjectURL(musicObjectUrl);musicObjectUrl=URL.createObjectURL(m.blob);player.src=musicObjectUrl;$('musicNow').textContent='♫ '+m.name;if(!window.__preview58PrepareOnly)await player.play()}catch(err){alert('Não foi possível iniciar o áudio. Abra a aba Músicas e toque em Ouvir.') }}
+$('musicManage').onclick=()=>{$('musicUploadFolder').value=musicFolder;$('musicUploadDialog').showModal()};$('musicUploadFolder').innerHTML=MUSIC_FOLDERS.map(f=>`<option>${escapeHtml(f)}</option>`).join('');$('musicUploadForm').onsubmit=async e=>{if(e.submitter?.value==='cancel')return;e.preventDefault();const files=[...$('musicFiles').files];if(!files.length)return;const folder=$('musicUploadFolder').value;try{for(const file of files){if(!file.type.startsWith('audio/')&&!/\.mp3$/i.test(file.name))throw Error('Selecione arquivos de áudio.');await musicPut({id:uid(),name:file.name.replace(/\.[^.]+$/,''),folder,size:file.size,blob:file})}musicFolder=folder;$('musicUploadDialog').close();$('musicUploadForm').reset();await loadMusic()}catch(err){alert('Não foi possível salvar o MP3. Verifique o espaço livre no aparelho.')}};
+$('musicStop').onclick=()=>{const player=$('musicAudio');player.pause();player.currentTime=0};$('musicVolume').oninput=e=>{$('musicAudio').volume=+e.target.value/100;$('musicVolumeLabel').textContent=e.target.value+'%'};$('musicAudio').volume=.5;loadMusic();

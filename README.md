@@ -1,0 +1,353 @@
+PRÉVIA 112 — Imagem de Apoio ao alternar dias
+- Evita carregamento concorrente durante a limpeza do dia anterior.
+- Carrega a imagem de apoio depois de selecionar o dia novo.
+- Aguarda a imagem decodificar antes de alterar o telão.
+- Não apaga bibliotecas ou configurações anteriores.
+
+PRÉVIA 107 — AJUSTES DE CABEÇALHO
+- Grade do PDF: exibir nome do arquivo em vez de “Páginas do PDF” e ocultar quantidade total.
+- Grade um pouco mais próxima do cabeçalho.
+- TELÃO SANTUÁRIO + AO VIVO centralizados como um grupo, com engrenagem à direita.
+- Outras funcionalidades da Prévia 106 preservadas.
+
+PRÉVIA 104 — ajustes solicitados a partir do ZIP original Prévia 103
+
+1. Grade PDF na coluna direita, abaixo do Telão Santuário, com três slides por linha e rolagem própria. Não esconde os itens do cronograma. Botão X fecha PDF e retira o slide do telão.
+2. Media Player das músicas do cronograma sempre sobreposto na coluna esquerda, inclusive com PDF aberto. Minimizar não interrompe áudio; botão dourado de reabrir no canto inferior direito.
+3. Seletor de Vídeos, Fotos e PDFs no cronograma: janela mais compacta com miniaturas reais, três por linha no iPad e duas no celular; mantém leitura das mídias já salvas.
+
+Não limpa o armazenamento local. Não sincroniza arquivos entre dispositivos. Testes de sintaxe e pacote não substituem teste real no Safari iPad.
+
+PRÉVIA 95 — Estabilidade do cronograma e Telão no iPad
+- No iPad em modo horizontal, a página não rola inteira: somente a lista do cronograma ou as miniaturas do PDF rolam.
+- O Telão Santuário fica fixo à direita.
+- O Media Player musical permanece sobre o telão e a letra tem rolagem independente com toque.
+- Dia da semana em fonte maior e sem ORGANIZAÇÃO. Botões Editar cronograma e Imagem de Apoio na mesma linha.
+- Minimizar PDF em dourado.
+- Os arquivos da biblioteca não são excluídos ou migrados.
+
+# Prévia 94 — Troca de slides sem mensagem intermediária
+
+- Remove o texto "Preparando página..." do Telão Santuário durante a troca de slides de PDF.
+- Mantém a imagem anterior até a próxima página estar disponível, sem tela preta ou texto de carregamento.
+- Usa a miniatura já renderizada como prévia imediata, quando disponível, e substitui por uma renderização de melhor qualidade.
+- Evita enviar uma página à apresentação antes de ela estar pronta.
+- Ignora renderizações antigas quando o usuário troca de slide rapidamente ou encerra a apresentação.
+- Mantém os demais recursos da Prévia 93.
+- Os arquivos do usuário permanecem no armazenamento local do navegador; não limpar os dados do site.
+
+PRÉVIA 92 — Player sobreposto ao Telão Santuário e controle de Imagem de Apoio compacto
+- Media Player de música aparece por cima da área do telão (sobreposição), não como painel alto abaixo.
+- Minimizar recolhe sem interromper a música; botão de reabrir permanece abaixo do telão.
+- Controle da Imagem de Apoio mostra somente o texto fixo “Imagem de Apoio”, sem nome do arquivo; dentro da janela ainda é possível trocar/remover.
+- Mantém arquivos e bases de dados existentes, sem reset.
+- Não validado em Safari real neste ambiente.
+
+PRÉVIA 78 — Miniaturas no cronograma e no seletor de mídias
+
+- Vídeos: usa quadro real capturado do vídeo quando o Safari permite; mantém o quadro de vídeo com controle nativo como alternativa.
+- Fotos: exibe a própria imagem.
+- PDFs: exibe a primeira página pelo renderizador integrado ao navegador, quando suportado.
+- Aplicado à galeria de escolha e aos cartões no cronograma.
+- Não remove arquivos já salvos.
+
+PRÉVIA 77 — Pastas modernas e upload simples
+
+- Vídeos, Fotos e PDFs são categorias únicas; uploads novos guardados em Todos, sem seleção de dias.
+- Upload com arquivo somente, nome automático, edição posterior pelo lápis.
+- Pastas visuais claras com ícones e títulos em maiúsculas; removido destaque dourado.
+- Pastas de Música também têm visual de pasta com ícone próprio.
+- Os arquivos anteriores no IndexedDB não são apagados.
+
+# REUNIÕES 3.0 — PRÉVIA 75
+
+Atualização consolidada da Prévia 74.
+
+**Novidade:** Cronograma > Adicionar > Vídeo/Foto/PDF/Música > Pasta abre galeria visual com três arquivos por linha e prévias dos arquivos guardados. Fotos mostram a imagem; vídeos mostram um quadro com ícone de Play; PDFs tentam mostrar a primeira página pelo visualizador PDF integrado ao navegador. No Safari, a miniatura do PDF depende do suporte nativo do iOS.
+
+Demais recursos e limitações da Prévia 74 foram preservados. Os arquivos residem no armazenamento local deste navegador e não sincronizam automaticamente com o computador. A apresentação remota e compatibilidade real no Safari precisam de testes.
+
+REUNIÕES 3.0 — PRÉVIA 57 RECONSTRUÍDA E CORRIGIDA (BASE 56)
+
+Alterações somente de 56 para 57:
+- Busca principal compacta com lupa e botão Adicionar música na mesma linha.
+- Busca dentro da pasta acima dos botões Voltar e Adicionar música, menores e centralizados.
+- Área compacta do Media Player à direita quando abre pasta, mantendo o original ao selecionar música.
+- Correção da busca para ocultar as caixas de pastas durante resultados.
+
+Limpeza segura:
+- layout54.js e layout55.js não são carregados pelo index.html atual e foram excluídos desta distribuição.
+- Os demais arquivos são mantidos, pois são carregados ou usados.
+
+ATENÇÃO GITHUB: carregar este ZIP descompactado no repositório não apaga automaticamente arquivos anteriores. É necessário excluir layout54.js e layout55.js manualmente no GitHub, após validar esta versão.
+Dados MP3 do IndexedDB não estão incluídos no ZIP.
+
+
+PRÉVIA 58: (1) Oculta aviso de sincronização no cronograma; (2) botão amarelo fixo no canto inferior direito ao minimizar player do cronograma; (3) player integrado à pasta carrega a primeira música sem autoplay; (4) fundo branco quando pasta vazia e cantos mais suaves; (5) títulos longos deslizam automaticamente uma vez.
+
+
+PRÉVIA 59: Responsividade para Safari no iPad. Ajuste de altura de página, espaços, cartões de pastas e rolagens internas do cronograma, Bíblia e biblioteca. Preserva o funcionamento da Prévia 58.
+
+Prévia 60: cores navy/dourado da biblioteca e pastas; busca menor; cadastro de MP3 encaixado na coluna direita, mantendo formulário e seleção de arquivos originais.
+
+PRÉVIA 61: alivia fundos e cartões da biblioteca e do cadastro de músicas; remove bordas claras excessivas. Bloqueia gesto de pinça/zoom no Safari do iPad para uso do aplicativo, mantendo rolagem de um dedo. Não modifica o Media Player do cronograma nem os dados locais.
+
+
+Prévia 62: cores das caixas da biblioteca aplicadas ao app; frase Biblioteca de Áudio removida; letra do player da pasta rolável por toque.
+
+
+## Prévia 63
+- Ajuste de grade do Media Player nas pastas: área branca da letra ocupa o restante da altura do player; rolagem vertical com um dedo, sem deslocar controles.
+- Botões de edição (lápis) e exclusão (lixeira) maiores e alinhados nas linhas de música.
+- Sem alterações intencionais em funções de áudio, biblioteca, cronograma ou Bíblia.
+
+
+## Prévia 64 — Biblioteca de Mídias
+Aba Mídias com categorias Vídeos, Fotos e PDFs; pastas por dia; pesquisa, edição do nome, exclusão, prévia e cadastro em painel à direita. Arquivos guardados localmente em IndexedDB (`reunioes3-midias-v64`) e não sincronizados entre dispositivos. Ao usar no cronograma, esta prévia conserva a restrição de 2 MB por arquivo devido ao armazenamento existente no aplicativo. Não remover arquivos da versão anterior de maneira isolada sem revisar as referências.
+
+
+## Prévia 65 — Correção da 64
+Restaura o botão `libraryAdd` invisível de compatibilidade, que havia sido removido na 64 e causava interrupção do `app.js` (prejudicando Cronograma, Bíblia e Músicas). Biblioteca de Mídias com retorno explícito a Mídias, pesquisador compacto, pastas menores, e prévia sem cartão branco vazio até a escolha de um arquivo.
+
+
+## Prévia 66
+- Mídias: pastas com miniaturas em até quatro colunas, sem painel lateral e sem pesquisa interna.
+- Botões Voltar à esquerda e Adicionar à direita, centralizados.
+- Arquivos novos aparecem primeiro na pasta (data de cadastro).
+- Vídeos reproduzidos no próprio cartão; imagens visíveis; PDFs com miniatura incorporada quando o Safari permitir e botão Abrir.
+- Músicas agrupadas e avulsas em ordem alfabética na pasta.
+
+
+Prévia 67: botão Voltar à esquerda de Adicionar nas categorias de Vídeos, Fotos e PDFs.
+
+
+## Prévia 68 — correção do salvamento de Mídias
+- Corrigida a função `validFile`, ausente na versão 67, que interrompia o salvamento antes da gravação.
+- Validação de formatos para vídeo, foto e PDF; confirmação de gravação local após salvar; mensagem de erro explícita.
+- Mantidos os layouts, as pastas e os demais recursos da 67.
+
+
+## Prévia 69 — Abertura e cronograma
+- Corrige a ação de abrir PDFs e fotos com links gerados previamente ao toque (compatibilidade Safari).
+- Mantém prévias integradas nos cartões de Mídias.
+- Cronograma oferece a seleção de vídeos, fotos e PDFs já armazenados na Biblioteca de Mídias.
+- Itens do cronograma guardam referência ao IndexedDB, sem duplicar vídeos grandes no localStorage.
+- Não apague os dados do site no Safari; arquivos armazenados são locais a esse navegador.
+
+
+## Prévia 70
+- Vídeos do cronograma agora abrem pausados no Media Player da direita, sem substituir cronograma nem enviar automaticamente ao telão.
+- Media Player próprio para vídeo com progresso, play/pause, repetição e volume compacto.
+- Seleção para adicionar mídia ao cronograma por pastas e arquivos, preservando seletor antigo internamente.
+- PDFs abrem grade de três páginas por linha na área do cronograma, com exclusão temporária e restauração, seleção e navegação.
+- Botões Apresentar/Encerrar e transições Fade/Merge/Wipe/Corte com duração padrão de 300 ms na engrenagem.
+- Limitações: a contagem de páginas PDFs complexos pode variar no Safari; miniprêvias de PDF dependem do visualizador do navegador. O canal BroadcastChannel funciona apenas entre janelas do mesmo navegador/origem e não sincroniza iPad com PC.
+
+
+## Prévia 71 — Minimizar grade PDF
+- Botão “− Minimizar” na janela da grade do PDF, que devolve o cronograma à esquerda sem fechar o PDF ou interromper a apresentação.
+- Botão dourado fixo no canto inferior direito, no mesmo lugar do player de música minimizado, para reabrir a grade sem perder página escolhida nem exclusões temporárias.
+- Mantidas as demais mudanças da Prévia 70.
+
+PRÉVIA 73: botão de lápis em cada item do cronograma para alterar somente o título exibido, sem modificar o nome real do arquivo salvo na Biblioteca de Mídias; tocar na área do versículo bíblico envia imediatamente seu texto ao telão, mantendo os controles próprios de vídeo, foto e PDF.
+
+
+## Prévia 74 — Consolidação
+- Grade PDF: três miniaturas **retangulares 16:9** por linha; excluir/restaurar página sem modificar arquivo; minimizar/reabrir.
+- Adicionar conteúdo: seis ícones de escolha; Bíblia abre sua aba, Música/Vídeo/Foto/PDF abrem pastas correspondentes, Lembrete formulário amarelo compacto. Edição avançada de itens antigos continua disponível.
+- Miniaturas de mídias do IndexedDB no cronograma, sem duplicar o arquivo inteiro no localStorage.
+- Visual geral mais claro (azul suave / branco), preservando os controles dourados dos players; removidos controles redundantes do painel Telão.
+- Controle de volume incorporado ao player de vídeos e separado do painel antigo.
+- Telão em outra aba da **mesma origem e mesmo navegador** procura arquivos pelo ID em IndexedDB, em vez de tentar acessar a URL blob de outra janela.
+- Limitação importante: **iPad e computador distintos não compartilham IndexedDB nem BroadcastChannel**. Esta versão continua exigindo servidor/websocket para controle remoto verdadeiro; não prometa reprodução do vídeo do iPad no PC.
+- Verificação com Safari real continua necessária, principalmente prévia de PDF e autoplay de vídeo.
+
+
+Prévia 76: vídeos, fotos e PDFs em uma pasta por categoria, com arquivos antigos preservados independentemente do dia original; seleção direta pelo cronograma; player do telão mais compacto com botão único para apresentar/encerrar.
+
+
+## Prévia 79
+- Ícones vetoriais profissionais na seleção de seis tipos de conteúdo, com lembrente amarelo.
+- Removida linha explicativa redundante da seleção de conteúdo.
+- Reduzidos os contornos duplicados de foco ao tocar no iPad, mantendo indicador para teclado.
+- Tocando no cabeçalho da etapa, expande/recolhe o cronograma, sem setinha.
+- Preservados arquivos e funções anteriores.
+
+
+PRÉVIA 80: Retirada a faixa azul-marinho do cabeçalho das etapas no cronograma. O nome INÍCIO é agora um cabeçalho claro e clicável, preservando abrir/fechar com toque, contador e botões de edição.
+
+
+## Prévia 81
+- Os lápis de renomeação desaparecem quando o cronograma está salvo.
+- Em Editar cronograma, músicas permitem somente Renomear e Remover; não abrem mais a escolha de pasta/MP3 na edição.
+- Vídeos, fotos, PDFs, lembretes e versículos mantêm Editar apenas dentro do modo de edição.
+
+
+Prévia 82: a paleta agora muda visivelmente a cor de destaque e o fundo suave do cabeçalho da etapa, sem recriar a faixa azul-marinho; cores não alteram o cronograma inteiro.
+
+
+## Prévia 83
+Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones menores à esquerda, sem bordas grossas ou degradês; duas colunas no iPad, uma no celular; nomes em maiúsculas. Sem alteração dos arquivos musicais salvos.
+
+
+## Prévia 84 — Modelo 1 e retorno à biblioteca inicial
+- Pastas em blocos compactos para Músicas e Mídias, com aparência padronizada.
+- Ao sair da aba Mídias e retornar, o aplicativo mostra novamente VÍDEOS, FOTOS e PDFs.
+- Arquivos salvos continuam preservados no IndexedDB original.
+
+
+## PRÉVIA 85 — PDF com renderização progressiva
+- Remove os `iframe` repetidos do PDF (causavam travamento e não mostravam slides no iPad).
+- Utiliza PDF.js 3.11.174 para renderizar páginas reais em canvas; miniaturas só são geradas quando entram na área visível, uma por vez, para reduzir memória.
+- Página escolhida renderizada separadamente no Telão ao Vivo; mesma técnica na janela de apresentação.
+- Grade de 3 miniaturas retangulares 16:9; minimizar, retirar/restaurar, anterior/próxima preservados.
+- Dependência: PDF.js carregado do CDN da Cloudflare; a primeira abertura do PDF precisa de internet. Para uso totalmente offline, será necessário incluir os arquivos pdf.min.js e pdf.worker.min.js localmente.
+- Não apaga nem migra os arquivos da Biblioteca de Mídias.
+
+
+## Prévia 86 — PDF direto pelo toque
+- Ao abrir um PDF no cronograma, a primeira página é enviada ao Telão ao Vivo.
+- Toque em uma miniatura para apresentar aquela página. A miniatura exibida fica verde.
+- Tocar novamente na mesma página retira o PDF do telão e remove o verde.
+- O botão Apresentar fica oculto apenas para PDFs.
+- PDF continua com botão Minimizar e reabrir; ao abrir outras mídias, a grade e o player de PDF são fechados.
+- Ao remover a página atualmente exibida, a apresentação é encerrada.
+
+
+## Prévia 87 — PDF com rolagem própria e Imagem de Apoio
+- Páginas do PDF em três colunas retangulares, com rolagem interna e altura limitada para manter visível a prévia à direita.
+- Botão Imagem de Apoio na grade do PDF, com escolha de foto da biblioteca por dia da reunião; opção de limpar.
+- Tocar no slide apresenta e marca verde; tocar novamente retira e exibe Imagem de Apoio, quando configurada.
+- Recursos locais do mesmo navegador; apresentação em outro dispositivo depende de infraestrutura adicional.
+
+
+## Prévia 88
+- PDF abre somente a grade, sem apresentar página automaticamente. Toque em uma miniatura para apresentar e toque novamente para retirar e voltar ao apoio.
+- Grade compacta: três miniaturas 16:9 por linha, sem X e sem espaçamento branco excessivo, rolagem interna.
+- Imagem de Apoio acima do cronograma; transição em engrenagem acima do telão; sem controles extras ou nome do PDF abaixo do telão.
+- Telão com moldura dourada discreta e conteúdo sem recorte.
+
+
+## PRÉVIA 89 — IMAGEM DE APOIO DIRETO DA GALERIA
+- Botão Imagem de Apoio acima do cronograma abre Galeria do aparelho, Fotos do aplicativo e Remover.
+- Uma única imagem por dia: a foto escolhida da galeria é otimizada e salva em IndexedDB separado (reunioes3-apoio-v89), chave do dia, sem criar cópias na pasta FOTOS.
+- Trocar substitui a imagem anterior; remover elimina a cópia local, sem alterar a galeria original.
+- Fotos já salvas na biblioteca podem ser usadas como referência, sem duplicação.
+- Telão em outra aba de mesma origem recupera Imagem de Apoio local da galeria. Sem sincronização entre aparelhos.
+- No iPad horizontal, o painel do telão usa posição fixa na rolagem do cronograma (sticky).
+- Não apague os dados do site nem mude a origem (domínio) para preservar a biblioteca atual.
+
+
+## Prévia 90 — Telão Santuário
+- Título TELÃO SANTUÁRIO acima, fora do cartão, com engrenagem de transição no mesmo cabeçalho.
+- Removido botão Apresentar interno do Media Player; vídeo/foto entra automaticamente na apresentação ao ser selecionado, vídeo local permanece pausado aguardando Play. PDF continua a entrar somente com toque na página.
+- Botão vermelho Encerrar separado, abaixo do Media Player, visível para fotos e vídeos.
+- Prévia de vídeos/fotos/PDFs ajustada para preencher 100% a área 16:9, mesmo em conteúdos de proporções diferentes (pode deformar a imagem).
+- Recursos anteriores preservados. Necessário testar no Safari/iPad.
+
+
+## Prévia 91 — Imagem de Apoio e controles minimizados
+- Imagem de Apoio configurada exclusivamente no Cronograma; a barra fica oculta enquanto a grade de PDF substitui a lista.
+- A imagem de apoio é restaurada no próprio Telão Santuário ao encerrar vídeo/foto/PDF e permanece como fundo do telão durante a reprodução de músicas.
+- O Media Player musical fica em um bloco próprio abaixo da prévia, sem ocultar o telão. Minimizar não interrompe o áudio.
+- Os botões para reabrir PDF e música ficam reunidos abaixo do Telão Santuário, não flutuam mais no canto da tela.
+- Cada dia continua com uma imagem de apoio própria; dados IndexedDB existentes são preservados.
+
+
+## Prévia 93 — TELÃO SANTUÁRIO AO VIVO
+- Título mais próximo da moldura e luz verde AO VIVO ao lado do título quando um conteúdo real estiver apresentado.
+- Sem AO VIVO para Imagem de Apoio ou tela vazia.
+- Pulsação sutil; respeita preferência de movimento reduzido.
+- Minimizar a grade do PDF com ícone −, sem texto, com rótulo acessível.
+
+
+## Prévia 96
+Media Player fixo dentro da coluna de cronograma; etapas agrupadas; miniaturas de PDF via PDF.js, vídeo com quadro quando suportado, imagens sem corte; visualização da imagem atual de apoio no seletor.
+
+## Prévia 98 — seleção da etapa e indicador ao vivo
+- Corrige limpeza antecipada da etapa selecionada no seletor de conteúdo: mídia adicionada ao Dízimo permanece no Dízimo.
+- Indicador AO VIVO amarelo com ponto piscando apenas quando o indicador de apresentação estiver ativo (mantém lógica anterior para imagem de apoio).
+- Amplia áreas de toque de etapas e botão adicionar.
+
+
+PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do telão com grade de PDF; preserva PDF ao tocar música.
+
+
+## Prévia 105 — ajustes pontuais sobre a Prévia 104
+- DOMINGO e demais dias em maiúsculas, com Imagem de Apoio e Editar cronograma na mesma linha em iPad.
+- Removido o painel azul de nome de arquivo para fotos; controles de vídeo movidos para fora da moldura do Telão, simplificados e sem nome do arquivo.
+- Adicionar diretamente um vídeo, foto ou PDF da galeria ou Arquivos do iPad/celular pela janela Adicionar conteúdo no cronograma. O arquivo novo é armazenado na Biblioteca de Mídias deste aparelho e referenciado no cronograma.
+- Janela de seleção com 3 miniaturas por linha em iPad e 2 no celular; para uma única mídia a janela se ajusta ao conteúdo.
+- A grade do PDF abaixo do Telão, já implementada na Prévia 104, não foi modificada.
+
+
+## Prévia 106
+- Botão X no Media Player do cronograma: fecha e para a música.
+- Botão − preservado para minimizar sem interromper a música.
+- Título longo desliza até o final e retorna suavemente ao começo (uma vez por faixa).
+- Botão Imagem de Apoio em azul mais claro.
+
+
+## Prévia 108
+- Música no cronograma não encerra ou substitui a imagem, o vídeo ou o PDF já apresentado no telão.
+- Indicador AO VIVO sempre visível: azul estático com imagem de apoio ou telão vazio; dourado pulsante somente com conteúdo apresentado.
+- Preservados a grade de PDF, o player e os controles de versões anteriores.
+
+
+## Prévia 109
+- Destaque dourado do slide apresentado, combinando com AO VIVO.
+- Moldura dourada única envolvendo Telão Santuário e grade de PDF.
+- Dimensões e rolagem estáveis na troca de slides para reduzir saltos no Safari do iPad.
+
+
+### PRÉVIA 110 — Estabilidade do PDF e troca segura de reunião
+- Usa o dia atual do iPad como seleção inicial.
+- Antes de mudar de dia enquanto houver conteúdo ao vivo ou música tocando, pede confirmação.
+- Na troca, fecha a grade do PDF e o player musical, interrompe a mídia e carrega a imagem de apoio do novo dia.
+- Telão e grade do PDF com dimensões estáveis, bordas invariáveis e rolagem somente nas miniaturas para reduzir deslocamentos.
+- Os arquivos locais e os demais recursos não são apagados.
+
+
+### PRÉVIA 111 — Largura do telão e Imagem de Apoio por dia
+- Garante que a moldura do Telão Santuário e o conteúdo 16:9 ocupem integralmente a coluna direita, mesmo depois de trocar de dia.
+- Impede carregamentos atrasados da Imagem de Apoio do dia anterior de substituírem o fundo do dia atual.
+- Preserva os arquivos, as configurações diárias, a grade do PDF e os controles existentes.
+
+
+## Prévia 113 — Título do dia oculto durante a edição
+- Quando **Salvar cronograma** está visível, o nome do dia no cabeçalho é ocultado para impedir que fique por trás dos botões.
+- Ao concluir a edição, o nome do dia volta normalmente.
+- As outras telas, mídias e configurações não foram modificadas.
+
+
+PRÉVIA 115: Cadastro de músicas em janela dividida: escolha a pasta na esquerda e os MP3 na direita, visual claro. O botão da pasta aberta chama-se apenas Voltar. Adicionar música só aparece na página principal da Biblioteca.
+
+
+Prévia 116: botão X para excluir música ao lado do lápis; amarelo dourado nos botões Adicionar vídeo/foto/PDF, Tocar/Apresentar, Editar cronograma e dia selecionado.
+
+
+PRÉVIA 117 — Ícones vetoriais SVG personalizados na barra lateral: Cronograma, Bíblia, Músicas, Mídias e Configurações. Todos alinhados em cápsulas claras, item ativo dourado. Sem alteração dos fluxos das telas.
+
+
+## Prévia 118 — ACF e ARA incluídas
+- Incluídos `Biblia_ACF.json` e `Biblia_ARA.json` (66 livros cada).
+- O aplicativo carrega automaticamente as duas bases; não é necessário importar no iPad.
+- Uma cópia é guardada em IndexedDB para uso posterior sem conexão, quando o navegador permitir.
+- Para a primeira abertura, use o endereço do servidor/deploy (HTTP/HTTPS), não `file://`.
+- A opção de substituir as bases manualmente continua disponível.
+- Os textos seguem os arquivos enviados pelo usuário, com seus respectivos avisos de direitos.
+
+
+### Prévia 119 — Bíblia reorganizada
+- ACF e ARA continuam incorporadas ao pacote, sem importação manual.
+- Bíblia em duas colunas no iPad: seleção à esquerda e prévia do Telão Santuário à direita.
+- Leitura com fundo branco, texto escuro, botões e seleções dourados.
+- Apresentar na Bíblia permanece na Bíblia e usa o Telão já existente, mantendo o canal de apresentação.
+- Removidos avisos e importação visual da página Bíblia; IDs preservados para não interromper o carregamento automático.
+- Anterior/Próximo capítulo na página bíblica.
+
+
+PRÉVIA 120: painel unificado de configurações de versículos (fontes, sombra, contorno, imagem/fundo e seis posições da referência); sequência de versículos com anterior/próximo no Telão e no Cronograma. ACF/ARA incluídas.
+
+
+PRÉVIA 121: Controle flutuante bíblico no Cronograma e na página Bíblia. Três cartões verticais: anterior, atual dourado, próximo. Toque direto nos textos; X encerra e retira do telão. Setas antigas escondidas.
