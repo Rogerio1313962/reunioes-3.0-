@@ -167,3 +167,10 @@ Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones me
 - O botão Apresentar fica oculto apenas para PDFs.
 - PDF continua com botão Minimizar e reabrir; ao abrir outras mídias, a grade e o player de PDF são fechados.
 - Ao remover a página atualmente exibida, a apresentação é encerrada.
+
+
+## Prévia 87 — PDF com rolagem própria e Imagem de Apoio
+- Páginas do PDF em três colunas retangulares, com rolagem interna e altura limitada para manter visível a prévia à direita.
+- Botão Imagem de Apoio na grade do PDF, com escolha de foto da biblioteca por dia da reunião; opção de limpar.
+- Tocar no slide apresenta e marca verde; tocar novamente retira e exibe Imagem de Apoio, quando configurada.
+- Recursos locais do mesmo navegador; apresentação em outro dispositivo depende de infraestrutura adicional.

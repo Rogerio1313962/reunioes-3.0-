@@ -1380,3 +1380,20 @@ body,main{background:#f0f5f9!important;color:#294862!important}
 #r70PageWorkspace .r70page.removed{border-color:#cad0d9!important;background:#e9edf1!important}
 #r70PageWorkspace .r70pageSelect:focus{outline:none!important}
 #r70PageWorkspace .r70pageSelect:focus-visible{outline:2px solid #638eae!important;outline-offset:2px}
+
+/* Previa 87 - PDF com rolagem interna, telão sempre visível */
+#r70PageWorkspace{min-width:0!important;margin:4px 0!important;padding:10px!important;display:flex;flex-direction:column;max-height:min(690px,calc(100dvh - 270px));overflow:hidden!important}
+#r70PageWorkspace[hidden]{display:none!important}
+#r70PageWorkspace .r70gridHeader{flex:0 0 auto;margin-bottom:8px!important}
+#r70PageWorkspace .r70grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;align-content:start;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;min-height:0;flex:1 1 auto;padding:3px 6px 12px 3px;scrollbar-width:thin}
+#r70PageWorkspace .r70page{align-self:start}
+#r70PageWorkspace .r70pageThumb{aspect-ratio:16/9!important}
+#r70PageWorkspace .r70pageSelect{padding-top:20px!important}
+#r70PageWorkspace .r71GridActions{gap:5px}
+#r70PageWorkspace .r71GridActions button{padding:7px!important;font-size:11px!important;white-space:nowrap}
+.r87supportPicker{position:fixed;z-index:10010;top:50%;left:50%;transform:translate(-50%,-50%);width:min(550px,90vw);max-height:78dvh;overflow-y:auto;background:white;color:#254d6c;border:1px solid #c7dbe9;border-radius:17px;box-shadow:0 22px 90px #132c4c77;padding:18px}
+.r87SupportHead{display:flex;align-items:center;justify-content:space-between}.r87SupportHead button,.r87supportPicker [data-none]{padding:8px 12px;border:1px solid #cbdce8;border-radius:8px;background:#edf3f9;color:#244e6e}
+.r87SupportItems{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-height:43dvh;overflow-y:auto;margin:12px 0}
+.r87SupportItems button{background:#f4f8fb;border:1px solid #d5e3ee;border-radius:9px;padding:6px;min-width:0;overflow-wrap:anywhere;color:#2d526e;font-size:11px}
+.r87SupportItems img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#e5edf5;border-radius:5px;margin-bottom:5px}
+@media(max-width:700px){#r70PageWorkspace{max-height:calc(100dvh - 210px)}#r70PageWorkspace .r70grid{gap:5px!important}#r70PageWorkspace .r71GridActions button{font-size:10px!important;padding:6px!important}}
