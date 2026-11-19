@@ -21,6 +21,7 @@
  left.append(header,topTools,results,folders,folder);
  // Dentro da pasta, a pesquisa fica acima de Voltar / Adicionar música.
  localSearch?.after(actions);
+ const agendaMusicHost=document.createElement('div');agendaMusicHost.id='r91MusicHost';preview.closest('.preview').insertAdjacentElement('afterend',agendaMusicHost);
  const parking=document.createElement('div');parking.id='music56Parking';parking.hidden=true;document.body.append(parking);
  parking.append(float);
  const restore=$('floatingMusicRestore');if(restore)restore.hidden=true;
@@ -46,11 +47,11 @@
    empty.hidden=selected;
   }else{
    if(add&&add.parentElement!==topTools)topTools.append(add);
-   if(agendaVisible){if(float.parentElement!==preview)preview.prepend(float)}
+   if(agendaVisible){if(float.parentElement!==agendaMusicHost)agendaMusicHost.append(float)}
    else if(float.parentElement!==parking)parking.append(float);
    empty.hidden=false;
   }
-  preview.classList.toggle('player56-on',agendaVisible);preview.classList.toggle('music-on-right',agendaVisible);minimize.hidden=!agendaVisible;reopen.hidden=!(tab==='agenda'&&agendaSong&&agendaMinimized);
+  preview.classList.remove('player56-on','music-on-right');agendaMusicHost.hidden=!agendaVisible;minimize.hidden=!agendaVisible;reopen.hidden=!(tab==='agenda'&&agendaSong&&agendaMinimized);
   float.setAttribute('aria-hidden',String(!(agendaVisible||open&&selected)));
   if(restore)restore.hidden=true;
   if(legacyClose)legacyClose.hidden=true;
@@ -92,6 +93,7 @@
    selected=true;agendaSong=false;
   }else if(tab==='agenda'){
    agendaSong=true;agendaMinimized=false;selected=false;
+   if(window.R70?.hasActiveMedia?.())window.R70.close();else void window.R70?.displaySupport?.();
   }else{
    // No player allowed on Bible, media or settings.
    return;

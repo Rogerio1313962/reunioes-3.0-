@@ -1450,3 +1450,18 @@ body,main{background:#f0f5f9!important;color:#294862!important}
 #agenda #preview>img,#agenda #preview>video,#agenda #preview>canvas{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:fill!important}
 #agenda .preview .actions,#agenda .preview .volume-panel{display:none!important}
 @media (min-width:950px){#agenda .layout>.right{overflow:visible!important}}
+
+/* Preview 91: Imagem de Apoio permanece no Telão enquanto a música toca. */
+#r88SupportBar[hidden]{display:none!important}
+#r91MusicHost{min-width:0;margin-top:9px}
+#r91MusicHost[hidden]{display:none!important}
+body[data-player56="agenda"] #agenda #r91MusicHost #floatingMusic{display:flex!important;position:relative!important;inset:auto!important;max-width:100%!important;min-height:0!important;width:100%!important;box-sizing:border-box!important;border-radius:15px!important;overflow:auto!important;box-shadow:0 5px 15px #182f4924!important}
+#agenda .preview #preview{display:flex!important;min-height:0!important}
+body[data-player56="agenda"] #agenda .preview .screen{display:flex!important}
+#r91MinimizedDock{display:flex;flex-wrap:wrap;gap:9px;margin-top:9px;justify-content:center;align-items:center;min-height:0}
+#r91MinimizedDock:empty{display:none!important}
+#r91MinimizedDock #r71PdfReopen,#r91MinimizedDock #agenda56Reopen{position:static!important;right:auto!important;bottom:auto!important;z-index:auto!important;margin:0!important;max-width:100%!important;min-height:41px!important;padding:9px 13px!important;background:#e6bd61!important;color:#1e3650!important;border:1px solid #c69e4b!important;border-radius:11px!important;font-size:13px!important;font-weight:750!important;box-shadow:0 3px 10px #6d563129!important;cursor:pointer!important}
+#r91MinimizedDock #r71PdfReopen[hidden],#r91MinimizedDock #agenda56Reopen[hidden]{display:none!important}
+#agenda.page.active #r91MinimizedDock #agenda56Reopen:not([hidden]){display:inline-flex!important;align-items:center!important}
+/* The previous fullscreen overlay location should no longer be used. */
+#agenda .right{min-width:0!important}

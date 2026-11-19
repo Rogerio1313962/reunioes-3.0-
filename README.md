@@ -199,3 +199,11 @@ Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones me
 - Botão vermelho Encerrar separado, abaixo do Media Player, visível para fotos e vídeos.
 - Prévia de vídeos/fotos/PDFs ajustada para preencher 100% a área 16:9, mesmo em conteúdos de proporções diferentes (pode deformar a imagem).
 - Recursos anteriores preservados. Necessário testar no Safari/iPad.
+
+
+## Prévia 91 — Imagem de Apoio e controles minimizados
+- Imagem de Apoio configurada exclusivamente no Cronograma; a barra fica oculta enquanto a grade de PDF substitui a lista.
+- A imagem de apoio é restaurada no próprio Telão Santuário ao encerrar vídeo/foto/PDF e permanece como fundo do telão durante a reprodução de músicas.
+- O Media Player musical fica em um bloco próprio abaixo da prévia, sem ocultar o telão. Minimizar não interrompe o áudio.
+- Os botões para reabrir PDF e música ficam reunidos abaixo do Telão Santuário, não flutuam mais no canto da tela.
+- Cada dia continua com uma imagem de apoio própria; dados IndexedDB existentes são preservados.
