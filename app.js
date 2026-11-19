@@ -91,12 +91,48 @@ const importedBibles={};
 // Armazenamento local das bases autorizadas, para não exigir nova importação a cada abertura.
 function bibleDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('reunioes3-biblias',1);req.onupgradeneeded=()=>req.result.createObjectStore('translations');req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
 async function storeBible(version,data){const db=await bibleDB();return new Promise((resolve,reject)=>{const tx=db.transaction('translations','readwrite');tx.objectStore('translations').put(data,version);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
-async function restoreBibles(){try{const db=await bibleDB();for(const version of ['ACF','ARA']){const data=await new Promise((resolve,reject)=>{const tx=db.transaction('translations','readonly');const req=tx.objectStore('translations').get(version);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});if(data)importedBibles[version]=data}db.close();const found=Object.keys(importedBibles);$('bibleImportStatus').textContent=found.length?'Bases salvas neste aparelho: '+found.join(', ')+'.':'Nenhuma base importada neste aparelho.';drawBiblePicker();loadBibleText()}catch(e){$('bibleImportStatus').textContent='Armazenamento local indisponível neste navegador.'}}
+// Prévia 118: ACF e ARA já acompanham o aplicativo. Carrega os JSONs locais automaticamente,
+// e guarda cópia no IndexedDB para que também funcionem depois de carregados sem rede.
+async function restoreBibles(){
+  const versions=['ACF','ARA'];
+  $('bibleImportStatus').textContent='Carregando ACF e ARA inclusas no aplicativo...';
+  // Restaurar bases da memória do navegador primeiro (inclusive em modo offline).
+  try{
+    const db=await bibleDB();
+    for(const version of versions){
+      const data=await new Promise((resolve,reject)=>{
+        const tx=db.transaction('translations','readonly');
+        const req=tx.objectStore('translations').get(version);
+        req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+      });
+      if(data&&data.books)importedBibles[version]=data;
+    }
+    db.close();
+    drawBiblePicker();loadBibleText();
+  }catch(error){console.warn('Bíblias em cache indisponíveis:',error)}
+  // Bases entregues junto com o app: não precisa escolher arquivos no iPad.
+  const outcome=await Promise.all(versions.map(async version=>{
+    try{
+      const response=await fetch('./Biblia_'+version+'.json?v=118',{cache:'force-cache'});
+      if(!response.ok)throw Error('HTTP '+response.status);
+      const data=await response.json();
+      if(data.translation!==version||!data.books||Object.keys(data.books).length!==66)throw Error('Base bíblica incompleta');
+      importedBibles[version]=data;
+      try{await storeBible(version,data)}catch(error){console.warn('Não foi possível guardar Bíblia para uso offline:',error)}
+      return true;
+    }catch(error){console.warn('Bíblia '+version+' não carregou do pacote:',error);return false}
+  }));
+  const ready=versions.filter(v=>!!importedBibles[v]);
+  if(ready.length===2){$('bibleImportStatus').textContent='ACF e ARA prontas para usar — já incluídas no aplicativo.'}
+  else if(ready.length){$('bibleImportStatus').textContent='Disponível: '+ready.join(', ')+'. Para completar, abra o aplicativo com o servidor ativo.'}
+  else{$('bibleImportStatus').textContent='Não foi possível carregar as Bíblias. Abra o aplicativo pelo endereço do servidor e recarregue.'}
+  drawBiblePicker();loadBibleText();
+}
 function importedVerseCount(bi,ch){const data=importedBibles[$('bibleTranslation').value];if(!data)return 40;let n=0;for(let v=1;v<=180;v++){if(getImportedVerse(data,bi,ch,v))n=v;else if(n)break}return n||40}
 
 function normalizeBookKey(k){return String(k).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
 function getImportedVerse(data,bi,ch,n){const books=data.books||data.livros||{};const bookName=BIBLE_BOOKS[bi][0];let book=books[bookName]||books[String(bi)]||books[String(bi+1)];if(!book){const wanted=normalizeBookKey(bookName);const key=Object.keys(books).find(k=>normalizeBookKey(k)===wanted);book=books[key]}const chapters=book?.chapters||book?.capitulos||book;const chapter=chapters?.[String(ch)]|| (Array.isArray(chapters)?chapters[ch-1]:null);const verses=chapter?.verses||chapter?.versiculos||chapter;const entry=verses?.[String(n)]??(Array.isArray(verses)?verses[n-1]:null);return typeof entry==='string'?entry:entry?.text||entry?.texto||''}
-async function loadBibleText(){const serial=++bibleFetchSerial;resetBibleText();if(!selectedVerses.length){$('bibleLoadStatus').textContent='Toque nos versículos para selecionar.';return;}const bi=Number($('bibleBook').value),ch=Number($('bibleChapter').value),version=$('bibleTranslation').value;const data=importedBibles[version];if(!data){$('bibleLoadStatus').textContent=`Base ${version} não importada. Importe um arquivo JSON autorizado para carregar os textos automaticamente.`;return;}const selected=[...selectedVerses].sort((a,b)=>a-b);const found=selected.map(n=>getImportedVerse(data,bi,ch,n));if(found.some(t=>!t)){ $('bibleLoadStatus').textContent='Um ou mais versículos não estão presentes na base importada.';return;}if(serial!==bibleFetchSerial)return;bibleLoadedText=found.map((t,i)=>`${selected[i]}. ${t}`).join('\n\n');bibleLoadedKey=[version,bi,ch,selected.join(',')].join('/');$('bibleText').value=bibleLoadedText;bibleCredit=data.credit||data.fonte||'';$('bibleCredit').textContent=bibleCredit;$('bibleLoadStatus').textContent=`Texto ${version} carregado da base importada.`;}
+async function loadBibleText(){const serial=++bibleFetchSerial;resetBibleText();if(!selectedVerses.length){$('bibleLoadStatus').textContent='Toque nos versículos para selecionar.';return;}const bi=Number($('bibleBook').value),ch=Number($('bibleChapter').value),version=$('bibleTranslation').value;const data=importedBibles[version];if(!data){$('bibleLoadStatus').textContent=`Bíblia ${version} ainda não carregada. Aguarde ou recarregue o aplicativo.`;return;}const selected=[...selectedVerses].sort((a,b)=>a-b);const found=selected.map(n=>getImportedVerse(data,bi,ch,n));if(found.some(t=>!t)){ $('bibleLoadStatus').textContent='Um ou mais versículos não estão presentes na base importada.';return;}if(serial!==bibleFetchSerial)return;bibleLoadedText=found.map((t,i)=>`${selected[i]}. ${t}`).join('\n\n');bibleLoadedKey=[version,bi,ch,selected.join(',')].join('/');$('bibleText').value=bibleLoadedText;bibleCredit=data.credit||data.fonte||'';$('bibleCredit').textContent=bibleCredit;$('bibleLoadStatus').textContent=`Texto ${version} pronto para apresentação.`;}
 $('bibleImport').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>15*1024*1024)throw Error('Arquivo maior que 15 MB.');const data=JSON.parse(await file.text());const translation=String(data.translation||data.traducao||'').toUpperCase();if(!['ACF','ARA'].includes(translation))throw Error('O JSON deve indicar translation: ACF ou ARA.');if(!data.books&&!data.livros)throw Error('O JSON precisa conter books ou livros.');importedBibles[translation]=data;await storeBible(translation,data);$('bibleTranslation').value=translation;$('bibleImportStatus').textContent=`Base ${translation} salva neste aparelho. Não é sincronizada entre aparelhos.`;drawBiblePicker();loadBibleText();}catch(err){$('bibleImportStatus').textContent='Erro na importação: '+err.message;}});
 $('bibleTranslation').addEventListener('change',loadBibleText);
 function bibleGroup(i){return BIBLE_GROUPS.findIndex(n=>i<n)}

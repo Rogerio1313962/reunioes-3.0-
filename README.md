@@ -327,3 +327,12 @@ Prévia 116: botão X para excluir música ao lado do lápis; amarelo dourado no
 
 
 PRÉVIA 117 — Ícones vetoriais SVG personalizados na barra lateral: Cronograma, Bíblia, Músicas, Mídias e Configurações. Todos alinhados em cápsulas claras, item ativo dourado. Sem alteração dos fluxos das telas.
+
+
+## Prévia 118 — ACF e ARA incluídas
+- Incluídos `Biblia_ACF.json` e `Biblia_ARA.json` (66 livros cada).
+- O aplicativo carrega automaticamente as duas bases; não é necessário importar no iPad.
+- Uma cópia é guardada em IndexedDB para uso posterior sem conexão, quando o navegador permitir.
+- Para a primeira abertura, use o endereço do servidor/deploy (HTTP/HTTPS), não `file://`.
+- A opção de substituir as bases manualmente continua disponível.
+- Os textos seguem os arquivos enviados pelo usuário, com seus respectivos avisos de direitos.
