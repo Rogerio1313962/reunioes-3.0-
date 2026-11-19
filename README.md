@@ -149,3 +149,12 @@ Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones me
 - Pastas em blocos compactos para Músicas e Mídias, com aparência padronizada.
 - Ao sair da aba Mídias e retornar, o aplicativo mostra novamente VÍDEOS, FOTOS e PDFs.
 - Arquivos salvos continuam preservados no IndexedDB original.
+
+
+## PRÉVIA 85 — PDF com renderização progressiva
+- Remove os `iframe` repetidos do PDF (causavam travamento e não mostravam slides no iPad).
+- Utiliza PDF.js 3.11.174 para renderizar páginas reais em canvas; miniaturas só são geradas quando entram na área visível, uma por vez, para reduzir memória.
+- Página escolhida renderizada separadamente no Telão ao Vivo; mesma técnica na janela de apresentação.
+- Grade de 3 miniaturas retangulares 16:9; minimizar, retirar/restaurar, anterior/próxima preservados.
+- Dependência: PDF.js carregado do CDN da Cloudflare; a primeira abertura do PDF precisa de internet. Para uso totalmente offline, será necessário incluir os arquivos pdf.min.js e pdf.worker.min.js localmente.
+- Não apaga nem migra os arquivos da Biblioteca de Mídias.
