@@ -300,3 +300,9 @@ PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do 
 - Na troca, fecha a grade do PDF e o player musical, interrompe a mídia e carrega a imagem de apoio do novo dia.
 - Telão e grade do PDF com dimensões estáveis, bordas invariáveis e rolagem somente nas miniaturas para reduzir deslocamentos.
 - Os arquivos locais e os demais recursos não são apagados.
+
+
+### PRÉVIA 111 — Largura do telão e Imagem de Apoio por dia
+- Garante que a moldura do Telão Santuário e o conteúdo 16:9 ocupem integralmente a coluna direita, mesmo depois de trocar de dia.
+- Impede carregamentos atrasados da Imagem de Apoio do dia anterior de substituírem o fundo do dia atual.
+- Preserva os arquivos, as configurações diárias, a grade do PDF e os controles existentes.

@@ -31,7 +31,7 @@
    // O handler original atualiza todas as etapas, contadores e registros do cronograma.
    queueMicrotask(()=>{
       if(state.day!==next)return;
-      try{window.R70?.displaySupport?.()}catch(e){console.warn(e)}
+      try{void window.R70?.displaySupport?.()}catch(e){console.warn(e)}
       try{document.querySelector('#agenda .r70grid')?.scrollTo({top:0,behavior:'instant'})}catch(e){}
    });
  },true);

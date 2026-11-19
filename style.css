@@ -1891,3 +1891,20 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
 #agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70pageThumb{width:100%!important;aspect-ratio:16/9!important;contain:layout paint!important;overflow:hidden!important;}
 #agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70pageThumb canvas{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;}
 #agenda .right>.r109PresentationFrame #preview>img,#agenda .right>.r109PresentationFrame #preview>video,#agenda .right>.r109PresentationFrame #preview>canvas{max-height:100%!important;}
+
+/* PREVIA 111 — Telão mantém a largura integral ao trocar de dia. */
+@media(min-width:701px){
+ #agenda .layout>.right{width:100%!important;min-width:0!important;justify-self:stretch!important;align-self:start!important;}
+ #agenda .layout>.right>.r109PresentationFrame{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  flex:0 0 auto!important;align-self:stretch!important;justify-self:stretch!important;
+  contain:none!important;box-sizing:border-box!important;
+ }
+ #agenda .right>.r109PresentationFrame>.preview{width:100%!important;max-width:100%!important;min-width:0!important;}
+ #agenda .right>.r109PresentationFrame #preview{
+  width:100%!important;min-width:0!important;max-width:none!important;
+  aspect-ratio:16/9!important;height:auto!important;min-height:0!important;
+ }
+ #agenda .right>.r109PresentationFrame #preview>.placeholder{width:100%!important;min-width:0!important;}
+ #agenda .right>.r109PresentationFrame>#r70PageWorkspace{width:100%!important;max-width:100%!important;}
+}

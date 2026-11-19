@@ -42,7 +42,47 @@ container.querySelector('[data-gallery-input]').onchange=async e=>{const file=e.
 container.querySelector('[data-none]').onclick=async()=>{status.textContent='Removendo…';try{await setSupport(null);close()}catch(err){status.textContent='Erro: '+err.message}};
 container.querySelector('[data-library]').onclick=async()=>{list.hidden=false;list.textContent='Carregando fotos…';try{const all=await window.ReunioesMediaLibrary.all();const pictures=all.filter(f=>f.type==='imagem');list.innerHTML=pictures.length?'':'Nenhuma foto salva. Adicione uma na aba Mídias → Fotos.';for(const f of pictures){const b=document.createElement('button');b.type='button';b.append(document.createTextNode(f.name));const img=document.createElement('img');img.alt='Prévia '+f.name;const uri=URL.createObjectURL(f.blob);img.src=uri;img.onload=()=>URL.revokeObjectURL(uri);b.prepend(img);b.onclick=async()=>{status.textContent='Selecionando…';try{await setSupport(f.id);close()}catch(err){status.textContent=err.message}};list.append(b)}}catch(e){list.textContent='Não foi possível carregar as fotos.'}};
 }
-async function showSupport(){if(isLive)return;const setting=chosenSupport();if(supportPreviewUrl){URL.revokeObjectURL(supportPreviewUrl);supportPreviewUrl=null}const pv=$('preview');if(!setting){channel.postMessage({kind:'present',item:null});pv.innerHTML='<div class="placeholder">✦<p>Nenhum conteúdo no telão</p></div>';return}try{let blob=null,item=null;if(setting.source==='gallery'){const row=await galleryRow(supportDay());blob=row?.blob;item={type:'imagem',title:'Imagem de Apoio',supportDay:supportDay()}}else{const row=await window.ReunioesMediaLibrary.get(setting.id);blob=row?.blob;item={type:'imagem',title:'Imagem de Apoio',mediaLibraryId:setting.id}}if(!blob)throw Error('Imagem indisponível');channel.postMessage({kind:'present',item});supportPreviewUrl=URL.createObjectURL(blob);{const im=document.createElement('img');im.className='r70Image';im.alt='Imagem de Apoio';im.src=supportPreviewUrl;pv.replaceChildren(im)}}catch(e){channel.postMessage({kind:'present',item:null});pv.textContent='Imagem de Apoio indisponível'}}
+let supportRenderVersion=0;
+async function showSupport(){
+ const version=++supportRenderVersion;
+ const day=supportDay();
+ if(isLive)return;
+ const setting=chosenSupport();
+ const pv=$('preview');
+ // O carregamento antigo não pode sobrescrever a imagem de outro dia.
+ const stillCurrent=()=>version===supportRenderVersion&&day===supportDay()&&!isLive;
+ if(!setting){
+  if(!stillCurrent())return;
+  if(supportPreviewUrl){URL.revokeObjectURL(supportPreviewUrl);supportPreviewUrl=null}
+  channel.postMessage({kind:'present',item:null});
+  pv.innerHTML='<div class="placeholder">✦<p>Nenhum conteúdo no telão</p></div>';
+  return;
+ }
+ try{
+  let blob=null,item=null;
+  if(setting.source==='gallery'){
+   const row=await galleryRow(day);blob=row?.blob;
+   item={type:'imagem',title:'Imagem de Apoio',supportDay:day};
+  }else{
+   const row=await window.ReunioesMediaLibrary.get(setting.id);blob=row?.blob;
+   item={type:'imagem',title:'Imagem de Apoio',mediaLibraryId:setting.id};
+  }
+  if(!stillCurrent())return;
+  if(!blob)throw Error('Imagem indisponível');
+  const nextUrl=URL.createObjectURL(blob);
+  const im=document.createElement('img');im.className='r70Image';im.alt='Imagem de Apoio';im.src=nextUrl;
+  const previous=supportPreviewUrl;
+  supportPreviewUrl=nextUrl;
+  pv.replaceChildren(im);
+  channel.postMessage({kind:'present',item});
+  if(previous)URL.revokeObjectURL(previous);
+ }catch(e){
+  if(!stillCurrent())return;
+  if(supportPreviewUrl){URL.revokeObjectURL(supportPreviewUrl);supportPreviewUrl=null}
+  channel.postMessage({kind:'present',item:null});
+  pv.textContent='Imagem de Apoio indisponível';
+ }
+}
 function close(){releasePdf();stop();ready=null;pdfMinimized=false;if($('r71PdfReopen'))$('r71PdfReopen').hidden=true;if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}playerVideo=null;$('r70MediaControls').hidden=true;changeWorkspace(false);void showSupport()}
 function stop(){previewSession++;if($('r90EndButton'))$('r90EndButton').hidden=true;if(isLive){channel.postMessage({kind:'present',item:null});isLive=false;window.dispatchEvent(new Event('r93-live-change'));void showSupport()}if(ready?.type==='pdf')updatePdfSelection();if($('r70Present')){$('r70Present').disabled=false;$('r70Present').textContent='▶ Apresentar'}if(playerVideo){playerVideo.pause();updatePlay()}}
 function format(n){n=Math.max(0,Math.floor(n||0));return Math.floor(n/60)+':'+String(n%60).padStart(2,'0')}
