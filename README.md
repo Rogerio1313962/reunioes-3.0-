@@ -1,3 +1,11 @@
+# REUNIÕES 3.0 — PRÉVIA 75
+
+Atualização consolidada da Prévia 74.
+
+**Novidade:** Cronograma > Adicionar > Vídeo/Foto/PDF/Música > Pasta abre galeria visual com três arquivos por linha e prévias dos arquivos guardados. Fotos mostram a imagem; vídeos mostram um quadro com ícone de Play; PDFs tentam mostrar a primeira página pelo visualizador PDF integrado ao navegador. No Safari, a miniatura do PDF depende do suporte nativo do iOS.
+
+Demais recursos e limitações da Prévia 74 foram preservados. Os arquivos residem no armazenamento local deste navegador e não sincronizam automaticamente com o computador. A apresentação remota e compatibilidade real no Safari precisam de testes.
+
 REUNIÕES 3.0 — PRÉVIA 57 RECONSTRUÍDA E CORRIGIDA (BASE 56)
 
 Alterações somente de 56 para 57:
@@ -79,3 +87,16 @@ Prévia 67: botão Voltar à esquerda de Adicionar nas categorias de Vídeos, Fo
 - Botão “− Minimizar” na janela da grade do PDF, que devolve o cronograma à esquerda sem fechar o PDF ou interromper a apresentação.
 - Botão dourado fixo no canto inferior direito, no mesmo lugar do player de música minimizado, para reabrir a grade sem perder página escolhida nem exclusões temporárias.
 - Mantidas as demais mudanças da Prévia 70.
+
+PRÉVIA 73: botão de lápis em cada item do cronograma para alterar somente o título exibido, sem modificar o nome real do arquivo salvo na Biblioteca de Mídias; tocar na área do versículo bíblico envia imediatamente seu texto ao telão, mantendo os controles próprios de vídeo, foto e PDF.
+
+
+## Prévia 74 — Consolidação
+- Grade PDF: três miniaturas **retangulares 16:9** por linha; excluir/restaurar página sem modificar arquivo; minimizar/reabrir.
+- Adicionar conteúdo: seis ícones de escolha; Bíblia abre sua aba, Música/Vídeo/Foto/PDF abrem pastas correspondentes, Lembrete formulário amarelo compacto. Edição avançada de itens antigos continua disponível.
+- Miniaturas de mídias do IndexedDB no cronograma, sem duplicar o arquivo inteiro no localStorage.
+- Visual geral mais claro (azul suave / branco), preservando os controles dourados dos players; removidos controles redundantes do painel Telão.
+- Controle de volume incorporado ao player de vídeos e separado do painel antigo.
+- Telão em outra aba da **mesma origem e mesmo navegador** procura arquivos pelo ID em IndexedDB, em vez de tentar acessar a URL blob de outra janela.
+- Limitação importante: **iPad e computador distintos não compartilham IndexedDB nem BroadcastChannel**. Esta versão continua exigindo servidor/websocket para controle remoto verdadeiro; não prometa reprodução do vídeo do iPad no PC.
+- Verificação com Safari real continua necessária, principalmente prévia de PDF e autoplay de vídeo.
