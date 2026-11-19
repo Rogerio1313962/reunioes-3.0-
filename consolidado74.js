@@ -38,10 +38,10 @@ async function renderPdfThumbnail(target,blob,url,withMark){
 }
 
 const d=document.createElement('dialog');d.id='r74AddDialog';d.className='r74modal';d.innerHTML='<div class="r74top"><h2 id="r74Title">Adicionar conteúdo</h2><button type="button" class="r74close" id="r74Close">✕</button></div><div id="r74Content"></div>';
-document.body.appendChild(d);el('r74Close').onclick=()=>d.close();
+document.body.appendChild(d);el('r74Close').onclick=()=>{d.close();chosenSection=null};
 function flush(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[]}
 function content(html){flush();el('r74Content').innerHTML=html}
-function add(type,title,extras={}){const s=chosenSection||state.sections?.[state.day]?.[0]?.id;const item={id:uid(),type,title,sectionId:s,reference:'',translation:'ACF',content:'',fileUrl:null,...extras};state.days[state.day].push(item);save();drawItems();d.close();}
+function add(type,title,extras={}){const s=chosenSection||state.sections?.[state.day]?.[0]?.id;const item={id:uid(),type,title,sectionId:s,reference:'',translation:'ACF',content:'',fileUrl:null,...extras};state.days[state.day].push(item);save();drawItems();d.close();chosenSection=null;}
 function choices(){el('r74Title').textContent='Adicionar conteúdo';content('<div class="r74choices">'+K.map((t,i)=>`<button type="button" class="r74choice" data-type="${t}"><span class="r74ico">${I[i]}</span>${N[i]}</button>`).join('')+'</div>');el('r74Content').querySelectorAll('[data-type]').forEach(b=>b.onclick=()=>selectType(b.dataset.type))}
 function selectType(t){kind=t;folder=null;if(t==='versiculo'){d.close();setTab('biblia');return}if(t==='texto'){el('r74Title').textContent='Lembrete';content('<button class="r74back">‹ Voltar</button><label>Nome<input id="r74MemoTitle" placeholder="Ex.: Avisos"></label><label>Lembrete<textarea id="r74Memo" rows="4" placeholder="Escreva o lembrete…"></textarea></label><button type="button" class="primary" id="r74SaveMemo">Adicionar ao cronograma</button>');el('r74Content').querySelector('.r74back').onclick=choices;el('r74SaveMemo').onclick=()=>{const title=el('r74MemoTitle').value.trim()||'Lembrete';const note=el('r74Memo').value.trim();if(!note){alert('Escreva o lembrete.');return}add('texto',title,{content:note})};return}(t==='musica'?folders():files('Todos'))}
 function folders(){el('r74Title').textContent='Escolher '+({musica:'música',video:'vídeo',imagem:'foto',pdf:'PDF'}[kind]||'arquivo');const days=kind==='musica'?(typeof MUSIC_FOLDERS!=='undefined'?MUSIC_FOLDERS:[]):['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];content('<button type="button" class="r74back">‹ Tipos</button><div class="r74folders">'+days.map((day,i)=>`<button type="button" data-folder="${i}">▣ ${escape(day)}</button>`).join('')+'</div>');el('r74Content').querySelector('.r74back').onclick=choices;el('r74Content').querySelectorAll('[data-folder]').forEach(b=>b.onclick=()=>files(days[Number(b.dataset.folder)]))}
@@ -79,7 +79,7 @@ async function files(day){
 }
 function openPicker(section){chosenSection=section||state.sections?.[state.day]?.[0]?.id;kind=null;choices();d.showModal()}
 // Final loaded after all old scripts: intercept "add" only; preserve full editor for existing items.
-const before=openEditor;openEditor=function(x){if(x)return before(x);const currentSection=chosenSection||el('itemSection')?.value||state.sections?.[state.day]?.[0]?.id;openPicker(currentSection);chosenSection=null;};
+const before=openEditor;openEditor=function(x){if(x)return before(x);const currentSection=chosenSection||el('itemSection')?.value||state.sections?.[state.day]?.[0]?.id;openPicker(currentSection);};
 // Old section-add calls openEditor() then sets section select; infer from clicked parent in capture phase.
 document.addEventListener('click',e=>{const btn=e.target.closest('.section-add');if(btn)chosenSection=btn.closest('.meeting-section')?.dataset.section||null},true);
 // Take over item tap on media thumbnails and body, not action buttons; Bible remains direct.

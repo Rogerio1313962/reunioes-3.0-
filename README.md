@@ -243,3 +243,8 @@ Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones me
 
 ## Prévia 96
 Media Player fixo dentro da coluna de cronograma; etapas agrupadas; miniaturas de PDF via PDF.js, vídeo com quadro quando suportado, imagens sem corte; visualização da imagem atual de apoio no seletor.
+
+## Prévia 98 — seleção da etapa e indicador ao vivo
+- Corrige limpeza antecipada da etapa selecionada no seletor de conteúdo: mídia adicionada ao Dízimo permanece no Dízimo.
+- Indicador AO VIVO amarelo com ponto piscando apenas quando o indicador de apresentação estiver ativo (mantém lógica anterior para imagem de apoio).
+- Amplia áreas de toque de etapas e botão adicionar.
