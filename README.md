@@ -312,3 +312,9 @@ PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do 
 - Garante que a moldura do Telão Santuário e o conteúdo 16:9 ocupem integralmente a coluna direita, mesmo depois de trocar de dia.
 - Impede carregamentos atrasados da Imagem de Apoio do dia anterior de substituírem o fundo do dia atual.
 - Preserva os arquivos, as configurações diárias, a grade do PDF e os controles existentes.
+
+
+## Prévia 113 — Título do dia oculto durante a edição
+- Quando **Salvar cronograma** está visível, o nome do dia no cabeçalho é ocultado para impedir que fique por trás dos botões.
+- Ao concluir a edição, o nome do dia volta normalmente.
+- As outras telas, mídias e configurações não foram modificadas.

@@ -1908,3 +1908,9 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
  #agenda .right>.r109PresentationFrame #preview>.placeholder{width:100%!important;min-width:0!important;}
  #agenda .right>.r109PresentationFrame>#r70PageWorkspace{width:100%!important;max-width:100%!important;}
 }
+
+/* PRÉVIA 113 — ocultar título do dia somente no modo de edição.
+   O botão Salvar cronograma indica o estado de edição real. */
+#agenda .r105AgendaHeader:has(#saveSchedule:not([hidden])) .r105DayHeading{display:none!important}
+#agenda .r105AgendaHeader:has(#saveSchedule:not([hidden])){justify-content:flex-start!important}
+#agenda .r105AgendaHeader:has(#saveSchedule:not([hidden])) .r105Support{flex:0 0 auto!important}
