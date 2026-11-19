@@ -24,8 +24,8 @@ function sync(){
  // Quando o PDF está em grade, o botão de reabrir precisa ficar na área do telão,
  // não na barra do cronograma que a grade oculta.
  const reopen=$('agenda56Reopen');if(reopen){
-  if(pdf){let dock=$('r91MinimizedDock');if(dock&&reopen.parentElement!==dock)dock.append(reopen)}
-  else{let bar=$('r88SupportBar');if(bar&&reopen.parentElement!==bar)bar.append(reopen)}
+  const dock=$('r91MinimizedDock');
+  if(dock&&reopen.parentElement!==dock)dock.append(reopen);
  }
  if(playing&&!compact){
   const origin=$('r99PinnedFirstStage')||$('sectionsRoot');
