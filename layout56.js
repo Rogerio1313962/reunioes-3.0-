@@ -96,7 +96,7 @@
    selected=true;agendaSong=false;
   }else if(tab==='agenda'){
    agendaSong=true;agendaMinimized=false;selected=false;
-   if(window.R70?.hasActiveMedia?.() && !window.R70?.isPdfOpen?.())window.R70.close();else if(!window.R70?.hasActiveMedia?.())void window.R70?.displaySupport?.();
+   // Música é áudio: preservar sem alterações a apresentação atual (foto, vídeo, PDF ou apoio).
   }else{
    // No player allowed on Bible, media or settings.
    return;

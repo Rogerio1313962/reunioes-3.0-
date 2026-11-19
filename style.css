@@ -1794,3 +1794,10 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
  position:absolute!important;right:2px!important;top:50%!important;transform:translateY(-50%)!important;margin:0!important;
 }
 @media(max-width:550px){#agenda .right>.r90ExternalHeader{padding:0 38px!important}.r107TelaoTitleGroup{gap:5px!important}#agenda .right>.r90ExternalHeader .r107TelaoTitleGroup h2{font-size:13px!important}}
+
+/* PRÉVIA 108 — AO VIVO sempre escrito: azul em espera; dourado animado ao apresentar. */
+#agenda #r93LiveIndicator.r108Idle{color:#365f80!important;background:#e7f1f9!important;border:1px solid #b8cfdf!important;box-shadow:none!important}
+#agenda #r93LiveIndicator.r108Idle .r93LiveDot{background:#4f83a8!important;box-shadow:none!important;animation:none!important;opacity:1!important}
+#agenda #r93LiveIndicator.r108Active{color:#56401b!important;background:#f8e6b4!important;border:1px solid #dbb35c!important}
+#agenda #r93LiveIndicator.r108Active .r93LiveDot{background:#e6a92e!important;animation:r98LivePulse 1.15s ease-in-out infinite!important}
+@media(prefers-reduced-motion:reduce){#agenda #r93LiveIndicator.r108Active .r93LiveDot{animation:none!important}}

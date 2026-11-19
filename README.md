@@ -280,3 +280,9 @@ PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do 
 - Botão − preservado para minimizar sem interromper a música.
 - Título longo desliza até o final e retorna suavemente ao começo (uma vez por faixa).
 - Botão Imagem de Apoio em azul mais claro.
+
+
+## Prévia 108
+- Música no cronograma não encerra ou substitui a imagem, o vídeo ou o PDF já apresentado no telão.
+- Indicador AO VIVO sempre visível: azul estático com imagem de apoio ou telão vazio; dourado pulsante somente com conteúdo apresentado.
+- Preservados a grade de PDF, o player e os controles de versões anteriores.

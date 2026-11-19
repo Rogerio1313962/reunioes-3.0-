@@ -10,7 +10,7 @@
  badge.setAttribute('role','status');
  badge.setAttribute('aria-label','Conteúdo ao vivo no telão');
  badge.innerHTML='<span class="r93LiveDot" aria-hidden="true"></span><span>AO VIVO</span>';
- badge.hidden=true;
+ badge.hidden=false;
  const titleGroup=document.createElement('div');titleGroup.className='r107TelaoTitleGroup';heading.parentNode.insertBefore(titleGroup,heading);titleGroup.append(heading,badge);
  const refresh=()=>{
    const content=preview.firstElementChild;
@@ -20,7 +20,11 @@
    const standardMedia=!!(window.current && !support && !empty);
    // Algumas telas bíblicas são montadas diretamente no preview.
    const bibleShown=!!preview.querySelector('.verse');
-   badge.hidden=!!support||!!empty||!(pdfOrMediaLive||standardMedia||bibleShown);
+   const live=!support&&!empty&&(pdfOrMediaLive||standardMedia||bibleShown);
+   badge.hidden=false;
+   badge.classList.toggle('r108Active',Boolean(live));
+   badge.classList.toggle('r108Idle',!live);
+   badge.setAttribute('aria-label',live?'Apresentação ao vivo no telão':'Telão em espera, sem apresentação ao vivo');
  };
  let pending=false;
  const schedule=()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;refresh()})};
