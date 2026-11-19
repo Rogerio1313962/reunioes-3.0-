@@ -1250,3 +1250,24 @@ body,main{background:#f0f5f9!important;color:#294862!important}
 .r75image iframe{width:100%;height:100%;border:none;pointer-events:none;display:block;background:#fff}
 .r75image .r75playMark{pointer-events:none}
 .item-thumb.r74loaded video{pointer-events:none}
+
+/* PRÉVIA 79: ícones vetoriais consistentes, destaque de foco discreto e cabeçalho limpo */
+#r74AddDialog .r74choices{gap:11px}
+#r74AddDialog .r74choice{background:#f0f6fa;border:1px solid #d2e2ee;border-radius:16px;color:#315d7f;min-height:110px;gap:10px;box-shadow:none;transition:background .16s,border-color .16s}
+#r74AddDialog .r74choice .r74ico{display:flex;align-items:center;justify-content:center;width:44px;height:44px;color:#477da4}
+#r74AddDialog .r74choice .r74ico svg{width:33px;height:33px;display:block;flex-shrink:0}
+#r74AddDialog .r74choice[data-type=texto]{background:#fff2c3;color:#92702f;border-color:#e9d28b}
+#r74AddDialog .r74choice[data-type=texto] .r74ico{color:#9b792f}
+#r74AddDialog .r74choice:active{background:#dceaf5;transform:none}
+#r74AddDialog .r74close{border:1px solid #d5e2ee;border-radius:11px;outline:none!important;box-shadow:none!important}
+#r74AddDialog .r74close:focus:not(:focus-visible),#r74AddDialog .r74choice:focus:not(:focus-visible){outline:0!important;box-shadow:none!important}
+#r74AddDialog .r74close:focus-visible,#r74AddDialog .r74choice:focus-visible{outline:2px solid #638ba9!important;outline-offset:1px!important;box-shadow:none!important}
+.meeting-section-head{cursor:pointer}
+.meeting-section-head .section-toggle{cursor:pointer;min-height:35px}
+.meeting-section-head .section-toggle strong{font-size:17px}
+.meeting-section-head .section-toggle:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}
+.meeting-section-head .section-toggle:focus-visible{outline:2px solid #e5edf6!important;outline-offset:0!important}
+.meeting-section{border:1px solid #d6e4ee!important;box-shadow:none!important}
+.meeting-section-head{border-radius:12px!important;padding:7px 10px!important;background:#547fa2!important}
+.meeting-section-head::before{display:none!important}
+@media(max-width:650px){#r74AddDialog .r74choice{min-height:92px;gap:5px;padding:10px 5px}#r74AddDialog .r74choice .r74ico{width:37px;height:37px}#r74AddDialog .r74choice .r74ico svg{width:29px;height:29px}}

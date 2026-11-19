@@ -119,3 +119,11 @@ PRÉVIA 73: botão de lápis em cada item do cronograma para alterar somente o t
 
 
 Prévia 76: vídeos, fotos e PDFs em uma pasta por categoria, com arquivos antigos preservados independentemente do dia original; seleção direta pelo cronograma; player do telão mais compacto com botão único para apresentar/encerrar.
+
+
+## Prévia 79
+- Ícones vetoriais profissionais na seleção de seis tipos de conteúdo, com lembrente amarelo.
+- Removida linha explicativa redundante da seleção de conteúdo.
+- Reduzidos os contornos duplicados de foco ao tocar no iPad, mantendo indicador para teclado.
+- Tocando no cabeçalho da etapa, expande/recolhe o cronograma, sem setinha.
+- Preservados arquivos e funções anteriores.
