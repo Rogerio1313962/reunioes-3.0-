@@ -1424,3 +1424,29 @@ body,main{background:#f0f5f9!important;color:#294862!important}
 #r70MediaControls[hidden]{display:none!important}
 #r70PageWorkspace .r70gridHeader{align-items:center!important}
 @media(max-width:900px){#r70PageWorkspace{max-height:calc(100dvh - 245px)!important}}
+
+/* PRÉVIA 89 — Imagem de Apoio, seleção na galeria, sem acúmulo */
+#r87SupportDialog .r89SupportActions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}
+#r87SupportDialog .r89SupportActions button{background:#e8f1f9;border:1px solid #c4d9e9;border-radius:12px;color:#315e81;min-height:68px;padding:12px 8px;font-size:13px;font-weight:750}
+#r87SupportDialog .r89RemoveSupport{display:block;width:100%;background:#fff4f4;border:1px solid #edc7c7;color:#a63838;border-radius:10px;margin-top:12px;font-weight:750;padding:12px}
+#r87SupportDialog .r89SupportStatus{font-size:12px;color:#446c89;margin:7px 0}
+#r87SupportDialog .r87SupportItems[hidden]{display:none!important}
+/* O telão deve permanecer visível durante a rolagem do cronograma em iPads na horizontal. */
+@media (min-width:950px){#agenda .layout{align-items:start}#agenda .layout>.right{position:sticky;top:12px;align-self:start;max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain}}
+
+/* PRÉVIA 90 — TELÃO SANTUÁRIO, título externo, finalização isolada e encaixe integral */
+#agenda .right>.r90ExternalHeader{display:flex!important;align-items:center!important;justify-content:space-between!important;margin:0 0 9px!important;padding:0 3px!important;border:0!important;background:transparent!important;gap:10px!important}
+#agenda .right>.r90ExternalHeader h2{font-size:17px!important;color:#315879!important;letter-spacing:.055em!important;font-weight:850!important;margin:0!important}
+#agenda .right>.r90ExternalHeader .chip{display:none!important}
+#agenda .right>.r90ExternalHeader #r88TransitionSettings{margin-left:auto!important}
+#agenda .right>.r90ExternalHeader #r70Gear{width:39px!important;height:39px!important;padding:4px!important;background:#f8fbff!important;border:1px solid #cbd9e5!important;color:#456f92!important}
+#agenda .right .preview{margin-top:0!important;padding-top:12px!important}
+#agenda .right .preview>.panelhead{display:none!important}
+#agenda #r70MediaControls .r70buttons{display:none!important}
+#r90EndButton{display:block!important;width:100%!important;margin:9px 0 16px!important;padding:12px!important;border:1px solid #a92532!important;border-radius:12px!important;background:#ca2e3e!important;color:#fff!important;font-size:15px!important;font-weight:800!important;box-shadow:0 3px 10px #9e172b25!important}
+#r90EndButton[hidden]{display:none!important}
+#agenda #preview{padding:0!important;display:flex!important;justify-content:center!important;align-items:center!important;aspect-ratio:16/9!important;width:100%!important;overflow:hidden!important;background:#07101e!important}
+#agenda #preview .r70Image,#agenda #preview .r70Video,#agenda #preview .r85PreviewCanvas{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;margin:0!important;object-fit:fill!important;border:0!important;background:#07101e!important}
+#agenda #preview>img,#agenda #preview>video,#agenda #preview>canvas{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:fill!important}
+#agenda .preview .actions,#agenda .preview .volume-panel{display:none!important}
+@media (min-width:950px){#agenda .layout>.right{overflow:visible!important}}

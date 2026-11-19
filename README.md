@@ -181,3 +181,21 @@ Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones me
 - Grade compacta: três miniaturas 16:9 por linha, sem X e sem espaçamento branco excessivo, rolagem interna.
 - Imagem de Apoio acima do cronograma; transição em engrenagem acima do telão; sem controles extras ou nome do PDF abaixo do telão.
 - Telão com moldura dourada discreta e conteúdo sem recorte.
+
+
+## PRÉVIA 89 — IMAGEM DE APOIO DIRETO DA GALERIA
+- Botão Imagem de Apoio acima do cronograma abre Galeria do aparelho, Fotos do aplicativo e Remover.
+- Uma única imagem por dia: a foto escolhida da galeria é otimizada e salva em IndexedDB separado (reunioes3-apoio-v89), chave do dia, sem criar cópias na pasta FOTOS.
+- Trocar substitui a imagem anterior; remover elimina a cópia local, sem alterar a galeria original.
+- Fotos já salvas na biblioteca podem ser usadas como referência, sem duplicação.
+- Telão em outra aba de mesma origem recupera Imagem de Apoio local da galeria. Sem sincronização entre aparelhos.
+- No iPad horizontal, o painel do telão usa posição fixa na rolagem do cronograma (sticky).
+- Não apague os dados do site nem mude a origem (domínio) para preservar a biblioteca atual.
+
+
+## Prévia 90 — Telão Santuário
+- Título TELÃO SANTUÁRIO acima, fora do cartão, com engrenagem de transição no mesmo cabeçalho.
+- Removido botão Apresentar interno do Media Player; vídeo/foto entra automaticamente na apresentação ao ser selecionado, vídeo local permanece pausado aguardando Play. PDF continua a entrar somente com toque na página.
+- Botão vermelho Encerrar separado, abaixo do Media Player, visível para fotos e vídeos.
+- Prévia de vídeos/fotos/PDFs ajustada para preencher 100% a área 16:9, mesmo em conteúdos de proporções diferentes (pode deformar a imagem).
+- Recursos anteriores preservados. Necessário testar no Safari/iPad.
