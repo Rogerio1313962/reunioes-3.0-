@@ -2202,3 +2202,9 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 .b121Cell:disabled{opacity:.5;cursor:default}.b121Foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:2px}.b121Counter{font-size:12px;font-weight:750;color:#597b95}.b121Finish{border:1px solid #dbb7b8!important;background:#fff1f1!important;color:#9e4447!important;border-radius:10px!important;padding:10px 12px!important;font-size:12px!important;font-weight:800!important;cursor:pointer}
 #b120Sequence,#b120AgendaSequence{display:none!important}
 @media(max-width:700px){.b121Card{padding:10px}.b121Cell{padding:10px;min-height:82px}.b121Now{min-height:110px}.b121Cell .b121Text{font-size:12px}.b121Now .b121Text{font-size:13px}.b121Cell .b121Ref{font-size:13px}}
+
+/* Prévia 122: retirar o quadro de leitura antigo, que foi substituído pelo controle de Bíblia.
+   Manter o textarea no DOM para as rotinas de carregamento/adição de versículos. */
+#biblia .b119Reader,#biblia .b119Reference{display:none!important}
+#biblia .b119Actions[hidden]{display:none!important}
+#biblia .b119Actions:not([hidden]){display:flex!important}

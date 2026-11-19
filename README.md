@@ -351,3 +351,7 @@ PRÉVIA 120: painel unificado de configurações de versículos (fontes, sombra,
 
 
 PRÉVIA 121: Controle flutuante bíblico no Cronograma e na página Bíblia. Três cartões verticais: anterior, atual dourado, próximo. Toque direto nos textos; X encerra e retira do telão. Setas antigas escondidas.
+
+
+## Prévia 122
+A caixa antiga Texto bíblico permanece somente no DOM, oculta, para as funções de carregamento. Ações Apresentar e Adicionar ao cronograma só são exibidas quando houver versículos selecionados. Mesma janela de Controle da Bíblia usada no Cronograma e na Bíblia.
