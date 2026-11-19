@@ -174,3 +174,10 @@ Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones me
 - Botão Imagem de Apoio na grade do PDF, com escolha de foto da biblioteca por dia da reunião; opção de limpar.
 - Tocar no slide apresenta e marca verde; tocar novamente retira e exibe Imagem de Apoio, quando configurada.
 - Recursos locais do mesmo navegador; apresentação em outro dispositivo depende de infraestrutura adicional.
+
+
+## Prévia 88
+- PDF abre somente a grade, sem apresentar página automaticamente. Toque em uma miniatura para apresentar e toque novamente para retirar e voltar ao apoio.
+- Grade compacta: três miniaturas 16:9 por linha, sem X e sem espaçamento branco excessivo, rolagem interna.
+- Imagem de Apoio acima do cronograma; transição em engrenagem acima do telão; sem controles extras ou nome do PDF abaixo do telão.
+- Telão com moldura dourada discreta e conteúdo sem recorte.
