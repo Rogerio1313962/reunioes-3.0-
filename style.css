@@ -1646,3 +1646,28 @@ body.r100CompactPlayer #agenda #r100Expand{display:inline-flex!important;min-hei
 body.r100CompactPlayer #agenda .right #r91MusicHost .floating-music-head{display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:6px!important;}
 body.r100CompactPlayer #agenda .right #r91MusicHost .floating-music-head>span{min-width:0;flex:1!important;}
 body.r100CompactPlayer #agenda #r91MinimizedDock{margin-top:8px!important;}
+
+/* PRÉVIA 101 — etapas uniformes em toda a largura do cronograma */
+#agenda #sectionsRoot{width:100%!important;min-width:0!important;display:block!important;}
+#agenda #sectionsRoot>.meeting-section{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;}
+#agenda #sectionsRoot>.meeting-section>.meeting-section-head{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;}
+#agenda #sectionsRoot>.meeting-section>.meeting-section-body{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}
+#agenda #r99PinnedFirstStage{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;}
+/* Botões administrativos somente no cronograma ativo */
+#agenda:not(.active) #r88SupportBar,#agenda:not(.active) #editSchedule,#agenda:not(.active) #saveSchedule,#agenda:not(.active) #newSection{display:none!important;}
+/* Vídeos e imagens sempre mantêm proporção original: não deformar quadros verticais. */
+#agenda #preview .r70Video,#agenda #preview .r70Image,#agenda #preview>video,#agenda #preview>img{object-fit:contain!important;background:#07101e!important;}
+#agenda #preview .r85PreviewCanvas,#agenda #preview>canvas{object-fit:contain!important;}
+/* Nome de arquivo centralizado no player de vídeo e faixa compacta dos comandos. */
+#agenda #r70MediaControls.r101VideoMode .r70head{position:relative!important;display:flex!important;justify-content:center!important;align-items:center!important;min-height:34px!important;padding:0 40px!important;margin-bottom:5px!important;}
+#agenda #r70MediaControls.r101VideoMode .r70head #r70Name{display:block!important;text-align:center!important;flex:1!important;min-width:0!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;font-size:14px!important;font-weight:750!important;}
+#agenda #r70MediaControls.r101VideoMode .r70head #r70Close{position:absolute!important;right:0!important;top:0!important;}
+#agenda #r70MediaControls.r101VideoMode #r70VideoControls{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:8px 12px!important;align-items:center!important;}
+#agenda #r70MediaControls.r101VideoMode #r70VideoControls[hidden]{display:none!important;}
+#agenda #r70MediaControls.r101VideoMode #r70VideoControls .r70seek{grid-column:1/-1!important;margin:3px 0!important;}
+#agenda #r70MediaControls.r101VideoMode #r70VideoControls .r70center{grid-column:1!important;justify-content:flex-start!important;margin:0!important;gap:6px!important;}
+#agenda #r70MediaControls.r101VideoMode #r70VideoControls .r70center button{min-width:38px!important;padding:7px 9px!important;}
+#agenda #r70MediaControls.r101VideoMode #r70VideoControls .r74volume{grid-column:2!important;justify-content:flex-end!important;min-width:0!important;gap:5px!important;margin:0!important;}
+#agenda #r70MediaControls.r101VideoMode #r70VideoControls .r74volume input{width:100%!important;min-width:25px!important;max-width:130px!important;flex:1 1 90px!important;}
+#agenda #r70MediaControls.r101VideoMode #r70VideoControls .r74volume output{min-width:30px!important;}
+#agenda #r70MediaControls.r101VideoMode .r70settings{margin-top:3px!important;}
