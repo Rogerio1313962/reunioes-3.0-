@@ -11,7 +11,7 @@
  badge.setAttribute('aria-label','Conteúdo ao vivo no telão');
  badge.innerHTML='<span class="r93LiveDot" aria-hidden="true"></span><span>AO VIVO</span>';
  badge.hidden=true;
- heading.insertAdjacentElement('afterend',badge);
+ const titleGroup=document.createElement('div');titleGroup.className='r107TelaoTitleGroup';heading.parentNode.insertBefore(titleGroup,heading);titleGroup.append(heading,badge);
  const refresh=()=>{
    const content=preview.firstElementChild;
    const support=content?.matches?.('img[alt="Imagem de Apoio"]')||false;

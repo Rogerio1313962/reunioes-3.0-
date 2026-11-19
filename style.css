@@ -1766,3 +1766,31 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
 #agenda .r105AgendaHeader .r105Support{background:#dbeaf6!important;color:#2a5b80!important;border:1px solid #afcde2!important;box-shadow:none!important}
 #agenda .r105AgendaHeader .r105Support:hover{background:#cce1f2!important}
 @media (prefers-reduced-motion:reduce){#preview58TitleText{transition:none!important;transform:none!important}}
+
+/* PREVIA 107 — cabeçalho simples para PDF; centralização real do Telão Santuário */
+#agenda .right>#r70PageWorkspace .r70gridHeader{
+ display:grid!important;grid-template-columns:minmax(35px,1fr) minmax(0,auto) minmax(35px,1fr)!important;
+ align-items:center!important;gap:8px!important;margin:0 0 6px!important;padding:0!important;min-height:40px!important;
+}
+#agenda .right>#r70PageWorkspace .r70gridHeader .r107PdfTitle{
+ grid-column:2!important;min-width:0!important;max-width:100%!important;text-align:center!important;overflow:hidden!important;
+}
+#agenda .right>#r70PageWorkspace .r70gridHeader .r107PdfTitle strong{
+ display:block!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;
+ font-size:clamp(13px,1.2vw,17px)!important;line-height:1.25!important;color:#294e70!important;
+}
+#agenda .right>#r70PageWorkspace .r70gridHeader .r71GridActions{
+ grid-column:3!important;justify-self:end!important;position:relative!important;
+}
+#agenda .right>#r70PageWorkspace .r70gridHeader small{display:none!important}
+#agenda .right>#r70PageWorkspace{padding-top:6px!important}
+#agenda .right>#r70PageWorkspace .r70grid{padding-top:0!important}
+#agenda .right>.r90ExternalHeader{position:relative!important;display:flex!important;justify-content:center!important;align-items:center!important;padding:0 44px!important;gap:0!important}
+#agenda .right>.r90ExternalHeader .r107TelaoTitleGroup{
+ display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;min-width:0!important;text-align:center!important;
+}
+#agenda .right>.r90ExternalHeader .r107TelaoTitleGroup h2{margin:0!important;text-align:center!important;white-space:nowrap!important}
+#agenda .right>.r90ExternalHeader #r88TransitionSettings{
+ position:absolute!important;right:2px!important;top:50%!important;transform:translateY(-50%)!important;margin:0!important;
+}
+@media(max-width:550px){#agenda .right>.r90ExternalHeader{padding:0 38px!important}.r107TelaoTitleGroup{gap:5px!important}#agenda .right>.r90ExternalHeader .r107TelaoTitleGroup h2{font-size:13px!important}}

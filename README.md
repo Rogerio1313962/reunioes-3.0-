@@ -1,3 +1,9 @@
+PRÉVIA 107 — AJUSTES DE CABEÇALHO
+- Grade do PDF: exibir nome do arquivo em vez de “Páginas do PDF” e ocultar quantidade total.
+- Grade um pouco mais próxima do cabeçalho.
+- TELÃO SANTUÁRIO + AO VIVO centralizados como um grupo, com engrenagem à direita.
+- Outras funcionalidades da Prévia 106 preservadas.
+
 PRÉVIA 104 — ajustes solicitados a partir do ZIP original Prévia 103
 
 1. Grade PDF na coluna direita, abaixo do Telão Santuário, com três slides por linha e rolagem própria. Não esconde os itens do cronograma. Botão X fecha PDF e retira o slide do telão.
