@@ -1,3 +1,19 @@
+PRÉVIA 78 — Miniaturas no cronograma e no seletor de mídias
+
+- Vídeos: usa quadro real capturado do vídeo quando o Safari permite; mantém o quadro de vídeo com controle nativo como alternativa.
+- Fotos: exibe a própria imagem.
+- PDFs: exibe a primeira página pelo renderizador integrado ao navegador, quando suportado.
+- Aplicado à galeria de escolha e aos cartões no cronograma.
+- Não remove arquivos já salvos.
+
+PRÉVIA 77 — Pastas modernas e upload simples
+
+- Vídeos, Fotos e PDFs são categorias únicas; uploads novos guardados em Todos, sem seleção de dias.
+- Upload com arquivo somente, nome automático, edição posterior pelo lápis.
+- Pastas visuais claras com ícones e títulos em maiúsculas; removido destaque dourado.
+- Pastas de Música também têm visual de pasta com ícone próprio.
+- Os arquivos anteriores no IndexedDB não são apagados.
+
 # REUNIÕES 3.0 — PRÉVIA 75
 
 Atualização consolidada da Prévia 74.

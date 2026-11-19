@@ -2,9 +2,9 @@
 (()=>{'use strict';
 const app=document.getElementById('media64App');if(!app)return;
 const body=document.getElementById('m64Body'),crumb=document.getElementById('m64Crumb');
-const categories=[{id:'video',label:'Vídeos',single:'vídeo',symbol:'▣',accept:'.mp4,.mov,.m4v,video/mp4,video/quicktime,video/x-m4v'},
-{id:'imagem',label:'Fotos',single:'foto',symbol:'▧',accept:'.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp'},
-{id:'pdf',label:'PDFs',single:'PDF',symbol:'▤',accept:'.pdf,application/pdf'}];
+const categories=[{id:'video',label:'Vídeos',single:'vídeo',symbol:'film',accept:'.mp4,.mov,.m4v,video/mp4,video/quicktime,video/x-m4v'},
+{id:'imagem',label:'Fotos',single:'foto',symbol:'image',accept:'.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp'},
+{id:'pdf',label:'PDFs',single:'PDF',symbol:'file-text',accept:'.pdf,application/pdf'}];
 const days=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
 let cat=null,day=null,selected=null,mode='preview',search='',rows=[],url=null,modal=null;
 const cardUrls=[];
@@ -35,7 +35,7 @@ function crumbs(){crumb.innerHTML='<button type="button" data-go="home">Mídias<
 function magnify(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16 16 5 5"/></svg>'}
 function searchBar(){return '<label class="m64searchwrap">'+magnify()+'<input class="m64search" id="m64Search" placeholder="Pesquisar" autocomplete="off" aria-label="Pesquisar arquivos"></label>'}
 function hookSearch(){const input=document.getElementById('m64Search');if(input){input.value=search;input.oninput=()=>{search=input.value;renderListOnly()}}}
-function categoriesView(){body.innerHTML='<h2 class="m64heading">Biblioteca de Mídias</h2><div class="m64grid m64categories">'+categories.map(c=>'<button type="button" class="m64tile" data-cat="'+c.id+'"><span class="m64ico">'+c.symbol+'</span><strong>'+c.label+'</strong><small>'+counter(c.id)+' arquivo(s)</small></button>').join('')+'</div>';body.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{cat=b.dataset.cat;day='Todos';search='';render()})}
+function categoriesView(){body.innerHTML='<h2 class="m64heading">Biblioteca de Mídias</h2><div class="m64grid m64categories">'+categories.map(c=>'<button type="button" class="m64tile" data-cat="'+c.id+'"><span class="m77folder-icon" aria-hidden="true"><svg viewBox="0 0 96 72" fill="none"><path d="M7 18V13a7 7 0 0 1 7-7h26l9 10h33a7 7 0 0 1 7 7v37a7 7 0 0 1-7 7H14a7 7 0 0 1-7-7V18Z" fill="#91b6d3"/><path d="M7 30a7 7 0 0 1 7-7h68a7 7 0 0 1 7 7v30a7 7 0 0 1-7 7H14a7 7 0 0 1-7-7V30Z" fill="#dbeaf5" stroke="#6c9cbf" stroke-width="2"/></svg><span class="m77folder-glyph">'+(c.id==='video'?'▶':c.id==='imagem'?'▧':'▤')+'</span></span><strong>'+c.label.toLocaleUpperCase('pt-BR')+'</strong><small>'+counter(c.id)+' arquivo(s)</small></button>').join('')+'</div>';body.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{cat=b.dataset.cat;day='Todos';search='';render()})}
 function daysView(){const c=config();body.innerHTML='<div class="m64titlebar"><h2 class="m64heading">'+c.label+'</h2></div><div class="m64toolbar">'+searchBar()+'<div class="m67navbuttons"><button type="button" class="m64back" id="m64HomeBack">← Voltar</button><button class="m64add" id="m64Add">+ Adicionar '+c.single+'</button></div></div><div class="m64grid" id="m64Days"></div>';hookSearch();document.getElementById('m64HomeBack').onclick=()=>{cat=null;day=null;search='';render()};document.getElementById('m64Add').onclick=()=>{day='Domingo';mode='add';selected=null;search='';render()};renderDays();document.getElementById('m64Search').oninput=e=>{search=e.target.value;renderDays()}}
 function renderDays(){const root=document.getElementById('m64Days');if(!root)return;root.innerHTML=days.filter(d=>!search||d.toLocaleLowerCase('pt-BR').includes(search.toLocaleLowerCase('pt-BR'))||rows.some(f=>f.type===cat&&f.day===d&&f.name.toLocaleLowerCase('pt-BR').includes(search.toLocaleLowerCase('pt-BR')))).map(d=>'<button type="button" class="m64tile" data-day="'+esc(d)+'"><span class="m64ico">▣</span><strong>'+esc(d.toUpperCase())+'</strong><small>'+counter(cat,d)+' arquivo(s)</small></button>').join('');root.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{day=b.dataset.day;mode='preview';search='';const first=orderedFiles()[0];selected=first?first.id:null;render()})}
 function listRows(){return orderedFiles()}
@@ -89,7 +89,7 @@ function folderView(){
 function renderRight(){
  const host=document.getElementById('m64FormHost');if(!host)return;
  host.hidden=mode!=='add';if(mode!=='add'){host.innerHTML='';return}
- host.innerHTML='<form class="m66form" id="m64Form"><h3>Adicionar '+esc(config().single)+'</h3><div class="m66formfields"><label>Pasta<select id="m64Dest">'+days.map(d=>'<option '+(d===day?'selected':'')+'>'+esc(d)+'</option>').join('')+'</select></label><label>Escolher arquivo<input id="m64File" type="file" accept="'+config().accept+'" required></label><label>Nome (opcional)<input type="text" id="m64Name" placeholder="Usar nome do arquivo"></label></div><p class="m64error" id="m64Error" role="status"></p><div class="m64footer"><button type="button" class="m64back" id="m64Cancel">Cancelar</button><button class="m64gold" type="submit" id="m64Save">Salvar arquivo</button></div></form>';
+ host.innerHTML='<form class="m66form m77simpleform" id="m64Form"><div class="m77uploadrow"><div><h3>Adicionar '+esc(config().single)+'</h3><small>Escolha o arquivo. Ele será salvo automaticamente em '+esc(config().label)+'.</small></div><label class="m77filepicker"><span>Escolher arquivo</span><input id="m64File" type="file" accept="'+config().accept+'" required></label></div><p class="m64error" id="m64Error" role="status"></p><div class="m64footer"><button type="button" class="m64back" id="m64Cancel">Cancelar</button><button class="m64gold" type="submit" id="m64Save">Salvar arquivo</button></div></form>';
  document.getElementById('m64Cancel').onclick=()=>{mode='preview';renderRight()};document.getElementById('m64Form').onsubmit=saveFile;
 }
 async function saveFile(e){
@@ -98,7 +98,7 @@ async function saveFile(e){
  const file=input?.files?.[0];
  if(!file||!validFile(file)){msg.textContent='Selecione um arquivo válido para esta categoria.';return}
  const dest='Todos';
- const name=document.getElementById('m64Name').value.trim()||file.name;
+ const name=file.name;
  saveBtn.disabled=true;saveBtn.textContent='Salvando…';msg.textContent='Gravando arquivo neste iPad…';
  try{
    const id=(typeof crypto!=='undefined'&&typeof crypto.randomUUID==='function'?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(36).slice(2));

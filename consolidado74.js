@@ -2,6 +2,27 @@
 const el=id=>document.getElementById(id),escape=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const K=['versiculo','video','imagem','pdf','musica','texto'], N=['Bíblia','Vídeo','Foto','PDF','Música','Lembrete'],I=['📖','🎬','🖼','📄','🎵','▤'];
 let chosenSection=null,kind=null,folder=null,urls=[];
+// Miniaturas compartilhadas: extrai um quadro real no Safari quando possivel.
+function renderVideoThumbnail(target,blob,url){
+ if(!target?.isConnected)return;
+ const video=document.createElement('video');
+ video.src=url;video.muted=true;video.defaultMuted=true;video.playsInline=true;
+ video.setAttribute('playsinline','');video.setAttribute('webkit-playsinline','');
+ video.preload='auto';video.controls=true;video.tabIndex=-1;
+ video.style.pointerEvents='none';
+ const capture=()=>{try{if(video.videoWidth<2||video.videoHeight<2)return;const c=document.createElement('canvas');c.width=320;c.height=Math.max(120,Math.round(320*video.videoHeight/video.videoWidth));c.getContext('2d').drawImage(video,0,0,c.width,c.height);const data=c.toDataURL('image/jpeg',.75);if(!target.isConnected)return;const pic=document.createElement('img');pic.src=data;pic.alt='Quadro de prévia do vídeo';target.replaceChildren(pic);if(target.classList.contains('r75image')){const mark=document.createElement('span');mark.className='r75playMark';mark.textContent='▶';target.append(mark)}}catch(e){/* Mantem video como fallback */}};
+ video.addEventListener('loadedmetadata',()=>{try{video.currentTime=Math.min(.18,Number.isFinite(video.duration)&&video.duration>.18?video.duration/5:.18)}catch(_){ }},{once:true});
+ video.addEventListener('seeked',capture,{once:true});video.addEventListener('loadeddata',capture,{once:true});
+ target.replaceChildren(video);
+ if(target.classList.contains('r75image')){const mark=document.createElement('span');mark.className='r75playMark';mark.textContent='▶';target.append(mark)}
+}
+function renderPdfThumbnail(target,blob,url,withMark){
+ const pdf=document.createElement('iframe');pdf.title='Primeira página do PDF';pdf.loading='eager';pdf.tabIndex=-1;
+ pdf.src=url+'#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH';
+ target.replaceChildren(pdf);
+ if(withMark){const mark=document.createElement('span');mark.className='r75pdfMark';mark.textContent='PDF';target.append(mark)}
+}
+
 const d=document.createElement('dialog');d.id='r74AddDialog';d.className='r74modal';d.innerHTML='<div class="r74top"><h2 id="r74Title">Adicionar conteúdo</h2><button type="button" class="r74close" id="r74Close">✕</button></div><div id="r74Content"></div>';
 document.body.appendChild(d);el('r74Close').onclick=()=>d.close();
 function flush(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[]}
@@ -35,13 +56,9 @@ async function files(day){
    if(kind==='imagem'){
     const pic=document.createElement('img');pic.alt='Miniatura da foto';pic.loading='lazy';pic.src=objectURL;tile.replaceChildren(pic);
    }else if(kind==='video'){
-    const v=document.createElement('video');v.src=objectURL+'#t=0.1';v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='metadata';
-    v.addEventListener('loadedmetadata',()=>{try{if(v.duration>0)v.currentTime=Math.min(0.15,v.duration/5)}catch(_){}},{once:true});
-    v.addEventListener('error',()=>{tile.classList.add('r75unavailable');tile.textContent='▶'}, {once:true});
-    tile.replaceChildren(v);const mark=document.createElement('span');mark.className='r75playMark';mark.textContent='▶';tile.append(mark);
+    renderVideoThumbnail(tile,record.blob,objectURL);
    }else{
-    const pdf=document.createElement('iframe');pdf.title='Primeira página do PDF';pdf.loading='lazy';pdf.tabIndex=-1;pdf.src=objectURL+'#page=1&toolbar=0&navpanes=0&view=Fit';tile.replaceChildren(pdf);
-    const mark=document.createElement('span');mark.className='r75pdfMark';mark.textContent='PDF';tile.append(mark);
+    renderPdfThumbnail(tile,record.blob,objectURL,true);
    }
   }
  }catch(err){box.textContent='Não foi possível abrir esta pasta: '+err.message}
@@ -54,7 +71,7 @@ document.addEventListener('click',e=>{const btn=e.target.closest('.section-add')
 // Take over item tap on media thumbnails and body, not action buttons; Bible remains direct.
 document.addEventListener('click',e=>{const row=e.target.closest('#sectionsRoot .item');if(!row||e.target.closest('button,[contenteditable],input,textarea,select,.drag-handle,.content-grip'))return;const item=state.days[state.day].find(x=>x.id===row.dataset.itemId);if(!item)return;if(['video','imagem','pdf'].includes(item.type)){window.R70?.open(item)}else if(item.type==='musica'){playMusic(item.musicId)}},false);
 // Library-backed item thumbnails: each redraw retains small square preview without storing large videos in localStorage.
-let thumbUrls=[];function thumbnails(){thumbUrls.forEach(u=>URL.revokeObjectURL(u));thumbUrls=[];const day=state.day;for(const row of document.querySelectorAll('#sectionsRoot .item[data-item-id]')){const item=state.days[day].find(x=>x.id===row.dataset.itemId);if(!item?.mediaLibraryId)continue;const thumb=row.querySelector('.item-thumb');if(!thumb)continue;thumb.dataset.thumbId=item.mediaLibraryId;window.ReunioesMediaLibrary?.get(item.mediaLibraryId).then(record=>{if(!record?.blob||thumb.dataset.thumbId!==record.id||!thumb.isConnected)return;const url=URL.createObjectURL(record.blob);thumbUrls.push(url);thumb.classList.add('r74loaded');if(item.type==='imagem'){const image=document.createElement('img');image.alt='Miniatura da foto';image.src=url;thumb.replaceChildren(image)}else if(item.type==='video'){const video=document.createElement('video');video.src=url+'#t=0.1';video.playsInline=true;video.muted=true;video.preload='metadata';thumb.replaceChildren(video)}else if(item.type==='pdf'){const frame=document.createElement('iframe');frame.src=url+'#page=1&toolbar=0&navpanes=0';frame.title='Miniatura do PDF';frame.loading='lazy';thumb.replaceChildren(frame)}}).catch(()=>{})}}
+let thumbUrls=[];function thumbnails(){thumbUrls.forEach(u=>URL.revokeObjectURL(u));thumbUrls=[];const day=state.day;for(const row of document.querySelectorAll('#sectionsRoot .item[data-item-id]')){const item=state.days[day].find(x=>x.id===row.dataset.itemId);if(!item?.mediaLibraryId)continue;const thumb=row.querySelector('.item-thumb');if(!thumb)continue;thumb.dataset.thumbId=item.mediaLibraryId;window.ReunioesMediaLibrary?.get(item.mediaLibraryId).then(record=>{if(!record?.blob||thumb.dataset.thumbId!==record.id||!thumb.isConnected)return;const url=URL.createObjectURL(record.blob);thumbUrls.push(url);thumb.classList.add('r74loaded');if(item.type==='imagem'){const image=document.createElement('img');image.alt='Miniatura da foto';image.src=url;thumb.replaceChildren(image)}else if(item.type==='video'){renderVideoThumbnail(thumb,record.blob,url)}else if(item.type==='pdf'){renderPdfThumbnail(thumb,record.blob,url,false)}}).catch(()=>{})}}
 const priorDraw=drawItems;drawItems=function(){priorDraw();thumbnails()};drawItems();
 window.Reunioes74={openPicker};
 })();

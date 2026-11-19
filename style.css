@@ -1218,3 +1218,35 @@ body,main{background:#f0f5f9!important;color:#294862!important}
 #r70MediaControls .r70settings{margin-top:6px!important;padding-top:5px!important}
 #r70MediaControls .r70seek{margin:4px 0!important}
 #biblioteca .m66folderhead h3{font-size:18px!important}
+
+/* Preview 77: pastas profissionais, sem aro dourado e com identidade azul clara */
+#biblioteca .m64categories{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+#biblioteca .m64tile{position:relative;align-items:center!important;text-align:center!important;justify-content:center!important;gap:7px!important;min-height:150px!important;padding:15px 12px!important;border-radius:17px!important;background:linear-gradient(145deg,#f9fcff,#e4eff8)!important;color:#294f70!important;border:1px solid #c4d9e9!important;box-shadow:0 3px 9px #24486810!important;outline:0!important}
+#biblioteca .m64tile:hover,#biblioteca .m64tile:focus-visible,#biblioteca .m64tile:active{border-color:#6b99bd!important;box-shadow:0 0 0 2px #8db4d334!important;transform:none!important}
+#biblioteca .m64tile strong{font-size:15px!important;color:#294f70!important;letter-spacing:.055em!important}
+#biblioteca .m64tile small{font-size:12px!important;color:#6886a1!important}
+#biblioteca .m77folder-icon{position:relative;width:90px;height:65px;display:block;flex:none}
+#biblioteca .m77folder-icon svg{width:100%;height:100%;filter:drop-shadow(0 3px 3px #4a70851b)}
+#biblioteca .m77folder-glyph{position:absolute;top:33px;left:50%;transform:translate(-50%,-50%);font-size:20px;font-weight:800;color:#517a9d}
+#biblioteca .m77simpleform{background:#f9fcff!important;border:1px solid #cfdfeb!important;color:#294f70!important;gap:8px!important;padding:14px 16px!important;box-shadow:none!important}
+#biblioteca .m77simpleform h3{color:#294f70!important;font-size:16px!important}
+#biblioteca .m77simpleform small{font-size:12px;color:#6987a0}
+#biblioteca .m77uploadrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+#biblioteca .m77filepicker{min-width:240px;max-width:430px;flex:1;display:flex;flex-direction:column;gap:6px;color:#426b8e;font-weight:650;font-size:12px}
+#biblioteca .m77filepicker input{padding:8px!important;background:white!important;border:1px solid #cdddea!important}
+#biblioteca .m77simpleform .m64footer{margin:0!important;gap:8px}
+#biblioteca .m77simpleform .m64gold,#biblioteca .m64add{background:#527da0!important;color:#fff!important;border:1px solid #476e8e!important;box-shadow:none!important}
+#biblioteca .m77simpleform .m64gold:hover,#biblioteca .m64add:hover{background:#426d91!important}
+#music56Left #musicFolders .music-folder{min-height:106px!important;align-items:center!important;text-align:center!important;justify-content:center!important;gap:6px!important;padding:14px 8px!important;background:linear-gradient(145deg,#f8fbfe,#dfedf7)!important;border:1px solid #c0d6e7!important;color:#315c80!important;border-radius:16px!important;box-shadow:0 3px 8px #305e7810!important;transform:none!important;outline:none!important}
+#music56Left #musicFolders .music-folder::after{display:none!important}
+#music56Left #musicFolders .music-folder:hover,#music56Left #musicFolders .music-folder:focus-visible,#music56Left #musicFolders .music-folder.chosen{background:linear-gradient(145deg,#e8f3fb,#d0e5f5)!important;border:2px solid #6998ba!important;box-shadow:0 0 0 2px #87b5d32a!important;transform:none!important}
+#music56Left #musicFolders .music-folder span{font-size:0!important;width:59px;height:42px;display:block;background:center/contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 62'%3E%3Cpath fill='%2396bad5' d='M6 17V12q0-6 6-6h26l9 9h31q6 0 6 6v32q0 6-6 6H12q-6 0-6-6Z'/%3E%3Cpath fill='%23d7eaf6' stroke='%236c9cbd' stroke-width='2' d='M6 28q0-6 6-6h66q6 0 6 6v25q0 6-6 6H12q-6 0-6-6Z'/%3E%3Cpath d='M38 34v15l14-7.5Z' fill='%2353789b'/%3E%3C/svg%3E")!important}
+#music56Left #musicFolders .music-folder b{font-size:12px!important;color:#294f70!important;text-transform:uppercase!important;line-height:1.3!important}
+#music56Left #musicFolders .music-folder small{color:#64819b!important;font-size:11px!important}
+@media(max-width:650px){#biblioteca .m64tile{min-height:118px!important;padding:9px 5px!important}#biblioteca .m77folder-icon{width:66px;height:50px}#biblioteca .m77folder-glyph{top:27px;font-size:15px}#biblioteca .m64tile strong{font-size:11px!important}#biblioteca .m77filepicker{min-width:100%}}
+
+/* Prev 78: miniaturas com imagem real, sem clique independente */
+.r75image video,.r75image img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.r75image iframe{width:100%;height:100%;border:none;pointer-events:none;display:block;background:#fff}
+.r75image .r75playMark{pointer-events:none}
+.item-thumb.r74loaded video{pointer-events:none}
