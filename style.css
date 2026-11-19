@@ -2149,3 +2149,39 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
 #biblia .b119ScreenNote{color:#6f879c;font-size:12px;line-height:1.5;margin:12px 3px}
 @media(max-width:900px){#biblia .b119Layout{grid-template-columns:minmax(0,1fr)!important}#biblia .b119Right{position:static!important}#biblia .b119ScreenFrame{max-width:780px}}
 @media(max-width:600px){#biblia .b119TopInputs{grid-template-columns:1fr!important}#biblia .b119Editor{padding:10px!important}#biblia .b119Header h2{font-size:20px!important}#biblia .b119ScreenHead{flex-wrap:wrap!important}}
+
+/* PREVIA 120: editor bíblico claro e posições de referência unificadas */
+#biblia .b120Settings{margin-top:16px;background:#fff;border:1px solid #d1deea;border-radius:13px;overflow:hidden;color:#294f70}
+#biblia .b120Settings summary{padding:14px;background:#eff5fa;cursor:pointer;font-weight:800;color:#2d597a;list-style-position:inside}
+#biblia .b120SettingsInner{padding:13px;display:grid;gap:10px}
+#biblia .b120Settings h3{margin:12px 0 2px;font-size:14px;color:#2c5878}
+#biblia .b120Fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#biblia .b120Fields label,#biblia .b120BgUpload{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#446580}
+#biblia .b120Fields select,#biblia .b120Fields input[type=color]{width:100%;min-height:38px;box-sizing:border-box;border:1px solid #cad9e7;background:white;color:#264e71;border-radius:8px;padding:6px}
+#biblia .b120Fields input[type=range]{width:100%;accent-color:#d4ac43}
+#biblia .b120Checks{display:flex;gap:18px;flex-wrap:wrap}
+#biblia .b120Checks label{display:flex;align-items:center;gap:5px;font-size:12px;color:#42647e}
+#biblia .b120Help{font-size:11px;color:#7890a4;margin:4px 0}
+.b120Sequence{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;padding:8px;border:1px solid #d2dfeb;background:#f8fbff;border-radius:11px;color:#315b7b}
+.b120Sequence[hidden]{display:none!important}
+.b120Sequence strong{font-size:12px;text-align:center}
+.b120Sequence button{font-size:12px;font-weight:800;border:1px solid #d9b961;border-radius:10px;padding:9px 12px;background:#f6e4a9;color:#77551e}
+.b120Sequence button:disabled{opacity:.4}
+.b120Verse{width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:stretch;justify-content:center;box-sizing:border-box;padding:5%;overflow:hidden;color:var(--b120-tcolor);background:#142d48}
+.b120VerseText{font-family:var(--b120-tfont);font-size:clamp(16px,4.3vw,var(--b120-tsize));line-height:1.23;text-align:center;font-weight:700;white-space:pre-wrap;text-shadow:var(--b120-tshadow);-webkit-text-stroke:var(--b120-tstroke);overflow-wrap:anywhere}
+.b120Ref{font-family:var(--b120-rfont);font-size:clamp(12px,2.2vw,var(--b120-rsize));font-weight:800;color:var(--b120-rcolor);text-shadow:var(--b120-rshadow);-webkit-text-stroke:var(--b120-rstroke)}
+.b120Translation{font-size:.72em;opacity:.88}
+.b120RefArea{margin-top:16px;width:100%;text-align:center}
+.b120Pos-below-left .b120RefArea{text-align:left}
+.b120Pos-below-right .b120RefArea{text-align:right}
+.b120Pos-bottom-left .b120RefArea,.b120Pos-bottom-right .b120RefArea{position:absolute;bottom:4%;left:4%;right:4%;margin:0}
+.b120Pos-bottom-left .b120RefArea{text-align:left}
+.b120Pos-bottom-right .b120RefArea{text-align:right}
+.b120Pos-bottom-left,.b120Pos-bottom-right{padding-bottom:12%}
+#biblia .b119Mirror .b120Verse{position:relative!important;width:100%!important;height:100%!important;padding:5%!important;box-sizing:border-box!important}
+#biblia .b119Mirror .b120VerseText{font-size:clamp(12px,1.65vw,24px)!important}
+#biblia .b119Mirror .b120Ref{font-size:clamp(10px,1.15vw,15px)!important}
+#agenda #preview .b120Verse{width:100%!important;height:100%!important}
+#agenda #preview .b120VerseText{font-size:clamp(12px,1.65vw,27px)!important}
+#agenda #preview .b120Ref{font-size:clamp(10px,1.15vw,16px)!important}
+@media(max-width:600px){#biblia .b120Fields{grid-template-columns:1fr}}

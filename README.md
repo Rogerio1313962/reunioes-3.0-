@@ -345,3 +345,6 @@ PRÉVIA 117 — Ícones vetoriais SVG personalizados na barra lateral: Cronogram
 - Apresentar na Bíblia permanece na Bíblia e usa o Telão já existente, mantendo o canal de apresentação.
 - Removidos avisos e importação visual da página Bíblia; IDs preservados para não interromper o carregamento automático.
 - Anterior/Próximo capítulo na página bíblica.
+
+
+PRÉVIA 120: painel unificado de configurações de versículos (fontes, sombra, contorno, imagem/fundo e seis posições da referência); sequência de versículos com anterior/próximo no Telão e no Cronograma. ACF/ARA incluídas.

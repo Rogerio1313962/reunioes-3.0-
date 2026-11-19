@@ -24,7 +24,7 @@
   // A tela da Bíblia mostra a mesma mídia, mas sem controles independentes.
   const srcVideos=[...source.querySelectorAll('video')];
   mirror.querySelectorAll('video').forEach((v,i)=>{v.removeAttribute('controls');v.muted=true;v.playsInline=true;try{v.currentTime=srcVideos[i]?.currentTime||0}catch(_e){};if(srcVideos[i]&&!srcVideos[i].paused)v.play().catch(()=>{})});
-  const active=!!(source.querySelector('.verse') || window.R70?.isLive?.() || source.querySelector('img:not([alt="Imagem de Apoio"]),video,canvas,iframe'));
+  const active=!!(source.querySelector('.verse,.b120Verse') || window.R70?.isLive?.() || source.querySelector('img:not([alt="Imagem de Apoio"]),video,canvas,iframe'));
   badge.classList.toggle('b119Active',active);
   badge.setAttribute('aria-label',active?'Conteúdo em apresentação':'Telão em espera');
  }

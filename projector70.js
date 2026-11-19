@@ -2,7 +2,13 @@
 const ch=new BroadcastChannel('reunioes3-projetor');const stage=document.getElementById('stage');let seq=0;let active=null;let pdfToken=0;let volume=.25,muted=false;
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function effect(){try{return JSON.parse(localStorage.getItem('reunioes-transition-v70')||'{}')}catch(e){return {}}}
-function replace(x){let layer=document.createElement('div');layer.className='r70layer';if(!x){return layer}if(x.type==='versiculo'){layer.innerHTML='<div class="verse">'+esc(x.content)+'<small>'+esc(x.reference)+' · '+esc(x.translation)+'</small></div>'}
+function replace(x){let layer=document.createElement('div');layer.className='r70layer';if(!x){return layer}if(x.type==='versiculo'){
+ const c=x.refSettings||{refPosition:'below-center',refSize:30,refColor:'#f0cf72',textSize:58,textColor:'#ffffff',textFont:'Arial',refFont:'Arial'};
+ const position=['end','below-center','below-left','below-right','bottom-left','bottom-right'].includes(c.refPosition)?c.refPosition:'below-center';
+ const css=`--b120-rsize:${Number(c.refSize)||30}px;--b120-tsize:${Number(c.textSize)||58}px;--b120-rcolor:${c.refColor||'#f0cf72'};--b120-tcolor:${c.textColor||'#fff'};--b120-rfont:${JSON.stringify(c.refFont||'Arial')},Arial;--b120-tfont:${JSON.stringify(c.textFont||'Arial')},Arial;--b120-rshadow:${c.refShadow?'0 3px 5px #000c':'none'};--b120-rstroke:${c.refOutline?'1px #000':'0 transparent'};--b120-tshadow:${c.textShadow?'0 3px 7px #000e':'none'};--b120-tstroke:${c.textOutline?'1px #000':'0 transparent'};background:${c.bg==='image'&&c.bgImage?'url('+JSON.stringify(c.bgImage)+') center/cover no-repeat':c.bg==='black'?'#030609':c.bg==='blue'?'#284e70':'#142d48'}`;
+ const ref='<span class="b120Ref">'+esc(x.reference)+' <span class="b120Translation">'+esc(x.translation)+'</span></span>';
+ layer.innerHTML='<div class="b120Verse b120Pos-'+position+'" style="'+css.replace(/"/g,'&quot;')+'"><div class="b120VerseText">'+esc(x.content)+(position==='end'?' '+ref:'')+'</div>'+(position==='end'?'':'<div class="b120RefArea">'+ref+'</div>')+'</div>';
+}
 else if(x.type==='texto')layer.innerHTML='<div class="verse">'+esc(x.content)+'</div>';
 else if(x.type==='imagem'){const im=document.createElement('img');im.src=x.fileUrl||'';layer.append(im)}
 else if(x.type==='video'){const v=document.createElement('video');v.src=x.fileUrl||'';v.playsInline=true;v.autoplay=true;v.controls=false;v.volume=volume;v.muted=muted;layer.append(v);v.play().catch(()=>{v.muted=true;v.play().catch(()=>{})})}
