@@ -158,3 +158,12 @@ Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones me
 - Grade de 3 miniaturas retangulares 16:9; minimizar, retirar/restaurar, anterior/próxima preservados.
 - Dependência: PDF.js carregado do CDN da Cloudflare; a primeira abertura do PDF precisa de internet. Para uso totalmente offline, será necessário incluir os arquivos pdf.min.js e pdf.worker.min.js localmente.
 - Não apaga nem migra os arquivos da Biblioteca de Mídias.
+
+
+## Prévia 86 — PDF direto pelo toque
+- Ao abrir um PDF no cronograma, a primeira página é enviada ao Telão ao Vivo.
+- Toque em uma miniatura para apresentar aquela página. A miniatura exibida fica verde.
+- Tocar novamente na mesma página retira o PDF do telão e remove o verde.
+- O botão Apresentar fica oculto apenas para PDFs.
+- PDF continua com botão Minimizar e reabrir; ao abrir outras mídias, a grade e o player de PDF são fechados.
+- Ao remover a página atualmente exibida, a apresentação é encerrada.
