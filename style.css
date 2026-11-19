@@ -1653,8 +1653,6 @@ body.r100CompactPlayer #agenda #r91MinimizedDock{margin-top:8px!important;}
 #agenda #sectionsRoot>.meeting-section>.meeting-section-head{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;}
 #agenda #sectionsRoot>.meeting-section>.meeting-section-body{width:100%!important;max-width:100%!important;box-sizing:border-box!important;}
 #agenda #r99PinnedFirstStage{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;}
-/* Botões administrativos somente no cronograma ativo */
-#agenda:not(.active) #r88SupportBar,#agenda:not(.active) #editSchedule,#agenda:not(.active) #saveSchedule,#agenda:not(.active) #newSection{display:none!important;}
 /* Vídeos e imagens sempre mantêm proporção original: não deformar quadros verticais. */
 #agenda #preview .r70Video,#agenda #preview .r70Image,#agenda #preview>video,#agenda #preview>img{object-fit:contain!important;background:#07101e!important;}
 #agenda #preview .r85PreviewCanvas,#agenda #preview>canvas{object-fit:contain!important;}
