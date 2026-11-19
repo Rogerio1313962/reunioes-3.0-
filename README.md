@@ -136,3 +136,10 @@ PRÉVIA 80: Retirada a faixa azul-marinho do cabeçalho das etapas no cronograma
 - Os lápis de renomeação desaparecem quando o cronograma está salvo.
 - Em Editar cronograma, músicas permitem somente Renomear e Remover; não abrem mais a escolha de pasta/MP3 na edição.
 - Vídeos, fotos, PDFs, lembretes e versículos mantêm Editar apenas dentro do modo de edição.
+
+
+Prévia 82: a paleta agora muda visivelmente a cor de destaque e o fundo suave do cabeçalho da etapa, sem recriar a faixa azul-marinho; cores não alteram o cronograma inteiro.
+
+
+## Prévia 83
+Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones menores à esquerda, sem bordas grossas ou degradês; duas colunas no iPad, uma no celular; nomes em maiúsculas. Sem alteração dos arquivos musicais salvos.

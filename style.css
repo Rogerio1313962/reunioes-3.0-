@@ -1284,3 +1284,57 @@ body,main{background:#f0f5f9!important;color:#294862!important}
 #agenda .meeting-section-body{background:#fff!important;border:1px solid #d9e5ef!important;border-radius:12px!important;overflow:hidden!important;margin-top:4px!important}
 #agenda .meeting-section-body[hidden]{display:none!important}
 #agenda .meeting-section .section-grip{color:#5c819f!important}
+
+/* PRÉVIA 82 — a cor escolhida na paleta afeta somente o título da etapa, sem faixa escura */
+#agenda .meeting-section-head{
+  background:var(--section-tint,#edf4fa)!important;
+  border-left:5px solid var(--section-accent,#527fa2)!important;
+  border-radius:10px!important;
+  padding:7px 8px!important;
+  margin:3px 0 4px!important;
+  transition:background-color .16s ease,border-color .16s ease;
+}
+#agenda .meeting-section-head .section-toggle strong{color:#294e6c!important}
+#agenda .meeting-section-head .section-toggle small{color:#54748d!important}
+#agenda .color-picker{border:1px solid #d6e4ef;border-radius:11px;background:#f7fafc;gap:9px;padding:12px;margin:4px 0 9px}
+#agenda .color-picker button{outline:none;box-shadow:0 0 0 1px #d3dde7;flex:0 0 34px}
+#agenda .color-picker button:focus-visible{outline:2px solid #577f9e;outline-offset:2px}
+
+/* PREVIA 83 — pastas musicais discretas e compactas, visual de lista premium */
+#music56Left #musicFolders{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:9px!important;align-content:start!important;margin-top:12px!important
+}
+#music56Left #musicFolders .music-folder{
+ min-height:72px!important;padding:12px 15px!important;display:grid!important;
+ grid-template-columns:40px minmax(0,1fr)!important;
+ grid-template-rows:auto auto!important;column-gap:13px!important;row-gap:3px!important;
+ align-items:center!important;justify-items:start!important;text-align:left!important;
+ border-radius:13px!important;border:1px solid #d6e3ed!important;
+ background:#ffffff!important;color:#335977!important;
+ box-shadow:0 1px 3px #244f7010!important;transform:none!important;
+ transition:background .15s,border-color .15s!important;
+}
+#music56Left #musicFolders .music-folder span{
+ grid-column:1!important;grid-row:1 / span 2!important;
+ width:38px!important;height:34px!important;display:block!important;
+ background:center/contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 42'%3E%3Cpath d='M4 10q0-4 4-4h12l4 5h17q3 0 3 4v20q0 3-3 3H7q-3 0-3-3Z' fill='%23dceaf5' stroke='%23799fbb' stroke-width='1.7'/%3E%3Cpath d='M5 18h38v17q0 3-4 3H9q-4 0-4-3Z' fill='%23b8d1e4'/%3E%3C/svg%3E")!important;
+ font-size:0!important
+}
+#music56Left #musicFolders .music-folder b{
+ grid-column:2!important;grid-row:1!important;font-size:12px!important;
+ font-weight:750!important;line-height:1.18!important;color:#2e5676!important;
+ letter-spacing:.025em!important;text-transform:uppercase!important
+}
+#music56Left #musicFolders .music-folder small{
+ grid-column:2!important;grid-row:2!important;font-size:11px!important;
+ color:#7991a5!important;opacity:1!important
+}
+#music56Left #musicFolders .music-folder::after{display:none!important}
+#music56Left #musicFolders .music-folder:hover,
+#music56Left #musicFolders .music-folder:focus-visible,
+#music56Left #musicFolders .music-folder.chosen{
+ min-height:72px!important;padding:12px 15px!important;border:1px solid #82acc9!important;
+ background:#edf5fb!important;box-shadow:none!important;transform:none!important
+}
+@media(max-width:630px){#music56Left #musicFolders{grid-template-columns:1fr!important}}
