@@ -1465,3 +1465,32 @@ body[data-player56="agenda"] #agenda .preview .screen{display:flex!important}
 #agenda.page.active #r91MinimizedDock #agenda56Reopen:not([hidden]){display:inline-flex!important;align-items:center!important}
 /* The previous fullscreen overlay location should no longer be used. */
 #agenda .right{min-width:0!important}
+
+/* PRÉVIA 92 — Player musical sobre o Telão Santuário, não abaixo dele. */
+#agenda.page.active .layout > .right{position:sticky!important;top:12px!important;align-self:start!important;min-width:0!important;isolation:isolate!important}
+#agenda #r91MusicHost{position:absolute!important;z-index:70!important;top:51px!important;left:0!important;right:0!important;width:100%!important;max-width:100%!important;margin:0!important;box-sizing:border-box!important;pointer-events:auto!important}
+#agenda #r91MusicHost[hidden]{display:none!important}
+body[data-player56="agenda"] #agenda.page.active #r91MusicHost #floatingMusic{
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ position:relative!important;inset:auto!important;transform:none!important;
+ width:100%!important;max-width:100%!important;min-height:0!important;
+ max-height:min(76dvh,740px)!important;overflow-y:auto!important;
+ border-radius:17px!important;padding:13px!important;
+ background:#192d47!important;box-shadow:0 9px 30px #0c1b35a0!important;
+ box-sizing:border-box!important;
+}
+#agenda #r88SupportBar{max-width:100%!important;min-width:0!important}
+#agenda #r88SupportBar #r87Support{display:inline-flex!important;align-items:center!important;justify-content:center!important;max-width:100%!important;min-height:43px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;box-sizing:border-box!important}
+#agenda #r91MinimizedDock{position:relative!important;z-index:4!important}
+@media(max-width:950px){#agenda #r91MusicHost{top:47px!important}body[data-player56="agenda"] #agenda.page.active #r91MusicHost #floatingMusic{max-height:72dvh!important;padding:10px!important}}
+
+/* PRÉVIA 93 — título alinhado ao telão, AO VIVO discreto, somente apresentações reais. */
+#agenda .right > .r90ExternalHeader{justify-content:flex-start!important;gap:10px!important;margin:4px 0 5px!important;padding:0 3px!important;min-height:38px!important}
+#agenda .right > .r90ExternalHeader h2{font-size:17px!important;letter-spacing:.035em!important;line-height:1.2!important}
+#agenda .right > .r90ExternalHeader #r88TransitionSettings{margin-left:auto!important}
+#r93LiveIndicator{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;color:#19864b;background:#e6f7ed;border:1px solid #bce5cb;font-size:10px;font-weight:800;letter-spacing:.04em;padding:5px 8px;border-radius:100px}
+#r93LiveIndicator[hidden]{display:none!important}
+.r93LiveDot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#20ae59;box-shadow:0 0 0 2px #20ae5920;animation:r93LivePulse 1.8s ease-in-out infinite}
+@keyframes r93LivePulse{0%,100%{opacity:1;box-shadow:0 0 0 2px #20ae5920}50%{opacity:.6;box-shadow:0 0 0 5px #20ae590a}}
+@media(prefers-reduced-motion:reduce){.r93LiveDot{animation:none}}
+#r71PdfMinimize{font-size:20px!important;width:38px!important;min-width:38px!important;padding:4px!important}

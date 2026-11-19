@@ -1,3 +1,20 @@
+# Prévia 94 — Troca de slides sem mensagem intermediária
+
+- Remove o texto "Preparando página..." do Telão Santuário durante a troca de slides de PDF.
+- Mantém a imagem anterior até a próxima página estar disponível, sem tela preta ou texto de carregamento.
+- Usa a miniatura já renderizada como prévia imediata, quando disponível, e substitui por uma renderização de melhor qualidade.
+- Evita enviar uma página à apresentação antes de ela estar pronta.
+- Ignora renderizações antigas quando o usuário troca de slide rapidamente ou encerra a apresentação.
+- Mantém os demais recursos da Prévia 93.
+- Os arquivos do usuário permanecem no armazenamento local do navegador; não limpar os dados do site.
+
+PRÉVIA 92 — Player sobreposto ao Telão Santuário e controle de Imagem de Apoio compacto
+- Media Player de música aparece por cima da área do telão (sobreposição), não como painel alto abaixo.
+- Minimizar recolhe sem interromper a música; botão de reabrir permanece abaixo do telão.
+- Controle da Imagem de Apoio mostra somente o texto fixo “Imagem de Apoio”, sem nome do arquivo; dentro da janela ainda é possível trocar/remover.
+- Mantém arquivos e bases de dados existentes, sem reset.
+- Não validado em Safari real neste ambiente.
+
 PRÉVIA 78 — Miniaturas no cronograma e no seletor de mídias
 
 - Vídeos: usa quadro real capturado do vídeo quando o Safari permite; mantém o quadro de vídeo com controle nativo como alternativa.
@@ -207,3 +224,10 @@ Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones me
 - O Media Player musical fica em um bloco próprio abaixo da prévia, sem ocultar o telão. Minimizar não interrompe o áudio.
 - Os botões para reabrir PDF e música ficam reunidos abaixo do Telão Santuário, não flutuam mais no canto da tela.
 - Cada dia continua com uma imagem de apoio própria; dados IndexedDB existentes são preservados.
+
+
+## Prévia 93 — TELÃO SANTUÁRIO AO VIVO
+- Título mais próximo da moldura e luz verde AO VIVO ao lado do título quando um conteúdo real estiver apresentado.
+- Sem AO VIVO para Imagem de Apoio ou tela vazia.
+- Pulsação sutil; respeita preferência de movimento reduzido.
+- Minimizar a grade do PDF com ícone −, sem texto, com rótulo acessível.
