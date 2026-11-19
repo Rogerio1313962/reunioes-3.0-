@@ -1205,3 +1205,16 @@ body,main{background:#f0f5f9!important;color:#294862!important}
 .r75kind{font-size:10px;color:#7892a6}
 .r75music{background:#d9e8f3;color:#54799b}.r75musicIcon{font-size:32px}
 @media(max-width:480px){.r74files.r75gallery{gap:6px}.r74files.r75gallery .r75file{padding:4px;border-radius:9px}.r75filename{font-size:10px;min-height:28px}.r75playMark{width:25px;height:25px;font-size:11px}}
+
+/* Prévia 76: painel do telão compacto, biblioteca de mídias sem dias */
+#r70MediaControls{padding:10px 12px!important;margin-top:7px!important;border-radius:14px!important;box-shadow:0 3px 12px #213e5622!important}
+#r70MediaControls .r70head{margin-bottom:6px!important;font-size:12px!important}
+#r70MediaControls .r70head button{padding:4px 8px!important}
+#r70MediaControls .r70buttons{margin:4px 0 7px!important}
+#r70MediaControls .r70buttons #r70Present{width:100%;padding:9px!important;font-size:13px!important}
+#r70VideoControls .r70center{margin:0!important;gap:6px!important}
+#r70VideoControls .r70center button{padding:6px 10px!important}
+#r70VideoControls .r74volume{margin:1px 0 4px!important}
+#r70MediaControls .r70settings{margin-top:6px!important;padding-top:5px!important}
+#r70MediaControls .r70seek{margin:4px 0!important}
+#biblioteca .m66folderhead h3{font-size:18px!important}

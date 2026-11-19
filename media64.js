@@ -8,7 +8,7 @@ const categories=[{id:'video',label:'Vídeos',single:'vídeo',symbol:'▣',accep
 const days=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
 let cat=null,day=null,selected=null,mode='preview',search='',rows=[],url=null,modal=null;
 const cardUrls=[];
-function orderedFiles(){return rows.filter(f=>f.type===cat&&f.day===day).sort((a,b)=>(Number(b.addedAt)||0)-(Number(a.addedAt)||0)||((b._fallbackIndex||0)-(a._fallbackIndex||0)))}
+function orderedFiles(){return rows.filter(f=>f.type===cat&&(day==='Todos'||f.day===day)).sort((a,b)=>(Number(b.addedAt)||0)-(Number(a.addedAt)||0)||((b._fallbackIndex||0)-(a._fallbackIndex||0)))}
 function orderedAll(all){return all.map((f,i)=>({...f,_fallbackIndex:i}))}
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function dbOpen(){return new Promise((ok,no)=>{const r=indexedDB.open('reunioes3-midias-v64',1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains('files'))r.result.createObjectStore('files',{keyPath:'id'})};r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}
@@ -31,11 +31,11 @@ function validFile(file){
  return false;
 }
 function counter(c,d){return rows.filter(f=>f.type===c&&(!d||f.day===d)).length}
-function crumbs(){crumb.innerHTML='<button type="button" data-go="home">Mídias</button>'+(cat?' <span>›</span> <button type="button" data-go="type">'+esc(config().label)+'</button>':'')+(day?' <span>›</span> <strong>'+esc(day)+'</strong>':'');crumb.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{if(b.dataset.go==='home'){cat=null;day=null}else day=null;selected=null;search='';mode='preview';release();render()})}
+function crumbs(){crumb.innerHTML='<button type="button" data-go="home">Mídias</button>'+(cat?' <span>›</span> <strong>'+esc(config().label)+'</strong>':'');crumb.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{if(b.dataset.go==='home'){cat=null;day=null}else {cat=null;day=null}selected=null;search='';mode='preview';release();render()})}
 function magnify(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16 16 5 5"/></svg>'}
 function searchBar(){return '<label class="m64searchwrap">'+magnify()+'<input class="m64search" id="m64Search" placeholder="Pesquisar" autocomplete="off" aria-label="Pesquisar arquivos"></label>'}
 function hookSearch(){const input=document.getElementById('m64Search');if(input){input.value=search;input.oninput=()=>{search=input.value;renderListOnly()}}}
-function categoriesView(){body.innerHTML='<h2 class="m64heading">Biblioteca de Mídias</h2><div class="m64grid m64categories">'+categories.map(c=>'<button type="button" class="m64tile" data-cat="'+c.id+'"><span class="m64ico">'+c.symbol+'</span><strong>'+c.label+'</strong><small>'+counter(c.id)+' arquivo(s)</small></button>').join('')+'</div>';body.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{cat=b.dataset.cat;day=null;search='';render()})}
+function categoriesView(){body.innerHTML='<h2 class="m64heading">Biblioteca de Mídias</h2><div class="m64grid m64categories">'+categories.map(c=>'<button type="button" class="m64tile" data-cat="'+c.id+'"><span class="m64ico">'+c.symbol+'</span><strong>'+c.label+'</strong><small>'+counter(c.id)+' arquivo(s)</small></button>').join('')+'</div>';body.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{cat=b.dataset.cat;day='Todos';search='';render()})}
 function daysView(){const c=config();body.innerHTML='<div class="m64titlebar"><h2 class="m64heading">'+c.label+'</h2></div><div class="m64toolbar">'+searchBar()+'<div class="m67navbuttons"><button type="button" class="m64back" id="m64HomeBack">← Voltar</button><button class="m64add" id="m64Add">+ Adicionar '+c.single+'</button></div></div><div class="m64grid" id="m64Days"></div>';hookSearch();document.getElementById('m64HomeBack').onclick=()=>{cat=null;day=null;search='';render()};document.getElementById('m64Add').onclick=()=>{day='Domingo';mode='add';selected=null;search='';render()};renderDays();document.getElementById('m64Search').oninput=e=>{search=e.target.value;renderDays()}}
 function renderDays(){const root=document.getElementById('m64Days');if(!root)return;root.innerHTML=days.filter(d=>!search||d.toLocaleLowerCase('pt-BR').includes(search.toLocaleLowerCase('pt-BR'))||rows.some(f=>f.type===cat&&f.day===d&&f.name.toLocaleLowerCase('pt-BR').includes(search.toLocaleLowerCase('pt-BR')))).map(d=>'<button type="button" class="m64tile" data-day="'+esc(d)+'"><span class="m64ico">▣</span><strong>'+esc(d.toUpperCase())+'</strong><small>'+counter(cat,d)+' arquivo(s)</small></button>').join('');root.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{day=b.dataset.day;mode='preview';search='';const first=orderedFiles()[0];selected=first?first.id:null;render()})}
 function listRows(){return orderedFiles()}
@@ -79,10 +79,10 @@ async function loadCardPreviews(list){
  }
 }
 function folderView(){
- body.innerHTML='<div class="m66folderpage"><div class="m66folderhead"><h3>'+esc(day.toUpperCase())+'</h3></div>'+
+ body.innerHTML='<div class="m66folderpage"><div class="m66folderhead"><h3>'+esc(config().label.toUpperCase())+'</h3></div>'+
  '<div class="m66tools"><button class="m64back" id="m64Back">← Voltar</button><button class="m64add" id="m64Add">+ Adicionar '+esc(config().single)+'</button></div>'+
  '<div class="m66formhost" id="m64FormHost" hidden></div><div class="m66gallery" id="m64List"></div><small class="m66count" id="m64Count"></small></div>';
- document.getElementById('m64Back').onclick=()=>{day=null;mode='preview';selected=null;search='';release();render()};
+ document.getElementById('m64Back').onclick=()=>{cat=null;day=null;mode='preview';selected=null;search='';release();render()};
  document.getElementById('m64Add').onclick=()=>{mode=mode==='add'?'preview':'add';renderRight()};
  renderRight();renderListOnly();
 }
@@ -97,7 +97,7 @@ async function saveFile(e){
  const input=document.getElementById('m64File'),msg=document.getElementById('m64Error'),saveBtn=document.getElementById('m64Save');
  const file=input?.files?.[0];
  if(!file||!validFile(file)){msg.textContent='Selecione um arquivo válido para esta categoria.';return}
- const dest=document.getElementById('m64Dest').value;
+ const dest='Todos';
  const name=document.getElementById('m64Name').value.trim()||file.name;
  saveBtn.disabled=true;saveBtn.textContent='Salvando…';msg.textContent='Gravando arquivo neste iPad…';
  try{
@@ -114,15 +114,15 @@ async function saveFile(e){
 function popup(title,inner,confirmLabel,onConfirm){if(modal)modal.remove();modal=document.createElement('div');modal.className='m64modal';modal.innerHTML='<div class="m64modalbox"><strong>'+title+'</strong>'+inner+'<footer><button type="button" class="m64back" id="m64No">Cancelar</button><button type="button" class="m64gold" id="m64Yes">'+confirmLabel+'</button></footer></div>';app.append(modal);modal.querySelector('#m64No').onclick=closePopup;modal.querySelector('#m64Yes').onclick=onConfirm}
 function closePopup(){if(modal){modal.remove();modal=null}}
 function editName(id){const f=rows.find(x=>x.id===id);if(!f)return;popup('Editar nome','<input id="m64Rename" aria-label="Nome do arquivo" value="'+esc(f.name)+'">','Salvar',async()=>{const name=modal.querySelector('#m64Rename').value.trim();if(!name)return;const rec=await dbGet(id);rec.name=name;await dbChange('put',rec);rows=orderedAll(await dbAll());closePopup();render()})}
-function deleteItem(id){const f=rows.find(x=>x.id===id);if(!f)return;popup('Excluir arquivo?','<p>'+esc(f.name)+'</p>','Excluir',async()=>{await dbChange('delete',id);rows=orderedAll(await dbAll());if(selected===id){release();selected=rows.find(r=>r.type===cat&&r.day===day)?.id||null}closePopup();render()})}
+function deleteItem(id){const f=rows.find(x=>x.id===id);if(!f)return;popup('Excluir arquivo?','<p>'+esc(f.name)+'</p>','Excluir',async()=>{await dbChange('delete',id);rows=orderedAll(await dbAll());if(selected===id){release();selected=rows.find(r=>r.type===cat)?.id||null}closePopup();render()})}
 async function addToSchedule(f){
- const index=days.indexOf(f.day);if(index<0)return;
+ const index=typeof state!=='undefined'?state.day:0;if(index<0||index>6)return;
  const record=await dbGet(f.id).catch(()=>null);if(!record?.blob){alert('Arquivo não encontrado na biblioteca deste iPad.');return}
  const section=state.sections?.[index]?.[0]?.id||'default-'+index;
  const item={id:uid(),type:f.type,title:f.name,mediaLibraryId:f.id,fileUrl:null,sectionId:section,reference:'',translation:'',content:''};
  state.days[index].push(item);
  try{save()}catch(err){state.days[index].pop();alert('Não foi possível salvar o item no cronograma.');return}
- state.day=index;drawDays();drawItems();setTab('agenda');alert('Arquivo incluído no cronograma de '+f.day+'. Ele permanece guardado nesta biblioteca do iPad.');
+ state.day=index;drawDays();drawItems();setTab('agenda');alert('Arquivo incluído no cronograma. Ele permanece guardado nesta biblioteca do iPad.');
 }
 function render(){release();crumbs();if(!cat)categoriesView();else if(!day)daysView();else folderView()}
 (async()=>{try{rows=orderedAll(await dbAll())}catch(e){body.textContent='Este navegador não permitiu acessar o armazenamento local. Verifique o modo privado e as permissões.';return}render()})();

@@ -100,3 +100,6 @@ PRÉVIA 73: botão de lápis em cada item do cronograma para alterar somente o t
 - Telão em outra aba da **mesma origem e mesmo navegador** procura arquivos pelo ID em IndexedDB, em vez de tentar acessar a URL blob de outra janela.
 - Limitação importante: **iPad e computador distintos não compartilham IndexedDB nem BroadcastChannel**. Esta versão continua exigindo servidor/websocket para controle remoto verdadeiro; não prometa reprodução do vídeo do iPad no PC.
 - Verificação com Safari real continua necessária, principalmente prévia de PDF e autoplay de vídeo.
+
+
+Prévia 76: vídeos, fotos e PDFs em uma pasta por categoria, com arquivos antigos preservados independentemente do dia original; seleção direta pelo cronograma; player do telão mais compacto com botão único para apresentar/encerrar.

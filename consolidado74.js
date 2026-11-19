@@ -8,12 +8,12 @@ function flush(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[]}
 function content(html){flush();el('r74Content').innerHTML=html}
 function add(type,title,extras={}){const s=chosenSection||state.sections?.[state.day]?.[0]?.id;const item={id:uid(),type,title,sectionId:s,reference:'',translation:'ACF',content:'',fileUrl:null,...extras};state.days[state.day].push(item);save();drawItems();d.close();}
 function choices(){el('r74Title').textContent='Adicionar conteúdo';content('<p class="r74hint">Escolha somente o tipo de conteúdo.</p><div class="r74choices">'+K.map((t,i)=>`<button type="button" class="r74choice" data-type="${t}"><span class="r74ico">${I[i]}</span>${N[i]}</button>`).join('')+'</div>');el('r74Content').querySelectorAll('[data-type]').forEach(b=>b.onclick=()=>selectType(b.dataset.type))}
-function selectType(t){kind=t;folder=null;if(t==='versiculo'){d.close();setTab('biblia');return}if(t==='texto'){el('r74Title').textContent='Lembrete';content('<button class="r74back">‹ Voltar</button><label>Nome<input id="r74MemoTitle" placeholder="Ex.: Avisos"></label><label>Lembrete<textarea id="r74Memo" rows="4" placeholder="Escreva o lembrete…"></textarea></label><button type="button" class="primary" id="r74SaveMemo">Adicionar ao cronograma</button>');el('r74Content').querySelector('.r74back').onclick=choices;el('r74SaveMemo').onclick=()=>{const title=el('r74MemoTitle').value.trim()||'Lembrete';const note=el('r74Memo').value.trim();if(!note){alert('Escreva o lembrete.');return}add('texto',title,{content:note})};return}folders()}
+function selectType(t){kind=t;folder=null;if(t==='versiculo'){d.close();setTab('biblia');return}if(t==='texto'){el('r74Title').textContent='Lembrete';content('<button class="r74back">‹ Voltar</button><label>Nome<input id="r74MemoTitle" placeholder="Ex.: Avisos"></label><label>Lembrete<textarea id="r74Memo" rows="4" placeholder="Escreva o lembrete…"></textarea></label><button type="button" class="primary" id="r74SaveMemo">Adicionar ao cronograma</button>');el('r74Content').querySelector('.r74back').onclick=choices;el('r74SaveMemo').onclick=()=>{const title=el('r74MemoTitle').value.trim()||'Lembrete';const note=el('r74Memo').value.trim();if(!note){alert('Escreva o lembrete.');return}add('texto',title,{content:note})};return}(t==='musica'?folders():files('Todos'))}
 function folders(){el('r74Title').textContent='Escolher '+({musica:'música',video:'vídeo',imagem:'foto',pdf:'PDF'}[kind]||'arquivo');const days=kind==='musica'?(typeof MUSIC_FOLDERS!=='undefined'?MUSIC_FOLDERS:[]):['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];content('<button type="button" class="r74back">‹ Tipos</button><div class="r74folders">'+days.map((day,i)=>`<button type="button" data-folder="${i}">▣ ${escape(day)}</button>`).join('')+'</div>');el('r74Content').querySelector('.r74back').onclick=choices;el('r74Content').querySelectorAll('[data-folder]').forEach(b=>b.onclick=()=>files(days[Number(b.dataset.folder)]))}
 async function files(day){
- folder=day;el('r74Title').textContent=day;
- content('<button type="button" class="r74back">‹ Pastas</button><p class="r75helper">Toque na miniatura para adicionar ao cronograma.</p><div class="r74files r75gallery" aria-live="polite">Carregando arquivos…</div>');
- el('r74Content').querySelector('.r74back').onclick=folders;
+ folder=day;el('r74Title').textContent=day==='Todos'?({video:'Vídeos',imagem:'Fotos',pdf:'PDFs'}[kind]||day):day;
+ content('<button type="button" class="r74back">‹ Voltar</button><p class="r75helper">Toque na miniatura para adicionar ao cronograma.</p><div class="r74files r75gallery" aria-live="polite">Carregando arquivos…</div>');
+ el('r74Content').querySelector('.r74back').onclick=kind==='musica'?folders:choices;
  const box=el('r74Content').querySelector('.r74files');
  try{
   if(kind==='musica'){
@@ -22,7 +22,7 @@ async function files(day){
    box.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{const m=matches.find(x=>x.id===b.dataset.id);if(m)add('musica',m.name,{musicId:m.id})});return;
   }
   const all=await window.ReunioesMediaLibrary.all();
-  const list=all.filter(r=>r.type===kind&&r.day===day).sort((a,b)=>(b.addedAt||0)-(a.addedAt||0));
+  const list=all.filter(r=>r.type===kind&&(day==='Todos'||r.day===day)).sort((a,b)=>(b.addedAt||0)-(a.addedAt||0));
   if(!d.open||folder!==day)return;
   box.innerHTML=list.length?list.map(r=>`<button type="button" class="r75file" data-id="${escape(r.id)}" title="Adicionar ${escape(r.name)}"><span class="r75image" data-preview="${escape(r.id)}"><span class="r75fallback">${kind==='video'?'▶':kind==='imagem'?'▧':'PDF'}</span></span><span class="r75filename">${escape(r.name)}</span><span class="r75kind">${kind==='video'?'Vídeo':kind==='imagem'?'Foto':'PDF'}</span></button>`).join(''):'Pasta vazia. Adicione arquivos na Biblioteca de Mídias.';
   box.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{const m=list.find(x=>x.id===b.dataset.id);if(m)add(kind,m.name,{mediaLibraryId:m.id})});
