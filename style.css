@@ -1801,3 +1801,78 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
 #agenda #r93LiveIndicator.r108Active{color:#56401b!important;background:#f8e6b4!important;border:1px solid #dbb35c!important}
 #agenda #r93LiveIndicator.r108Active .r93LiveDot{background:#e6a92e!important;animation:r98LivePulse 1.15s ease-in-out infinite!important}
 @media(prefers-reduced-motion:reduce){#agenda #r93LiveIndicator.r108Active .r93LiveDot{animation:none!important}}
+
+
+/* PRÉVIA 109 — Moldura única do TELÃO + grade PDF, sem saltos visuais. */
+#agenda .layout>.right>.r109PresentationFrame{
+ order:2!important;position:relative!important;display:flex!important;flex-direction:column!important;
+ flex:0 1 auto!important;gap:7px!important;box-sizing:border-box!important;
+ background:#f8fbff!important;border:1.5px solid #d5ad52!important;border-radius:21px!important;
+ padding:10px!important;min-width:0!important;min-height:0!important;
+ box-shadow:0 4px 16px #a58b4b24!important;overflow:hidden!important;
+}
+#agenda .right>.r109PresentationFrame>.preview{
+ display:block!important;position:relative!important;flex:0 0 auto!important;order:0!important;
+ border:0!important;background:transparent!important;box-shadow:none!important;
+ padding:0!important;margin:0!important;min-width:0!important;box-sizing:border-box!important;
+}
+#agenda .right>.r109PresentationFrame #preview{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ width:100%!important;aspect-ratio:16/9!important;height:auto!important;overflow:hidden!important;
+ border-radius:12px!important;contain:layout paint!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace:not([hidden]){
+ order:1!important;display:flex!important;flex-direction:column!important;
+ flex:0 1 auto!important;min-width:0!important;min-height:0!important;
+ max-height:min(42dvh,410px)!important;margin:0!important;
+ padding:5px 0 0!important;background:transparent!important;border:0!important;
+ border-radius:0!important;box-shadow:none!important;overflow:hidden!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace[hidden]{display:none!important}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70grid{
+ flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;
+ overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;
+ scrollbar-gutter:stable!important;overflow-anchor:none!important;touch-action:pan-y!important;
+ padding:2px 5px 9px 2px!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70gridHeader{
+ flex:0 0 40px!important;min-height:40px!important;margin-bottom:5px!important;
+ display:grid!important;grid-template-columns:minmax(36px,1fr) minmax(0,auto) minmax(36px,1fr)!important;
+ align-items:center!important;gap:8px!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r107PdfTitle{grid-column:2!important;min-width:0!important;text-align:center!important}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r107PdfTitle strong{font-size:clamp(12px,1.2vw,16px)!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;display:block!important}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r71GridActions{grid-column:3!important;justify-self:end!important}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70page{
+ box-sizing:border-box!important;min-width:0!important;min-height:0!important;
+ border:2px solid #d2dce6!important;background:#fff!important;
+ box-shadow:none!important;outline:none!important;overflow:hidden!important;
+ border-radius:9px!important;transform:none!important;transition:background-color .13s,border-color .13s!important;
+ contain:layout paint!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70page.on-screen{
+ border-color:#d6a43d!important;background:#fff2c9!important;
+ box-shadow:0 0 0 1px #d6a43d40!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70page.on-screen .r85pageLabel{
+ background:#f6d885!important;color:#5f4210!important;font-weight:800!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70page.on-screen .r70pageSelect{color:#6a501a!important}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70pageThumb{
+ aspect-ratio:16/9!important;height:auto!important;width:100%!important;
+ background:#111d2c!important;overflow:hidden!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70pageThumb canvas{
+ display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r85pageLabel{
+ min-height:18px!important;height:18px!important;line-height:18px!important;
+ padding:0 2px!important;margin:0!important;overflow:hidden!important;
+ white-space:nowrap!important;text-overflow:ellipsis!important;box-sizing:border-box!important;
+}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace .r70pageSelect{padding:0!important;margin:0!important;display:block!important;width:100%!important;min-height:0!important;}
+#agenda .right>.r109PresentationFrame>#r70PageWorkspace #r71PdfMinimize{
+ background:#eac66f!important;color:#21354b!important;border-color:#c49e41!important;
+ font-size:21px!important;font-weight:900!important;
+}
+@media(max-width:700px){#agenda .right>.r109PresentationFrame>#r70PageWorkspace:not([hidden]){max-height:min(40dvh,330px)!important}}

@@ -286,3 +286,9 @@ PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do 
 - Música no cronograma não encerra ou substitui a imagem, o vídeo ou o PDF já apresentado no telão.
 - Indicador AO VIVO sempre visível: azul estático com imagem de apoio ou telão vazio; dourado pulsante somente com conteúdo apresentado.
 - Preservados a grade de PDF, o player e os controles de versões anteriores.
+
+
+## Prévia 109
+- Destaque dourado do slide apresentado, combinando com AO VIVO.
+- Moldura dourada única envolvendo Telão Santuário e grade de PDF.
+- Dimensões e rolagem estáveis na troca de slides para reduzir saltos no Safari do iPad.
