@@ -1494,3 +1494,60 @@ body[data-player56="agenda"] #agenda.page.active #r91MusicHost #floatingMusic{
 @keyframes r93LivePulse{0%,100%{opacity:1;box-shadow:0 0 0 2px #20ae5920}50%{opacity:.6;box-shadow:0 0 0 5px #20ae590a}}
 @media(prefers-reduced-motion:reduce){.r93LiveDot{animation:none}}
 #r71PdfMinimize{font-size:20px!important;width:38px!important;min-width:38px!important;padding:4px!important}
+
+/* PRÉVIA 95 — Tela estável no iPad: somente a lista do cronograma rola. */
+@media (min-width:900px) {
+  html,body {height:100%;width:100%;overflow:hidden!important;overscroll-behavior:none!important;}
+  body>.app,.app{height:100dvh!important;min-height:0!important;overflow:hidden!important;}
+  .app>.sidebar{height:100dvh!important;max-height:100dvh!important;overflow-y:auto!important;flex-shrink:0!important;}
+  .app>main{display:flex!important;flex-direction:column!important;height:100dvh!important;min-height:0!important;overflow:hidden!important;padding-bottom:10px!important;}
+  main>header{flex:0 0 auto!important;}
+  main>#agenda.page.active{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;height:100%!important;min-height:0!important;overflow:hidden!important;overscroll-behavior:none!important;}
+  #agenda>.hero{flex:0 0 auto!important;}
+  #agenda>.days{flex:0 0 auto!important;}
+  #agenda>.layout{flex:1 1 auto!important;min-height:0!important;height:0!important;max-height:100%!important;overflow:hidden!important;align-items:stretch!important;}
+  #agenda>.layout>.panel{height:100%!important;max-height:100%!important;min-height:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;}
+  #agenda>.layout>.panel>.panelhead{flex:0 0 auto!important;}
+  #agenda>.layout>.panel>#r88SupportBar{flex:0 0 auto!important;}
+  #agenda>.layout>.panel>#r70PageWorkspace:not([hidden]){flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow:hidden!important;}
+  #agenda>.layout>.panel>#r70PageWorkspace .r70grid{min-height:0!important;flex:1 1 auto!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;}
+  #agenda>.layout>.panel>#sectionsRoot:not([style*="display: none"]){flex:1 1 auto!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;padding-right:4px!important;}
+  #agenda>.layout>.panel>#items:not([hidden]){min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain!important;}
+  #agenda>.layout>.right{position:relative!important;top:auto!important;align-self:stretch!important;height:100%!important;max-height:100%!important;min-height:0!important;overflow:visible!important;overscroll-behavior:none!important;}
+  #agenda>.layout>.right .preview{flex:0 0 auto!important;}
+  #agenda #r91MusicHost{max-height:none!important;}
+  body[data-player56="agenda"] #agenda.page.active #r91MusicHost #floatingMusic{
+    height:min(670px,calc(100dvh - 160px))!important;
+    max-height:calc(100dvh - 160px)!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-rows:auto auto auto auto minmax(0,1fr)!important;
+    align-content:stretch!important;
+  }
+  body[data-player56="agenda"] #agenda #r91MusicHost #floatingMusic #lyricsPanel:not([hidden]){
+    grid-column:1 / -1!important;
+    grid-row:5!important;
+    min-height:0!important;height:100%!important;max-height:100%!important;
+    display:flex!important;flex-direction:column!important;overflow:hidden!important;
+  }
+  body[data-player56="agenda"] #agenda #r91MusicHost #floatingMusic #lyricsScroll{
+    min-height:0!important;height:0!important;flex:1 1 auto!important;
+    max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;
+    overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;
+  }
+  /* Cabeçalho e controles ficam fixos, mesmo com letra longa. */
+  body[data-player56="agenda"] #agenda #floatingMusic>.floating-music-head,
+  body[data-player56="agenda"] #agenda #floatingMusic>.floating-music-controls,
+  body[data-player56="agenda"] #agenda #floatingMusic>.floating-music-progress,
+  body[data-player56="agenda"] #agenda #floatingMusic>.floating-music-volume {min-height:0!important;}
+}
+/* Ajustes adicionais: botão PDF dourado e título do dia limpo. */
+#agenda .panelhead .eyebrow{display:none!important}
+#agenda #dayTitle{font-size:27px!important;line-height:1.15!important;margin:0!important}
+#r71PdfMinimize{background:#eac66f!important;border:1px solid #d5aa4b!important;color:#20374f!important;box-shadow:none!important}
+#agenda #r88SupportBar{display:flex!important;justify-content:space-between!important;align-items:center!important;gap:10px!important;flex-wrap:wrap!important}
+#agenda #r88SupportBar .section-toolbar{display:flex!important;gap:8px!important;margin-left:auto!important;align-items:center!important;flex-wrap:wrap!important}
+#agenda #r88SupportBar .section-toolbar button[hidden]{display:none!important}
+#agenda #r88SupportBar[hidden]{display:none!important}

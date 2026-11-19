@@ -1,3 +1,11 @@
+PRÉVIA 95 — Estabilidade do cronograma e Telão no iPad
+- No iPad em modo horizontal, a página não rola inteira: somente a lista do cronograma ou as miniaturas do PDF rolam.
+- O Telão Santuário fica fixo à direita.
+- O Media Player musical permanece sobre o telão e a letra tem rolagem independente com toque.
+- Dia da semana em fonte maior e sem ORGANIZAÇÃO. Botões Editar cronograma e Imagem de Apoio na mesma linha.
+- Minimizar PDF em dourado.
+- Os arquivos da biblioteca não são excluídos ou migrados.
+
 # Prévia 94 — Troca de slides sem mensagem intermediária
 
 - Remove o texto "Preparando página..." do Telão Santuário durante a troca de slides de PDF.
