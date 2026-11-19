@@ -1752,3 +1752,17 @@ body:has(#agenda.page.active) #agenda56Reopen:not([hidden]){
 #r74AddDialog .r75gallery{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 #r74AddDialog.r105SmallGallery .r75gallery{grid-template-columns:minmax(0,1fr)!important;max-width:270px!important}
 @media(max-width:700px){#r74AddDialog .r75gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+
+/* PRÉVIA 106 — X encerra música; menos apenas minimiza; apoio azul claro. */
+#agenda106Close{display:none!important}
+body[data-player56="agenda"] #agenda #floatingMusic #agenda106Close:not([hidden]){
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:40px!important;height:40px!important;min-width:40px!important;
+ border:1px solid #7993ae!important;border-radius:10px!important;
+ background:#314d6d!important;color:#fff!important;font-size:27px!important;
+ line-height:1!important;padding:0!important;cursor:pointer!important;margin-left:3px!important;
+}
+body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidden]){margin-left:3px!important}
+#agenda .r105AgendaHeader .r105Support{background:#dbeaf6!important;color:#2a5b80!important;border:1px solid #afcde2!important;box-shadow:none!important}
+#agenda .r105AgendaHeader .r105Support:hover{background:#cce1f2!important}
+@media (prefers-reduced-motion:reduce){#preview58TitleText{transition:none!important;transform:none!important}}

@@ -267,3 +267,10 @@ PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do 
 - Adicionar diretamente um vídeo, foto ou PDF da galeria ou Arquivos do iPad/celular pela janela Adicionar conteúdo no cronograma. O arquivo novo é armazenado na Biblioteca de Mídias deste aparelho e referenciado no cronograma.
 - Janela de seleção com 3 miniaturas por linha em iPad e 2 no celular; para uma única mídia a janela se ajusta ao conteúdo.
 - A grade do PDF abaixo do Telão, já implementada na Prévia 104, não foi modificada.
+
+
+## Prévia 106
+- Botão X no Media Player do cronograma: fecha e para a música.
+- Botão − preservado para minimizar sem interromper a música.
+- Título longo desliza até o final e retorna suavemente ao começo (uma vez por faixa).
+- Botão Imagem de Apoio em azul mais claro.

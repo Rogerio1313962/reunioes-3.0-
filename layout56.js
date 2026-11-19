@@ -29,9 +29,12 @@
  let selected=false, agendaSong=false, agendaMinimized=false;
  const minimize=document.createElement('button');minimize.type='button';minimize.id='agenda56Minimize';minimize.textContent='−';minimize.title='Minimizar player e mostrar telão';minimize.setAttribute('aria-label','Minimizar player e mostrar telão');
  float.querySelector('.floating-music-head')?.append(minimize);
+ const closeAgenda=document.createElement('button');closeAgenda.type='button';closeAgenda.id='agenda106Close';closeAgenda.textContent='×';closeAgenda.title='Fechar Media Player e parar a música';closeAgenda.setAttribute('aria-label','Fechar Media Player e parar a música');
+ minimize.after(closeAgenda);
  const reopen=document.createElement('button');reopen.type='button';reopen.id='agenda56Reopen';reopen.textContent='♫ Mostrar player';reopen.title='Reabrir player de música';
  document.body.append(reopen);
  minimize.onclick=()=>{agendaMinimized=true;refresh()};
+ closeAgenda.onclick=()=>{resetTrack();try{audio.currentTime=0}catch(_e){};refresh();};
  reopen.onclick=()=>{agendaMinimized=false;refresh()};
  let lastTab='';let folderOpenToken=0;
  const activeTab=()=>document.querySelector('.page.active')?.id||'';
@@ -51,7 +54,7 @@
    else if(float.parentElement!==parking)parking.append(float);
    empty.hidden=false;
   }
-  preview.classList.remove('player56-on','music-on-right');agendaMusicHost.hidden=!agendaVisible;minimize.hidden=!agendaVisible;reopen.hidden=!(tab==='agenda'&&agendaSong&&agendaMinimized);
+  preview.classList.remove('player56-on','music-on-right');agendaMusicHost.hidden=!agendaVisible;minimize.hidden=!agendaVisible;closeAgenda.hidden=!agendaVisible;reopen.hidden=!(tab==='agenda'&&agendaSong&&agendaMinimized);
   float.setAttribute('aria-hidden',String(!(agendaVisible||open&&selected)));
   if(restore)restore.hidden=true;
   if(legacyClose)legacyClose.hidden=true;
