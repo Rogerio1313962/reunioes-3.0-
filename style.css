@@ -1718,3 +1718,37 @@ body:has(#agenda.page.active) #agenda56Reopen:not([hidden]){
  #r74AddDialog .r75gallery,#r74AddDialog .r74files{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;}
  #agenda .right>#r70PageWorkspace:not([hidden]){max-height:43dvh!important;min-height:150px!important;}
 }
+
+/* Prévia 105 — cabeçalho, vídeo limpo e importação direta */
+#agenda .layout>.panel>.panelhead.r105AgendaHeader{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:10px!important;margin-bottom:12px!important;min-width:0!important;}
+#agenda .r105AgendaHeader .r105DayHeading{flex:1 1 auto!important;min-width:0!important;}
+#agenda .r105AgendaHeader h2#dayTitle{font-size:clamp(20px,2.25vw,29px)!important;font-weight:850!important;white-space:nowrap!important;text-transform:uppercase!important;margin:0!important;line-height:1.2!important}
+#agenda .r105AgendaHeader .r105Support{flex:0 0 auto!important;white-space:nowrap!important;margin:0!important;min-height:39px!important;padding:8px 10px!important;font-size:12px!important}
+#agenda .r105AgendaHeader .section-toolbar{flex:0 0 auto!important;display:flex!important;align-items:center!important;gap:6px!important;white-space:nowrap!important;margin:0!important}
+#agenda .r105AgendaHeader .section-toolbar button{min-height:39px!important;padding:8px 10px!important;font-size:12px!important}
+#agenda .r105AgendaHeader .section-toolbar button[hidden]{display:none!important}
+#agenda #r88SupportBar{display:none!important}
+@media(max-width:700px){#agenda .layout>.panel>.panelhead.r105AgendaHeader{flex-wrap:wrap!important}#agenda .r105AgendaHeader .r105DayHeading{flex-basis:100%!important}#agenda .r105AgendaHeader .section-toolbar{margin-left:auto!important}}
+/* Vídeos: controles enxutos fora da moldura dourada e sem título de arquivo */
+#agenda .right>#r70MediaControls:not([hidden]){order:3!important;position:relative!important;display:block!important;flex:0 0 auto!important;margin:0!important;padding:5px 3px 0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#294d6c!important;}
+#agenda .right>#r70MediaControls .r70head,#agenda .right>#r70MediaControls .r70settings,#agenda .right>#r70MediaControls .r70buttons{display:none!important}
+#agenda .right>#r70MediaControls #r70VideoControls{margin:0!important;gap:5px 10px!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r70seek{margin:0!important;color:#45627c!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r70center{margin:0!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r70center button{border:1px solid #cbd9e7!important;background:#f4f8fc!important;color:#355d7c!important;border-radius:9px!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r70center #r70Play{background:#eac66f!important;color:#20374f!important;border-color:#c5a251!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r74volume{color:#416584!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r74volume input{accent-color:#caa04e!important}
+#agenda .right>#r90EndButton{order:5!important;margin:4px 0 10px!important}
+#agenda .right>#r70PageWorkspace:not([hidden]){order:4!important}
+/* Fotos: somente a imagem, sem tarja azul, player e nome de arquivo */
+#agenda .right>#r70MediaControls[hidden]{display:none!important}
+/* Picker responsivo e opção de adicionar arquivo diretamente no próprio cronograma */
+#r74AddDialog.r105SmallGallery{width:min(410px,calc(100vw - 24px))!important}
+#r74AddDialog .r105Import{display:flex;flex-direction:column;gap:5px;margin:5px 0 13px!important}
+#r74AddDialog .r105ImportButton{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;min-height:43px;padding:10px 16px;border-radius:10px;background:#527fa4;color:#fff;font-size:13px;font-weight:750;cursor:pointer}
+#r74AddDialog #r105NewFile{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+#r74AddDialog #r105ImportStatus{font-size:12px;color:#3f6586;min-height:0}
+#r74AddDialog .r75gallery{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#r74AddDialog.r105SmallGallery .r75gallery{grid-template-columns:minmax(0,1fr)!important;max-width:270px!important}
+@media(max-width:700px){#r74AddDialog .r75gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
