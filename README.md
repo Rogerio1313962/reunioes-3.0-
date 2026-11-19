@@ -127,3 +127,12 @@ Prévia 76: vídeos, fotos e PDFs em uma pasta por categoria, com arquivos antig
 - Reduzidos os contornos duplicados de foco ao tocar no iPad, mantendo indicador para teclado.
 - Tocando no cabeçalho da etapa, expande/recolhe o cronograma, sem setinha.
 - Preservados arquivos e funções anteriores.
+
+
+PRÉVIA 80: Retirada a faixa azul-marinho do cabeçalho das etapas no cronograma. O nome INÍCIO é agora um cabeçalho claro e clicável, preservando abrir/fechar com toque, contador e botões de edição.
+
+
+## Prévia 81
+- Os lápis de renomeação desaparecem quando o cronograma está salvo.
+- Em Editar cronograma, músicas permitem somente Renomear e Remover; não abrem mais a escolha de pasta/MP3 na edição.
+- Vídeos, fotos, PDFs, lembretes e versículos mantêm Editar apenas dentro do modo de edição.

@@ -1,33 +1,37 @@
-/* Prévia 73: título independente do arquivo e toque direto em versículos. */
+/* Prévia 81: a edição só aparece em Editar cronograma; música permite apenas renomear/remover. */
 (function(){
   const previousDraw=drawItems;
+  function renameItem(id){
+    const item=state.days[state.day].find(x=>x.id===id);
+    if(!item)return;
+    const answer=prompt('Nome deste item no cronograma:',item.title||'');
+    if(answer===null)return;
+    const title=answer.trim();
+    if(!title){alert('O nome não pode ficar vazio.');return;}
+    item.title=title;
+    try{save();drawItems();}catch(e){alert('Não foi possível salvar o nome.');}
+  }
   drawItems=function(){
     previousDraw();
+    const editing=!!document.getElementById('saveSchedule')&&!document.getElementById('saveSchedule').hidden;
     document.querySelectorAll('#sectionsRoot .item, #items .item').forEach(row=>{
       const id=row.dataset.itemId;
-      if(!id||row.querySelector('.r73Rename'))return;
       const item=state.days[state.day].find(x=>x.id===id);
       if(!item)return;
-      const button=document.createElement('button');
-      button.type='button';button.className='r73Rename';button.title='Editar nome exibido no cronograma';
-      button.setAttribute('aria-label','Renomear '+(item.title||'item'));
-      button.textContent='✎';
-      button.addEventListener('click',e=>{
-        e.preventDefault();e.stopPropagation();
-        const fresh=state.days[state.day].find(x=>x.id===id);if(!fresh)return;
-        const answer=prompt('Nome deste item no cronograma:',fresh.title||'');
-        if(answer===null)return;
-        const name=answer.trim();if(!name){alert('O nome não pode ficar vazio.');return}
-        fresh.title=name;
-        try{save();drawItems()}catch(err){alert('Não foi possível salvar o novo nome.');}
-      });
-      const info=row.querySelector('.iteminfo');
-      if(info)info.appendChild(button);
-      else row.appendChild(button);
-      // O toque direto funciona apenas para versículos; as mídias seguem no player pausado.
+      // Pencils from older builds must never be visible while schedule is saved.
+      row.querySelectorAll('.r73Rename').forEach(btn=>btn.remove());
+      const edit=row.querySelector('[data-act="edit"]');
+      if(edit){
+        edit.hidden=!editing;
+        if(item.type==='musica'){
+          edit.textContent='Renomear';
+          edit.title='Alterar somente o nome deste item';
+          edit.onclick=e=>{e.preventDefault();e.stopPropagation();if(editing)renameItem(id)};
+        }
+      }
       if(item.type==='versiculo'){
         row.classList.add('r73VerseTap');
-        row.title='Toque para mostrar o versículo diretamente no telão';
+        row.title='Toque para apresentar o versículo diretamente no telão';
         row.addEventListener('click',e=>{
           if(e.target.closest('button,input,select,textarea,a,[contenteditable],.content-grip,.drag-handle'))return;
           const verse=state.days[state.day].find(x=>x.id===id);
