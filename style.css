@@ -1669,3 +1669,52 @@ body.r100CompactPlayer #agenda #r91MinimizedDock{margin-top:8px!important;}
 #agenda #r70MediaControls.r101VideoMode #r70VideoControls .r74volume input{width:100%!important;min-width:25px!important;max-width:130px!important;flex:1 1 90px!important;}
 #agenda #r70MediaControls.r101VideoMode #r70VideoControls .r74volume output{min-width:30px!important;}
 #agenda #r70MediaControls.r101VideoMode .r70settings{margin-top:3px!important;}
+
+/* PRÉVIA 104 — mudanças pedidas sobre a base original 103. */
+/* PDF: grade abaixo do Telão Santuário, sem cobrir ou esconder o cronograma. */
+#agenda .layout>.right{display:flex!important;flex-direction:column!important;align-items:stretch!important;min-width:0!important;gap:8px!important;}
+#agenda .right>#r70PageWorkspace:not([hidden]){
+ display:flex!important;flex-direction:column!important;position:relative!important;
+ flex:1 1 auto!important;order:3!important;min-width:0!important;min-height:145px!important;
+ max-height:calc(100dvh - 390px)!important;margin:2px 0 0!important;
+ padding:10px!important;overflow:hidden!important;z-index:3!important;
+}
+#agenda .right>#r70PageWorkspace[hidden]{display:none!important;}
+#agenda .right>#r70PageWorkspace .r70grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;overflow-y:auto!important;overflow-x:hidden!important;min-height:0!important;flex:1 1 auto!important;touch-action:pan-y!important;overscroll-behavior:contain!important;}
+#agenda .right>#r70PageWorkspace .r70pageThumb{aspect-ratio:16/9!important;}
+#agenda .right>#r70PageWorkspace #r71PdfMinimize{font-size:20px!important;font-weight:900!important;min-width:38px!important;background:#eac66f!important;color:#21354b!important;}
+#agenda .right>#r70PageWorkspace .r70gridHeader{flex:0 0 auto!important;}
+#agenda .right>.preview{order:2!important;}
+#agenda .right>.r90ExternalHeader{order:1!important;}
+#agenda .right>#r90EndButton{order:4!important;}
+#agenda .right>#r91MinimizedDock{order:5!important;}
+#agenda .right>.tips{order:9!important;}
+#agenda .layout>.panel>#sectionsRoot{display:grid;}
+#agenda #r71PdfReopen{display:none!important;}
+/* Player de música nunca fica junto ao Telão, mesmo durante PDF. */
+#agenda .right>#r91MusicHost{display:none!important;}
+body.r100OverlayPlayer #agenda>.layout>.panel>#r91MusicHost{z-index:150!important;}
+body.r100OverlayPlayer #agenda>.layout>.panel>#r91MusicHost #floatingMusic{height:100%!important;max-height:100%!important;}
+/* Reabrir player de música no canto inferior direito. */
+#agenda.page.active ~ #agenda56Reopen,
+body:has(#agenda.page.active) #agenda56Reopen:not([hidden]){
+ display:inline-flex!important;position:fixed!important;right:18px!important;bottom:18px!important;
+ z-index:10010!important;background:#eac66f!important;color:#22364a!important;
+ border:1px solid #c99f4d!important;border-radius:12px!important;
+ box-shadow:0 5px 20px #162a3b42!important;padding:11px 15px!important;
+ font-weight:800!important;min-height:46px!important;align-items:center!important;justify-content:center!important;
+}
+/* Seletor de mídia com galeria equilibrada e miniaturas visíveis. */
+#r74AddDialog.r74modal{width:min(760px,calc(100vw - 32px))!important;max-width:760px!important;max-height:min(86dvh,770px)!important;padding:18px!important;overflow:hidden!important;}
+#r74AddDialog #r74Content{overflow-y:auto!important;min-height:0!important;max-height:calc(86dvh - 96px)!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;}
+#r74AddDialog .r75gallery,#r74AddDialog .r74files{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;align-content:start!important;align-items:start!important;max-height:none!important;padding:5px!important;}
+#r74AddDialog .r75gallery .r75file{min-width:0!important;width:100%!important;height:auto!important;min-height:0!important;align-self:start!important;padding:7px!important;display:flex!important;flex-direction:column!important;gap:6px!important;overflow:hidden!important;}
+#r74AddDialog .r75gallery .r75image{width:100%!important;height:auto!important;aspect-ratio:16/9!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;border-radius:8px!important;background:#dce8f2!important;}
+#r74AddDialog .r75gallery .r75image img,#r74AddDialog .r75gallery .r75image video,#r74AddDialog .r75gallery .r75image canvas{width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;}
+#r74AddDialog .r75gallery .r75filename{font-size:12px!important;line-height:1.25!important;overflow-wrap:anywhere!important;word-break:break-word!important;text-align:center!important;display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden!important;}
+#r74AddDialog .r75helper{display:none!important;}
+@media(max-width:700px){
+ #r74AddDialog.r74modal{width:calc(100vw - 20px)!important;padding:12px!important;}
+ #r74AddDialog .r75gallery,#r74AddDialog .r74files{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;}
+ #agenda .right>#r70PageWorkspace:not([hidden]){max-height:43dvh!important;min-height:150px!important;}
+}

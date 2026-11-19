@@ -1,3 +1,11 @@
+PRÉVIA 104 — ajustes solicitados a partir do ZIP original Prévia 103
+
+1. Grade PDF na coluna direita, abaixo do Telão Santuário, com três slides por linha e rolagem própria. Não esconde os itens do cronograma. Botão X fecha PDF e retira o slide do telão.
+2. Media Player das músicas do cronograma sempre sobreposto na coluna esquerda, inclusive com PDF aberto. Minimizar não interrompe áudio; botão dourado de reabrir no canto inferior direito.
+3. Seletor de Vídeos, Fotos e PDFs no cronograma: janela mais compacta com miniaturas reais, três por linha no iPad e duas no celular; mantém leitura das mídias já salvas.
+
+Não limpa o armazenamento local. Não sincroniza arquivos entre dispositivos. Testes de sintaxe e pacote não substituem teste real no Safari iPad.
+
 PRÉVIA 95 — Estabilidade do cronograma e Telão no iPad
 - No iPad em modo horizontal, a página não rola inteira: somente a lista do cronograma ou as miniaturas do PDF rolam.
 - O Telão Santuário fica fixo à direita.

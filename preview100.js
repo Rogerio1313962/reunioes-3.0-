@@ -12,27 +12,17 @@ const head=$('floatingMusic')?.querySelector('.floating-music-head');head?.appen
 function gridShowing(){const el=$('r70PageWorkspace');return Boolean(el&&!el.hidden&&getComputedStyle(el).display!=='none')}
 function sync(){
  const playing=document.body.dataset.player56==='agenda'&&!host.hidden;
- const pdf=gridShowing();
- if(!pdf)expanded=false;
- const compact=playing&&pdf&&!expanded;
- const target=compact?rightMarker:leftMarker;
- if(compact){if(host.parentElement!==right)rightMarker.after(host)}
- else if(host.parentElement!==panel)leftMarker.after(host);
- document.body.classList.toggle('r100CompactPlayer',compact);
- document.body.classList.toggle('r100OverlayPlayer',playing&&!compact);
- expand.hidden=!compact;
- // Quando o PDF está em grade, o botão de reabrir precisa ficar na área do telão,
- // não na barra do cronograma que a grade oculta.
- const reopen=$('agenda56Reopen');if(reopen){
-  const dock=$('r91MinimizedDock');
-  if(dock&&reopen.parentElement!==dock)dock.append(reopen);
- }
- if(playing&&!compact){
+ if(host.parentElement!==panel)leftMarker.after(host);
+ document.body.classList.remove('r100CompactPlayer');
+ document.body.classList.toggle('r100OverlayPlayer',playing);
+ expand.hidden=true;
+ if(playing){
   const origin=$('r99PinnedFirstStage')||$('sectionsRoot');
   const top=Math.max(0,origin.getBoundingClientRect().top-panel.getBoundingClientRect().top);
   host.style.setProperty('--r100Top',top+'px');
  }
 }
+
 const watch=new MutationObserver(()=>requestAnimationFrame(sync));
 watch.observe(document.body,{attributes:true,attributeFilter:['data-player56']});
 watch.observe(host,{attributes:true,attributeFilter:['hidden']});
