@@ -2024,3 +2024,33 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
 #r115Form #songGroupDialog .dialogactions .primary{background:#e4c069!important;color:#283d52!important;border:1px solid #cfa748!important}
 #r115Form #songGroupDialog .group-file-selected{color:#6e849a!important}
 @media(max-width:700px){#r115Overlay{inset:1.5vh 1vw!important}#r115Panel{grid-template-columns:minmax(138px,38%) minmax(0,62%)!important}#r115Folders{padding:9px!important}#r115FolderList{grid-template-columns:1fr!important}#r115FolderList .r115-folder{min-height:43px!important;padding:7px!important;font-size:10px!important}#r115Form{padding:5px!important}#r115Form #songGroupDialog[open]{padding:9px!important}}
+
+
+/* PREVIA 116: amarelo dourado nos comandos solicitados, sem alterar os demais. */
+#agenda .days button.selected,
+#agenda .item button[data-act="show"],
+#agenda #sectionsRoot .item button[data-act="show"],
+#agenda .section-toolbar #editSchedule,
+#biblioteca .m64add,
+#biblioteca .m66tools .m64add,
+#biblioteca .m67navbuttons .m64add {
+ background:#edca71!important;
+ border-color:#d9ad45!important;
+ color:#243a51!important;
+ box-shadow:0 2px 7px #9a752025!important;
+ font-weight:800!important;
+}
+#agenda .days button.selected:hover,
+#agenda .item button[data-act="show"]:hover,
+#agenda .section-toolbar #editSchedule:hover,
+#biblioteca .m64add:hover{
+ background:#e1b958!important;
+ border-color:#c9a03d!important;
+ color:#243a51!important;
+}
+#music56Workspace.folder-open #music56Left .song-row-action.song-row-delete{
+ color:#a4454c!important;
+ font-size:22px!important;
+ font-weight:600!important;
+ line-height:1!important;
+}

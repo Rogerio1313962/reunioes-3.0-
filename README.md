@@ -321,3 +321,6 @@ PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do 
 
 
 PRÉVIA 115: Cadastro de músicas em janela dividida: escolha a pasta na esquerda e os MP3 na direita, visual claro. O botão da pasta aberta chama-se apenas Voltar. Adicionar música só aparece na página principal da Biblioteca.
+
+
+Prévia 116: botão X para excluir música ao lado do lápis; amarelo dourado nos botões Adicionar vídeo/foto/PDF, Tocar/Apresentar, Editar cronograma e dia selecionado.
