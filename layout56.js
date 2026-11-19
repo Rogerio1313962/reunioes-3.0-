@@ -15,7 +15,7 @@
  empty.innerHTML='<div class="music57-minihead"><span class="music57-note" aria-hidden="true">♫</span><strong>Media Player</strong></div><div class="music57-minicontrols"><button type="button" id="music57Play" aria-label="Reproduzir música selecionada" disabled>▶</button><span>Selecione uma música para reproduzir</span></div>';
  const actions=document.createElement('div');actions.id='music56Actions';
  const topTools=document.createElement('div');topTools.id='music57TopTools';
- const back=document.createElement('button');back.type='button';back.id='music56Back';back.textContent='← Voltar às pastas';
+ const back=document.createElement('button');back.type='button';back.id='music56Back';back.textContent='Voltar';
  actions.append(back);right.append(empty);workspace.append(left,right);panel.prepend(workspace);
  topTools.append(search,add);
  left.append(header,topTools,results,folders,folder);

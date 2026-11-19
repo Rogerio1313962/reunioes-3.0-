@@ -1914,3 +1914,113 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
 #agenda .r105AgendaHeader:has(#saveSchedule:not([hidden])) .r105DayHeading{display:none!important}
 #agenda .r105AgendaHeader:has(#saveSchedule:not([hidden])){justify-content:flex-start!important}
 #agenda .r105AgendaHeader:has(#saveSchedule:not([hidden])) .r105Support{flex:0 0 auto!important}
+
+
+/* PREVIA 114 - cadastro de música mais claro e seleção de pasta fora do modal */
+#music56Left #musicFolders .music-folder.chosen,
+#music56Left #musicFolders .music-folder:hover{
+  background:linear-gradient(145deg,#fff6d8,#f4dfa0)!important;
+  border:2px solid #e2ba57!important;
+  box-shadow:0 0 0 2px #f0d58a33!important;
+}
+#music56Left #musicFolders .music-folder.chosen b,
+#music56Left #musicFolders .music-folder:hover b{color:#775212!important}
+#music56Left #musicFolders .music-folder.chosen small,
+#music56Left #musicFolders .music-folder:hover small{color:#8a6a2c!important}
+#music56Left #musicFolders .music-folder.chosen span,
+#music56Left #musicFolders .music-folder:hover span{filter:saturate(1.1)}
+
+#music56Workspace.music60-adding #music56Right{background:#eef4fa!important}
+#music56Right #songGroupDialog[open]{
+  background:linear-gradient(180deg,#fdfefe 0%,#f4f8fc 100%)!important;
+  color:#1f3d5f!important;
+  border:1px solid #d8e4ef!important;
+  box-shadow:0 16px 34px #24476618!important;
+}
+#music56Right #songGroupDialog .dialoghead{
+  background:#eef4fa!important;
+  border-bottom:1px solid #d7e2ee!important;
+}
+#music56Right #songGroupDialog .dialoghead h2{color:#1d446c!important}
+#music56Right #songGroupDialog #groupClose{
+  background:#fff!important;color:#32597f!important;border:1px solid #c8d6e5!important;
+}
+#music56Right #songGroupDialog .muted{color:#69819b!important}
+#music56Right #songGroupDialog .group-folder-banner{
+  background:#fff7dc!important;border:1px solid #edd28a!important;border-radius:14px!important;
+  padding:14px 16px!important;margin:12px 0 14px!important;display:grid!important;gap:4px!important;
+}
+#music56Right #songGroupDialog .group-folder-banner-label{
+  font-size:12px!important;font-weight:800!important;letter-spacing:.04em!important;text-transform:uppercase!important;color:#98732d!important;
+}
+#music56Right #songGroupDialog .group-folder-banner strong{font-size:20px!important;color:#6c5019!important}
+#music56Right #songGroupDialog .group-folder-banner small{color:#8b7447!important}
+#music56Right #songGroupDialog .group-folder-confirm{color:#2f6a4c!important}
+#music56Right #songGroupDialog .group-add-details summary{
+  background:#dfeaf5!important;color:#29496d!important;border:1px solid #c8d8e7!important;
+}
+#music56Right #songGroupDialog .group-file-slot{
+  background:#ffffff!important;border:1px solid #d5e0eb!important;box-shadow:0 1px 3px #1f3d5f0d!important;
+}
+#music56Right #songGroupDialog .group-file-slot b,
+#music56Right #songGroupDialog .group-slot-head small,
+#music56Right #songGroupDialog .group-existing-row,
+#music56Right #songGroupDialog .group-existing-row span,
+#music56Right #songGroupDialog .group-detected-name{color:#1f3d5f!important}
+#music56Right #songGroupDialog .group-pick-label{
+  background:#fff9e8!important;border:1px solid #e3c067!important;color:#7d5d1f!important;
+}
+#music56Right #songGroupDialog .group-file-selected{color:#6a819a!important}
+#music56Right #songGroupDialog .group-file-selected.has-files{color:#235d8e!important;font-weight:700!important}
+#music56Right #songGroupDialog .group-lyrics-label{color:#234364!important}
+#music56Right #songGroupDialog .group-lyrics-label textarea{
+  background:#fff!important;color:#173556!important;border:1px solid #cad8e7!important;
+}
+#music56Right #songGroupDialog .group-lyrics-label textarea::placeholder{color:#8396a9!important}
+#music56Right #songGroupDialog .group-existing-row{
+  background:#fff!important;border:1px solid #d6e1ec!important;color:#264566!important;
+}
+#music56Right #songGroupDialog .group-existing-row button{
+  background:#f5f9fd!important;color:#2b5b85!important;border:1px solid #cad7e6!important;
+}
+#music56Right #songGroupDialog .dialogactions button{
+  border-radius:12px!important;
+}
+#music56Right #songGroupDialog .dialogactions .primary{
+  background:#ddb650!important;border:1px solid #d2aa41!important;color:#273a54!important;
+}
+
+/* PREVIA 115: único botão Voltar dentro de cada pasta. */
+#music56Workspace.folder-open #music56Actions #newSongGroup{display:none!important}
+#music56Workspace.folder-open #music56Actions{justify-content:center!important}
+#music56Workspace.folder-open #music56Actions #music56Back{font-size:14px!important;min-width:108px!important;padding:10px 18px!important}
+/* Janela de cadastro realmente dividida, sem cabeçalho de biblioteca duplicado. */
+#r115Overlay[hidden]{display:none!important}
+#r115Overlay{position:fixed!important;inset:3vh 3vw!important;z-index:3000!important;background:#e9f1f8!important;border:1px solid #b9ccdc!important;border-radius:20px!important;box-shadow:0 0 0 100vmax #102a4682,0 18px 48px #12324b44!important;overflow:hidden!important;color:#264766!important}
+#r115Panel{display:grid!important;grid-template-columns:minmax(240px,40%) minmax(0,60%)!important;width:100%!important;height:100%!important;min-height:0!important}
+#r115Folders{min-width:0!important;display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important;background:#eaf2f9!important;border-right:1px solid #cfdeea!important;padding:18px!important;gap:14px!important}
+#r115Folders .r115-folder-top h2{margin:0 0 7px!important;font-size:20px!important;color:#274b6d!important}
+#r115Folders .r115-folder-top p{margin:0!important;font-size:13px!important;color:#728aa0!important}
+#r115FolderList{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;overflow-y:auto!important;align-content:start!important;padding:2px!important}
+#r115FolderList .r115-folder{display:flex!important;align-items:center!important;text-align:left!important;gap:8px!important;min-width:0!important;min-height:64px!important;border:1px solid #d3dfeb!important;border-radius:12px!important;background:#fff!important;color:#325a7a!important;padding:9px!important;font-size:12px!important;font-weight:700!important;cursor:pointer!important;overflow-wrap:anywhere!important}
+#r115FolderList .r115-folder.active{background:#f5e1a4!important;color:#6e5018!important;border:2px solid #d6ae49!important;padding:8px!important}
+#r115FolderList .r115-folder .r115-folder-icon{font-size:20px!important;color:#7b9cba!important;flex:0 0 auto!important}
+#r115FolderList .r115-folder.active .r115-folder-icon{color:#a67a29!important}
+#r115FolderList .r115-folder .r115-tick{margin-left:auto!important;color:#99721d!important}
+#r115Form{min-width:0!important;min-height:0!important;overflow:auto!important;background:#f8fbfe!important;padding:12px!important;display:flex!important;flex-direction:column!important}
+#r115Form #songGroupDialog[open]{position:static!important;inset:auto!important;display:block!important;box-sizing:border-box!important;min-width:0!important;width:100%!important;max-width:none!important;max-height:none!important;height:auto!important;overflow:visible!important;margin:0!important;border-radius:15px!important;padding:18px!important;background:#fff!important;color:#274967!important;border:1px solid #d4e1ed!important;box-shadow:none!important}
+#r115Form #songGroupDialog .dialoghead{background:#edf4fa!important;border-radius:10px!important;padding:10px!important;color:#274967!important}
+#r115Form #songGroupDialog .dialoghead h2{color:#264b6c!important}
+#r115Form #songGroupDialog .muted{color:#71879a!important}
+#r115Form #songGroupDialog .group-file-slot{background:#f7fafd!important;border:1px solid #d5e1eb!important;color:#264767!important}
+#r115Form #songGroupDialog .group-add-details summary{background:#e8f0f7!important;color:#284d6d!important}
+#r115Form #songGroupDialog .group-pick-label{color:#78581c!important;background:#fff2ce!important;border:1px solid #e0bc67!important}
+#r115Form #songGroupDialog .group-folder-banner{background:#fff6dc!important;border:1px solid #e6ce91!important;color:#72541e!important;border-radius:11px!important;padding:12px!important}
+#r115Form #songGroupDialog .group-folder-banner strong{color:#6b501d!important}
+#r115Form #songGroupDialog .group-folder-banner-label{color:#957028!important}
+#r115Form #songGroupDialog .group-folder-confirm{color:#427b60!important}
+#r115Form #songGroupDialog .group-lyrics-label{color:#294a6b!important}
+#r115Form #songGroupDialog .group-lyrics-label textarea{color:#234361!important;background:#fff!important;border:1px solid #c6d7e7!important}
+#r115Form #songGroupDialog .dialogactions .primary{background:#e4c069!important;color:#283d52!important;border:1px solid #cfa748!important}
+#r115Form #songGroupDialog .group-file-selected{color:#6e849a!important}
+@media(max-width:700px){#r115Overlay{inset:1.5vh 1vw!important}#r115Panel{grid-template-columns:minmax(138px,38%) minmax(0,62%)!important}#r115Folders{padding:9px!important}#r115FolderList{grid-template-columns:1fr!important}#r115FolderList .r115-folder{min-height:43px!important;padding:7px!important;font-size:10px!important}#r115Form{padding:5px!important}#r115Form #songGroupDialog[open]{padding:9px!important}}

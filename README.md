@@ -318,3 +318,6 @@ PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do 
 - Quando **Salvar cronograma** está visível, o nome do dia no cabeçalho é ocultado para impedir que fique por trás dos botões.
 - Ao concluir a edição, o nome do dia volta normalmente.
 - As outras telas, mídias e configurações não foram modificadas.
+
+
+PRÉVIA 115: Cadastro de músicas em janela dividida: escolha a pasta na esquerda e os MP3 na direita, visual claro. O botão da pasta aberta chama-se apenas Voltar. Adicionar música só aparece na página principal da Biblioteca.
