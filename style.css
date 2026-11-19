@@ -2054,3 +2054,41 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
  font-weight:600!important;
  line-height:1!important;
 }
+
+
+/* PRÉVIA 117 — Barra lateral: ícones vetoriais premium e estados consistentes */
+.app>.sidebar nav{display:flex;flex-direction:column;gap:6px}
+.app>.sidebar nav>.nav{
+ display:flex!important;align-items:center!important;gap:11px!important;
+ width:100%!important;min-height:52px!important;padding:9px 11px!important;
+ margin:0!important;border-radius:14px!important;
+ color:#416483!important;background:transparent!important;
+ border:1px solid transparent!important;font-size:13px!important;
+ font-weight:650!important;letter-spacing:.005em!important;
+ text-align:left!important;transition:background .16s ease,border-color .16s ease,box-shadow .16s ease!important;
+}
+.app>.sidebar nav>.nav>.nav-icon{
+ --nav-icon-background:#f3f7fc;display:grid!important;place-items:center!important;
+ width:36px!important;height:36px!important;min-width:36px!important;
+ border-radius:11px!important;background:#f3f7fc!important;
+ border:1px solid #ccdae6!important;color:#547c9e!important;
+ transition:background .16s ease,border-color .16s ease,color .16s ease!important;
+}
+.app>.sidebar nav>.nav>.nav-icon>svg{width:21px!important;height:21px!important;display:block!important;overflow:visible!important}
+.app>.sidebar nav>.nav>span:not(.nav-icon){margin-left:0!important;line-height:1.2!important;min-width:0!important}
+.app>.sidebar nav>.nav:hover{background:#f5f9fc!important;border-color:#d5e2ed!important}
+.app>.sidebar nav>.nav:focus-visible{outline:2px solid #9cb5d0!important;outline-offset:2px!important}
+.app>.sidebar nav>.nav.active{
+ background:#fff4d5!important;color:#71541b!important;
+ border:1px solid #e5c474!important;box-shadow:0 3px 10px #99712a12!important;
+}
+.app>.sidebar nav>.nav.active>.nav-icon{
+ --nav-icon-background:#f6d98d;background:#f6d98d!important;
+ border-color:#d8ad49!important;color:#75531b!important;
+}
+@media(max-width:700px){
+ .app>.sidebar nav>.nav{justify-content:center!important;padding:8px 3px!important;min-height:50px!important}
+ .app>.sidebar nav>.nav>.nav-icon{width:38px!important;height:38px!important;min-width:38px!important}
+ .app>.sidebar nav>.nav>span:not(.nav-icon){display:none!important}
+}
+@media(prefers-reduced-motion:reduce){.app>.sidebar nav>.nav,.app>.sidebar nav>.nav>.nav-icon{transition:none!important}}

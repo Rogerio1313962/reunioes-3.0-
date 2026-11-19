@@ -324,3 +324,6 @@ PRÉVIA 115: Cadastro de músicas em janela dividida: escolha a pasta na esquerd
 
 
 Prévia 116: botão X para excluir música ao lado do lápis; amarelo dourado nos botões Adicionar vídeo/foto/PDF, Tocar/Apresentar, Editar cronograma e dia selecionado.
+
+
+PRÉVIA 117 — Ícones vetoriais SVG personalizados na barra lateral: Cronograma, Bíblia, Músicas, Mídias e Configurações. Todos alinhados em cápsulas claras, item ativo dourado. Sem alteração dos fluxos das telas.
