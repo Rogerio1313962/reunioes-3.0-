@@ -1551,3 +1551,32 @@ body[data-player56="agenda"] #agenda.page.active #r91MusicHost #floatingMusic{
 #agenda #r88SupportBar .section-toolbar{display:flex!important;gap:8px!important;margin-left:auto!important;align-items:center!important;flex-wrap:wrap!important}
 #agenda #r88SupportBar .section-toolbar button[hidden]{display:none!important}
 #agenda #r88SupportBar[hidden]{display:none!important}
+
+/* PRÉVIA 96 — player FIXO dentro do cronograma, nunca sobre o telão */
+#agenda #r91MusicHost{position:relative!important;inset:auto!important;top:auto!important;left:auto!important;right:auto!important;z-index:auto!important;flex:0 0 auto!important;order:0!important;max-width:100%!important;width:100%!important;margin:0 0 9px!important;transform:none!important;}
+#agenda #r91MusicHost[hidden]{display:none!important}
+#agenda>.layout>.panel>#sectionsRoot{align-content:start!important;justify-content:start!important;justify-items:stretch!important;align-items:start!important;grid-auto-rows:max-content!important;gap:9px!important;}
+#agenda #sectionsRoot .meeting-section{flex:0 0 auto!important;align-self:start!important;margin:0 0 9px!important;min-height:0!important;height:auto!important;}
+#agenda #sectionsRoot .meeting-section-head{margin:0 0 4px!important;}
+#agenda #sectionsRoot .meeting-section-body{height:auto!important;min-height:0!important;}
+body[data-player56="agenda"] #agenda.page.active #r91MusicHost #floatingMusic{position:relative!important;inset:auto!important;z-index:auto!important;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:auto auto auto auto minmax(0,1fr)!important;width:100%!important;max-width:100%!important;height:clamp(320px,51dvh,580px)!important;max-height:min(590px,58dvh)!important;min-height:0!important;overflow:hidden!important;padding:12px!important;box-sizing:border-box!important;box-shadow:0 5px 13px #152b4240!important;}
+body[data-player56="agenda"] #agenda #r91MusicHost #floatingMusic #lyricsPanel:not([hidden]){grid-column:1/-1!important;grid-row:5!important;height:100%!important;min-height:0!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;}
+body[data-player56="agenda"] #agenda #r91MusicHost #floatingMusic #lyricsScroll{height:0!important;flex:1!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain!important;}
+body[data-player56="agenda"] #agenda #agenda56Minimize{background:#eac66f!important;border-color:#d5aa4b!important;color:#20374f!important;}
+#agenda .right #r91MusicHost{display:none!important}
+#agenda .right{isolation:auto!important}
+/* Miniaturas proporcionais: fotos sem zoom, PDFs renderizados, vídeos com fallback legível */
+#agenda .item-thumb.r74loaded{display:flex!important;position:relative!important;align-items:center!important;justify-content:center!important;background:#eaf1f7!important;overflow:hidden!important;}
+#agenda .item-thumb.r74loaded img,#agenda .item-thumb.r74loaded video{width:100%!important;height:100%!important;object-fit:contain!important;background:#eaf1f7!important;}
+.r96mediaThumb{position:relative!important;overflow:hidden!important;background:#e6eef5!important;}
+.r96mediaThumb .r96ThumbPicture{object-fit:contain!important;width:100%!important;height:100%!important;}
+.r96PdfCanvas{display:block;width:100%!important;height:100%!important;object-fit:contain!important;background:#fff!important;}
+.r96VideoFallback{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:24px;color:#456784;background:linear-gradient(140deg,#dce9f3,#eff5fa)}
+.r96VideoMark{position:absolute;inset:auto 3px 3px auto;background:#243d60dd;color:white;border-radius:5px;padding:1px 5px;font-size:10px;}
+.r96PdfFallback{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#fff;color:#c34242;font-weight:800;font-size:15px;}
+.r96PdfMark{position:absolute;bottom:2px;right:2px;background:#c34242;color:white;font-size:10px;padding:1px 4px;border-radius:3px;}
+.r75image img,.r75image video{object-fit:contain!important;}
+.r96CurrentSupport{display:flex;flex-direction:column;gap:9px;margin:14px 0;padding:12px;background:#f3f7fb;border:1px solid #d6e3ed;border-radius:12px;}
+.r96CurrentSupport img{width:100%;height:175px;object-fit:contain;background:#e5edf4;border-radius:9px;}
+.r96CurrentSupport p{margin:0;color:#6b8192;}
+@media(min-width:900px){#agenda>.layout>.panel>#r91MusicHost{flex:0 0 auto!important;}#agenda>.layout>.panel>#sectionsRoot:not([style*="display: none"]){flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;}}

@@ -5,22 +5,36 @@ let chosenSection=null,kind=null,folder=null,urls=[];
 // Miniaturas compartilhadas: extrai um quadro real no Safari quando possivel.
 function renderVideoThumbnail(target,blob,url){
  if(!target?.isConnected)return;
- const video=document.createElement('video');
- video.src=url;video.muted=true;video.defaultMuted=true;video.playsInline=true;
+ target.replaceChildren();target.classList.add('r96mediaThumb');
+ const fallback=document.createElement('span');fallback.className='r96VideoFallback';fallback.textContent='▶';target.append(fallback);
+ const video=document.createElement('video');video.muted=true;video.defaultMuted=true;video.playsInline=true;video.preload='auto';video.src=url;
  video.setAttribute('playsinline','');video.setAttribute('webkit-playsinline','');
- video.preload='auto';video.controls=true;video.tabIndex=-1;
- video.style.pointerEvents='none';
- const capture=()=>{try{if(video.videoWidth<2||video.videoHeight<2)return;const c=document.createElement('canvas');c.width=320;c.height=Math.max(120,Math.round(320*video.videoHeight/video.videoWidth));c.getContext('2d').drawImage(video,0,0,c.width,c.height);const data=c.toDataURL('image/jpeg',.75);if(!target.isConnected)return;const pic=document.createElement('img');pic.src=data;pic.alt='Quadro de prévia do vídeo';target.replaceChildren(pic);if(target.classList.contains('r75image')){const mark=document.createElement('span');mark.className='r75playMark';mark.textContent='▶';target.append(mark)}}catch(e){/* Mantem video como fallback */}};
- video.addEventListener('loadedmetadata',()=>{try{video.currentTime=Math.min(.18,Number.isFinite(video.duration)&&video.duration>.18?video.duration/5:.18)}catch(_){ }},{once:true});
- video.addEventListener('seeked',capture,{once:true});video.addEventListener('loadeddata',capture,{once:true});
- target.replaceChildren(video);
- if(target.classList.contains('r75image')){const mark=document.createElement('span');mark.className='r75playMark';mark.textContent='▶';target.append(mark)}
+ let done=false;
+ const capture=()=>{if(done||!target.isConnected||video.videoWidth<2||video.videoHeight<2)return;try{
+  const canvas=document.createElement('canvas');canvas.width=300;canvas.height=Math.max(1,Math.round(300*video.videoHeight/video.videoWidth));
+  canvas.getContext('2d').drawImage(video,0,0,canvas.width,canvas.height);
+  const pic=new Image();pic.alt='Quadro do vídeo';pic.src=canvas.toDataURL('image/jpeg',.78);pic.className='r96ThumbPicture';
+  target.replaceChildren(pic);const mark=document.createElement('span');mark.className='r96VideoMark';mark.textContent='▶';target.append(mark);done=true;video.removeAttribute('src');video.load();
+ }catch(e){/* em formatos sem quadro no Safari, usar ícone de vídeo */}};
+ video.addEventListener('loadeddata',()=>{try{video.currentTime=Math.min(.5,Number.isFinite(video.duration)?Math.max(.05,video.duration/10):.2)}catch(e){};capture()});
+ video.addEventListener('seeked',capture);video.addEventListener('canplay',capture);
+ video.addEventListener('error',()=>{video.removeAttribute('src')},{once:true});
 }
-function renderPdfThumbnail(target,blob,url,withMark){
- const pdf=document.createElement('iframe');pdf.title='Primeira página do PDF';pdf.loading='eager';pdf.tabIndex=-1;
- pdf.src=url+'#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH';
- target.replaceChildren(pdf);
- if(withMark){const mark=document.createElement('span');mark.className='r75pdfMark';mark.textContent='PDF';target.append(mark)}
+async function renderPdfThumbnail(target,blob,url,withMark){
+ if(!target?.isConnected)return;target.classList.add('r96mediaThumb');target.replaceChildren();
+ const fallback=document.createElement('span');fallback.className='r96PdfFallback';fallback.textContent='PDF';target.append(fallback);
+ try{
+  const lib=window.pdfjsLib;if(!lib)return;
+  lib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const bytes=await blob.arrayBuffer();const task=lib.getDocument({data:new Uint8Array(bytes)});
+  const doc=await task.promise;try{
+   const page=await doc.getPage(1);const view=page.getViewport({scale:1});const scale=Math.min(1.3,300/view.width);
+   const viewport=page.getViewport({scale});const canvas=document.createElement('canvas');canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
+   const ctx=canvas.getContext('2d',{alpha:false});ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+   await page.render({canvasContext:ctx,viewport}).promise;
+   if(target.isConnected){canvas.className='r96PdfCanvas';canvas.setAttribute('aria-label','Primeira página do PDF');target.replaceChildren(canvas);if(withMark){const mark=document.createElement('span');mark.className='r96PdfMark';mark.textContent='PDF';target.append(mark)}}
+  }finally{await doc.destroy()}
+ }catch(e){/* placeholder legível se PDF.js não estiver disponível */}
 }
 
 const d=document.createElement('dialog');d.id='r74AddDialog';d.className='r74modal';d.innerHTML='<div class="r74top"><h2 id="r74Title">Adicionar conteúdo</h2><button type="button" class="r74close" id="r74Close">✕</button></div><div id="r74Content"></div>';

@@ -239,3 +239,7 @@ Pastas da Biblioteca de Músicas convertidas para cartões compactos, ícones me
 - Sem AO VIVO para Imagem de Apoio ou tela vazia.
 - Pulsação sutil; respeita preferência de movimento reduzido.
 - Minimizar a grade do PDF com ícone −, sem texto, com rótulo acessível.
+
+
+## Prévia 96
+Media Player fixo dentro da coluna de cronograma; etapas agrupadas; miniaturas de PDF via PDF.js, vídeo com quadro quando suportado, imagens sem corte; visualização da imagem atual de apoio no seletor.
