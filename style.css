@@ -2092,3 +2092,60 @@ body[data-player56="agenda"] #agenda #floatingMusic #agenda56Minimize:not([hidde
  .app>.sidebar nav>.nav>span:not(.nav-icon){display:none!important}
 }
 @media(prefers-reduced-motion:reduce){.app>.sidebar nav>.nav,.app>.sidebar nav>.nav>.nav-icon{transition:none!important}}
+
+
+/* PREVIA 119 — Bíblia clara, no padrão visual dourado e azul do app. */
+#biblia.page.active{overflow-y:auto!important;background:transparent!important}
+#biblia .b119Layout{display:grid!important;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr)!important;gap:14px!important;align-items:start;min-width:0;padding:0 2px 10px}
+#biblia .b119Editor{max-width:none!important;min-width:0;margin:0!important;padding:16px!important;background:#f7fbff!important;border:1px solid #d0dfed!important;border-radius:19px!important;box-shadow:0 3px 12px #244a6b0b!important}
+#biblia .b119Header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+#biblia .b119Header h2{font-size:23px!important;margin:3px 0 0!important;color:#234967!important}
+#biblia .b119Eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;color:#7392ab}
+#biblia .b119Versions{font-size:12px;font-weight:800;white-space:nowrap;color:#7f5f20;background:#fff3d6;border:1px solid #e4c67d;border-radius:999px;padding:7px 11px}
+#biblia .b119TopInputs{grid-template-columns:repeat(2,minmax(0,1fr))!important;margin:0 0 11px!important;gap:9px!important}
+#biblia .b119TopInputs label{font-size:12px!important;font-weight:700!important;color:#416584!important;margin:0!important}
+#biblia .b119TopInputs input,#biblia .b119TopInputs select{height:43px!important;background:#fff!important;color:#294e70!important;border:1px solid #c6d9e8!important;border-radius:10px!important;padding:8px 11px!important;font-size:13px!important;box-shadow:none!important}
+#biblia .bible-stage{background:#e9f3fb!important;border:1px solid #d0e0ee!important;border-radius:15px!important;margin:0 0 12px!important;padding:11px!important}
+#biblia .bible-step-nav{margin-bottom:11px!important;gap:7px!important}
+#biblia .bible-step-nav button{font-size:12px!important;min-height:41px!important;background:#fff!important;color:#365c7b!important;border:1px solid #c9dbea!important;border-radius:10px!important}
+#biblia .bible-step-nav button.active{background:#f4d785!important;color:#6a4a13!important;border-color:#dcb64f!important}
+#biblia .bible-books-grid{grid-template-columns:repeat(auto-fit,minmax(67px,1fr))!important;max-height:26dvh!important;overflow-y:auto!important;gap:6px!important}
+#biblia .bible-book-tile{min-height:52px!important;padding:5px 2px!important;border-radius:10px!important}
+#biblia .bible-book-tile strong{font-size:17px!important}
+#biblia .bible-book-tile small{font-size:9px!important}
+#biblia .bible-book-tile.chosen{outline:2px solid #d9aa3d!important;background:#fff3d3!important;color:#78591a!important}
+#biblia .bible-number-grid{grid-template-columns:repeat(7,minmax(0,1fr))!important;max-height:26dvh!important;overflow-y:auto!important;gap:6px!important}
+#biblia .bible-number-grid button{min-height:40px!important;background:#fff!important;border:1px solid #cbdce8!important;border-radius:9px!important;color:#315779!important}
+#biblia .bible-number-grid button.chosen{background:#f2d17c!important;border-color:#d4a947!important;color:#684b17!important}
+#biblia .b119Reader{background:#fff!important;border:1px solid #d2e0ea!important;border-radius:13px!important;padding:12px!important}
+#biblia .b119ReaderHead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+#biblia .b119ReaderHead>strong{font-size:14px;color:#2f5776}
+#biblia .b119ChapterNav{display:flex;gap:5px}
+#biblia .b119ChapterNav button{font-size:11px!important;padding:7px 8px!important;background:#f2f7fc!important;color:#365e80!important;border:1px solid #d1dfe9!important;border-radius:8px!important}
+#biblia .b119ChapterNav button:disabled{opacity:.4}
+#biblia #bibleText{width:100%!important;min-height:135px!important;max-height:30dvh!important;resize:vertical!important;border:0!important;outline:none!important;box-shadow:none!important;background:#fff!important;color:#223c55!important;font-size:16px!important;line-height:1.55!important;padding:5px!important;font-family:inherit!important}
+#biblia .b119Reference{font-weight:700;color:#496f8f;font-size:13px;margin:11px 0 0}
+#biblia .b119Actions{display:flex!important;flex-wrap:wrap!important;gap:9px!important;margin:12px 0 0!important}
+#biblia .b119Actions button{min-height:43px!important;padding:10px 13px!important;border-radius:11px!important;font-weight:800!important;font-size:12px!important}
+#biblia #biblePresent{background:#f1cc70!important;color:#664811!important;border:1px solid #d5aa48!important}
+#biblia #bibleAdd{background:#fff!important;color:#355f81!important;border:1px solid #c2d6e6!important}
+#biblia .b119HiddenMeta[hidden]{display:none!important}
+#biblia .b119Right{min-width:0;position:sticky;top:0}
+#biblia .b119ScreenHead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 13px;padding:6px 2px}
+#biblia .b119ScreenTitle{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#biblia .b119ScreenTitle h2{font-size:19px!important;margin:0!important;color:#294b68!important;white-space:nowrap}
+#biblia .b119LiveBadge{display:flex;align-items:center;gap:5px;border-radius:999px;border:1px solid #c2d7e6;background:#e5f2fb;color:#3a708b;font-size:11px;font-weight:800;padding:6px 9px;white-space:nowrap}
+#biblia .b119LiveDot{width:8px;height:8px;background:#5794b6;border-radius:50%;display:inline-block}
+#biblia .b119LiveBadge.b119Active{background:#fff0c0;border-color:#eccb6b;color:#8e661d}
+#biblia .b119Active .b119LiveDot{background:#d7a02b}
+#biblia #b119Clear{border:1px solid #cbdbe8;background:#fff;color:#446783;padding:8px 10px;font-size:12px;font-weight:700;border-radius:10px;white-space:nowrap}
+#biblia .b119ScreenFrame{background:#fff;border:2px solid #e0af45;border-radius:22px;padding:12px;box-shadow:0 4px 13px #344e6920;width:100%;box-sizing:border-box}
+#biblia .b119Mirror{width:100%!important;aspect-ratio:16/9!important;min-height:0!important;height:auto!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#0b1728!important;border-radius:13px!important;position:relative!important;color:#fff!important}
+#biblia .b119Mirror img,#biblia .b119Mirror video,#biblia .b119Mirror iframe,#biblia .b119Mirror canvas{width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;position:absolute!important;inset:0!important}
+#biblia .b119Mirror .verse{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;width:100%!important;height:100%!important;box-sizing:border-box!important;white-space:pre-wrap!important;overflow:auto!important;font-size:clamp(12px,1.35vw,22px)!important;padding:4%!important;text-align:center!important}
+#biblia .b119Mirror .verse small{font-size:.65em!important;color:#f4d785!important;margin-top:10px!important}
+#biblia .b119Mirror .placeholder,#biblia .b119Empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#7791aa;font-size:22px;text-align:center}
+#biblia .b119Mirror .placeholder p,#biblia .b119Empty p{font-size:13px;margin:0;color:#7791aa}
+#biblia .b119ScreenNote{color:#6f879c;font-size:12px;line-height:1.5;margin:12px 3px}
+@media(max-width:900px){#biblia .b119Layout{grid-template-columns:minmax(0,1fr)!important}#biblia .b119Right{position:static!important}#biblia .b119ScreenFrame{max-width:780px}}
+@media(max-width:600px){#biblia .b119TopInputs{grid-template-columns:1fr!important}#biblia .b119Editor{padding:10px!important}#biblia .b119Header h2{font-size:20px!important}#biblia .b119ScreenHead{flex-wrap:wrap!important}}

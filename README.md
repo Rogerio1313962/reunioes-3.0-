@@ -336,3 +336,12 @@ PRÉVIA 117 — Ícones vetoriais SVG personalizados na barra lateral: Cronogram
 - Para a primeira abertura, use o endereço do servidor/deploy (HTTP/HTTPS), não `file://`.
 - A opção de substituir as bases manualmente continua disponível.
 - Os textos seguem os arquivos enviados pelo usuário, com seus respectivos avisos de direitos.
+
+
+### Prévia 119 — Bíblia reorganizada
+- ACF e ARA continuam incorporadas ao pacote, sem importação manual.
+- Bíblia em duas colunas no iPad: seleção à esquerda e prévia do Telão Santuário à direita.
+- Leitura com fundo branco, texto escuro, botões e seleções dourados.
+- Apresentar na Bíblia permanece na Bíblia e usa o Telão já existente, mantendo o canal de apresentação.
+- Removidos avisos e importação visual da página Bíblia; IDs preservados para não interromper o carregamento automático.
+- Anterior/Próximo capítulo na página bíblica.
