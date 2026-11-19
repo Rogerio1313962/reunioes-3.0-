@@ -1,3 +1,9 @@
+PRÉVIA 112 — Imagem de Apoio ao alternar dias
+- Evita carregamento concorrente durante a limpeza do dia anterior.
+- Carrega a imagem de apoio depois de selecionar o dia novo.
+- Aguarda a imagem decodificar antes de alterar o telão.
+- Não apaga bibliotecas ou configurações anteriores.
+
 PRÉVIA 107 — AJUSTES DE CABEÇALHO
 - Grade do PDF: exibir nome do arquivo em vez de “Páginas do PDF” e ocultar quantidade total.
 - Grade um pouco mais próxima do cabeçalho.

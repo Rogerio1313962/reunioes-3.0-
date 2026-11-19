@@ -27,13 +27,17 @@
    if(activePresentation()&&!window.confirm('Há uma apresentação ou música em andamento. Deseja encerrar o conteúdo atual e abrir o cronograma de '+label+'?')){
       e.preventDefault();e.stopImmediatePropagation();return;
    }
+   window.__r112SwitchingDay=true;
    closePrevious();
    // O handler original atualiza todas as etapas, contadores e registros do cronograma.
-   queueMicrotask(()=>{
+   // Aguarda o handler do botão concluir a atualização do dia antes de abrir o apoio.
+   // O início da próxima tarefa impede que limpezas antigas apaguem a imagem nova.
+   setTimeout(()=>{
+      window.__r112SwitchingDay=false;
       if(state.day!==next)return;
       try{void window.R70?.displaySupport?.()}catch(e){console.warn(e)}
       try{document.querySelector('#agenda .r70grid')?.scrollTo({top:0,behavior:'instant'})}catch(e){}
-   });
+   },0);
  },true);
  // Se retornar à aba Cronograma durante outra semana, não reinicia um dia escolhido manualmente.
 })();

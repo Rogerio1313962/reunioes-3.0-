@@ -44,6 +44,7 @@ container.querySelector('[data-library]').onclick=async()=>{list.hidden=false;li
 }
 let supportRenderVersion=0;
 async function showSupport(){
+ if(window.__r112SwitchingDay)return;
  const version=++supportRenderVersion;
  const day=supportDay();
  if(isLive)return;
@@ -70,7 +71,11 @@ async function showSupport(){
   if(!stillCurrent())return;
   if(!blob)throw Error('Imagem indisponível');
   const nextUrl=URL.createObjectURL(blob);
-  const im=document.createElement('img');im.className='r70Image';im.alt='Imagem de Apoio';im.src=nextUrl;
+  const im=document.createElement('img');im.className='r70Image';im.alt='Imagem de Apoio';
+  im.src=nextUrl;
+  // Só altera o telão depois de a imagem estar decodificada, evitando tela preta.
+  try{if(im.decode)await im.decode();else await new Promise((resolve,reject)=>{im.onload=resolve;im.onerror=reject})}catch(e){URL.revokeObjectURL(nextUrl);throw e}
+  if(!stillCurrent()){URL.revokeObjectURL(nextUrl);return}
   const previous=supportPreviewUrl;
   supportPreviewUrl=nextUrl;
   pv.replaceChildren(im);
