@@ -93,7 +93,7 @@
    selected=true;agendaSong=false;
   }else if(tab==='agenda'){
    agendaSong=true;agendaMinimized=false;selected=false;
-   if(window.R70?.hasActiveMedia?.())window.R70.close();else void window.R70?.displaySupport?.();
+   if(window.R70?.hasActiveMedia?.() && !window.R70?.isPdfOpen?.())window.R70.close();else if(!window.R70?.hasActiveMedia?.())void window.R70?.displaySupport?.();
   }else{
    // No player allowed on Bible, media or settings.
    return;

@@ -1615,3 +1615,34 @@ body[data-player56="agenda"] #agenda #agenda56Minimize{background:#eac66f!import
 #agenda #sectionsRoot>.meeting-section:first-child>.meeting-section-head{display:none!important;}
 #agenda #sectionsRoot>.meeting-section:first-child>.meeting-section-body{margin-top:0!important;}
 #agenda #sectionsRoot{scroll-padding-top:8px!important;}
+
+/* PRÉVIA 100 — player ocupa a mesma superfície visual da lista, sem mudar o layout. */
+#agenda>.layout>.panel{position:relative!important;}
+#agenda.r100Unused{display:block}
+body.r100OverlayPlayer #agenda>.layout>.panel>#r91MusicHost{
+ position:absolute!important;left:16px!important;right:16px!important;top:var(--r100Top,150px)!important;
+ width:auto!important;bottom:12px!important;height:auto!important;max-height:none!important;
+ z-index:25!important;margin:0!important;display:block!important;pointer-events:auto!important;
+}
+body.r100OverlayPlayer #agenda>.layout>.panel>#r91MusicHost #floatingMusic{
+ height:100%!important;max-height:100%!important;min-height:0!important;overflow:hidden!important;
+}
+body.r100OverlayPlayer #agenda #r100Expand{display:none!important;}
+body.r100CompactPlayer #agenda .right #r91MusicHost{
+ display:block!important;position:relative!important;inset:auto!important;width:100%!important;
+ margin:10px 0 0!important;height:auto!important;max-height:none!important;z-index:5!important;
+}
+body.r100CompactPlayer #agenda.page.active #r91MusicHost #floatingMusic{
+ position:relative!important;inset:auto!important;display:grid!important;
+ grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto auto auto!important;
+ width:100%!important;height:auto!important;max-height:none!important;min-height:0!important;
+ padding:12px!important;overflow:hidden!important;box-shadow:0 4px 14px #152b4240!important;
+}
+body.r100CompactPlayer #agenda .right #r91MusicHost #floatingMusic #lyricsPanel,
+body.r100CompactPlayer #agenda .right #r91MusicHost #floatingMusic #lyricsScroll,
+body.r100CompactPlayer #agenda .right #r91MusicHost #floatingMusic #lyricsHide,
+body.r100CompactPlayer #agenda .right #r91MusicHost #floatingMusic #lyricsShow{display:none!important;}
+body.r100CompactPlayer #agenda #r100Expand{display:inline-flex!important;min-height:39px!important;align-items:center!important;justify-content:center!important;background:#eac66f!important;color:#20374f!important;border-radius:9px!important;border:1px solid #d5aa4b!important;padding:6px 9px!important;font-weight:750!important;}
+body.r100CompactPlayer #agenda .right #r91MusicHost .floating-music-head{display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:6px!important;}
+body.r100CompactPlayer #agenda .right #r91MusicHost .floating-music-head>span{min-width:0;flex:1!important;}
+body.r100CompactPlayer #agenda #r91MinimizedDock{margin-top:8px!important;}

@@ -248,3 +248,6 @@ Media Player fixo dentro da coluna de cronograma; etapas agrupadas; miniaturas d
 - Corrige limpeza antecipada da etapa selecionada no seletor de conteúdo: mídia adicionada ao Dízimo permanece no Dízimo.
 - Indicador AO VIVO amarelo com ponto piscando apenas quando o indicador de apresentação estiver ativo (mantém lógica anterior para imagem de apoio).
 - Amplia áreas de toque de etapas e botão adicionar.
+
+
+PRÉVIA 100: Media Player sobre a lista sem deslocar etapas; compacto abaixo do telão com grade de PDF; preserva PDF ao tocar música.
