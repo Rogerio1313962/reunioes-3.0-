@@ -2301,3 +2301,53 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 #agenda .panel.preview{order:1!important}#agenda .right>.b123Controller{order:2!important}#agenda .panel.tips{order:3!important}
 #agenda .panel.preview .screen{margin-bottom:0!important}
 #agenda #preview .b120Translation,#biblia .b119Mirror .b120Translation{font-size:.7em!important;opacity:.92!important}
+
+
+/* PREVIA 126 — Bíblia com toque direto, engrenagem fixa e controlador padronizado */
+#biblia .b119Header{position:sticky!important;top:0!important;z-index:35!important;background:#f7fbff!important;padding:2px 0 10px!important}
+#biblia .b125HeaderTools{margin-left:0!important}
+#biblia #b120Settings{position:sticky!important;top:0!important;z-index:45!important;margin-left:8px!important;align-self:flex-start!important}
+#biblia #b120Settings summary{display:grid!important;place-items:center!important;background:#f6d98d!important;border:1px solid #d8ad49!important;color:#75531b!important;box-shadow:0 2px 8px #8e6b221a!important}
+#biblia .b119Header>div:first-child{flex:1 1 auto!important}
+#biblia .b119Header .b125HeaderTools{display:flex!important;align-items:center!important;gap:8px!important}
+#biblia .b119Actions,#biblia #biblePresent,#biblia #bibleAdd{display:none!important}
+#biblia .b119Reference{display:none!important}
+#biblia .bible-stage{padding-top:10px!important}
+#biblia .bible-stage .bible-step-nav{position:sticky!important;top:56px!important;z-index:15!important;background:#e9f3fb!important;padding-bottom:8px!important}
+#biblia .bible-books-grid,#biblia .bible-number-grid{padding-bottom:4px!important}
+#biblia .bible-number-grid button{font-weight:800!important}
+#biblia .bible-number-grid button.chosen{background:#f2d17c!important;border-color:#d4a947!important;color:#684b17!important;box-shadow:0 2px 0 #d4a94726 inset!important}
+#agenda .right>.b123Controller,#biblia .b119Right>.b123Controller{margin-top:8px!important}
+#agenda .right>.b123Controller .b121Card,#biblia .b119Right>.b123Controller .b121Card{padding:12px!important;border-radius:18px!important}
+#agenda .right>.b123Controller .b121Head,#biblia .b119Right>.b123Controller .b121Head{padding-bottom:8px!important}
+#agenda .right>.b123Controller .b121Title strong,#biblia .b119Right>.b123Controller .b121Title strong{font-size:15px!important}
+#agenda .right>.b123Controller .b121Title small,#biblia .b119Right>.b123Controller .b121Title small{font-size:11px!important}
+#agenda .right>.b123Controller .b121VerseList,#biblia .b119Right>.b123Controller .b121VerseList{gap:6px!important}
+#agenda .right>.b123Controller .b121Cell,
+#agenda .right>.b123Controller .b121Cell:hover,
+#agenda .right>.b123Controller .b121Cell:focus,
+#agenda .right>.b123Controller .b121Cell:focus-visible,
+#agenda .right>.b123Controller .b121Cell:active,
+#biblia .b119Right>.b123Controller .b121Cell,
+#biblia .b119Right>.b123Controller .b121Cell:hover,
+#biblia .b119Right>.b123Controller .b121Cell:focus,
+#biblia .b119Right>.b123Controller .b121Cell:focus-visible,
+#biblia .b119Right>.b123Controller .b121Cell:active{background:#fff!important;border:1px solid #dbe5ef!important;color:#315675!important;outline:none!important;box-shadow:none!important;-webkit-tap-highlight-color:transparent!important}
+#agenda .right>.b123Controller .b121Now,#biblia .b119Right>.b123Controller .b121Now{background:#fff4d5!important;border:2px solid #e1b247!important;color:#6c4b16!important}
+#agenda .right>.b123Controller .b121Cell .b121Text,#biblia .b119Right>.b123Controller .b121Cell .b121Text{font-size:12px!important;line-height:1.35!important;-webkit-line-clamp:3!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;overflow:hidden!important}
+#agenda .right>.b123Controller .b121Now .b121Text,#biblia .b119Right>.b123Controller .b121Now .b121Text{font-size:14px!important;-webkit-line-clamp:4!important}
+#agenda .right>.b123Controller .b121Cell .b121Ref,#biblia .b119Right>.b123Controller .b121Cell .b121Ref{font-size:12px!important;margin:1px 0 2px!important}
+#agenda .right>.b123Controller .b121Now .b121Ref,#biblia .b119Right>.b123Controller .b121Now .b121Ref{font-size:14px!important}
+#agenda .right>.b123Controller .b121Cell,
+#biblia .b119Right>.b123Controller .b121Cell{min-height:76px!important;padding:8px 10px!important;border-radius:16px!important;text-align:left!important}
+#agenda .right>.b123Controller .b121Now,#biblia .b119Right>.b123Controller .b121Now{min-height:84px!important}
+#agenda .right>.b123Controller .b121Foot,#biblia .b119Right>.b123Controller .b121Foot{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;margin-top:4px!important}
+#agenda .right>.b123Controller .b121Counter,#biblia .b119Right>.b123Controller .b121Counter{font-size:12px!important;color:#6e86a0!important}
+#agenda .right>.b123Controller .b121Finish,#biblia .b119Right>.b123Controller .b121Finish{padding:10px 14px!important;border-radius:14px!important;background:#fff2f0!important;border:1px solid #efc4bf!important;color:#a14c4c!important;font-weight:800!important}
+#agenda #preview .b120Verse,#biblia .b119Mirror .b120Verse,.r70layer .b120Verse{position:absolute!important;inset:0!important;width:auto!important;height:auto!important;padding:5% 4.2% 8%!important}
+#agenda #preview .b120VerseText,#biblia .b119Mirror .b120VerseText,.r70layer .b120VerseText{line-height:1.18!important}
+#agenda #preview .b120RefArea,#biblia .b119Mirror .b120RefArea,.r70layer .b120RefArea{margin-top:10px!important}
+.b120Pos-bottom-left .b120RefArea,.b120Pos-bottom-right .b120RefArea{left:3.3%!important;right:3.3%!important;bottom:3.4%!important;max-width:93.4%!important}
+.b120Pos-bottom-left,.b120Pos-bottom-right{padding-bottom:15%!important}
+.b120Ref,.b120Translation{overflow-wrap:anywhere!important;white-space:normal!important}
+#agenda #preview,.b119Mirror{background:#07101e!important}

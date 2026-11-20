@@ -137,6 +137,9 @@ $('bibleImport').addEventListener('change',async e=>{const file=e.target.files?.
 $('bibleTranslation').addEventListener('change',loadBibleText);
 function bibleGroup(i){return BIBLE_GROUPS.findIndex(n=>i<n)}
 function bibleRef(){const name=BIBLE_BOOKS[Number($('bibleBook').value)][0],ch=Number($('bibleChapter').value)||1;const vs=[...selectedVerses].sort((a,b)=>a-b);const ref=`${name} ${ch}${vs.length?':'+vs.join(', '):''}`;$('bibleReferencePreview').textContent='Referência: '+ref;return ref}
+
+function presentSelectedBibleVerse(){const item=bibleItem();if(!item)return;present(item)}
+
 function drawBiblePicker(){const bi=Number($('bibleBook').value),book=BIBLE_BOOKS[bi],ch=Number($('bibleChapter').value)||1;
  $('bibleSelectedBook').textContent=book[0];$('bibleSelectedChapter').textContent='Capítulo '+ch;$('bibleSelectedVerses').textContent=selectedVerses.length?selectedVerses.slice().sort((a,b)=>a-b).join(', '):'Selecionar';
  ['book','chapter','verse'].forEach(step=>{const b=$('bibleStep'+step[0].toUpperCase()+step.slice(1));b.classList.toggle('active',step===bibleStep);b.setAttribute('aria-pressed',step===bibleStep)});
@@ -144,13 +147,13 @@ function drawBiblePicker(){const bi=Number($('bibleBook').value),book=BIBLE_BOOK
  if(bibleStep==='book'){$('bibleBooksGrid').innerHTML=BIBLE_BOOKS.map(([name],i)=>`<button type="button" class="bible-book-tile group-${bibleGroup(i)} ${i===bi?'chosen':''}" data-book="${i}"><strong>${BIBLE_ABBR[i]}</strong><small>${escapeHtml(name)}</small></button>`).join('');$('bibleBooksGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('bibleBook').value=b.dataset.book;bibleChapters();selectedVerses=[];bibleStep='chapter';drawBiblePicker();loadBibleText()})}
  if(bibleStep==='chapter'){$('bibleChaptersGrid').innerHTML=Array.from({length:book[1]},(_,i)=>`<button type="button" data-chapter="${i+1}" class="${ch===i+1?'chosen':''}">${i+1}</button>`).join('');$('bibleChaptersGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('bibleChapter').value=b.dataset.chapter;selectedVerses=[];bibleStep='verse';drawBiblePicker();loadBibleText()})}
  if(bibleStep==='verse'){const max=importedVerseCount(bi,ch); // Usa a quantidade da base importada quando disponível.
- $('bibleVersesGrid').innerHTML=Array.from({length:max},(_,i)=>`<button type="button" data-verse="${i+1}" class="${selectedVerses.includes(i+1)?'chosen':''}" aria-pressed="${selectedVerses.includes(i+1)}">${i+1}</button>`).join('');$('bibleVersesGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{const v=Number(b.dataset.verse);selectedVerses=selectedVerses.includes(v)?selectedVerses.filter(x=>x!==v):[...selectedVerses,v];drawBiblePicker();loadBibleText()})}
+ $('bibleVersesGrid').innerHTML=Array.from({length:max},(_,i)=>`<button type="button" data-verse="${i+1}" class="${selectedVerses.includes(i+1)?'chosen':''}" aria-pressed="${selectedVerses.includes(i+1)}">${i+1}</button>`).join('');$('bibleVersesGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{const v=Number(b.dataset.verse);selectedVerses=[v];drawBiblePicker();loadBibleText();queueMicrotask(()=>{if(document.getElementById('biblia')?.classList.contains('active'))presentSelectedBibleVerse()})})}
  bibleRef();}
 ['book','chapter','verse'].forEach(step=>{$('bibleStep'+step[0].toUpperCase()+step.slice(1)).onclick=()=>{bibleStep=step;drawBiblePicker()}});
 // A referência lista apenas os versículos tocados; nunca cria um intervalo.
 function bibleItem(){const content=bibleLoadedText.trim();const key=[$('bibleTranslation').value,Number($('bibleBook').value),Number($('bibleChapter').value),selectedVerses.slice().sort((a,b)=>a-b).join(',')].join('/');if(!selectedVerses.length){alert('Escolha pelo menos um versículo.');return null}if(!content||bibleLoadedKey!==key){alert('Aguarde o carregamento do texto bíblico antes de continuar.');return null}const reference=bibleRef();return {id:uid(),type:'versiculo',title:$('bibleTitle').value.trim()||reference,reference,translation:$('bibleTranslation').value,content,credit:bibleCredit,fileUrl:null}}
 $('bibleAdd').onclick=()=>{const item=bibleItem();if(!item)return;state.days[state.day].push(item);try{save()}catch(e){state.days[state.day].pop();alert('Não foi possível salvar no aparelho.');return}drawItems();setTab('agenda');alert('Adicionado ao cronograma. Nada foi projetado.')};
-$('biblePresent').onclick=()=>{const item=bibleItem();if(item){present(item);setTab('agenda')}};
+$('biblePresent').onclick=()=>{const item=bibleItem();if(item)present(item)};
 drawBiblePicker();
 restoreBibles();
 
