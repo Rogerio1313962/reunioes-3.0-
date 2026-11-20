@@ -138,7 +138,17 @@ $('bibleTranslation').addEventListener('change',loadBibleText);
 function bibleGroup(i){return BIBLE_GROUPS.findIndex(n=>i<n)}
 function bibleRef(){const name=BIBLE_BOOKS[Number($('bibleBook').value)][0],ch=Number($('bibleChapter').value)||1;const vs=[...selectedVerses].sort((a,b)=>a-b);const ref=`${name} ${ch}${vs.length?':'+vs.join(', '):''}`;$('bibleReferencePreview').textContent='Referência: '+ref;return ref}
 
-function presentSelectedBibleVerse(){const item=bibleItem();if(!item)return;present(item)}
+function presentSelectedBibleVerse(){
+  const bi=Number($('bibleBook').value),ch=Number($('bibleChapter').value),v=Number(selectedVerses[0]);
+  const translation=$('bibleTranslation').value;
+  const raw=importedBibles[translation];
+  if(!raw||!v)return;
+  const text=getImportedVerse(raw,bi,ch,v);
+  if(!text){$('bibleLoadStatus').textContent='Versículo não disponível nesta tradução.';return;}
+  const reference=BIBLE_BOOKS[bi][0]+' '+ch+':'+v;
+  // A Bíblia apresenta diretamente um versículo. Não ativa o editor do cronograma.
+  present({id:uid(),type:'versiculo',title:reference,reference,translation,content:text});
+}
 
 function drawBiblePicker(){const bi=Number($('bibleBook').value),book=BIBLE_BOOKS[bi],ch=Number($('bibleChapter').value)||1;
  $('bibleSelectedBook').textContent=book[0];$('bibleSelectedChapter').textContent='Capítulo '+ch;$('bibleSelectedVerses').textContent=selectedVerses.length?selectedVerses.slice().sort((a,b)=>a-b).join(', '):'Selecionar';
@@ -147,7 +157,7 @@ function drawBiblePicker(){const bi=Number($('bibleBook').value),book=BIBLE_BOOK
  if(bibleStep==='book'){$('bibleBooksGrid').innerHTML=BIBLE_BOOKS.map(([name],i)=>`<button type="button" class="bible-book-tile group-${bibleGroup(i)} ${i===bi?'chosen':''}" data-book="${i}"><strong>${BIBLE_ABBR[i]}</strong><small>${escapeHtml(name)}</small></button>`).join('');$('bibleBooksGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('bibleBook').value=b.dataset.book;bibleChapters();selectedVerses=[];bibleStep='chapter';drawBiblePicker();loadBibleText()})}
  if(bibleStep==='chapter'){$('bibleChaptersGrid').innerHTML=Array.from({length:book[1]},(_,i)=>`<button type="button" data-chapter="${i+1}" class="${ch===i+1?'chosen':''}">${i+1}</button>`).join('');$('bibleChaptersGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('bibleChapter').value=b.dataset.chapter;selectedVerses=[];bibleStep='verse';drawBiblePicker();loadBibleText()})}
  if(bibleStep==='verse'){const max=importedVerseCount(bi,ch); // Usa a quantidade da base importada quando disponível.
- $('bibleVersesGrid').innerHTML=Array.from({length:max},(_,i)=>`<button type="button" data-verse="${i+1}" class="${selectedVerses.includes(i+1)?'chosen':''}" aria-pressed="${selectedVerses.includes(i+1)}">${i+1}</button>`).join('');$('bibleVersesGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{const v=Number(b.dataset.verse);selectedVerses=[v];drawBiblePicker();loadBibleText();queueMicrotask(()=>{if(document.getElementById('biblia')?.classList.contains('active'))presentSelectedBibleVerse()})})}
+ $('bibleVersesGrid').innerHTML=Array.from({length:max},(_,i)=>`<button type="button" data-verse="${i+1}" class="${selectedVerses.includes(i+1)?'chosen':''}" aria-pressed="${selectedVerses.includes(i+1)}">${i+1}</button>`).join('');$('bibleVersesGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{const v=Number(b.dataset.verse);selectedVerses=[v];drawBiblePicker();loadBibleText();if(document.getElementById('biblia')?.classList.contains('active'))presentSelectedBibleVerse()})}
  bibleRef();}
 ['book','chapter','verse'].forEach(step=>{$('bibleStep'+step[0].toUpperCase()+step.slice(1)).onclick=()=>{bibleStep=step;drawBiblePicker()}});
 // A referência lista apenas os versículos tocados; nunca cria um intervalo.

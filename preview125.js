@@ -4,8 +4,8 @@ const apply=()=>{
   // Mover o bloco de controle do cronograma para ficar sempre abaixo do telão.
   const agendaRight=document.querySelector('#agenda .right');
   const agendaCtrl=agendaRight?.querySelector('.b123Controller');
-  const agendaTips=agendaRight?.querySelector('.panel.tips');
-  if(agendaRight&&agendaCtrl&&agendaTips&&agendaCtrl.nextElementSibling!==agendaTips){agendaTips.before(agendaCtrl)}
+  const frame=agendaRight?.querySelector('.r109PresentationFrame')||agendaRight?.querySelector('.panel.preview');
+  if(agendaRight&&agendaCtrl&&frame&&frame.nextElementSibling!==agendaCtrl){frame.after(agendaCtrl)}
   // Remover indicação antiga ACF · ARA, se restar.
   document.querySelectorAll('#biblia .b119Versions').forEach(el=>el.remove());
 };
