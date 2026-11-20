@@ -49,40 +49,28 @@ function updateOldReferences(){
 }
 updateOldReferences();
 
-// O seletor só adiciona o conjunto; nenhum áudio toca no ato da seleção.
-const modal=document.createElement('dialog');modal.id='r134SongDialog';modal.innerHTML=`<div class="r134DialogHead"><div><small>BIBLIOTECA DE MÚSICAS</small><h2 id="r134SongName">Música</h2></div><button type="button" id="r134SongClose" aria-label="Fechar">×</button></div><p>Escolha a versão que deseja reproduzir.</p><div id="r134Versions" class="r134Versions"></div>`;
-document.body.appendChild(modal);
-$$('r134SongClose').onclick=()=>modal.close();
-let currentSong=null;
-async function openSongVersions(item){
+// Prévia 154: toque em uma música do cronograma abre diretamente o Media Player.
+// A seleção de versões é feita pelos botões do próprio player, sem janela intermediária.
+async function openSongPlayer(item){
  if(!item)return;
  const records=await musicAll().catch(()=>[]);
  const selected=records.find(t=>t.id===item.musicId);
- const siblings=selected?.groupId?records.filter(t=>t.groupId===selected.groupId):selected?[selected]:[];
- currentSong=item;
- $$('r134SongName').textContent=item.title||selected?.groupTitle||selected?.name||'Música';
- const grid=$$('r134Versions');grid.replaceChildren();
- if(!siblings.length){grid.textContent='Música não encontrada neste aparelho.';modal.showModal();return}
- for(const [role,label,code] of roles){
-  const track=siblings.find(t=>(t.role||'completa')===role);
-  const button=document.createElement('button');button.type='button';button.className='r134VersionButton';button.disabled=!track;
-  button.innerHTML=`<b>${code}</b><span>${label}</span>`;
-  if(track)button.onclick=()=>{modal.close();playMusic(track.id)};
-  grid.appendChild(button);
- }
- modal.showModal();
+ if(!selected){alert('Música não encontrada neste aparelho.');return}
+ const group=selected.groupId?records.filter(t=>t.groupId===selected.groupId):[selected];
+ // Sempre começar pela versão Piano completa quando disponível.
+ const piano=group.find(t=>t.role==='completa')||selected;
+ await playMusic(piano.id);
 }
-window.r134OpenSongVersions=openSongVersions;
-// Captura o toque nas músicas do cronograma antes dos handlers antigos que iniciavam o MP3 direto.
+window.r134OpenSongVersions=openSongPlayer;
 document.addEventListener('click',e=>{
- const row=e.target.closest('#sectionsRoot .item[data-item-id],#items .item[data-item-id]');
+ const row=e.target.closest?.('#sectionsRoot .item[data-item-id],#items .item[data-item-id]');
  if(!row||!document.getElementById('agenda')?.classList.contains('active'))return;
  const item=state.days[state.day]?.find(it=>it.id===row.dataset.itemId);
  if(item?.type!=='musica')return;
  const act=e.target.closest('button[data-act]');
  if(act&&act.dataset.act!=='show')return;
  if(e.target.closest('button:not([data-act]),input,textarea,select,a,.drag-handle,.content-grip'))return;
- e.preventDefault();e.stopImmediatePropagation();void openSongVersions(item);
+ e.preventDefault();e.stopImmediatePropagation();void openSongPlayer(item);
 },true);
 
 // Troca instantânea da tradução do versículo já projetado, sem exigir novo toque no número.

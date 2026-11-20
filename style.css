@@ -2728,3 +2728,35 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 #fundos .f124Screen #f124Empty{z-index:3!important}
 /* Evita o zoom por dois toques em toda a interface, sem bloquear a rolagem normal. */
 html,body,.app,.sidebar,main,.page,button,a,label{touch-action:manipulation}
+
+/* Prévia 154: barra de progresso única, sem camadas branca/amarela concorrentes. */
+#floatingSeek{
+ -webkit-appearance:none!important;appearance:none!important;
+ background:transparent!important;background-image:none!important;
+ height:24px!important;min-height:24px!important;padding:0!important;
+ border:none!important;border-radius:0!important;box-shadow:none!important;
+ display:block!important;width:100%!important;margin:0!important;
+}
+#floatingSeek::-webkit-slider-runnable-track{
+ -webkit-appearance:none!important;appearance:none!important;
+ height:7px!important;border-radius:999px!important;
+ background:linear-gradient(to right,#e8c66e 0%,#e8c66e var(--seek-fill,0%),#d8e0eb var(--seek-fill,0%),#d8e0eb 100%)!important;
+ border:0!important;box-shadow:none!important;
+}
+#floatingSeek::-webkit-slider-thumb{
+ -webkit-appearance:none!important;appearance:none!important;
+ width:18px!important;height:18px!important;margin-top:-5.5px!important;
+ border-radius:50%!important;background:#fff!important;
+ border:1px solid #c3d0dc!important;box-shadow:0 1px 3px #091e3e33!important;
+}
+#floatingSeek::-moz-range-track{height:7px!important;border:0!important;border-radius:999px!important;background:#d8e0eb!important}
+#floatingSeek::-moz-range-progress{height:7px!important;background:#e8c66e!important;border-radius:999px!important}
+#floatingSeek::-moz-range-thumb{width:18px!important;height:18px!important;border:1px solid #c3d0dc!important;border-radius:50%!important;background:#fff!important}
+#floatingRepeat.is-on,#floatingRepeat[aria-pressed="true"],#musicRepeatButton[aria-pressed="true"]{
+ background:#edca72!important;color:#263e54!important;border:1px solid #d2a846!important;
+ box-shadow:0 0 0 2px #e9cc7844!important;
+}
+#floatingRepeat.is-on svg,#floatingRepeat[aria-pressed="true"] svg{color:#263e54!important;stroke:#263e54!important}
+#fundos #f124Repeat[aria-pressed="true"],#agenda #r70Repeat[aria-pressed="true"]{
+ background:#edca72!important;color:#263e54!important;border-color:#d2a846!important;
+}

@@ -52,3 +52,6 @@ Prévia 151: tenta diversos quadros do arquivo MOV/MP4 antes de usar a miniatura
 
 
 Prévia 153: tela FUNDOS ANTES DA REUNIÃO sem título TELÃO SANTUÁRIO; vídeo selecionado aparece no iPad antes de tocar Play, usando miniatura de um quadro como poster; o indicador AO VIVO aparece com bolinha piscando apenas após transmitir; proteção contra zoom por toque duplo em todas as páginas.
+
+
+Prévia 154: remoção da janela modal de versões ao tocar numa música do Cronograma; abertura direta do player em Piano completo, barra de reprodução com trilha única e repetir amarelo quando ativado.
