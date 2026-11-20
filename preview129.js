@@ -15,7 +15,7 @@ function renderMode(){const is=!!window.bibleCronogramaSelect;actions.hidden=!is
 $('b129Cancel').onclick=()=>{window.bibleCronogramaSelect=null;selectedVerses=[];drawBiblePicker();renderMode();setTab('agenda')};
 $('b129Add').onclick=()=>{if(!window.bibleCronogramaSelect||!selectedVerses.length)return;const bi=Number($('bibleBook').value),ch=Number($('bibleChapter').value),v=$('bibleTranslation').value;const data=importedBibles[v];if(!data){alert('Aguarde a Bíblia carregar.');return}const nums=[...selectedVerses].sort((a,b)=>a-b),verses=nums.map(n=>({reference:BIBLE_BOOKS[bi][0]+' '+ch+':'+n,text:getImportedVerse(data,bi,ch,n)}));if(verses.some(x=>!x.text)){alert('Há versículos indisponíveis nesta tradução.');return}
 const ref=BIBLE_BOOKS[bi][0]+' '+ch+':'+(typeof formatVerseSpan==='function'?formatVerseSpan(nums):nums.join(', ')),mode=window.bibleCronogramaSelect;
-const item={id:uid(),type:'versiculo',title:ref,reference:ref,translation:v,content:verses[0].text,verses,sectionId:mode.sectionId||null};
+const item={id:uid(),type:'versiculo',title:ref,reference:ref,translation:v,content:verses[0].text,verses,sectionId:mode.sectionId||null,cronogramaSource:true};
 state.days[mode.day].push(item);try{save()}catch(e){state.days[mode.day].pop();alert('Não foi possível salvar.');return}
 window.bibleCronogramaSelect=null;selectedVerses=[];drawBiblePicker();drawItems();renderMode();setTab('agenda')};
 window.addEventListener('bible-cronograma-mode',()=>{selectedVerses=[];drawBiblePicker();renderMode()});window.addEventListener('bible-verse-selection',renderMode);
@@ -29,14 +29,18 @@ document.querySelector('button.nav[data-tab="biblia"]')?.addEventListener('click
 const modal=document.createElement('dialog');modal.id='b129HighlightDialog';modal.innerHTML='<div class="b129HighHead"><strong>Destacar trecho do versículo</strong><button type="button" id="b129Close">×</button></div><p>Selecione as palavras abaixo e toque em Destacar. A cor será a mesma da referência bíblica.</p><textarea id="b129VerseText" rows="7"></textarea><div class="b129HighFooter"><button type="button" id="b129Clear">Remover destaque</button><button type="button" id="b129Apply">Destacar seleção</button></div>';
 document.body.append(modal);
 function activeController(){const agenda=$('b121Overlay-agenda');const biblia=$('b121Overlay-biblia');if(agenda&&!agenda.hidden&&getComputedStyle(agenda).display!=='none')return agenda;if(biblia&&!biblia.hidden&&getComputedStyle(biblia).display!=='none')return biblia;return biblia||agenda||null}
-function attachMarkButtons(){document.querySelectorAll('.b121MarkInline').forEach(btn=>{if(btn.dataset.bound==='1')return;btn.dataset.bound='1';btn.onclick=()=>{if(!lastItem)return;const root=activeController();const liveText=root?.querySelector('.b121Now .b121Text')?.textContent||lastItem.content||'';modal.querySelector('textarea').value=liveText;modal.showModal();};});}
+function attachMarkButtons(){document.querySelectorAll('.b121MarkInline').forEach(btn=>{if(btn.dataset.bound==='1')return;btn.dataset.bound='1';btn.onclick=()=>{if(!lastItem||!canUseHighlights(lastItem))return;const root=activeController();const liveText=root?.querySelector('.b121Now .b121Text')?.textContent||lastItem.content||'';modal.querySelector('textarea').value=liveText;modal.showModal();};});}
 attachMarkButtons();
 let lastItem=null;
+function canUseHighlights(item){return !!(item&&item.cronogramaSource);}
+function syncHighlightUi(){const allow=canUseHighlights(lastItem);document.querySelectorAll('.b121MarkInline').forEach(btn=>{btn.hidden=!allow;btn.disabled=!allow});}
 const outerPresent=present;
 present=function(item){if(item?.type==='versiculo'){
- const one=item.verses?.[0];const ref=one?.reference||item.reference||'';const full={...item};full.highlights=Array.isArray(item.highlights)?item.highlights:readMarks({...item,reference:ref});lastItem=full;return outerPresent(full)}lastItem=null;return outerPresent(item)};
+ const one=item.verses?.[0];const ref=one?.reference||item.reference||'';const full={...item};
+ full.highlights=canUseHighlights(full)?(Array.isArray(item.highlights)?item.highlights:readMarks({...item,reference:ref})):[];
+ lastItem=full;syncHighlightUi();return outerPresent(full)}lastItem=null;syncHighlightUi();return outerPresent(item)};
 $('b129Close').onclick=()=>modal.close();
-function persistMarks(marks){if(!lastItem)return;const controllerRef=activeController()?.querySelector('.b121Now .b121Ref')?.textContent||lastItem.reference;const keyItem={translation:lastItem.translation,reference:controllerRef};try{localStorage.setItem(highlightKey(keyItem),JSON.stringify(marks))}catch(e){}
+function persistMarks(marks){if(!lastItem||!canUseHighlights(lastItem))return;const controllerRef=activeController()?.querySelector('.b121Now .b121Ref')?.textContent||lastItem.reference;const keyItem={translation:lastItem.translation,reference:controllerRef};try{localStorage.setItem(highlightKey(keyItem),JSON.stringify(marks))}catch(e){}
 lastItem.highlights=marks;
 // Record permanently in the scheduled item when it belongs to a cronograma.
 for(const day of state.days){for(const it of day){if(it.id===lastItem.id){it.highlights=marks;try{save()}catch(e){}break}}}
@@ -44,5 +48,6 @@ present({...lastItem,reference:controllerRef,content:$('b129VerseText').value,ve
 $('b129Apply').onclick=()=>{const t=$('b129VerseText'),str=t.value.slice(t.selectionStart,t.selectionEnd).trim();if(!str){alert('Selecione primeiro as palavras que deseja destacar.');return}const marks=readMarks({translation:lastItem.translation,reference:activeController()?.querySelector('.b121Now .b121Ref')?.textContent||lastItem.reference});if(!marks.includes(str))marks.push(str);persistMarks(marks)};
 $('b129Clear').onclick=()=>persistMarks([]);
 attachMarkButtons();
+syncHighlightUi();
 renderMode();
 })();

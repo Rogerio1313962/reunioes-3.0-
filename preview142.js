@@ -47,7 +47,7 @@ $('b129Add')?.addEventListener('click',event=>{
  const saved=state.days[mode.day]?.find(x=>x.id===mode.editId);
  if(!saved){alert('O item original não foi encontrado.');return}
  const old={...saved};
- Object.assign(saved,{title:reference,reference,translation:version,content:parts[0].text,verses:parts,highlights:[]});
+ Object.assign(saved,{title:reference,reference,translation:version,content:parts[0].text,verses:parts,highlights:[],cronogramaSource:true});
  try{save()}catch(err){Object.assign(saved,old);alert('Não foi possível salvar no iPad.');return}
  window.bibleCronogramaSelect=null;selectedVerses=[];bibleStep='book';drawBiblePicker();
  $('b129Add').textContent='+ Adicionar ao cronograma';

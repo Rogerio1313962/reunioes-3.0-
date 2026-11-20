@@ -148,7 +148,7 @@ function presentSelectedBibleVerse(){
   if(!text){$('bibleLoadStatus').textContent='Versículo não disponível nesta tradução.';return;}
   const reference=BIBLE_BOOKS[bi][0]+' '+ch+':'+v;
   // A Bíblia apresenta diretamente um versículo. Não ativa o editor do cronograma.
-  present({id:uid(),type:'versiculo',title:reference,reference,translation,content:text});
+  present({id:uid(),type:'versiculo',title:reference,reference,translation,content:text,cronogramaSource:false});
 }
 
 function drawBiblePicker(){const bi=Number($('bibleBook').value),book=BIBLE_BOOKS[bi],ch=Number($('bibleChapter').value)||1;
@@ -163,8 +163,8 @@ function drawBiblePicker(){const bi=Number($('bibleBook').value),book=BIBLE_BOOK
 ['book','chapter','verse'].forEach(step=>{$('bibleStep'+step[0].toUpperCase()+step.slice(1)).onclick=()=>{bibleStep=step;drawBiblePicker()}});
 // A referência lista apenas os versículos tocados; nunca cria um intervalo.
 function bibleItem(){const content=bibleLoadedText.trim();const key=[$('bibleTranslation').value,Number($('bibleBook').value),Number($('bibleChapter').value),selectedVerses.slice().sort((a,b)=>a-b).join(',')].join('/');if(!selectedVerses.length){alert('Escolha pelo menos um versículo.');return null}if(!content||bibleLoadedKey!==key){alert('Aguarde o carregamento do texto bíblico antes de continuar.');return null}const reference=bibleRef();return {id:uid(),type:'versiculo',title:$('bibleTitle').value.trim()||reference,reference,translation:$('bibleTranslation').value,content,credit:bibleCredit,fileUrl:null}}
-$('bibleAdd').onclick=()=>{const item=bibleItem();if(!item)return;state.days[state.day].push(item);try{save()}catch(e){state.days[state.day].pop();alert('Não foi possível salvar no aparelho.');return}drawItems();setTab('agenda');alert('Adicionado ao cronograma. Nada foi projetado.')};
-$('biblePresent').onclick=()=>{const item=bibleItem();if(item)present(item)};
+$('bibleAdd').onclick=()=>{const item=bibleItem();if(!item)return;item.cronogramaSource=true;state.days[state.day].push(item);try{save()}catch(e){state.days[state.day].pop();alert('Não foi possível salvar no aparelho.');return}drawItems();setTab('agenda');alert('Adicionado ao cronograma. Nada foi projetado.')};
+$('biblePresent').onclick=()=>{const item=bibleItem();if(item){item.cronogramaSource=false;present(item)}};
 drawBiblePicker();
 restoreBibles();
 

@@ -2589,3 +2589,92 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 #r70Gear:hover,#agenda .right>.r90ExternalHeader #r70Gear:hover,#r88TransitionSettings #r70Gear:hover{
   box-shadow:0 4px 9px rgba(28,54,80,.23),0 9px 16px rgba(28,54,80,.17)!important;
 }
+
+/* PRÉVIA 146 — cabeçalho da Bíblia sem faixa azul e engrenagem maior, centralizada */
+#biblia .b119Header{
+  background:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  border:0!important;
+  border-radius:0!important;
+  padding:2px 0 10px!important;
+  min-height:58px!important;
+  align-items:center!important;
+}
+#biblia .b119Header::before,
+#biblia .b119Header::after{
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#biblia .b119Header>.b125HeaderTools{
+  align-items:center!important;
+  justify-content:flex-end!important;
+  flex-wrap:nowrap!important;
+  gap:8px!important;
+}
+#biblia .b125HeaderTools #b120Settings{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 43px!important;
+  width:43px!important;
+  min-width:43px!important;
+  height:46px!important;
+  margin:0!important;
+  padding:0!important;
+  align-self:center!important;
+}
+#biblia .b125HeaderTools #b120Settings summary{
+  display:grid!important;
+  place-items:center!important;
+  width:43px!important;
+  height:46px!important;
+  min-width:43px!important;
+  min-height:46px!important;
+  font-size:30px!important;
+  line-height:1!important;
+  padding:0!important;
+  margin:0!important;
+  color:#6a727c!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  filter:drop-shadow(0 3px 3px rgba(25,45,66,.42)) drop-shadow(0 5px 6px rgba(25,45,66,.19))!important;
+}
+#biblia .b125HeaderTools .b125TranslationWrap{
+  align-self:center!important;
+  margin:0!important;
+}
+#biblia .b125HeaderTools .b125TranslationWrap select{
+  margin:0!important;
+}
+@media(max-width:700px){
+  #biblia .b119Header{gap:5px!important;}
+  #biblia .b125HeaderTools{gap:4px!important;}
+  #biblia .b125HeaderTools #b120Settings{
+    width:38px!important;min-width:38px!important;flex-basis:38px!important;height:44px!important;
+  }
+  #biblia .b125HeaderTools #b120Settings summary{
+    width:38px!important;min-width:38px!important;height:44px!important;min-height:44px!important;font-size:27px!important;
+  }
+}
+
+/* PRÉVIA 147 — Fundos: imagem de apoio, X superior e player padrão Cronograma */
+#fundos .f124Screen #f124SupportImage{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;display:block!important;z-index:1!important}
+#fundos .f124Screen #f124SupportImage[hidden]{display:none!important}
+#fundos .f124Screen video{position:relative!important;z-index:0!important;object-fit:contain!important}
+#fundos .f124Screen #f124Empty{z-index:2!important}
+#fundos .f124Player{padding:12px 14px!important;gap:9px!important}
+#fundos .f147PlayerHeader{order:1!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important}
+#fundos .f147PlayerHeader .f124Name{flex:1!important;margin:0!important;text-align:center!important;min-width:0!important;font-weight:800!important;font-size:15px!important}
+#fundos .f147Close{flex:0 0 38px!important;display:grid!important;place-items:center!important;width:38px!important;height:38px!important;padding:0!important;border:1px solid #ecc5c1!important;border-radius:10px!important;background:#fff0ef!important;color:#a54247!important;font-size:25px!important;line-height:1!important;font-weight:600!important}
+#fundos .f124Seek{order:2!important;display:flex!important;width:100%!important;gap:8px!important;margin:0!important;align-items:center!important;font-size:12px!important}
+#fundos .f124Seek input{flex:1!important;min-width:30px!important}
+#fundos .f124Actions{order:3!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;flex-wrap:nowrap!important;width:100%!important;padding:2px 0 5px!important}
+#fundos .f124Actions>button{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 48px!important;width:48px!important;height:48px!important;min-width:48px!important;border-radius:11px!important;padding:0!important;font-size:22px!important;line-height:1!important;background:#f4f8fc!important;color:#355d7c!important;border:1px solid #cbd9e7!important}
+#fundos .f124Actions #f124Play{background:#eac66f!important;color:#20374f!important;border-color:#c5a251!important}
+#fundos .f124Volume{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:6px!important;min-width:0!important;width:auto!important;margin:0 0 0 5px!important;flex:0 1 auto!important;color:#416584!important;font-size:14px!important}
+#fundos .f124Volume input{width:118px!important;min-width:55px!important;max-width:118px!important;flex:1 1 118px!important;accent-color:#caa04e!important}
+#fundos .f124Project{display:none!important}
+@media(max-width:510px){#fundos .f124Actions{flex-wrap:wrap!important}#fundos .f124Volume{flex-basis:100%!important;justify-content:center!important;margin-top:6px!important}}

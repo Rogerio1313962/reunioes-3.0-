@@ -32,3 +32,12 @@ Prévia 144: Versículos de 1 a 3 linhas passam a ficar visualmente mais central
 
 
 Prévia 145: Sombra sutil adicionada à engrenagem da Bíblia e às engrenagens de configuração do telão, preservando o estilo atual de cada botão.
+
+
+Prévia 146: removida a faixa azul-clara do cabeçalho da Bíblia, ampliada a engrenagem de configuração e centralizada imediatamente à direita da seleção ACF/ARA, preservando a sombra do ícone.
+
+
+Prévia 147: Na aba FUNDOS mostra a imagem de apoio do dia quando não há vídeo; remove os botões Apresentar/Encerrar, acrescenta X para fechar vídeo e restaurar apoio. Play inicia projeção e reprodução; Media Player com layout e controles padronizados com o Cronograma.
+
+
+Prévia 148: destaque de trecho bíblico agora aparece e funciona somente para versículos usados pelo Cronograma. Versículos apresentados diretamente pela aba Bíblia não exibem o botão de destaque nem aplicam destaques salvos.

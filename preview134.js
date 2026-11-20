@@ -97,9 +97,12 @@ $$('bibleTranslation')?.addEventListener('change',()=>{
  if(book<0||!raw)return;
  const text=getImportedVerse(raw,book,+match[2],+match[3]);
  if(!text)return;
- const original=state.days[state.day]?.find(item=>item.type==='versiculo'&&item.verses?.some(v=>v.reference===ref));
+ const activeNow=document.querySelector('#b121Overlay-biblia .b121Now .b121Ref')?.textContent?.trim()===ref||document.querySelector('#b121Overlay-agenda .b121Now .b121Ref')?.textContent?.trim()===ref;
+ const original=state.days[state.day]?.find(item=>item.type==='versiculo'&&item.id&&item.verses?.some(v=>v.reference===ref));
+ const cronogramaSource=!!original?.cronogramaSource;
  const item={id:original?.id||uid(),type:'versiculo',title:ref,reference:ref,translation,content:text,
-  refSettings:window.bible120Settings?.(),highlights:window.bible129ReadMarks?.({translation,reference:ref})||[]};
+  refSettings:window.bible120Settings?.(),cronogramaSource,
+  highlights:cronogramaSource?(window.bible129ReadMarks?.({translation,reference:ref})||[]):[]};
  present(item);
 });
 })();
