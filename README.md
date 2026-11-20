@@ -22,3 +22,5 @@ Prévia 138: correção real da engrenagem do telão com janela modal própria; 
 Prévia 140: Botão de edição da referência bíblica substituído por lápis compacto e alinhado. Ao remover etapa do Cronograma, todos os itens daquela etapa também são excluídos mediante confirmação; bibliotecas de arquivos intactas.
 
 Prévia 141: ajuste responsivo de fonte do versículo no telão físico e na prévia, preservando referência separada. Controlador exibe textos completos de anterior/atual/próximo; em trechos excepcionais, a página pode precisar rolar para acomodar todo o texto legível.
+
+Prévia 142: abrir aba Bíblia começa pelos livros. Editar um versículo do Cronograma usa seleção na Bíblia e substitui o item existente, sem abrir formulário antigo.
