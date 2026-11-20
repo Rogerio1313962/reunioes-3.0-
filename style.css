@@ -2760,3 +2760,47 @@ html,body,.app,.sidebar,main,.page,button,a,label{touch-action:manipulation}
 #fundos #f124Repeat[aria-pressed="true"],#agenda #r70Repeat[aria-pressed="true"]{
  background:#edca72!important;color:#263e54!important;border-color:#d2a846!important;
 }
+
+
+/* Prévia 157 — todos os controles de ADICIONAR com o mesmo acabamento premium da Biblioteca de Músicas.
+   Não altera os botões de salvar, reproduzir, voltar, excluir ou editar. */
+#newSongGroup,
+#newSection,
+#addItem,
+#bibleAdd,
+#b129Add,
+#r74SaveMemo,
+#r87SupportAdd,
+#groupAddDetails > summary,
+#groupFileSlots .group-pick-label,
+#fundos .f124Upload,
+#agenda .meeting-section-content > .section-add,
+#agenda button.section-add,
+#music56Right #newSongGroup {
+  background:linear-gradient(180deg,#f6d987 0%,#edc766 78%,#e8bb56 100%)!important;
+  border:1px solid #deb451!important;
+  color:#624619!important;
+  border-radius:12px!important;
+  font-weight:800!important;
+  box-shadow:0 3px 7px rgba(147,102,20,.17),0 8px 17px rgba(145,98,14,.14),inset 0 1px 0 rgba(255,255,255,.48)!important;
+  text-shadow:none!important;
+  transform:none;
+  transition:box-shadow .18s ease,filter .18s ease,transform .18s ease!important;
+}
+#newSongGroup:hover,#newSection:hover,#addItem:hover,#bibleAdd:hover,
+#b129Add:hover,#r74SaveMemo:hover,#groupAddDetails > summary:hover,
+#groupFileSlots .group-pick-label:hover,#fundos .f124Upload:hover,
+#agenda button.section-add:hover{
+  filter:brightness(1.035)!important;
+  box-shadow:0 4px 10px rgba(147,102,20,.21),0 10px 20px rgba(145,98,14,.17),inset 0 1px 0 rgba(255,255,255,.53)!important;
+}
+#newSongGroup:active,#newSection:active,#addItem:active,#bibleAdd:active,
+#b129Add:active,#r74SaveMemo:active,#groupAddDetails > summary:active,
+#groupFileSlots .group-pick-label:active,#fundos .f124Upload:active,
+#agenda button.section-add:active{
+  transform:translateY(1px)!important;
+  box-shadow:0 1px 3px rgba(147,102,20,.17),inset 0 1px 2px rgba(155,104,24,.12)!important;
+}
+#b129Add:disabled,#r74SaveMemo:disabled,#bibleAdd:disabled{
+  opacity:.55!important;filter:grayscale(.2)!important;cursor:not-allowed!important;
+}

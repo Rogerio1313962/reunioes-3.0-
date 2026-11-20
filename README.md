@@ -55,3 +55,12 @@ Prévia 153: tela FUNDOS ANTES DA REUNIÃO sem título TELÃO SANTUÁRIO; vídeo
 
 
 Prévia 154: remoção da janela modal de versões ao tocar numa música do Cronograma; abertura direta do player em Piano completo, barra de reprodução com trilha única e repetir amarelo quando ativado.
+
+
+Prévia 155: otimização da atualização do Safari. ACF/ARA só são baixadas e gravadas no IndexedDB quando não estão em cache; restauração deixa primeira renderização da página ocorrer. Biblioteca e miniaturas dos vídeos de Fundos só carregam quando a aba é aberta; miniaturas são processadas em fila, reduzindo travamento e consumo de memória na inicialização. Dados existentes preservados.
+
+
+Prévia 156: inclusão de lembretes no Cronograma com um único campo de texto, sem exigir Nome. Os lembretes existentes são preservados.
+
+
+Prévia 157: padronização premium amarela, com relevo e sombra, nos botões de adicionar conteúdo, etapa, música, vídeo e lembrete.

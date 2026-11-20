@@ -71,6 +71,8 @@ function sync(){
 function resetObject(){video.pause();still.hidden=true;still.removeAttribute('src');video.removeAttribute('poster');video.removeAttribute('src');video.load();if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=null;}
 const thumbCache=new Map();
 const thumbPending=new Map();
+let thumbnailQueue=Promise.resolve();
+let listEpoch=0;
 function showThumb(slot,uri){
  if(!slot)return;
  if(!uri){slot.replaceChildren();const label=document.createElement('span');label.className='f151NoThumb';label.textContent='▶';const note=document.createElement('small');note.textContent='Prévia indisponível';slot.append(label,note);return;}
@@ -80,7 +82,7 @@ function capturePreview(row,slot){
  const key=row.id;
  if(thumbCache.has(key)){showThumb(slot,thumbCache.get(key));return}
  if(thumbPending.has(key)){thumbPending.get(key).then(uri=>{if(slot.isConnected)showThumb(slot,uri)});return}
- const task=new Promise(resolve=>{
+ const task=thumbnailQueue.catch(()=>{}).then(()=>new Promise(resolve=>{
   if(!row.blob){resolve(null);return}
   const url=URL.createObjectURL(row.blob),v=document.createElement('video');
   v.muted=true;v.defaultMuted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');
@@ -138,7 +140,8 @@ function capturePreview(row,slot){
   v.addEventListener('error',()=>finish(null),{once:true});
   waiters.push(setTimeout(()=>finish(null),14000));
   v.src=url;v.load();
- });
+ }));
+ thumbnailQueue=task.then(()=>new Promise(done=>setTimeout(done,80)));
  thumbPending.set(key,task);
  task.then(uri=>{thumbCache.set(key,uri);thumbPending.delete(key);if(slot.isConnected)showThumb(slot,uri)});
 }
@@ -205,6 +208,11 @@ video.onplay=()=>{still.hidden=true;sync();if(live)send('play')};video.onpause=(
 fundosButton.addEventListener('click',()=>{if(!selected)refreshSupportImage()});
 document.addEventListener('click',e=>{if(e.target.closest('#days [data-day]'))queueMicrotask(()=>{if(!selected)refreshSupportImage()})},true);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!selected)refreshSupportImage()});
-refreshSupportImage();
-list();
+// Evite ler todos os arquivos de vídeo e decodificar miniaturas antes da visita à aba FUNDOS.
+let firstFundosVisit=true;
+fundosButton.addEventListener('click',()=>{
+ if(!firstFundosVisit)return;
+ firstFundosVisit=false;
+ setTimeout(()=>{void list();if(!selected)void refreshSupportImage();},0);
+});
 })();

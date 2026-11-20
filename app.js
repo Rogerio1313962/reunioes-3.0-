@@ -95,23 +95,29 @@ async function storeBible(version,data){const db=await bibleDB();return new Prom
 // e guarda cópia no IndexedDB para que também funcionem depois de carregados sem rede.
 async function restoreBibles(){
   const versions=['ACF','ARA'];
-  $('bibleImportStatus').textContent='Carregando ACF e ARA inclusas no aplicativo...';
-  // Restaurar bases da memória do navegador primeiro (inclusive em modo offline).
+  const status=$('bibleImportStatus');
+  if(status)status.textContent='Carregando ACF e ARA inclusas no aplicativo...';
+  // A primeira tela fica interativa antes da leitura das bases (8 MB de JSON).
+  // A base já persistida no IndexedDB tem prioridade, sem download, parse e gravação repetidos.
+  await new Promise(resolve=>requestAnimationFrame(()=>setTimeout(resolve,40)));
   try{
     const db=await bibleDB();
-    for(const version of versions){
-      const data=await new Promise((resolve,reject)=>{
-        const tx=db.transaction('translations','readonly');
-        const req=tx.objectStore('translations').get(version);
-        req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
-      });
-      if(data&&data.books)importedBibles[version]=data;
-    }
-    db.close();
-    drawBiblePicker();loadBibleText();
+    try{
+      for(const version of versions){
+        const data=await new Promise((resolve,reject)=>{
+          const tx=db.transaction('translations','readonly');
+          const req=tx.objectStore('translations').get(version);
+          req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+        });
+        if(data&&data.books&&Object.keys(data.books).length===66)importedBibles[version]=data;
+        // Entre as leituras grandes, devolva o controle ao Safari.
+        await new Promise(resolve=>setTimeout(resolve,0));
+      }
+    }finally{db.close()}
   }catch(error){console.warn('Bíblias em cache indisponíveis:',error)}
-  // Bases entregues junto com o app: não precisa escolher arquivos no iPad.
-  const outcome=await Promise.all(versions.map(async version=>{
+  // Busque no pacote apenas a tradução que ainda não foi salva no dispositivo.
+  for(const version of versions){
+    if(importedBibles[version])continue;
     try{
       const response=await fetch('./Biblia_'+version+'.json?v=118',{cache:'force-cache'});
       if(!response.ok)throw Error('HTTP '+response.status);
@@ -119,13 +125,13 @@ async function restoreBibles(){
       if(data.translation!==version||!data.books||Object.keys(data.books).length!==66)throw Error('Base bíblica incompleta');
       importedBibles[version]=data;
       try{await storeBible(version,data)}catch(error){console.warn('Não foi possível guardar Bíblia para uso offline:',error)}
-      return true;
-    }catch(error){console.warn('Bíblia '+version+' não carregou do pacote:',error);return false}
-  }));
+    }catch(error){console.warn('Bíblia '+version+' não carregou do pacote:',error)}
+    await new Promise(resolve=>setTimeout(resolve,0));
+  }
   const ready=versions.filter(v=>!!importedBibles[v]);
-  if(ready.length===2){$('bibleImportStatus').textContent='ACF e ARA prontas para usar — já incluídas no aplicativo.'}
-  else if(ready.length){$('bibleImportStatus').textContent='Disponível: '+ready.join(', ')+'. Para completar, abra o aplicativo com o servidor ativo.'}
-  else{$('bibleImportStatus').textContent='Não foi possível carregar as Bíblias. Abra o aplicativo pelo endereço do servidor e recarregue.'}
+  if(ready.length===2)status.textContent='ACF e ARA prontas para usar — já incluídas no aplicativo.';
+  else if(ready.length)status.textContent='Disponível: '+ready.join(', ')+'. Para completar, abra o aplicativo com o servidor ativo.';
+  else status.textContent='Não foi possível carregar as Bíblias. Abra o aplicativo pelo endereço do servidor e recarregue.';
   drawBiblePicker();loadBibleText();
 }
 function importedVerseCount(bi,ch){const data=importedBibles[$('bibleTranslation').value];if(!data)return 40;let n=0;for(let v=1;v<=180;v++){if(getImportedVerse(data,bi,ch,v))n=v;else if(n)break}return n||40}
