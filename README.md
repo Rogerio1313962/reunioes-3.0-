@@ -14,3 +14,7 @@ Teste de sintaxe dos scripts efetuado. Funcionamento visual no Safari/iPad e em 
 PRÉVIA 135: indicador AO VIVO da Bíblia e Cronograma em amarelo pulsante somente quando há apresentação, sem piscar na imagem de apoio. A engrenagem do Telão Santuário configura efeito e duração de transições de mídia, não a aparência da Bíblia.
 
 Prévia 136: No Cronograma, Adicionar conteúdo > Música abre a mesma Biblioteca de Músicas, mas oculta o botão + Adicionar música. Ao escolher uma música, ela é adicionada à etapa sem tocar. Fora desse modo, a Biblioteca funciona normalmente.
+
+Prévia 137: Media player do cronograma centralizado e aproximado; player da aba FUNDOS alinhado ao mesmo padrão visual.
+
+Prévia 138: correção real da engrenagem do telão com janela modal própria; os efeitos e a duração são salvos e o diálogo fecha automaticamente. Preserva os dois media players da 137.

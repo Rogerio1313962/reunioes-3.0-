@@ -2461,3 +2461,46 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 #musicas #r136ReturnAgenda[hidden]{display:none!important}
 #musicas #r136ReturnAgenda{margin-left:auto;background:#eef5fb;border:1px solid #c9d9e9;color:#315d81;border-radius:12px;font-weight:750;padding:11px 14px}
 #musicas.r136SchedulePicker .song-row-play{cursor:pointer}
+
+/* Prévia 137 — media players alinhados entre Cronograma e Fundos */
+#agenda .right>#r70MediaControls{padding:8px 12px 0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#agenda .right>#r70MediaControls #r70VideoControls{display:grid!important;grid-template-columns:max-content max-content!important;justify-content:center!important;align-items:center!important;column-gap:12px!important;row-gap:8px!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r70seek{grid-column:1/-1!important;margin:0!important;color:#45627c!important;width:100%!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r70seek input{accent-color:#caa04e!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r70center{grid-column:1!important;justify-content:center!important;gap:8px!important;margin:0!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r70center button{width:48px!important;min-width:48px!important;height:48px!important;padding:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;border-radius:11px!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r74volume{grid-column:2!important;justify-content:flex-start!important;align-items:center!important;gap:6px!important;margin:0!important;min-width:0!important;color:#416584!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r74volume input{width:118px!important;min-width:118px!important;max-width:118px!important;flex:0 0 118px!important;accent-color:#caa04e!important}
+#agenda .right>#r70MediaControls #r70VideoControls .r74volume output{min-width:34px!important;text-align:left!important;color:#8ca0b4!important}
+#agenda .right>#r90EndButton{margin:10px 0 8px!important}
+
+#fundos .f124Player{display:flex!important;flex-direction:column!important;gap:10px!important;padding:16px 16px 14px!important}
+#fundos .f124Name{order:1!important;margin-bottom:0!important}
+#fundos .f124Seek{order:2!important;margin:0!important;color:#45627c!important}
+#fundos .f124Seek input{accent-color:#caa04e!important}
+#fundos .f124Actions{order:3!important;justify-content:center!important;gap:8px!important;flex-wrap:nowrap!important}
+#fundos .f124Actions button{width:48px!important;height:48px!important;flex:0 0 48px!important;border-radius:11px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
+#fundos .f124Actions #f124Play{background:#eac66f!important;color:#20374f!important;border-color:#c5a251!important}
+#fundos .f124Actions button[aria-pressed=true]{background:#fae6ae!important;color:#65491a!important}
+#fundos .f124Volume{display:flex!important;align-items:center!important;gap:6px!important;flex:0 0 auto!important;color:#416584!important;margin-left:2px!important}
+#fundos .f124Volume input{width:118px!important;min-width:118px!important;max-width:118px!important;accent-color:#caa04e!important}
+#fundos .f124Project{order:4!important;margin-top:4px!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
+#fundos .f124Project button{min-width:0!important;padding:14px 12px!important;border-radius:12px!important}
+#fundos .f124Finish{background:#ca2e3e!important;color:#fff!important;border-color:#a92532!important}
+@media(max-width:960px){#fundos .f124Actions{flex-wrap:wrap!important}#fundos .f124Volume{width:100%!important;justify-content:center!important}#fundos .f124Project{grid-template-columns:1fr!important}}
+
+/* Prévia 138 — modal de configurações do telão independente da moldura */
+#r138TelSettings{width:min(460px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;max-height:min(85dvh,640px)!important;overflow:auto!important;position:fixed!important;margin:auto!important;border:1px solid #cbdbe8!important;border-radius:18px!important;padding:22px!important;background:#fff!important;color:#244968!important;box-shadow:0 24px 80px #1735517a!important;z-index:9999!important}
+#r138TelSettings::backdrop{background:rgba(13,33,53,.60)!important}
+#r138TelSettings:not([open]){display:none!important}
+#r138TelSettings .r138Top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+#r138TelSettings .r138Top strong{font-size:20px;color:#234766}
+#r138TelSettings #r138Close{width:39px;height:39px;flex:0 0 39px;border:1px solid #d0deea;border-radius:11px;background:#eef4fa;color:#355c7c;font-size:25px;padding:0}
+#r138TelSettings .r138Intro{margin:0 0 16px;font-size:13px;color:#668198;line-height:1.5}
+#r138TelSettings label{display:block;font-size:13px;font-weight:750;color:#345979;margin:12px 0}
+#r138TelSettings select{display:block;width:100%;min-height:44px;margin-top:7px;padding:8px 12px;border-radius:10px;border:1px solid #ccdae7;color:#234563;background:#f8fbff;font-size:14px}
+#r138TelSettings .r138Buttons{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+#r138TelSettings .r138Buttons button{border:1px solid #cbdbe8;border-radius:11px;padding:12px 15px;background:#f0f5fa;color:#345979;font-size:13px;font-weight:750}
+#r138TelSettings #r138Save{background:#f0cf76;border-color:#d6ad53;color:#624617}
+#agenda #r88TransitionSettings{z-index:300!important;isolation:isolate!important}
+#agenda .right>.r90ExternalHeader{position:relative!important;z-index:301!important;overflow:visible!important}
