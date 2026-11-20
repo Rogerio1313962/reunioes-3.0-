@@ -69,3 +69,6 @@ Prévia 158: removida a frase 'Recado · não vai ao telão' dos lembretes no cr
 
 
 Prévia 159: arquivos JavaScript consolidados em reunioes-app.js e reunioes-telao.js. Toda a aplicação mantém a ordem de execução de cada módulo; mantém dois arquivos de dados bíblicos separados. Aba Mídias carrega miniaturas sob demanda, não carrega todos os vídeos simultaneamente, libera referências ao sair. Grade Vídeos possui rolagem interna independente com título e botões fixos. Alterações apenas no pacote do aplicativo, preservando dados gravados no IndexedDB/localStorage existentes. Testar no iPad antes de usar em reunião.
+
+
+Prévia 160: correção na pasta Mídias/Vídeos para manter nomes e botões sempre visíveis, inclusive quando os vídeos .mov demoram a carregar ou não geram miniatura. Previsões carregadas conforme a rolagem; nenhum arquivo armazenado no IndexedDB é modificado por esta atualização.

@@ -935,7 +935,7 @@ function listRows(){return orderedFiles()}
 function cardHTML(f){
  const typeIcon=cat==='video'?'▶':cat==='imagem'?'▧':'▤';
  return '<article class="m66card" data-card="'+esc(f.id)+'">'+
- '<div class="m66thumb" data-thumb="'+esc(f.id)+'" aria-label="Prévia de '+esc(f.name)+'"><span class="m66placeholder">'+typeIcon+'</span></div>'+
+ '<div class="m66thumb" data-thumb="'+esc(f.id)+'" aria-label="Prévia de '+esc(f.name)+'"><span class="m66placeholder" aria-hidden="true">'+typeIcon+'</span><span class="m160PreviewState">Carregando prévia…</span></div>'+
  '<div class="m66filebody"><div class="m66filetitle" title="'+esc(f.name)+'">'+esc(f.name)+'</div>'+
  '<div class="m66actions">'+
  '<a class="m66btn m69open" data-open="'+esc(f.id)+'" href="#" target="_blank" rel="noopener" title="Abrir arquivo">Abrir</a>'+
@@ -970,7 +970,9 @@ function loadCardPreviews(list){
    cardObserver=new IntersectionObserver(entries=>{
      for(const entry of entries)if(entry.isIntersecting){schedule(entry.target);cardObserver?.unobserve(entry.target)}
    },{root:root,rootMargin:'180px 0px',threshold:0});
-   for(const el of root.querySelectorAll('[data-thumb]'))cardObserver.observe(el);
+   const cards=[...root.querySelectorAll('[data-thumb]')];
+   cards.slice(0,4).forEach(schedule);
+   cards.slice(4).forEach(el=>cardObserver.observe(el));
  }else{
    for(const el of [...root.querySelectorAll('[data-thumb]')].slice(0,8))schedule(el);
  }
@@ -992,9 +994,26 @@ async function hydratePreview({id,epoch}){
  const openLink=document.querySelector('#m64List [data-open="'+CSS.escape(id)+'"]');if(openLink)openLink.href=objectURL;
  slot.replaceChildren();
  if(cat==='video'){
-   const video=document.createElement('video');video.src=objectURL;video.controls=true;video.playsInline=true;video.muted=true;video.preload='metadata';video.setAttribute('aria-label','Reproduzir prévia do vídeo '+record.name);
-   video.addEventListener('loadedmetadata',()=>{if(Number.isFinite(video.duration)&&video.duration>0){try{video.currentTime=Math.min(0.4,video.duration/3)}catch(_){}}},{once:true});
-   slot.append(video);
+   const video=document.createElement('video');
+   video.playsInline=true;video.setAttribute('playsinline','');video.muted=true;
+   video.preload='metadata';video.controls=false;
+   video.setAttribute('aria-label','Prévia do vídeo '+record.name);
+   video.addEventListener('loadedmetadata',()=>{
+     if(Number.isFinite(video.duration)&&video.duration>0){try{video.currentTime=Math.min(0.7,Math.max(0.08,video.duration*.12))}catch(_){}}
+   },{once:true});
+   video.addEventListener('error',()=>{
+      if(epoch!==previewEpoch)return;
+      slot.classList.add('m160Unavailable');
+      const notice=document.createElement('span');notice.className='m160PreviewState';notice.textContent='Prévia indisponível';slot.append(notice);
+   },{once:true});
+   // A miniatura e o nome são independentes. A falha ao decodificar o .mov
+   // não afeta o título, a edição ou os botões de cada arquivo.
+   video.src=objectURL;slot.append(video);
+   const btn=document.createElement('button');btn.type='button';btn.className='m160OpenPreview';btn.textContent='▶';
+   btn.title='Abrir vídeo';btn.setAttribute('aria-label','Abrir vídeo '+record.name);
+   btn.addEventListener('click',()=>{
+     const open=document.querySelector('#m64List [data-open="'+CSS.escape(id)+'"]');open?.click();
+   });slot.append(btn);
  }else if(cat==='imagem'){
    const link=document.createElement('a');link.href=objectURL;link.target='_blank';link.rel='noopener';link.className='m69photoLink';
    const img=document.createElement('img');img.src=objectURL;img.alt='Abrir foto: '+record.name;img.loading='lazy';link.append(img);slot.append(link);

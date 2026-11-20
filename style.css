@@ -2821,3 +2821,19 @@ html,body,.app,.sidebar,main,.page,button,a,label{touch-action:manipulation}
 #biblioteca #m64FormHost:not([hidden]){flex:0 0 auto!important;max-height:34vh!important;overflow-y:auto!important}
 #biblioteca .m66thumb video{pointer-events:auto!important}
 @media(max-width:800px){#biblioteca .m66folderpage{height:calc(100dvh - 120px)!important;max-height:calc(100dvh - 120px)!important;min-height:310px!important}}
+
+/* PRÉVIA 160 — cartões completos e prévias de vídeos seguras no Safari */
+#biblioteca .m66gallery{grid-auto-rows:max-content!important;align-items:start!important;}
+#biblioteca .m66gallery .m66card{display:flex!important;flex-direction:column!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;isolation:isolate!important;}
+#biblioteca .m66gallery .m66thumb{flex:0 0 auto!important;position:relative!important;width:100%!important;height:auto!important;aspect-ratio:16 / 10!important;overflow:hidden!important;border-radius:11px 11px 0 0!important;background:#dce8f3!important;}
+#biblioteca .m66gallery .m66thumb video{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important;background:#13263b!important;}
+#biblioteca .m66gallery .m66filebody{position:relative!important;display:flex!important;visibility:visible!important;opacity:1!important;flex:0 0 auto!important;min-width:0!important;width:100%!important;min-height:67px!important;height:auto!important;padding:7px!important;flex-direction:column!important;gap:6px!important;background:#fff!important;z-index:2!important;overflow:visible!important;}
+#biblioteca .m66gallery .m66filetitle{position:relative!important;display:block!important;visibility:visible!important;opacity:1!important;color:#244969!important;font-size:12px!important;line-height:1.25!important;font-weight:800!important;min-width:0!important;white-space:normal!important;overflow-wrap:anywhere!important;text-overflow:clip!important;}
+#biblioteca .m66gallery .m66actions{display:flex!important;visibility:visible!important;opacity:1!important;justify-content:space-between!important;align-items:center!important;flex-wrap:nowrap!important;gap:3px!important;min-width:0!important;}
+#biblioteca .m66gallery .m66actions>*{min-width:0!important;}
+#biblioteca .m66gallery .m66schedule{flex:1!important;white-space:normal!important;line-height:1.05!important;}
+#biblioteca .m66gallery .m66thumb .m160PreviewState{position:absolute;bottom:10px;left:8px;right:8px;font-size:10px;color:#526e8b;text-align:center;pointer-events:none;}
+#biblioteca .m66gallery .m66thumb:has(video) .m160PreviewState{display:none!important;}
+#biblioteca .m66gallery .m66thumb.m160Unavailable .m160PreviewState{display:block!important;background:#142b42dd;color:#fff;border-radius:7px;padding:4px!important;}
+#biblioteca .m66gallery .m160OpenPreview{position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;z-index:3!important;display:grid!important;place-items:center!important;width:48px!important;height:48px!important;min-width:48px!important;border:0!important;border-radius:50%!important;background:#26384ddc!important;color:white!important;font-size:25px!important;padding:0!important;box-shadow:0 3px 12px #0004!important;}
+@media(max-width:700px){#biblioteca .m66gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}#biblioteca .m66gallery .m66filebody{padding:6px!important}#biblioteca .m66gallery .m66actions{flex-wrap:wrap!important}}
