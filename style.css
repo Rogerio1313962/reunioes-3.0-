@@ -2377,30 +2377,24 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 .b120Pos-bottom-left .b120RefArea,.b120Pos-bottom-right .b120RefArea{left:4%!important;right:4%!important;bottom:5%!important;max-width:92%!important;box-sizing:border-box!important}
 @media(max-width:650px){#biblia .b119Eyebrow{font-size:13px!important}#biblia .b125HeaderTools .b125TranslationWrap select{width:145px!important;font-size:11px!important}#biblia .b125HeaderTools #b120Settings summary{width:40px!important;height:40px!important}}
 
-
-/* PRÉVIA 128 — Mesma régua de controle na Bíblia e no Cronograma.
-   Três versículos e encerrar cabem no painel SEM rolagem interna. */
-#biblia .b125HeaderTools #b120Settings{flex:0 0 33px!important;margin:0!important}
-#biblia .b125HeaderTools #b120Settings summary{width:33px!important;height:33px!important;min-width:33px!important;min-height:33px!important;padding:0!important;font-size:18px!important;border-radius:9px!important}
-#biblia .b125HeaderTools .b125TranslationWrap select{height:36px!important;max-height:36px!important}
-#biblia .b119Header{min-height:40px!important;padding:0 0 8px!important}
-#biblia .b119Header>.b125HeaderTools{gap:6px!important}
-#agenda .right>.b123Controller,#biblia .b119Right>.b123Controller{box-sizing:border-box!important;max-width:100%!important;width:100%!important;min-width:0!important;margin-top:6px!important;padding:0!important;overflow:visible!important;position:relative!important}
-#agenda .right>.b123Controller .b121Card,#biblia .b119Right>.b123Controller .b121Card{height:390px!important;min-height:0!important;max-height:390px!important;width:100%!important;max-width:100%!important;display:grid!important;grid-template-rows:45px minmax(0,1fr) 40px!important;gap:6px!important;padding:10px!important;overflow:hidden!important;box-sizing:border-box!important;border-radius:16px!important}
-#agenda .right>.b123Controller .b121Head,#biblia .b119Right>.b123Controller .b121Head{height:45px!important;min-height:0!important;margin:0!important;padding:0 0 6px!important;box-sizing:border-box!important;gap:6px!important}
-#agenda .right>.b123Controller .b121Book,#biblia .b119Right>.b123Controller .b121Book{width:31px!important;height:31px!important;min-width:31px!important;font-size:17px!important;border-radius:9px!important}
-#agenda .right>.b123Controller .b121Title strong,#biblia .b119Right>.b123Controller .b121Title strong{font-size:13px!important;line-height:1.2!important}
-#agenda .right>.b123Controller .b121Title small,#biblia .b119Right>.b123Controller .b121Title small{display:none!important}
-#agenda .right>.b123Controller .b121Close,#biblia .b119Right>.b123Controller .b121Close{width:33px!important;height:33px!important;min-width:33px!important;font-size:19px!important}
-#agenda .right>.b123Controller .b121VerseList,#biblia .b119Right>.b123Controller .b121VerseList{height:100%!important;min-height:0!important;max-height:none!important;display:grid!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;gap:6px!important;overflow:hidden!important;box-sizing:border-box!important}
-#agenda .right>.b123Controller .b121Cell,#biblia .b119Right>.b123Controller .b121Cell{min-height:0!important;max-height:100%!important;height:100%!important;display:flex!important;flex-direction:column!important;gap:2px!important;padding:7px 10px!important;border-radius:11px!important;overflow:hidden!important;box-sizing:border-box!important}
-#agenda .right>.b123Controller .b121Cell .b121Label,#biblia .b119Right>.b123Controller .b121Cell .b121Label{font-size:9px!important;line-height:1.15!important;letter-spacing:.09em!important}
-#agenda .right>.b123Controller .b121Cell .b121Ref,#biblia .b119Right>.b123Controller .b121Cell .b121Ref{font-size:13px!important;line-height:1.15!important;margin:0!important}
-#agenda .right>.b123Controller .b121Cell .b121Text,#biblia .b119Right>.b123Controller .b121Cell .b121Text{font-size:12px!important;line-height:1.22!important;max-height:none!important;-webkit-line-clamp:3!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;overflow:hidden!important;color:#39566d!important}
-#agenda .right>.b123Controller .b121Now,#biblia .b119Right>.b123Controller .b121Now{min-height:0!important;background:#fff0bd!important;border:2px solid #ddb34d!important}
-#agenda .right>.b123Controller .b121Now .b121Text,#biblia .b119Right>.b123Controller .b121Now .b121Text{font-size:12px!important;-webkit-line-clamp:3!important;color:#4e3c21!important}
-#agenda .right>.b123Controller .b121Foot,#biblia .b119Right>.b123Controller .b121Foot{height:40px!important;min-height:40px!important;max-height:40px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;padding:0!important;margin:0!important;box-sizing:border-box!important}
-#agenda .right>.b123Controller .b121Counter,#biblia .b119Right>.b123Controller .b121Counter{font-size:11px!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;min-width:0!important}
-#agenda .right>.b123Controller .b121Finish,#biblia .b119Right>.b123Controller .b121Finish{flex:none!important;height:35px!important;min-height:35px!important;padding:6px 9px!important;border-radius:9px!important;font-size:11px!important;white-space:nowrap!important}
-#agenda .right>.b123Controller button.b121Cell:not(:disabled):focus,#agenda .right>.b123Controller button.b121Cell:not(:disabled):active,#biblia .b119Right>.b123Controller button.b121Cell:not(:disabled):focus,#biblia .b119Right>.b123Controller button.b121Cell:not(:disabled):active{background:#fff!important;color:#39566d!important;outline:none!important}
-@media(max-height:820px){#agenda .right>.b123Controller .b121Card,#biblia .b119Right>.b123Controller .b121Card{height:355px!important;max-height:355px!important}#agenda .right>.b123Controller .b121Cell .b121Text,#biblia .b119Right>.b123Controller .b121Cell .b121Text{-webkit-line-clamp:2!important}}
+/* PRÉVIA 129 */
+#b129ModeActions[hidden]{display:none!important}
+#b129ModeActions{margin:12px 0;padding:13px;background:#fff8e5;border:1px solid #e4c777;border-radius:13px;color:#4e5d6e}
+#b129ModeActions p{margin:6px 0 12px;font-size:12px;color:#688197}
+.b129ModeTop,.b129ModeBottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.b129ModeTop strong{font-size:14px;color:#294b66}
+#b129ModeActions button{padding:9px 12px;border-radius:9px;border:1px solid #dac079;background:#fff;color:#365875;font-weight:800}
+#b129Add{background:#f4cf72!important;color:#654612!important}
+#b129Add:disabled{opacity:.45}
+#agenda .right>.b123Controller{display:none!important}
+.b129MarkButton{background:#eef5ff!important;border:1px solid #c9dcec!important;border-radius:10px!important;color:#315e84!important;font-size:12px!important;font-weight:800!important;padding:9px!important}
+#b129HighlightDialog{width:min(620px,92vw);max-height:85dvh;box-sizing:border-box;padding:17px;border:1px solid #d4e2ef;border-radius:17px;background:#fff;color:#2d4e6b;box-shadow:0 25px 70px #001c3e69}
+#b129HighlightDialog::backdrop{background:#00122487}
+.b129HighHead,.b129HighFooter{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.b129HighHead strong{font-size:17px}
+#b129HighlightDialog p{font-size:13px;line-height:1.4;color:#627b90}
+#b129VerseText{width:100%;box-sizing:border-box;font-size:17px;line-height:1.6;min-height:140px;color:#254762;background:#f9fcff;border:1px solid #cddfeb;border-radius:12px;padding:12px;user-select:text;-webkit-user-select:text}
+.b129HighFooter{margin-top:12px}
+.b129HighFooter button,#b129Close{padding:11px 14px;border:1px solid #cad9e5;border-radius:10px;background:#eef5fc;color:#315873;font-weight:800}
+#b129Apply{background:#f4d27c;color:#644b19;border-color:#dcb85f}
+.b129Marked{font-weight:inherit!important}

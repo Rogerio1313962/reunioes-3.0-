@@ -44,7 +44,7 @@ function render(){const current=active?{reference:active.reference,text:active.t
  }
 }
 const originalPresent=present;
-function broadcastCurrent(){if(!active)return;const item={...active.original,verses:undefined,content:active.text,reference:active.reference,refSettings:window.bible120Settings?.()||active.original.refSettings};originalPresent(item);render()}
+function broadcastCurrent(){if(!active)return;const item={...active.original,verses:undefined,content:active.text,reference:active.reference,refSettings:window.bible120Settings?.()||active.original.refSettings};if(window.bible129ReadMarks)item.highlights=window.bible129ReadMarks(item);originalPresent(item);render()}
 function activate(reference,text,original){const position=findBook(reference);active={reference,text,original,position};before=position?nearby(position,-1):null;after=position?nearby(position,1):null;
  if(!before)before=fallback(-1);if(!after)after=fallback(1);
  broadcastCurrent()}
