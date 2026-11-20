@@ -61,8 +61,15 @@ async function files(day){
  const box=el('r74Content').querySelector('.r74files');
  try{
   if(kind==='musica'){
-   const matches=musicIndex.filter(x=>x.folder===day).sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
-   box.innerHTML=matches.length?matches.map(m=>`<button type="button" class="r75file" data-id="${escape(m.id)}"><span class="r75image r75music"><span class="r75musicIcon">♫</span></span><span class="r75filename">${escape(m.name)}</span><span class="r75kind">Música</span></button>`).join(''):'Nenhuma música nesta pasta.';
+   // Uma única entrada por música, independentemente dos sete arquivos de versões.
+   const tracks=(await musicAll()).filter(x=>x.folder===day);
+   const groups=new Map();
+   for(const track of tracks){const key=track.groupId||track.id;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(track)}
+   const matches=[...groups.values()].map(variants=>{
+     const track=variants.find(t=>t.role==='completa')||variants.find(t=>t.role==='piano_bateria')||variants.find(t=>(t.role||'completa')!=='fundo')||variants[0];
+     return {id:track.id,name:track.groupTitle||track.name,available:variants.length};
+   }).sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
+   box.innerHTML=matches.length?matches.map(m=>`<button type="button" class="r75file" data-id="${escape(m.id)}"><span class="r75image r75music"><span class="r75musicIcon">♫</span></span><span class="r75filename">${escape(m.name)}</span><span class="r75kind">Música · ${m.available} versão(ões)</span></button>`).join(''):'Nenhuma música nesta pasta.';
    box.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{const m=matches.find(x=>x.id===b.dataset.id);if(m)add('musica',m.name,{musicId:m.id})});return;
   }
   const all=await window.ReunioesMediaLibrary.all();
