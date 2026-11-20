@@ -16,6 +16,7 @@
   const show=row.querySelector('[data-act="show"]'),edit=row.querySelector('[data-act="edit"]'),del=row.querySelector('[data-act="delete"]');
   if(show)show.hidden=isEdit;
   if(edit){const allowEdit=isEdit&&item.type!=='musica';edit.hidden=!allowEdit;
+   if(allowEdit&&item.type==='versiculo'){edit.classList.add('r140VerseEdit');edit.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.2 3.8a2.1 2.1 0 0 1 3 3L8.7 17.3 4 18.5l1.2-4.7Z"/></svg>';edit.setAttribute('aria-label','Editar referência bíblica');edit.title='Editar referência bíblica';}
    if(allowEdit&&['texto','imagem','video','pdf'].includes(item.type)){edit.textContent='✎';edit.setAttribute('aria-label',item.type==='texto'?'Editar texto do lembrete':'Renomear arquivo');edit.title=edit.getAttribute('aria-label');edit.onclick=e=>{e.preventDefault();e.stopPropagation();quickEdit(item)}}
   }
   if(del){del.hidden=!isEdit;del.textContent='✕';del.title='Remover do cronograma';del.setAttribute('aria-label','Remover do cronograma');}

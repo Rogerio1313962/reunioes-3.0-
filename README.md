@@ -18,3 +18,7 @@ Prévia 136: No Cronograma, Adicionar conteúdo > Música abre a mesma Bibliotec
 Prévia 137: Media player do cronograma centralizado e aproximado; player da aba FUNDOS alinhado ao mesmo padrão visual.
 
 Prévia 138: correção real da engrenagem do telão com janela modal própria; os efeitos e a duração são salvos e o diálogo fecha automaticamente. Preserva os dois media players da 137.
+
+Prévia 140: Botão de edição da referência bíblica substituído por lápis compacto e alinhado. Ao remover etapa do Cronograma, todos os itens daquela etapa também são excluídos mediante confirmação; bibliotecas de arquivos intactas.
+
+Prévia 141: ajuste responsivo de fonte do versículo no telão físico e na prévia, preservando referência separada. Controlador exibe textos completos de anterior/atual/próximo; em trechos excepcionais, a página pode precisar rolar para acomodar todo o texto legível.

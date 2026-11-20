@@ -2504,3 +2504,26 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 #r138TelSettings #r138Save{background:#f0cf76;border-color:#d6ad53;color:#624617}
 #agenda #r88TransitionSettings{z-index:300!important;isolation:isolate!important}
 #agenda .right>.r90ExternalHeader{position:relative!important;z-index:301!important;overflow:visible!important}
+
+
+/* Prévia 140 — edição de referência com ícone alinhado aos demais comandos */
+#agenda #sectionsRoot .item.r97Editing button.r140VerseEdit{width:36px!important;min-width:36px!important;max-width:36px!important;height:36px!important;min-height:36px!important;display:inline-grid!important;place-items:center!important;flex:0 0 36px!important;border-radius:10px!important;padding:0!important;border:1px solid #d3dfeb!important;background:#f3f7fb!important;color:#416489!important;font-size:0!important;line-height:1!important;box-shadow:none!important;}
+#agenda #sectionsRoot .item.r97Editing button.r140VerseEdit svg{width:18px!important;height:18px!important;display:block!important;}
+#agenda #sectionsRoot .item.r97Editing button.r140VerseEdit:focus-visible{outline:2px solid #d7b451!important;outline-offset:2px!important;}
+#agenda #sectionsRoot .item.r97Editing button.r140VerseEdit[hidden]{display:none!important;}
+
+/* PREVIA 141 — telão com texto ajustado à caixa; referência sem sobreposição */
+#preview .b120Verse,#b119Mirror .b120Verse,#stage .r70layer .b120Verse{display:flex!important;flex-direction:column!important;box-sizing:border-box!important;padding:3.8% 4% 3.8%!important;overflow:hidden!important;align-items:stretch!important;justify-content:center!important;gap:0!important}
+#preview .b120VerseText,#b119Mirror .b120VerseText,#stage .r70layer .b120VerseText{flex:0 1 auto!important;min-height:0!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;line-height:1.16!important;text-align:center!important;margin:0!important;max-width:100%!important}
+#preview .b120RefArea,#b119Mirror .b120RefArea,#stage .r70layer .b120RefArea{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;flex:0 0 auto!important;width:100%!important;max-width:100%!important;margin:6px 0 0!important;padding:0!important;box-sizing:border-box!important;overflow:visible!important}
+#preview .b120Pos-bottom-left .b120RefArea,#b119Mirror .b120Pos-bottom-left .b120RefArea,#stage .b120Pos-bottom-left .b120RefArea{text-align:left!important}
+#preview .b120Pos-bottom-right .b120RefArea,#b119Mirror .b120Pos-bottom-right .b120RefArea,#stage .b120Pos-bottom-right .b120RefArea{text-align:right!important}
+#preview .b120Pos-bottom-left,#preview .b120Pos-bottom-right,#b119Mirror .b120Pos-bottom-left,#b119Mirror .b120Pos-bottom-right,#stage .b120Pos-bottom-left,#stage .b120Pos-bottom-right{justify-content:flex-start!important}
+#preview .b120Pos-bottom-left .b120VerseText,#preview .b120Pos-bottom-right .b120VerseText,#b119Mirror .b120Pos-bottom-left .b120VerseText,#b119Mirror .b120Pos-bottom-right .b120VerseText,#stage .b120Pos-bottom-left .b120VerseText,#stage .b120Pos-bottom-right .b120VerseText{margin:auto 0!important}
+#preview .b120Pos-bottom-left .b120RefArea,#preview .b120Pos-bottom-right .b120RefArea,#b119Mirror .b120Pos-bottom-left .b120RefArea,#b119Mirror .b120Pos-bottom-right .b120RefArea,#stage .b120Pos-bottom-left .b120RefArea,#stage .b120Pos-bottom-right .b120RefArea{margin-top:auto!important}
+/* Cartões mostram o texto completo, sem reticências nem corte de linhas. */
+#agenda .right .b123Controller .b121Text,#biblia .b119Right .b123Controller .b121Text{display:block!important;-webkit-line-clamp:unset!important;line-clamp:unset!important;-webkit-box-orient:initial!important;overflow:visible!important;white-space:normal!important;overflow-wrap:anywhere!important;max-height:none!important;font-size:12px!important;line-height:1.28!important}
+#agenda .right .b123Controller .b121Cell,#biblia .b119Right .b123Controller .b121Cell{height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:8px 10px!important}
+#agenda .right .b123Controller .b121Now .b121Text,#biblia .b119Right .b123Controller .b121Now .b121Text{font-size:12px!important;line-height:1.29!important}
+#agenda .right .b123Controller .b121VerseList,#biblia .b119Right .b123Controller .b121VerseList{height:auto!important;max-height:none!important;overflow:visible!important;display:flex!important;flex-direction:column!important;gap:5px!important}
+#agenda .right .b123Controller .b121Card,#biblia .b119Right .b123Controller .b121Card{max-height:none!important;overflow:visible!important}
