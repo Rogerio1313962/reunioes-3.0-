@@ -19,16 +19,22 @@ const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
 const ver=item=>String(item?.translation||'ACF').toUpperCase().includes('ARA')?'ARA':'ACF';
 function findBook(ref){if(typeof BIBLE_BOOKS==='undefined')return null;const m=String(ref||'').match(/^(.+?)\s+(\d+):(\d+)$/u);if(!m)return null;const bi=BIBLE_BOOKS.findIndex(b=>normalize(b[0])===normalize(m[1]));if(bi<0)return null;return {bi,ch:Number(m[2]),n:Number(m[3])}}
 function getText(bi,ch,n,version){if(typeof importedBibles==='undefined'||typeof getImportedVerse!=='function')return '';const data=importedBibles[version];return data?getImportedVerse(data,bi,ch,n):''}
-function nearby(part,delta){if(!part)return null;let {bi,ch,n}=part;const v=ver(active);for(let tries=0;tries<3;tries++){
- n+=delta;
- if(n<1){ch--;if(ch<1){bi--;if(bi<0)return null;ch=BIBLE_BOOKS[bi][1]}n=180}
- if(ch>BIBLE_BOOKS[bi][1]){bi++;if(bi>=BIBLE_BOOKS.length)return null;ch=1;n=1}
- if(delta<0&&n===180){let count=0;for(let i=1;i<=180;i++){if(getText(bi,ch,i,v))count=i;else if(count)break}n=count;if(!n)continue}
- const text=getText(bi,ch,n,v);if(text)return {bi,ch,n,reference:BIBLE_BOOKS[bi][0]+' '+ch+':'+n,text};
- if(delta>0){ch++;if(ch>BIBLE_BOOKS[bi][1]){bi++;if(bi>=BIBLE_BOOKS.length)return null;ch=1}n=0}
- else{ch--;if(ch<1){bi--;if(bi<0)return null;ch=BIBLE_BOOKS[bi][1]}n=181}
+function nearby(part,delta){
+ if(!part)return null;
+ let {bi,ch,n}=part;const v=ver(active);
+ for(let attempts=0;attempts<300;attempts++){
+  n+=delta;
+  if(delta>0&&n>180){ch++;n=1}
+  if(delta<0&&n<1){ch--;n=180}
+  if(ch<1){bi--;if(bi<0)return null;ch=BIBLE_BOOKS[bi][1];n=180}
+  if(ch>BIBLE_BOOKS[bi][1]){bi++;if(bi>=BIBLE_BOOKS.length)return null;ch=1;n=1}
+  const text=getText(bi,ch,n,v);
+  if(text)return {bi,ch,n,reference:BIBLE_BOOKS[bi][0]+' '+ch+':'+n,text};
+  // Avançar ao próximo capítulo depois do fim real do capítulo atual.
+  if(delta>0){ch++;n=0;if(ch>BIBLE_BOOKS[bi][1]){bi++;if(bi>=BIBLE_BOOKS.length)return null;ch=1}}
  }
- return null}
+ return null;
+}
 function fallback(direction){if(!active)return null;const seq=Array.isArray(active.original?.verses)?active.original.verses:[];const idx=seq.findIndex(p=>p.reference===active.reference);const part=seq[idx+direction];return part?{...findBook(part.reference),reference:part.reference,text:part.text}:null}
 function render(){const current=active?{reference:active.reference,text:active.text}:null;
  for(const v of views){v.hidden=!active;if(!active)continue;
