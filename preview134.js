@@ -97,12 +97,12 @@ $$('bibleTranslation')?.addEventListener('change',()=>{
  if(book<0||!raw)return;
  const text=getImportedVerse(raw,book,+match[2],+match[3]);
  if(!text)return;
- const activeNow=document.querySelector('#b121Overlay-biblia .b121Now .b121Ref')?.textContent?.trim()===ref||document.querySelector('#b121Overlay-agenda .b121Now .b121Ref')?.textContent?.trim()===ref;
- const original=state.days[state.day]?.find(item=>item.type==='versiculo'&&item.id&&item.verses?.some(v=>v.reference===ref));
- const cronogramaSource=!!original?.cronogramaSource;
- const item={id:original?.id||uid(),type:'versiculo',title:ref,reference:ref,translation,content:text,
-  refSettings:window.bible120Settings?.(),cronogramaSource,
-  highlights:cronogramaSource?(window.bible129ReadMarks?.({translation,reference:ref})||[]):[]};
+ const activeItem=window.bibleActivePresentation;
+ const scheduled=activeItem?.id&&state.days.some(day=>day.some(entry=>entry.id===activeItem.id&&entry.type==='versiculo'));
+ const cronogramaSource=!!scheduled;
+ const item={...activeItem,id:activeItem?.id||uid(),type:'versiculo',title:ref,reference:ref,translation,content:text,
+  verses:undefined,refSettings:window.bible120Settings?.(),cronogramaSource,
+  highlights:[]};
  present(item);
 });
 })();

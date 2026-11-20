@@ -35,7 +35,7 @@
         row.addEventListener('click',e=>{
           if(e.target.closest('button,input,select,textarea,a,[contenteditable],.content-grip,.drag-handle'))return;
           const verse=state.days[state.day].find(x=>x.id===id);
-          if(verse?.type==='versiculo'){window.bibleOpenFromSchedule=true;present(verse);window.dispatchEvent(new CustomEvent('bible-schedule-present',{detail:verse}));setTab('biblia');}
+          if(verse?.type==='versiculo'){window.bibleOpenFromSchedule=true;present({...verse,cronogramaSource:true});window.dispatchEvent(new CustomEvent('bible-schedule-present',{detail:verse}));setTab('biblia');}
         });
       }
     });

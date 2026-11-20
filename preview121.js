@@ -40,13 +40,13 @@ function render(){const current=active?{reference:active.reference,text:active.t
  for(const v of views){v.hidden=!active;if(!active)continue;
   const cells=[[v.querySelector('.b121Before'),before,'Início da Bíblia'],[v.querySelector('.b121Now'),current,''],[v.querySelector('.b121After'),after,'Fim da Bíblia']];
   for(const [cell,item,empty] of cells){cell.querySelector('.b121Ref').textContent=item?.reference||'—';cell.querySelector('.b121Text').textContent=item?.text||empty;if(cell.tagName==='BUTTON')cell.disabled=!item;}
-  const canHighlight=!!active?.original?.cronogramaSource;
+  const canHighlight=!!active;
   const markBtn=v.querySelector('.b121MarkInline'); if(markBtn){markBtn.hidden=!canHighlight; markBtn.disabled=!canHighlight;}
   v.querySelector('.b121Counter').textContent=(current?.reference||'')+(active?.original?.translation?' · '+String(active.original.translation).replace(/—.*/, '').trim():'');
  }
 }
 const originalPresent=present;
-function broadcastCurrent(){if(!active)return;const item={...active.original,verses:undefined,content:active.text,reference:active.reference,refSettings:window.bible120Settings?.()||active.original.refSettings};if(window.bible129ReadMarks)item.highlights=window.bible129ReadMarks(item);originalPresent(item);render()}
+function broadcastCurrent(){if(!active)return;const item={...active.original,verses:undefined,content:active.text,reference:active.reference,refSettings:window.bible120Settings?.()||active.original.refSettings};if(window.bible129ReadMarks)item.highlights=window.bible129ReadMarks(item);window.bibleActivePresentation=item;originalPresent(item);window.bibleOnControllerVerseChange?.(item);render()}
 function activate(reference,text,original){const position=findBook(reference);active={reference,text,original,position};before=position?nearby(position,-1):null;after=position?nearby(position,1):null;
  if(!before)before=fallback(-1);if(!after)after=fallback(1);
  broadcastCurrent()}
@@ -57,7 +57,7 @@ present=function(item){if(item?.type==='versiculo'){
  const text=first?.text||item.content||'';
  activate(reference,text,item);return;
  }
- active=null;before=null;after=null;render();return originalPresent(item)
+ active=null;before=null;after=null;window.bibleActivePresentation=null;render();return originalPresent(item)
 };
 window.addEventListener('pageshow',render);render();
 })();

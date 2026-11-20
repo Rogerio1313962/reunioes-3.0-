@@ -41,3 +41,6 @@ Prévia 147: Na aba FUNDOS mostra a imagem de apoio do dia quando não há víde
 
 
 Prévia 148: destaque de trecho bíblico agora aparece e funciona somente para versículos usados pelo Cronograma. Versículos apresentados diretamente pela aba Bíblia não exibem o botão de destaque nem aplicam destaques salvos.
+
+
+Prévia 149: destaque disponível tanto na Bíblia livre (temporário, sem persistência) quanto nos versículos do Cronograma (salvo exclusivamente no item e na referência específicos). Fechar apresentação ou sair da Bíblia limpa os destaques temporários. Versículos projetados diretamente nunca recebem destaques agendados.
