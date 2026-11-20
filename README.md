@@ -89,3 +89,10 @@ Prévia 164: abertura redesenhada com anel DOURADO EXTRAÍDO do logo oficial (n�
 - Sem rotação do anel, sem bolinha e sem animação isolada do Play.
 - Marca no menu lateral ajustada para exibir o R inteiro, sem recorte.
 - Mantidos os 10 arquivos e os recursos da Prévia 164.
+
+
+## Prévia 166 — Acabamento do logo
+- Retirados os halos esbranquiçados do recorte do R e do anel, preservando desenho e cores originais.
+- Fundo azul-marinho e zoom suave mantidos; sombra levemente ajustada para contraste.
+- Ícone interno sem bordas brancas, sem alterar os controles do aplicativo.
+- Mantida a estrutura original de 10 arquivos.
