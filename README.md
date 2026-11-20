@@ -82,3 +82,10 @@ Prévia 162: cartões de PDF com proporções uniformes, miniatura PDF.js sem if
 Prévia 163: identidade no menu, animação de abertura com fundo azul-marinho, anel dourado no plano inclinado e gesto de Play. O Cronograma inicia música retirando versículo e vídeo (inclusive pausado) da apresentação e restaurando a Imagem de Apoio do dia, se existente. Seleção do vídeo exibe prévia no iPad, sem transmissão até tocar Play/Apresentar. Repetição de vídeo tem botão ⟲ com estado amarelo; a opção segue no arquivo enviado ao telão. Mantida a galeria padronizada da Prévia 162. Os arquivos e dados do navegador permanecem inalterados.
 
 Prévia 164: abertura redesenhada com anel DOURADO EXTRAÍDO do logo oficial (não bolinha separada); gira em perspectiva em torno do R ao longo do eixo inclinado, Play dourado é acionado e termina no logo oficial sem alteração de cor. Fundo azul-marinho na inicialização e ocultação da interface até a saída da abertura. Continua 10 arquivos; os três componentes PNG são embutidos no index.html para não criar novas pastas nem dependências.
+
+
+## Prévia 165 — Logo e abertura suavizados
+- Abertura: somente a imagem oficial do R ampliando lentamente (zoom de 94% a 104,5%), com sombra discreta no fundo azul-marinho.
+- Sem rotação do anel, sem bolinha e sem animação isolada do Play.
+- Marca no menu lateral ajustada para exibir o R inteiro, sem recorte.
+- Mantidos os 10 arquivos e os recursos da Prévia 164.
