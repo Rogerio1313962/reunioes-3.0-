@@ -17,7 +17,7 @@ const fundosButton=document.createElement('button');fundosButton.className='nav'
 fundosButton.innerHTML='<span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m10 8 6 4-6 4V8Z"/></svg></span><span>FUNDOS</span>';
 nav.insertBefore(fundosButton,settingsButton);
 const section=document.createElement('section');section.id='fundos';section.className='page fundos124';
-section.innerHTML=`<div class="f124Layout"><div class="f124Library"><div class="f124Head"><div><span class="f124Kicker">ANTES DAS REUNIÕES</span><h2>Fundos de oração</h2></div><label class="f124Upload">＋ Adicionar vídeos<input type="file" id="f124Upload" accept="video/*,.mp4,.mov,.m4v" multiple hidden></label></div><p class="f124Hint">Escolha um vídeo para preparar e, quando desejar, envie ao telão. Os vídeos ficam armazenados neste navegador.</p><div id="f124Status" class="f124Status" role="status"></div><div id="f124List" class="f124List"></div></div><div class="f124Right"><div class="f124ScreenTitle"><h2>TELÃO SANTUÁRIO</h2><span class="f124Badge">FUNDOS</span></div><div class="f124Screen"><video id="f124Video" playsinline preload="metadata"></video><img id="f124SupportImage" hidden alt="Imagem de apoio do dia"><div id="f124Empty">Nenhuma imagem de apoio definida para este dia</div></div><div class="f124Player"><div class="f147PlayerHeader"><div id="f124Name" class="f124Name">Nenhum vídeo selecionado</div><button type="button" id="f147Close" class="f147Close" aria-label="Fechar vídeo e voltar à imagem de apoio" title="Fechar e voltar à imagem de apoio">×</button></div><div class="f124Actions"><button id="f124Back" title="Voltar ao início">↺</button><button id="f124Play" title="Reproduzir ou pausar">▶</button><button id="f124Repeat" title="Repetir vídeo" aria-pressed="false">↻</button><div class="f124Volume"><button type="button" id="f150Mute" class="f150Mute" aria-label="Silenciar vídeo" title="Silenciar vídeo"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button><input type="range" id="f124Volume" min="0" max="100" value="50" aria-label="Volume"></div></div><div class="f124Seek"><span id="f124Current">0:00</span><input id="f124Seek" type="range" min="0" max="1000" value="0" aria-label="Avançar vídeo"><span id="f124Duration">0:00</span></div></div></div></div>`;
+section.innerHTML=`<div class="f124Layout"><div class="f124Library"><div class="f124Head"><div><span class="f124Kicker">ANTES DAS REUNIÕES</span><h2>Fundos de oração</h2></div><label class="f124Upload">＋ Adicionar vídeos<input type="file" id="f124Upload" accept="video/*,.mp4,.mov,.m4v" multiple hidden></label></div><p class="f124Hint">Escolha um vídeo para preparar e, quando desejar, envie ao telão. Os vídeos ficam armazenados neste navegador.</p><div id="f124Status" class="f124Status" role="status"></div><div id="f124List" class="f124List"></div></div><div class="f124Right"><div class="f124ScreenTitle"><h2>TELÃO SANTUÁRIO</h2><span id="f124Badge" class="f124Badge">FUNDOS</span></div><div class="f124Screen"><video id="f124Video" playsinline preload="metadata"></video><img id="f124SupportImage" hidden alt="Imagem de apoio do dia"><div id="f124Empty">Nenhuma imagem de apoio definida para este dia</div></div><div class="f124Player"><div class="f147PlayerHeader"><div id="f124Name" class="f124Name">Nenhum vídeo selecionado</div><button type="button" id="f147Close" class="f147Close" aria-label="Fechar vídeo e voltar à imagem de apoio" title="Fechar e voltar à imagem de apoio">×</button></div><div class="f124Actions"><button id="f124Back" title="Voltar ao início">↺</button><button id="f124Play" title="Reproduzir ou pausar">▶</button><button id="f124Repeat" title="Repetir vídeo" aria-pressed="false">↻</button><div class="f124Volume"><button type="button" id="f150Mute" class="f150Mute" aria-label="Silenciar vídeo" title="Silenciar vídeo"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></button><input type="range" id="f124Volume" min="0" max="100" value="50" aria-label="Volume"></div></div><div class="f124Seek"><span id="f124Current">0:00</span><input id="f124Seek" type="range" min="0" max="1000" value="0" aria-label="Avançar vídeo"><span id="f124Duration">0:00</span></div></div></div></div>`;
 $('ajustes').insertAdjacentElement('beforebegin',section);
 fundosButton.onclick=()=>setTab('fundos');
 const video=$('f124Video'),empty=$('f124Empty'),status=$('f124Status'),supportImg=$('f124SupportImage');
@@ -51,6 +51,14 @@ async function refreshSupportImage(){
 const send=(action,extra={})=>channel.postMessage({kind:'videoControl',action,...extra});
 const pretty=n=>{n=Number.isFinite(n)?Math.floor(n):0;return Math.floor(n/60)+':'+String(n%60).padStart(2,'0')};
 let selected=null,objectUrl=null,live=false,loop=false,loadToken=0;
+function syncBadge(){
+ const badge=$('f124Badge');
+ if(!badge)return;
+ badge.textContent=live?'AO VIVO':'FUNDOS';
+ badge.classList.toggle('f124BadgeLive',live);
+ badge.setAttribute('aria-label',live?'Vídeo ao vivo no telão':'Vídeo preparado apenas no iPad');
+}
+syncBadge();
 function sync(){
  $('f124Play').textContent=video.paused?'▶':'Ⅱ';
  const duration=Number.isFinite(video.duration)?video.duration:0;
@@ -137,10 +145,11 @@ async function list(){try{const rows=(await window.ReunioesMediaLibrary.all()).f
 for(const row of rows){const card=document.createElement('div');card.className='f124Item'+(selected?.id===row.id?' selected':'');const name=document.createElement('button');name.type='button';name.className='f124Choose';const preview=document.createElement('span');preview.className='f150Thumb';preview.textContent='▶';const title=document.createElement('span');title.className='f150Title';title.textContent=row.name;name.append(preview,title);name.onclick=()=>choose(row.id);const del=document.createElement('button');del.type='button';del.className='f124Delete';del.textContent='✕';del.title='Excluir vídeo';del.onclick=async()=>{if(!confirm('Excluir este vídeo de fundo?'))return;if(selected?.id===row.id){await closeVideo();}await deleteRow(row.id);thumbCache.delete(row.id);thumbPending.delete(row.id);list()};card.append(name,del);holder.append(card);if(row.blob)capturePreview(row,preview);else showThumb(preview,null)}
 }catch(e){status.textContent='Não foi possível abrir a biblioteca de vídeos.'}}
 async function deleteRow(id){const db=await new Promise((ok,no)=>{const req=indexedDB.open('reunioes3-midias-v64',1);req.onsuccess=()=>ok(req.result);req.onerror=()=>no(req.error)});await new Promise((ok,no)=>{const t=db.transaction('files','readwrite');t.objectStore('files').delete(id);t.oncomplete=ok;t.onerror=()=>no(t.error)});db.close()}
-async function choose(id){const token=++loadToken;try{const row=await window.ReunioesMediaLibrary.get(id);if(token!==loadToken||!row?.blob)return;if(live)await finish();resetObject();selected=row;supportToken++;supportImg.hidden=true;releaseSupportImage();objectUrl=URL.createObjectURL(row.blob);video.src=objectUrl;video.style.objectFit='contain';video.style.objectPosition='center center';video.loop=loop;video.volume=Number($('f124Volume').value)/100;empty.hidden=true;$('f124Name').textContent=row.name;status.textContent='Vídeo preparado. Toque em Play para reproduzir no telão.';sync();list()}catch(e){status.textContent='Não foi possível carregar este vídeo.'}}
+async function choose(id){const token=++loadToken;try{const row=await window.ReunioesMediaLibrary.get(id);if(token!==loadToken||!row?.blob)return;if(live)await finish();resetObject();selected=row;supportToken++;supportImg.hidden=true;releaseSupportImage();objectUrl=URL.createObjectURL(row.blob);video.src=objectUrl;video.style.objectFit='contain';video.style.objectPosition='center center';video.loop=loop;video.volume=Number($('f124Volume').value)/100;empty.hidden=true;$('f124Name').textContent=row.name;status.textContent='Vídeo preparado no iPad. Toque em Play para reproduzir no telão.';syncBadge();sync();list()}catch(e){status.textContent='Não foi possível carregar este vídeo.'}}
 async function finish(){
  if(live){video.pause();channel.postMessage({kind:'present',item:null});live=false}
- status.textContent='Apresentação encerrada.';
+ status.textContent='Apresentação encerrada. O vídeo voltou a ficar apenas no iPad.';
+ syncBadge();
  await window.R70?.displaySupport?.();
  sync();
 }
@@ -151,6 +160,7 @@ async function closeVideo(){
  selected=null;
  $('f124Name').textContent='Nenhum vídeo selecionado';
  status.textContent='';
+ syncBadge();
  sync();
  await refreshSupportImage();
  list();
@@ -161,6 +171,7 @@ async function beginLive(){
  if(typeof present==='function'&&window.current?.type==='versiculo')present(null);
  channel.postMessage({kind:'present',item:{type:'video',title:selected.name,mediaLibraryId:selected.id}});
  live=true;
+ syncBadge();
  status.textContent='Vídeo transmitido no telão.';
  send('repeat',{value:loop});
  channel.postMessage({kind:'volume',volume:video.volume,muted:video.volume===0});
