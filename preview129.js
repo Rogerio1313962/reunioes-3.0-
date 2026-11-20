@@ -26,21 +26,23 @@ if(item.translation&&['ACF','ARA'].includes(item.translation)){$('bibleTranslati
 renderMode()});
 // Sidebar opening the Bible always goes back to the direct one-touch presentation mode.
 document.querySelector('button.nav[data-tab="biblia"]')?.addEventListener('click',()=>{window.bibleCronogramaSelect=null;renderMode()});
-const markButton=document.createElement('button');markButton.className='b129MarkButton';markButton.type='button';markButton.textContent='✎ Destacar trecho';right?.querySelector('.b121Foot')?.prepend(markButton);
 const modal=document.createElement('dialog');modal.id='b129HighlightDialog';modal.innerHTML='<div class="b129HighHead"><strong>Destacar trecho do versículo</strong><button type="button" id="b129Close">×</button></div><p>Selecione as palavras abaixo e toque em Destacar. A cor será a mesma da referência bíblica.</p><textarea id="b129VerseText" rows="7"></textarea><div class="b129HighFooter"><button type="button" id="b129Clear">Remover destaque</button><button type="button" id="b129Apply">Destacar seleção</button></div>';
 document.body.append(modal);
+function activeController(){const agenda=$('b121Overlay-agenda');const biblia=$('b121Overlay-biblia');if(agenda&&!agenda.hidden&&getComputedStyle(agenda).display!=='none')return agenda;if(biblia&&!biblia.hidden&&getComputedStyle(biblia).display!=='none')return biblia;return biblia||agenda||null}
+function attachMarkButtons(){document.querySelectorAll('.b121MarkInline').forEach(btn=>{if(btn.dataset.bound==='1')return;btn.dataset.bound='1';btn.onclick=()=>{if(!lastItem)return;const root=activeController();const liveText=root?.querySelector('.b121Now .b121Text')?.textContent||lastItem.content||'';modal.querySelector('textarea').value=liveText;modal.showModal();};});}
+attachMarkButtons();
 let lastItem=null;
 const outerPresent=present;
 present=function(item){if(item?.type==='versiculo'){
  const one=item.verses?.[0];const ref=one?.reference||item.reference||'';const full={...item};full.highlights=Array.isArray(item.highlights)?item.highlights:readMarks({...item,reference:ref});lastItem=full;return outerPresent(full)}lastItem=null;return outerPresent(item)};
-markButton.onclick=()=>{if(!lastItem)return;const liveText=$('b121Overlay-biblia')?.querySelector('.b121Now .b121Text')?.textContent||lastItem.content||'';modal.querySelector('textarea').value=liveText;modal.showModal();};
 $('b129Close').onclick=()=>modal.close();
-function persistMarks(marks){if(!lastItem)return;const controllerRef=$('b121Overlay-biblia')?.querySelector('.b121Now .b121Ref')?.textContent||lastItem.reference;const keyItem={translation:lastItem.translation,reference:controllerRef};try{localStorage.setItem(highlightKey(keyItem),JSON.stringify(marks))}catch(e){}
+function persistMarks(marks){if(!lastItem)return;const controllerRef=activeController()?.querySelector('.b121Now .b121Ref')?.textContent||lastItem.reference;const keyItem={translation:lastItem.translation,reference:controllerRef};try{localStorage.setItem(highlightKey(keyItem),JSON.stringify(marks))}catch(e){}
 lastItem.highlights=marks;
 // Record permanently in the scheduled item when it belongs to a cronograma.
 for(const day of state.days){for(const it of day){if(it.id===lastItem.id){it.highlights=marks;try{save()}catch(e){}break}}}
 present({...lastItem,reference:controllerRef,content:$('b129VerseText').value,verses:undefined,highlights:marks});modal.close();}
-$('b129Apply').onclick=()=>{const t=$('b129VerseText'),str=t.value.slice(t.selectionStart,t.selectionEnd).trim();if(!str){alert('Selecione primeiro as palavras que deseja destacar.');return}const marks=readMarks({translation:lastItem.translation,reference:$('b121Overlay-biblia')?.querySelector('.b121Now .b121Ref')?.textContent||lastItem.reference});if(!marks.includes(str))marks.push(str);persistMarks(marks)};
+$('b129Apply').onclick=()=>{const t=$('b129VerseText'),str=t.value.slice(t.selectionStart,t.selectionEnd).trim();if(!str){alert('Selecione primeiro as palavras que deseja destacar.');return}const marks=readMarks({translation:lastItem.translation,reference:activeController()?.querySelector('.b121Now .b121Ref')?.textContent||lastItem.reference});if(!marks.includes(str))marks.push(str);persistMarks(marks)};
 $('b129Clear').onclick=()=>persistMarks([]);
+attachMarkButtons();
 renderMode();
 })();

@@ -24,3 +24,6 @@ Prévia 140: Botão de edição da referência bíblica substituído por lápis 
 Prévia 141: ajuste responsivo de fonte do versículo no telão físico e na prévia, preservando referência separada. Controlador exibe textos completos de anterior/atual/próximo; em trechos excepcionais, a página pode precisar rolar para acomodar todo o texto legível.
 
 Prévia 142: abrir aba Bíblia começa pelos livros. Editar um versículo do Cronograma usa seleção na Bíblia e substitui o item existente, sem abrir formulário antigo.
+
+
+Prévia 143: controlador da Bíblia ajustado nos dois contextos (Cronograma e Bíblia), botão “Destacar trecho” no cabeçalho, botão X em vermelho, texto auxiliar removido e engrenagem da tradução simplificada.

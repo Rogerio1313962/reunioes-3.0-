@@ -2527,3 +2527,48 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 #agenda .right .b123Controller .b121Now .b121Text,#biblia .b119Right .b123Controller .b121Now .b121Text{font-size:12px!important;line-height:1.29!important}
 #agenda .right .b123Controller .b121VerseList,#biblia .b119Right .b123Controller .b121VerseList{height:auto!important;max-height:none!important;overflow:visible!important;display:flex!important;flex-direction:column!important;gap:5px!important}
 #agenda .right .b123Controller .b121Card,#biblia .b119Right .b123Controller .b121Card{max-height:none!important;overflow:visible!important}
+
+
+/* PRÉVIA 143 — controlador da Bíblia refinado nos dois contextos e engrenagem simplificada */
+#agenda .right>.b123Controller .b121Head,
+#biblia .b119Right>.b123Controller .b121Head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;padding-bottom:8px!important;border-bottom:1px solid #dbe5ef!important}
+#agenda .right>.b123Controller .b121Title,
+#biblia .b119Right>.b123Controller .b121Title{display:flex!important;align-items:center!important;gap:10px!important;min-width:0!important;flex:1 1 auto!important}
+#agenda .right>.b123Controller .b121Book,
+#biblia .b119Right>.b123Controller .b121Book{display:grid!important;place-items:center!important;width:34px!important;height:34px!important;background:#f3d37b!important;color:#7b5620!important;border-radius:10px!important;flex:0 0 34px!important}
+#agenda .right>.b123Controller .b121Book svg,
+#biblia .b119Right>.b123Controller .b121Book svg{width:18px!important;height:18px!important;display:block!important}
+#agenda .right>.b123Controller .b121Title strong,
+#biblia .b119Right>.b123Controller .b121Title strong{font-size:14px!important;line-height:1.15!important;letter-spacing:.04em!important;color:#244a6d!important}
+#agenda .right>.b123Controller .b121Title small,
+#biblia .b119Right>.b123Controller .b121Title small{display:none!important}
+#agenda .right>.b123Controller .b121HeadActions,
+#biblia .b119Right>.b123Controller .b121HeadActions{display:flex!important;align-items:center!important;gap:8px!important;flex:0 0 auto!important}
+#agenda .right>.b123Controller .b121MarkInline,
+#biblia .b119Right>.b123Controller .b121MarkInline{padding:8px 10px!important;border-radius:10px!important;border:1px solid #cfe0ef!important;background:#eef5ff!important;color:#315e84!important;font-size:11.5px!important;font-weight:800!important;white-space:nowrap!important}
+#agenda .right>.b123Controller .b121Close,
+#biblia .b119Right>.b123Controller .b121Close{width:36px!important;height:36px!important;border-radius:10px!important;border:1px solid #efc4bf!important;background:#fff2f0!important;color:#a14c4c!important;font-size:22px!important;display:grid!important;place-items:center!important;padding:0!important;box-shadow:none!important}
+#agenda .right>.b123Controller .b121Close:hover,
+#agenda .right>.b123Controller .b121Close:focus,
+#biblia .b119Right>.b123Controller .b121Close:hover,
+#biblia .b119Right>.b123Controller .b121Close:focus{background:#ffe9e7!important;color:#95383e!important;border-color:#e9b0aa!important;outline:none!important}
+#agenda .right>.b123Controller .b121Foot,
+#biblia .b119Right>.b123Controller .b121Foot{justify-content:flex-start!important;padding-top:2px!important;margin-top:2px!important}
+#agenda .right>.b123Controller .b121Counter,
+#biblia .b119Right>.b123Controller .b121Counter{font-size:11px!important;color:#6e86a0!important}
+#agenda .right>.b123Controller .b121Finish,
+#biblia .b119Right>.b123Controller .b121Finish{display:none!important}
+#biblia .b125HeaderTools{display:flex!important;align-items:center!important;gap:6px!important}
+#biblia .b125HeaderTools #b120Settings{flex:0 0 auto!important;margin-left:2px!important;position:relative!important;top:auto!important;align-self:center!important}
+#biblia #b120Settings summary{width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;padding:2px 4px!important;background:transparent!important;border:none!important;border-radius:0!important;box-shadow:none!important;color:#7a5a23!important;font-size:24px!important;line-height:1!important;display:grid!important;place-items:center!important}
+#biblia #b120Settings summary:hover,
+#biblia #b120Settings summary:focus{background:transparent!important;border:none!important;box-shadow:none!important;outline:none!important;color:#5f4417!important}
+#biblia .b125HeaderTools .b125TranslationWrap select{margin-right:0!important}
+@media(max-width:700px){
+  #agenda .right>.b123Controller .b121Head,
+  #biblia .b119Right>.b123Controller .b121Head{align-items:flex-start!important;flex-wrap:wrap!important}
+  #agenda .right>.b123Controller .b121HeadActions,
+  #biblia .b119Right>.b123Controller .b121HeadActions{width:100%!important;justify-content:space-between!important}
+  #agenda .right>.b123Controller .b121MarkInline,
+  #biblia .b119Right>.b123Controller .b121MarkInline{flex:1 1 auto!important;text-align:center!important}
+}
