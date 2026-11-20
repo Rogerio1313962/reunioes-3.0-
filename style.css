@@ -2863,3 +2863,9 @@ html,body,.app,.sidebar,main,.page,button,a,label{touch-action:manipulation}
 
 /* Prévia 166: identidade R sem franja branca, bordas transparentes refinadas */
 .sidebar .r163-brandmark img{filter:drop-shadow(0 2px 3px rgba(8,30,62,.24))!important}
+
+/* Prévia 167 — o ícone de repetir vídeo tem duas setas e estado inequívoco. */
+#agenda #r70Repeat{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:48px!important;height:48px!important;min-width:48px!important;padding:0!important}
+#agenda #r70Repeat svg{width:25px;height:25px;display:block;flex:none}
+#agenda .right>#r70MediaControls #r70VideoControls .r70center #r70Repeat.on,
+#agenda .right>#r70MediaControls #r70VideoControls .r70center #r70Repeat[aria-pressed="true"]{background:#edca72!important;border-color:#cfaa49!important;color:#1b3450!important;box-shadow:0 2px 8px rgba(149,105,15,.18)!important}

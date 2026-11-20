@@ -96,3 +96,6 @@ Prévia 164: abertura redesenhada com anel DOURADO EXTRAÍDO do logo oficial (n�
 - Fundo azul-marinho e zoom suave mantidos; sombra levemente ajustada para contraste.
 - Ícone interno sem bordas brancas, sem alterar os controles do aplicativo.
 - Mantida a estrutura original de 10 arquivos.
+
+
+Prévia 167: música iniciada pelo Cronograma substitui qualquer versículo ou vídeo (inclusive pausado) pela imagem de apoio do dia; controle Repetir vídeo substituído pelo ícone de duas setas e estado amarelo quando ativado. A estrutura continua com 10 arquivos.
