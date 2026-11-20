@@ -64,3 +64,5 @@ Prévia 156: inclusão de lembretes no Cronograma com um único campo de texto, 
 
 
 Prévia 157: padronização premium amarela, com relevo e sombra, nos botões de adicionar conteúdo, etapa, música, vídeo e lembrete.
+
+Prévia 158: removida a frase 'Recado · não vai ao telão' dos lembretes no cronograma e ampliado o texto do lembrete para melhor visibilidade.
