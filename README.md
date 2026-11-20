@@ -27,3 +27,8 @@ Prévia 142: abrir aba Bíblia começa pelos livros. Editar um versículo do Cro
 
 
 Prévia 143: controlador da Bíblia ajustado nos dois contextos (Cronograma e Bíblia), botão “Destacar trecho” no cabeçalho, botão X em vermelho, texto auxiliar removido e engrenagem da tradução simplificada.
+
+Prévia 144: Versículos de 1 a 3 linhas passam a ficar visualmente mais centralizados na região escura acima da ilustração da Bíblia, mantendo fonte adaptativa, distância da referência e atuação também no telão externo.
+
+
+Prévia 145: Sombra sutil adicionada à engrenagem da Bíblia e às engrenagens de configuração do telão, preservando o estilo atual de cada botão.

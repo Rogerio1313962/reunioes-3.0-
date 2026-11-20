@@ -2572,3 +2572,20 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
   #agenda .right>.b123Controller .b121MarkInline,
   #biblia .b119Right>.b123Controller .b121MarkInline{flex:1 1 auto!important;text-align:center!important}
 }
+
+
+/* PREVIA 145 — sombra discreta para todas as engrenagens de configuração. */
+#biblia #b120Settings summary{
+  filter:drop-shadow(0 2px 2px rgba(30,51,72,.32)) drop-shadow(0 5px 6px rgba(35,57,79,.17))!important;
+  transition:filter .18s ease,transform .18s ease!important;
+}
+#biblia #b120Settings summary:hover{
+  filter:drop-shadow(0 3px 4px rgba(30,51,72,.38)) drop-shadow(0 7px 9px rgba(35,57,79,.23))!important;
+}
+#r70Gear,#agenda .right>.r90ExternalHeader #r70Gear,#r88TransitionSettings #r70Gear{
+  box-shadow:0 3px 7px rgba(28,54,80,.19),0 7px 13px rgba(28,54,80,.13)!important;
+  transition:box-shadow .18s ease!important;
+}
+#r70Gear:hover,#agenda .right>.r90ExternalHeader #r70Gear:hover,#r88TransitionSettings #r70Gear:hover{
+  box-shadow:0 4px 9px rgba(28,54,80,.23),0 9px 16px rgba(28,54,80,.17)!important;
+}

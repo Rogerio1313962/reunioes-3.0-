@@ -66,7 +66,28 @@
     }
     fits(lo);
   }
-  // Mantem centragem do texto e referencia completamente separada.
+  // Versículos de até três linhas ficam no centro visual da área escura,
+  // acima da ilustração da Bíblia. A referência permanece independente.
+  // Removemos qualquer deslocamento anterior para recalcular corretamente.
+  text.style.removeProperty('transform');
+  const computed=getComputedStyle(text);
+  const lineHeight=parseFloat(computed.lineHeight)||parseFloat(computed.fontSize)*1.16;
+  const lineCount=lineHeight>0?Math.ceil((text.scrollHeight-1)/lineHeight):99;
+  const textLength=(text.textContent||'').trim().length;
+  if(lineCount>=1&&lineCount<=3&&textLength<=260){
+    const parentRect=verse.getBoundingClientRect();
+    const textRect=text.getBoundingClientRect();
+    const centerY=textRect.top-parentRect.top+textRect.height/2;
+    const bottomY=textRect.bottom-parentRect.top;
+    // O centro desejado é 43% da altura do telão, sem tocar no livro ou na referência.
+    const targetY=parentRect.height*.43;
+    const remainingAboveImage=Math.max(0,parentRect.height*.72-bottomY);
+    const remainingAboveRef=refArea
+      ?Math.max(0,refArea.getBoundingClientRect().top-textRect.bottom-8)
+      :remainingAboveImage;
+    const shift=Math.max(0,Math.min(targetY-centerY,remainingAboveImage,remainingAboveRef,parentRect.height*.095));
+    if(shift>.5)text.style.setProperty('transform','translateY('+shift.toFixed(1)+'px)','important');
+  }
  }
  function fitAll(){timer=0;for(const selector of rootSelectors){const root=document.querySelector(selector);if(!root)continue;root.querySelectorAll('.b120Verse').forEach(sizeVerse)}}
  function schedule(){if(timer)return;timer=requestAnimationFrame(fitAll)}
