@@ -1155,7 +1155,7 @@ container.querySelector('[data-none]').onclick=async()=>{status.textContent='Rem
 container.querySelector('[data-library]').onclick=async()=>{list.hidden=false;list.textContent='Carregando fotos…';try{const all=await window.ReunioesMediaLibrary.all();const pictures=all.filter(f=>f.type==='imagem');list.innerHTML=pictures.length?'':'Nenhuma foto salva. Adicione uma na aba Mídias → Fotos.';for(const f of pictures){const b=document.createElement('button');b.type='button';b.append(document.createTextNode(f.name));const img=document.createElement('img');img.alt='Prévia '+f.name;const uri=URL.createObjectURL(f.blob);img.src=uri;img.onload=()=>URL.revokeObjectURL(uri);b.prepend(img);b.onclick=async()=>{status.textContent='Selecionando…';try{await setSupport(f.id);close()}catch(err){status.textContent=err.message}};list.append(b)}}catch(e){list.textContent='Não foi possível carregar as fotos.'}};
 }
 let supportRenderVersion=0;
-async function showSupport(){
+async function showSupport(projectorOnly=false){
  if(window.__r112SwitchingDay)return;
  const version=++supportRenderVersion;
  const day=supportDay();
@@ -1168,7 +1168,7 @@ async function showSupport(){
   if(!stillCurrent())return;
   if(supportPreviewUrl){URL.revokeObjectURL(supportPreviewUrl);supportPreviewUrl=null}
   channel.postMessage({kind:'present',item:null});
-  pv.innerHTML='<div class="placeholder">✦<p>Nenhum conteúdo no telão</p></div>';
+  if(!projectorOnly)pv.innerHTML='<div class="placeholder">✦<p>Nenhum conteúdo no telão</p></div>';
   return;
  }
  try{
@@ -1190,17 +1190,17 @@ async function showSupport(){
   if(!stillCurrent()){URL.revokeObjectURL(nextUrl);return}
   const previous=supportPreviewUrl;
   supportPreviewUrl=nextUrl;
-  pv.replaceChildren(im);
+  if(!projectorOnly)pv.replaceChildren(im);
   channel.postMessage({kind:'present',item});
   if(previous)URL.revokeObjectURL(previous);
  }catch(e){
   if(!stillCurrent())return;
   if(supportPreviewUrl){URL.revokeObjectURL(supportPreviewUrl);supportPreviewUrl=null}
   channel.postMessage({kind:'present',item:null});
-  pv.textContent='Imagem de Apoio indisponível';
+  if(!projectorOnly)pv.textContent='Imagem de Apoio indisponível';
  }
 }
-function close(){releasePdf();stop();ready=null;pdfMinimized=false;if($('r71PdfReopen'))$('r71PdfReopen').hidden=true;if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}playerVideo=null;$('r70MediaControls').hidden=true;changeWorkspace(false);void showSupport()}
+function close(){openGeneration++;releasePdf();stop();ready=null;pdfMinimized=false;if($('r71PdfReopen'))$('r71PdfReopen').hidden=true;if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}playerVideo=null;$('r70MediaControls').hidden=true;changeWorkspace(false);void showSupport()}
 function stop(){previewSession++;if($('r90EndButton'))$('r90EndButton').hidden=true;if(isLive){channel.postMessage({kind:'present',item:null});isLive=false;window.dispatchEvent(new Event('r93-live-change'));void showSupport()}if(ready?.type==='pdf')updatePdfSelection();if($('r70Present')){$('r70Present').disabled=false;$('r70Present').textContent='▶ Apresentar'}if(playerVideo){playerVideo.pause();updatePlay()}}
 function format(n){n=Math.max(0,Math.floor(n||0));return Math.floor(n/60)+':'+String(n%60).padStart(2,'0')}
 function updatePlay(){if($('r70Play'))$('r70Play').textContent=playerVideo&&!playerVideo.paused?'Ⅱ':'▶'}
@@ -1248,8 +1248,9 @@ function togglePdfPage(p){if(p<1||p>pageTotal||skipped.has(p)||ready?.type!=='pd
 function step(dir){const list=Array.from({length:pageTotal},(_,i)=>i+1).filter(p=>!skipped.has(p));const idx=list.indexOf(activePage);if(idx<0)return;setPage(list[Math.max(0,Math.min(list.length-1,idx+dir))])}
 function send(){if(!ready||!objectUrl)return;const item={...ready,fileUrl:ready.mediaLibraryId?null:objectUrl,videoLoop:repeat};if(ready.type==='pdf')item.pdfPage=activePage;channel.postMessage({kind:'present',item})}
 function show(){if(isLive){stop();return}if(!ready||!objectUrl)return;if(ready.type==='pdf'&&!activePage)return;send();isLive=true;window.dispatchEvent(new Event('r93-live-change'));if(ready.type==='pdf')updatePdfSelection();$('r70Present').textContent='■ Encerrar';$('r70Present').disabled=false;if(ready.type==='video'){const v=playerVideo;channel.postMessage({kind:'videoControl',action:'repeat',value:repeat});channel.postMessage({kind:'volume',volume:Number($('r74Volume').value)/100,muted:false});if(v&&v.paused)v.play().catch(()=>{});updatePlay()}}
-async function open(item){ensure();releasePdf();stop();if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}ready=item;pdfMinimized=false;if($('r71PdfReopen'))$('r71PdfReopen').hidden=true;playerVideo=null;skipped=new Set(item.pdfSkipped||[]);activePage=item.type==='pdf'?0:1;pageTotal=1;const preview=$('preview');$('r70MediaControls').hidden=item.type!=='video';$('r70Name').textContent=item.title;$('r70VideoControls').hidden=item.type!=='video';$('r70PdfControls').hidden=item.type!=='pdf';$('r70Present').hidden=item.type==='pdf';changeWorkspace(item.type==='pdf');if(item.type!=='pdf')preview.innerHTML='<div class="r70Empty">Carregando prévia…</div>';let blob=null;try{if(item.mediaLibraryId){const record=await window.ReunioesMediaLibrary.get(item.mediaLibraryId);if(!record?.blob)throw Error('Arquivo não encontrado');blob=record.blob}else if(item.fileUrl){objectUrl=item.fileUrl}else throw Error('Sem arquivo');if(blob){if(item.type==='pdf'&&blob.type!=='application/pdf')blob=new Blob([blob],{type:'application/pdf'});objectUrl=URL.createObjectURL(blob)}
-if(item.type==='video'){changeWorkspace(false);preview.innerHTML='';const video=document.createElement('video');video.className='r70Video';video.style.objectFit='contain';video.style.objectPosition='center center';video.playsInline=true;video.setAttribute('playsinline','');video.preload='metadata';video.src=objectUrl;video.controls=false;video.autoplay=false;video.loop=repeat;video.volume=Number($('r74Volume').value)/100;video.addEventListener('loadedmetadata',()=>{video.pause();syncVideo()});video.addEventListener('timeupdate',syncVideo);video.addEventListener('play',()=>{updatePlay();if(isLive)channel.postMessage({kind:'videoControl',action:'play'})});video.addEventListener('pause',()=>{updatePlay();if(isLive)channel.postMessage({kind:'videoControl',action:'pause'})});video.addEventListener('ended',updatePlay);preview.append(video);playerVideo=video;updatePlay()}
+let openGeneration=0;
+async function open(item){const myGeneration=++openGeneration;ensure();releasePdf();stop();supportRenderVersion++;if(item.type==='video')void showSupport(true);if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}ready=item;pdfMinimized=false;if($('r71PdfReopen'))$('r71PdfReopen').hidden=true;playerVideo=null;skipped=new Set(item.pdfSkipped||[]);activePage=item.type==='pdf'?0:1;pageTotal=1;const preview=$('preview');$('r70MediaControls').hidden=item.type!=='video';$('r70Name').textContent=item.title;$('r70VideoControls').hidden=item.type!=='video';$('r70PdfControls').hidden=item.type!=='pdf';$('r70Present').hidden=item.type==='pdf';changeWorkspace(item.type==='pdf');if(item.type!=='pdf')preview.innerHTML='<div class="r70Empty">Carregando prévia…</div>';let blob=null;try{if(item.mediaLibraryId){const record=await window.ReunioesMediaLibrary.get(item.mediaLibraryId);if(!record?.blob)throw Error('Arquivo não encontrado');blob=record.blob}else if(item.fileUrl){objectUrl=item.fileUrl}else throw Error('Sem arquivo');if(myGeneration!==openGeneration||ready!==item)return;if(blob){if(item.type==='pdf'&&blob.type!=='application/pdf')blob=new Blob([blob],{type:'application/pdf'});objectUrl=URL.createObjectURL(blob)}
+if(item.type==='video'){changeWorkspace(false);preview.innerHTML='';const video=document.createElement('video');video.className='r70Video';video.style.objectFit='contain';video.style.objectPosition='center center';video.playsInline=true;video.setAttribute('playsinline','');video.preload='auto';video.src=objectUrl;video.controls=false;video.autoplay=false;video.loop=repeat;video.volume=Number($('r74Volume').value)/100;video.addEventListener('loadedmetadata',()=>{video.pause();if(video.duration>0){try{video.currentTime=Math.min(.08,video.duration/4)}catch(e){}}syncVideo()});video.addEventListener('seeked',()=>{if(!isLive)video.pause();syncVideo()});video.addEventListener('timeupdate',syncVideo);video.addEventListener('play',()=>{updatePlay();if(isLive)channel.postMessage({kind:'videoControl',action:'play'})});video.addEventListener('pause',()=>{updatePlay();if(isLive)channel.postMessage({kind:'videoControl',action:'pause'})});video.addEventListener('ended',updatePlay);preview.append(video);playerVideo=video;updatePlay()}
 else if(item.type==='imagem'){changeWorkspace(false);preview.innerHTML='<img class="r70Image" alt="Prévia" src="'+objectUrl+'">'}
 else if(item.type==='pdf'){const source=blob?await blob.arrayBuffer():await(await fetch(objectUrl)).arrayBuffer();const task=pdfLibrary().getDocument({data:new Uint8Array(source),useSystemFonts:true});pdfDocument=await task.promise;pageTotal=pdfDocument.numPages;renderPageGrid();updatePdfSelection();/* PDF só é apresentado ao tocar em uma miniatura */}
 if(item.type==='imagem'){isLive=true;send();window.dispatchEvent(new Event('r93-live-change'));if($('r90EndButton'))$('r90EndButton').hidden=false} else if(item.type==='video'&&playerVideo){playerVideo.pause();updatePlay();$('r70Present').textContent='▶ Apresentar no telão'}

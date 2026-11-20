@@ -2869,3 +2869,32 @@ html,body,.app,.sidebar,main,.page,button,a,label{touch-action:manipulation}
 #agenda #r70Repeat svg{width:25px;height:25px;display:block;flex:none}
 #agenda .right>#r70MediaControls #r70VideoControls .r70center #r70Repeat.on,
 #agenda .right>#r70MediaControls #r70VideoControls .r70center #r70Repeat[aria-pressed="true"]{background:#edca72!important;border-color:#cfaa49!important;color:#1b3450!important;box-shadow:0 2px 8px rgba(149,105,15,.18)!important}
+
+
+/* PRÉVIA 169 — PALETA AZUL INTERMEDIÁRIA: contraste sem escurecer a interface.
+   Dourado = ação; amarelo claro = estado ligado; verde = conteúdo ao vivo; vermelho = encerrar. */
+html,body,main{background:#dce7f1!important;color:#1c3853!important}
+main{background:linear-gradient(145deg,#e9f1f8 0%,#dce7f1 90%)!important}
+.sidebar{background:#d4e2ef!important;border-right:1px solid #bacfdf!important;box-shadow:3px 0 14px rgba(28,59,91,.05)!important}
+.sidebar .brand strong{color:#1c405f!important}
+.sidebar .brand small,.sidebar .sidefoot,.sidebar .sidefoot small{color:#68839b!important}
+.sidebar .nav{color:#315878!important}
+.sidebar .nav.active{background:#f8e9be!important;color:#76551e!important;border:1px solid #dfbd69!important;box-shadow:0 2px 8px rgba(124,92,36,.08)!important}
+.sidebar .nav.active .nav-icon{background:#f0d081!important}
+#agenda>.days button,.days button{background:#f4f8fc!important;color:#385a77!important;border-color:#c7d9e8!important}
+#agenda>.days button.selected,.days button.selected{background:#e9c56f!important;color:#2b4057!important;border-color:#d8ac46!important;font-weight:800!important}
+#agenda .panel,.page>.panel,#agenda .right>.panel,.b119Editor,.b119Right{background:#edf4fa!important;border-color:#c2d6e6!important;color:#203d5b!important}
+#agenda .item,#agenda .meeting-section-content .item{background:#f3f7fb!important;border-color:#c9dbe9!important;color:#203e5d!important}
+#agenda .section-header{background:#deece8!important}
+#agenda .iteminfo small,.muted{color:#607e97!important}
+#agenda .panelhead h2,#agenda .b119ScreenTitle h2,#agenda .r90ExternalHeader h2{color:#193b59!important}
+#agenda .right .screen,#agenda #preview{background:#071626!important}
+/* Action buttons remain gold; selected/toggle state is lighter yellow and marked. */
+#agenda button[data-act="show"],#agenda .section-toolbar .primary,#agenda #editSchedule,#agenda .item button.item-play{background:#e8c26b!important;color:#23384e!important;border-color:#d6a94d!important;font-weight:750!important}
+#agenda #r70Play,#agenda #r70Present{background:#e8c26b!important;color:#20384d!important;border-color:#d2aa51!important}
+#agenda #r70Repeat[aria-pressed="true"],#agenda #r70Repeat.on,#agenda .right>#r70MediaControls #r70VideoControls .r70center #r70Repeat.on{background:#f3d986!important;border-color:#d5ae57!important;color:#1f3b56!important}
+#agenda #r70Repeat[aria-pressed="false"]{background:#e3edf6!important;color:#315b7b!important;border-color:#c7d9e9!important}
+#agenda #r90EndButton{background:#cb3547!important;color:white!important;border-color:#bc3043!important}
+/* Readability in all library panels and configuration without affecting Bible tile palette. */
+#biblioteca .media64,#ajustes>.panel,#musicas>.panel{color:#224563!important}
+#agenda button:focus-visible,.sidebar button:focus-visible{outline:3px solid #2d739e!important;outline-offset:2px}

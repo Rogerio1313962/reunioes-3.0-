@@ -105,3 +105,11 @@ Prévia 164: abertura redesenhada com anel DOURADO EXTRAÍDO do logo oficial (n�
 
 
 Prévia 167: música iniciada pelo Cronograma substitui qualquer versículo ou vídeo (inclusive pausado) pela imagem de apoio do dia; controle Repetir vídeo substituído pelo ícone de duas setas e estado amarelo quando ativado. A estrutura continua com 10 arquivos.
+
+
+## Prévia 169 — contraste intermediário e vídeo em prévia
+- O vídeo escolhido no cronograma carrega na tela do iPad sem iniciar no telão.
+- O telão recebe a imagem de apoio do dia ao selecionar o vídeo, e só recebe o vídeo no Play.
+- Em iPad, o primeiro quadro do vídeo é solicitado ao carregá-lo, sem reprodução automática.
+- Nova paleta azul intermediária; dourado indica ação, amarelo claro indica ativo.
+- Mantidos os 10 arquivos, sem instalação Windows ou contas novas nesta prévia.
