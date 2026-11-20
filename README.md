@@ -44,3 +44,6 @@ Prévia 148: destaque de trecho bíblico agora aparece e funciona somente para v
 
 
 Prévia 149: destaque disponível tanto na Bíblia livre (temporário, sem persistência) quanto nos versículos do Cronograma (salvo exclusivamente no item e na referência específicos). Fechar apresentação ou sair da Bíblia limpa os destaques temporários. Versículos projetados diretamente nunca recebem destaques agendados.
+
+
+Prévia 150: aba Fundos com miniaturas reais extraídas dos vídeos, mantendo proporção original com barras laterais quando necessário; X no canto direito do player; volume com ícone vetorial e alternância mudo; barras de progresso ajustadas para 0–100% na aba Fundos e no Cronograma.
