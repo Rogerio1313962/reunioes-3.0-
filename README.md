@@ -72,3 +72,5 @@ Prévia 159: arquivos JavaScript consolidados em reunioes-app.js e reunioes-tela
 
 
 Prévia 160: correção na pasta Mídias/Vídeos para manter nomes e botões sempre visíveis, inclusive quando os vídeos .mov demoram a carregar ou não geram miniatura. Previsões carregadas conforme a rolagem; nenhum arquivo armazenado no IndexedDB é modificado por esta atualização.
+
+Prévia 161: identidade azul-marinho e dourado fosco. Atalho/ícone PWA via logo.png e Apple touch icon. Splash Screen desenhada no primeiro HTML antes de qualquer tela do app, com o próprio R e anel no ângulo original; efeito de movimento leve, play e progresso; o app só fica visível após inicialização ou limite de segurança de 6,5 s. Sem vídeo pesado; todos os dados locais preservados. A imagem inicial nativa do iOS, mostrada antes da execução do site, é controlada pelo iOS, e reabrir um PWA já ativo pode restaurar a sessão sem nova navegação.
