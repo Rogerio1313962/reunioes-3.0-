@@ -1,3 +1,9 @@
+# Reuniões 3.0 — Prévia 168
+
+Corrige o acionamento real das músicas pelo Cronograma: a captura de clique da Prévia 154 passava por `openSongPlayer()` e pulava a limpeza do telão adicionada na Prévia 167. Agora ambas as rotas limpam versículo/vídeo e retornam à imagem de apoio. Invalida carregamentos atrasados no telão para impedir que vídeo antigo reapareça após começar a música.
+
+Continua com a estrutura consolidada de dez arquivos. Dados do navegador não são apagados.
+
 REUNIÕES 3.0 — PRÉVIA 134
 
 Nesta atualização:

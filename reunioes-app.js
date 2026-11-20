@@ -1438,7 +1438,7 @@ const before=openEditor;openEditor=function(x){if(x)return before(x);const curre
 // Old section-add calls openEditor() then sets section select; infer from clicked parent in capture phase.
 document.addEventListener('click',e=>{const btn=e.target.closest('.section-add');if(btn)chosenSection=btn.closest('.meeting-section')?.dataset.section||null},true);
 // Take over item tap on media thumbnails and body, not action buttons; Bible remains direct.
-document.addEventListener('click',e=>{const row=e.target.closest('#sectionsRoot .item');if(!row||e.target.closest('button,[contenteditable],input,textarea,select,.drag-handle,.content-grip'))return;const item=state.days[state.day].find(x=>x.id===row.dataset.itemId);if(!item)return;if(['video','imagem','pdf'].includes(item.type)){window.R70?.open(item)}else if(item.type==='musica'){playMusic(item.musicId)}},false);
+document.addEventListener('click',e=>{const row=e.target.closest('#sectionsRoot .item');if(!row||e.target.closest('button,[contenteditable],input,textarea,select,.drag-handle,.content-grip'))return;const item=state.days[state.day].find(x=>x.id===row.dataset.itemId);if(!item)return;if(['video','imagem','pdf'].includes(item.type)){window.R70?.open(item)}else if(item.type==='musica'){window.__r167MusicFromSchedule=true;window.reunioesClearForScheduleMusic?.();playMusic(item.musicId)}},false);
 // Library-backed item thumbnails: each redraw retains small square preview without storing large videos in localStorage.
 let thumbUrls=[];function thumbnails(){thumbUrls.forEach(u=>URL.revokeObjectURL(u));thumbUrls=[];const day=state.day;for(const row of document.querySelectorAll('#sectionsRoot .item[data-item-id]')){const item=state.days[day].find(x=>x.id===row.dataset.itemId);if(!item?.mediaLibraryId)continue;const thumb=row.querySelector('.item-thumb');if(!thumb)continue;thumb.dataset.thumbId=item.mediaLibraryId;window.ReunioesMediaLibrary?.get(item.mediaLibraryId).then(record=>{if(!record?.blob||thumb.dataset.thumbId!==record.id||!thumb.isConnected)return;const url=URL.createObjectURL(record.blob);thumbUrls.push(url);thumb.classList.add('r74loaded');if(item.type==='imagem'){const image=document.createElement('img');image.alt='Miniatura da foto';image.src=url;thumb.replaceChildren(image)}else if(item.type==='video'){renderVideoThumbnail(thumb,record.blob,url)}else if(item.type==='pdf'){renderPdfThumbnail(thumb,record.blob,url,false)}}).catch(()=>{})}}
 const priorDraw=drawItems;drawItems=function(){priorDraw();thumbnails()};drawItems();
@@ -2390,6 +2390,11 @@ async function openSongPlayer(item){
  const selected=records.find(t=>t.id===item.musicId);
  if(!selected){alert('Música não encontrada neste aparelho.');return}
  const group=selected.groupId?records.filter(t=>t.groupId===selected.groupId):[selected];
+ // Prévia 168: este é o caminho real de clique do Cronograma (captura).
+ // Na 167 ele ignorava a limpeza e deixava o versículo/vídeo no telão.
+ // Preparar a música pelo Cronograma deve retomar a imagem de apoio antes do Play.
+ window.__r167MusicFromSchedule=true;
+ window.reunioesClearForScheduleMusic?.();
  // Sempre começar pela versão Piano completa quando disponível.
  const piano=group.find(t=>t.role==='completa')||selected;
  await playMusic(piano.id);
@@ -2695,13 +2700,13 @@ window.addEventListener('bible-cronograma-mode',resetLabels);
  let lastClear=0;
  window.reunioesClearForScheduleMusic=function(){
    const now=Date.now();
-   if(now-lastClear<180)return;
+   if(now-lastClear<35)return;
    lastClear=now;
    // Invalida o estado de vídeo/PDF e impede que sua prévia continue no telão.
    try{window.R70?.stopForMusic?.()}catch(e){console.warn('Falha ao encerrar mídia anterior',e)}
    // A Bíblia pode ter projetado diretamente, sem passar pelo player R70.
    // Sempre envia a saída e recupera o apoio — inclusive se o vídeo estiver pausado.
-   try{current=null;channel.postMessage({kind:'present',item:null})}catch(e){}
+   try{mediaPresentToken++;current=null;channel.postMessage({kind:'present',item:null})}catch(e){}
    try{void window.R70?.displaySupport?.()}catch(e){console.warn('Não foi possível recuperar o apoio',e)}
  };
  // Se o usuário apertar Play novamente no player aberto pelo Cronograma,
