@@ -2837,3 +2837,22 @@ html,body,.app,.sidebar,main,.page,button,a,label{touch-action:manipulation}
 #biblioteca .m66gallery .m66thumb.m160Unavailable .m160PreviewState{display:block!important;background:#142b42dd;color:#fff;border-radius:7px;padding:4px!important;}
 #biblioteca .m66gallery .m160OpenPreview{position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;z-index:3!important;display:grid!important;place-items:center!important;width:48px!important;height:48px!important;min-width:48px!important;border:0!important;border-radius:50%!important;background:#26384ddc!important;color:white!important;font-size:25px!important;padding:0!important;box-shadow:0 3px 12px #0004!important;}
 @media(max-width:700px){#biblioteca .m66gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}#biblioteca .m66gallery .m66filebody{padding:6px!important}#biblioteca .m66gallery .m66actions{flex-wrap:wrap!important}}
+
+/* Prévia 162: grade uniforme de PDF / Foto, sem popups; vídeo no próprio cartão. */
+#biblioteca .m66gallery{align-items:start!important;grid-auto-rows:auto!important}
+#biblioteca .m66gallery .m66card{height:100%!important;align-self:stretch!important;overflow:hidden!important}
+#biblioteca .m66gallery .m66thumb{aspect-ratio:16/10!important;min-height:0!important;max-height:none!important}
+#biblioteca .m66gallery .m66thumb img,#biblioteca .m66gallery .m66thumb canvas{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important;background:#f8fafc!important}
+#biblioteca .m66gallery .m66filebody{height:93px!important;min-height:93px!important;max-height:93px!important;overflow:hidden!important;justify-content:space-between!important}
+#biblioteca .m66gallery .m66filetitle{font-size:12px!important;line-height:1.2!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;min-height:29px!important;max-height:29px!important;overflow-wrap:anywhere!important}
+#biblioteca .m66gallery .m66actions{min-height:35px!important;align-content:center!important}
+#biblioteca .m66gallery .m162PdfFallback{font-size:24px;font-weight:800;color:#395c80;background:#f8fafc;padding:22px;border:1px solid #d1dfeb;border-radius:8px}
+#biblioteca .m66gallery .m66thumb .m160PreviewState{display:none!important}
+@media(max-width:560px){#biblioteca .m66gallery .m66filebody{height:106px!important;min-height:106px!important;max-height:106px!important}}
+
+/* Prévia 163 — logo oficial no menu e estado de repetição */
+.r163-brandmark{background:transparent!important;border:0!important;overflow:hidden!important;border-radius:11px!important;flex:0 0 43px!important;width:43px!important;height:43px!important;padding:0!important}
+.r163-brandmark img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 40%;transform:scale(1.45)}
+#agenda #r70Repeat{min-width:58px;display:inline-grid;place-items:center;font-size:28px;font-weight:800;border-radius:12px;transition:background .15s,color .15s}
+#agenda #r70Repeat[aria-pressed="true"],#agenda #r70Repeat.on{background:#edca72!important;border-color:#d2a846!important;color:#283b50!important;box-shadow:0 1px 4px #ae833444!important}
+#agenda #r70Repeat[aria-pressed="false"]{background:#f4f8fc;color:#3a688d}

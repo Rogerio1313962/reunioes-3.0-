@@ -74,3 +74,11 @@ Prévia 159: arquivos JavaScript consolidados em reunioes-app.js e reunioes-tela
 Prévia 160: correção na pasta Mídias/Vídeos para manter nomes e botões sempre visíveis, inclusive quando os vídeos .mov demoram a carregar ou não geram miniatura. Previsões carregadas conforme a rolagem; nenhum arquivo armazenado no IndexedDB é modificado por esta atualização.
 
 Prévia 161: identidade azul-marinho e dourado fosco. Atalho/ícone PWA via logo.png e Apple touch icon. Splash Screen desenhada no primeiro HTML antes de qualquer tela do app, com o próprio R e anel no ângulo original; efeito de movimento leve, play e progresso; o app só fica visível após inicialização ou limite de segurança de 6,5 s. Sem vídeo pesado; todos os dados locais preservados. A imagem inicial nativa do iOS, mostrada antes da execução do site, é controlada pelo iOS, e reabrir um PWA já ativo pode restaurar a sessão sem nova navegação.
+
+
+Prévia 162: cartões de PDF com proporções uniformes, miniatura PDF.js sem iframe; fotos sem abrir aba; vídeo com reprodução no próprio cartão do iPad.
+
+
+Prévia 163: identidade no menu, animação de abertura com fundo azul-marinho, anel dourado no plano inclinado e gesto de Play. O Cronograma inicia música retirando versículo e vídeo (inclusive pausado) da apresentação e restaurando a Imagem de Apoio do dia, se existente. Seleção do vídeo exibe prévia no iPad, sem transmissão até tocar Play/Apresentar. Repetição de vídeo tem botão ⟲ com estado amarelo; a opção segue no arquivo enviado ao telão. Mantida a galeria padronizada da Prévia 162. Os arquivos e dados do navegador permanecem inalterados.
+
+Prévia 164: abertura redesenhada com anel DOURADO EXTRAÍDO do logo oficial (não bolinha separada); gira em perspectiva em torno do R ao longo do eixo inclinado, Play dourado é acionado e termina no logo oficial sem alteração de cor. Fundo azul-marinho na inicialização e ocultação da interface até a saída da abertura. Continua 10 arquivos; os três componentes PNG são embutidos no index.html para não criar novas pastas nem dependências.
