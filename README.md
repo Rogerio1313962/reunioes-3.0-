@@ -355,3 +355,11 @@ PRÉVIA 121: Controle flutuante bíblico no Cronograma e na página Bíblia. Tr�
 
 ## Prévia 122
 A caixa antiga Texto bíblico permanece somente no DOM, oculta, para as funções de carregamento. Ações Apresentar e Adicionar ao cronograma só são exibidas quando houver versículos selecionados. Mesma janela de Controle da Bíblia usada no Cronograma e na Bíblia.
+
+
+## Prévia 123
+- Controle bíblico reposicionado abaixo do Telão Santuário no Cronograma e na Bíblia.
+- Navegação livre pelos versículos da Bíblia importada, inclusive fora da seleção original.
+- Janela com anterior, atual e próximo com texto, e botão Encerrar.
+- Engrenagem isolada no cabeçalho superior do editor da Bíblia.
+- Salvar configurações explicitamente e automaticamente; foto de fundo processada e armazenada em IndexedDB (sem limite anterior de 1,5 MB).

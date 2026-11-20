@@ -1,79 +1,55 @@
-/* Prévia 121: controle bíblico sobre a coluna esquerda, comum ao Cronograma e Bíblia.
-   Anterior em cima, versículo AO VIVO ao centro, próximo embaixo, sem setas. */
+/* Prévia 123 — o mesmo controle da Bíblia abaixo do telão em ambas as páginas;
+   a navegação é livre por toda a tradução, não só pelos versículos escolhidos. */
 (()=>{'use strict';
-const agenda=document.querySelector('#agenda .layout > .panel');
-const bible=document.querySelector('#biblia .b119Editor');
-if(!agenda||!bible||typeof present!=='function')return;
-const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const bars=['b120Sequence','b120AgendaSequence'];
+const agendaRight=document.querySelector('#agenda .layout > .right');
+const bibleRight=document.querySelector('#biblia .b119Right');
+if(!agendaRight||!bibleRight||typeof present!=='function')return;
 const views=[];
-for(const [parent,context] of [[agenda,'agenda'],[bible,'biblia']]){
-  const overlay=document.createElement('div');overlay.className='b121Overlay';overlay.id='b121Overlay-'+context;overlay.hidden=true;
-  overlay.innerHTML=`<section class="b121Card" role="dialog" aria-modal="false" aria-label="Controle da Bíblia"><header class="b121Head"><div class="b121Title"><span class="b121Book">▣</span><div><strong>CONTROLE DA BÍBLIA</strong><small>Toque no anterior ou próximo para projetar</small></div></div><button type="button" class="b121Close" title="Encerrar apresentação" aria-label="Fechar e retirar versículo do telão">×</button></header><div class="b121VerseList"><button type="button" class="b121Cell b121Before" data-offset="-1"><span class="b121Label">ANTERIOR</span><strong class="b121Ref"></strong><span class="b121Text"></span></button><div class="b121Cell b121Now" aria-live="polite"><span class="b121Label"><i></i> NO TELÃO AGORA</span><strong class="b121Ref"></strong><span class="b121Text"></span></div><button type="button" class="b121Cell b121After" data-offset="1"><span class="b121Label">PRÓXIMO</span><strong class="b121Ref"></strong><span class="b121Text"></span></button></div><footer class="b121Foot"><span class="b121Counter"></span><button type="button" class="b121Finish">Encerrar apresentação</button></footer></section>`;
-  parent.append(overlay);
-  overlay.querySelectorAll('.b121Close,.b121Finish').forEach(b=>b.addEventListener('click',()=>present(null)));
-  overlay.querySelectorAll('button[data-offset]').forEach(b=>b.addEventListener('click',()=>go(Number(b.dataset.offset))));
-  views.push(overlay);
+for(const [parent,name] of [[agendaRight,'agenda'],[bibleRight,'biblia']]){
+ const control=document.createElement('section');control.className='b121Overlay b123Controller';control.id='b121Overlay-'+name;control.hidden=true;
+ control.innerHTML=`<div class="b121Card"><header class="b121Head"><div class="b121Title"><span class="b121Book">▣</span><div><strong>CONTROLE DA BÍBLIA</strong><small>Toque no versículo anterior ou próximo para apresentar</small></div></div><button type="button" class="b121Close" aria-label="Encerrar apresentação">×</button></header><div class="b121VerseList"><button type="button" class="b121Cell b121Before" data-offset="-1"><span class="b121Label">ANTERIOR</span><strong class="b121Ref"></strong><span class="b121Text"></span></button><div class="b121Cell b121Now"><span class="b121Label"><i></i> NO TELÃO AGORA</span><strong class="b121Ref"></strong><span class="b121Text"></span></div><button type="button" class="b121Cell b121After" data-offset="1"><span class="b121Label">PRÓXIMO</span><strong class="b121Ref"></strong><span class="b121Text"></span></button></div><footer class="b121Foot"><span class="b121Counter">Navegação livre pela Bíblia</span><button type="button" class="b121Finish">Encerrar apresentação</button></footer></div>`;
+ if(name==='biblia'){const frame=parent.querySelector('.b119ScreenFrame');frame?.insertAdjacentElement('afterend',control)}else{const frame=parent.querySelector('.r109PresentationFrame')||parent.querySelector('.preview');frame?.insertAdjacentElement('afterend',control)}
+ for(const btn of control.querySelectorAll('.b121Close,.b121Finish'))btn.onclick=()=>present(null);
+ for(const btn of control.querySelectorAll('button[data-offset]'))btn.onclick=()=>step(Number(btn.dataset.offset));
+ views.push(control);
 }
-let activeItem=null,parts=[],index=0,stopped=true;
-const bibleVersion=item=>String(item?.translation||'ACF').toUpperCase().startsWith('ARA')?'ARA':'ACF';
-function expandSingle(item){
-  if(!item||item.type!=='versiculo'||item.verses?.length)return null;
-  if(typeof BIBLE_BOOKS==='undefined'||typeof importedBibles==='undefined'||typeof getImportedVerse!=='function')return null;
-  const ref=String(item.reference||'').trim();const m=ref.match(/^(.+?)\s+(\d+):(\d+)$/u);if(!m)return null;
-  const bi=BIBLE_BOOKS.findIndex(b=>String(b[0]).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()===m[1].normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase());
-  if(bi<0)return null;
-  const ch=Number(m[2]),num=Number(m[3]);const data=importedBibles[bibleVersion(item)];if(!data)return null;
-  const list=[];for(let n=1;n<=180;n++){const text=getImportedVerse(data,bi,ch,n);if(!text){if(n>num)break;continue}list.push({reference:BIBLE_BOOKS[bi][0]+' '+ch+':'+n,text})}
-  if(!list.length)return null;
-  const start=list.findIndex(v=>v.reference===m[1]+' '+ch+':'+num);
-  if(start<0)return null;
-  // Abrir na seleção original, sem avançar ou retroceder involuntariamente.
-  return {list,start};
+for(const id of ['b120Sequence','b120AgendaSequence']){const el=document.getElementById(id);if(el){el.hidden=true;el.setAttribute('aria-hidden','true')}}
+let active=null;let before=null;let after=null;
+const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const ver=item=>String(item?.translation||'ACF').toUpperCase().includes('ARA')?'ARA':'ACF';
+function findBook(ref){if(typeof BIBLE_BOOKS==='undefined')return null;const m=String(ref||'').match(/^(.+?)\s+(\d+):(\d+)$/u);if(!m)return null;const bi=BIBLE_BOOKS.findIndex(b=>normalize(b[0])===normalize(m[1]));if(bi<0)return null;return {bi,ch:Number(m[2]),n:Number(m[3])}}
+function getText(bi,ch,n,version){if(typeof importedBibles==='undefined'||typeof getImportedVerse!=='function')return '';const data=importedBibles[version];return data?getImportedVerse(data,bi,ch,n):''}
+function nearby(part,delta){if(!part)return null;let {bi,ch,n}=part;const v=ver(active);for(let tries=0;tries<3;tries++){
+ n+=delta;
+ if(n<1){ch--;if(ch<1){bi--;if(bi<0)return null;ch=BIBLE_BOOKS[bi][1]}n=180}
+ if(ch>BIBLE_BOOKS[bi][1]){bi++;if(bi>=BIBLE_BOOKS.length)return null;ch=1;n=1}
+ if(delta<0&&n===180){let count=0;for(let i=1;i<=180;i++){if(getText(bi,ch,i,v))count=i;else if(count)break}n=count;if(!n)continue}
+ const text=getText(bi,ch,n,v);if(text)return {bi,ch,n,reference:BIBLE_BOOKS[bi][0]+' '+ch+':'+n,text};
+ if(delta>0){ch++;if(ch>BIBLE_BOOKS[bi][1]){bi++;if(bi>=BIBLE_BOOKS.length)return null;ch=1}n=0}
+ else{ch--;if(ch<1){bi--;if(bi<0)return null;ch=BIBLE_BOOKS[bi][1]}n=181}
+ }
+ return null}
+function fallback(direction){if(!active)return null;const seq=Array.isArray(active.original?.verses)?active.original.verses:[];const idx=seq.findIndex(p=>p.reference===active.reference);const part=seq[idx+direction];return part?{...findBook(part.reference),reference:part.reference,text:part.text}:null}
+function render(){const current=active?{reference:active.reference,text:active.text}:null;
+ for(const v of views){v.hidden=!active;if(!active)continue;
+  const cells=[[v.querySelector('.b121Before'),before,'Início da Bíblia'],[v.querySelector('.b121Now'),current,''],[v.querySelector('.b121After'),after,'Fim da Bíblia']];
+  for(const [cell,item,empty] of cells){cell.querySelector('.b121Ref').textContent=item?.reference||'—';cell.querySelector('.b121Text').textContent=item?.text||empty;if(cell.tagName==='BUTTON')cell.disabled=!item;}
+  v.querySelector('.b121Counter').textContent=current?.reference+' · '+ver(active.original);
+ }
 }
-function markCell(node,part,disabled){
-  const label=node.querySelector('.b121Ref'),txt=node.querySelector('.b121Text');
-  if(!part){label.textContent='—';txt.textContent=disabled==='before'?'Início da sequência':'Fim da sequência'}
-  else{label.textContent=part.reference||'';txt.textContent=part.text||''}
-  if(node.tagName==='BUTTON'){node.disabled=!part;node.setAttribute('aria-label',part?'Apresentar '+part.reference:'Indisponível')}
-}
-function render(){
-  for(const overlay of views){overlay.hidden=stopped;
-    if(stopped)continue;
-    markCell(overlay.querySelector('.b121Before'),parts[index-1],'before');
-    markCell(overlay.querySelector('.b121Now'),parts[index]);
-    markCell(overlay.querySelector('.b121After'),parts[index+1],'after');
-    overlay.querySelector('.b121Counter').textContent='Versículo '+(index+1)+' de '+parts.length;
-  }
-}
-function showPart(next){
-  if(stopped||next<0||next>=parts.length)return;
-  index=next;
-  // O controle da Prévia 120 continua atualizando o telão e a transmissão.
-  const button=document.getElementById(next>lastIndex?'b120Next':'b120Prev');
-  if(activeItem?.verses?.length&&button&&!button.disabled){button.click()}
-  else if(activeItem){
-    const part=parts[index];const single={...activeItem,verses:undefined,content:part.text,reference:part.reference};
-    internalPresent(single);
-  }
-  lastIndex=index;render();
-}
-let lastIndex=0;
-function go(offset){showPart(index+offset)}
-const internalPresent=present;
-present=function(item){
-  if(item?.type==='versiculo'){
-    const bundled=Array.isArray(item.verses)&&item.verses.length?item.verses:null;
-    const expanded=bundled?null:expandSingle(item);
-    activeItem=item;
-    if(bundled){parts=bundled.map(v=>({reference:v.reference,text:v.text}));index=0;lastIndex=0;stopped=false;const r=internalPresent(item);render();return r}
-    if(expanded){parts=expanded.list;index=expanded.start;lastIndex=index;stopped=false;const r=internalPresent(item);render();return r}
-    parts=[{reference:item.reference||'',text:item.content||''}];index=0;lastIndex=0;stopped=false;const r=internalPresent(item);render();return r;
-  }
-  stopped=true;parts=[];activeItem=null;index=0;lastIndex=0;render();
-  return internalPresent(item);
+const originalPresent=present;
+function broadcastCurrent(){if(!active)return;const item={...active.original,verses:undefined,content:active.text,reference:active.reference,refSettings:window.bible120Settings?.()||active.original.refSettings};originalPresent(item);render()}
+function activate(reference,text,original){const position=findBook(reference);active={reference,text,original,position};before=position?nearby(position,-1):null;after=position?nearby(position,1):null;
+ if(!before)before=fallback(-1);if(!after)after=fallback(1);
+ broadcastCurrent()}
+function step(dir){if(!active)return;const neighbor=dir<0?before:after;if(!neighbor)return;activate(neighbor.reference,neighbor.text,active.original)}
+present=function(item){if(item?.type==='versiculo'){
+ const first=Array.isArray(item.verses)&&item.verses.length?item.verses[0]:null;
+ const reference=first?.reference||item.reference||'';
+ const text=first?.text||item.content||'';
+ activate(reference,text,item);return;
+ }
+ active=null;before=null;after=null;render();return originalPresent(item)
 };
-// Controles antigos com setas não devem aparecer na interface.
-for(const id of bars){const bar=document.getElementById(id);if(bar){bar.hidden=true;bar.setAttribute('aria-hidden','true')}}
 window.addEventListener('pageshow',render);render();
 })();
