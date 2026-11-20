@@ -2705,3 +2705,9 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 #fundos .f124Seek,#agenda .r70seek{gap:9px!important}
 #fundos .f124Seek span,#agenda .r70seek span{flex:0 0 34px!important;text-align:center!important;font-variant-numeric:tabular-nums!important}
 @media(max-width:640px){#fundos .f124List{grid-template-columns:1fr!important}}
+
+/* Prévia 151 — miniaturas do vídeo com fallback visível, sem miniatura preta */
+#fundos .f150Thumb{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;background:linear-gradient(160deg,#1d3953,#0d2031)!important;color:#f1d789!important;min-height:95px!important}
+#fundos .f150Thumb .f151NoThumb{font-size:30px!important;line-height:1!important;color:#f1d789!important}
+#fundos .f150Thumb small{font-size:10px!important;color:#c9d9e8!important;letter-spacing:.01em!important}
+#fundos .f150Thumb img{width:100%!important;height:100%!important;object-fit:contain!important;display:block!important}

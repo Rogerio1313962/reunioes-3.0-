@@ -47,3 +47,5 @@ Prévia 149: destaque disponível tanto na Bíblia livre (temporário, sem persi
 
 
 Prévia 150: aba Fundos com miniaturas reais extraídas dos vídeos, mantendo proporção original com barras laterais quando necessário; X no canto direito do player; volume com ícone vetorial e alternância mudo; barras de progresso ajustadas para 0–100% na aba Fundos e no Cronograma.
+
+Prévia 151: tenta diversos quadros do arquivo MOV/MP4 antes de usar a miniatura; rejeita captura preta. Miniatura é processada após o card ser adicionado à página e fallback explícito é exibido quando o Safari não decodifica.

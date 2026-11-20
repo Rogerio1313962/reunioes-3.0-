@@ -61,23 +61,80 @@ function sync(){
 } 
 function resetObject(){video.pause();video.removeAttribute('src');video.load();if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=null;}
 const thumbCache=new Map();
+const thumbPending=new Map();
+function showThumb(slot,uri){
+ if(!slot)return;
+ if(!uri){slot.replaceChildren();const label=document.createElement('span');label.className='f151NoThumb';label.textContent='▶';const note=document.createElement('small');note.textContent='Prévia indisponível';slot.append(label,note);return;}
+ const im=document.createElement('img');im.src=uri;im.alt='Prévia do vídeo';slot.replaceChildren(im);
+}
 function capturePreview(row,slot){
- if(thumbCache.has(row.id)){const uri=thumbCache.get(row.id);if(uri){const im=document.createElement('img');im.src=uri;im.alt='Miniatura do vídeo';slot.replaceChildren(im)}return}
- // Extrai um quadro real localmente. Safari pode não suportar alguns codecs MOV;
- // nesses casos permanece o ícone de vídeo, sem alterar o arquivo original.
- const url=URL.createObjectURL(row.blob),v=document.createElement('video');
- v.muted=true;v.playsInline=true;v.preload='auto';v.src=url;
- let finished=false;
- function done(uri){if(finished)return;finished=true;v.pause();v.removeAttribute('src');v.load();URL.revokeObjectURL(url);thumbCache.set(row.id,uri||null);if(!uri||!slot.isConnected)return;const im=document.createElement('img');im.src=uri;im.alt='Miniatura de '+row.name;slot.replaceChildren(im)}
- function snap(){if(!v.videoWidth||!v.videoHeight)return done(null);try{const cv=document.createElement('canvas');const scale=Math.min(1,240/v.videoWidth,135/v.videoHeight);cv.width=Math.max(1,Math.round(v.videoWidth*scale));cv.height=Math.max(1,Math.round(v.videoHeight*scale));cv.getContext('2d').drawImage(v,0,0,cv.width,cv.height);done(cv.toDataURL('image/jpeg',.72))}catch(e){done(null)}}
- v.addEventListener('loadedmetadata',()=>{try{const d=v.duration;if(Number.isFinite(d)&&d>.05){v.currentTime=Math.min(.5,d*.15)}else snap()}catch(e){snap()}},{once:true});
- v.addEventListener('seeked',snap,{once:true});v.addEventListener('loadeddata',()=>{if(v.readyState>=2&&!Number.isFinite(v.duration))snap()},{once:true});
- v.addEventListener('error',()=>done(null),{once:true});
- setTimeout(()=>done(null),6500);
- v.load();
+ const key=row.id;
+ if(thumbCache.has(key)){showThumb(slot,thumbCache.get(key));return}
+ if(thumbPending.has(key)){thumbPending.get(key).then(uri=>{if(slot.isConnected)showThumb(slot,uri)});return}
+ const task=new Promise(resolve=>{
+  if(!row.blob){resolve(null);return}
+  const url=URL.createObjectURL(row.blob),v=document.createElement('video');
+  v.muted=true;v.defaultMuted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');
+  v.preload='auto';v.style.cssText='position:absolute;width:2px;height:2px;opacity:0;pointer-events:none';
+  // Anexar o elemento ajuda o Safari do iPad a decodificar quadros de MOV/HEVC.
+  document.body.append(v);
+  let done=false,attempt=0;
+  const waiters=[];
+  function cleanup(){for(const x of waiters)clearTimeout(x);v.pause();v.removeAttribute('src');v.load();v.remove();URL.revokeObjectURL(url)}
+  function finish(uri){if(done)return;done=true;cleanup();resolve(uri||null)}
+  function viableFrame(){
+   if(v.videoWidth<2||v.videoHeight<2||v.readyState<2)return null;
+   try{
+    const c=document.createElement('canvas');c.width=224;c.height=126;
+    const ctx=c.getContext('2d',{willReadFrequently:true});if(!ctx)return null;
+    ctx.fillStyle='#061624';ctx.fillRect(0,0,224,126);
+    const scale=Math.min(224/v.videoWidth,126/v.videoHeight);
+    const w=Math.round(v.videoWidth*scale),h=Math.round(v.videoHeight*scale);
+    ctx.drawImage(v,Math.round((224-w)/2),Math.round((126-h)/2),w,h);
+    // Ignorar quadros ainda não decodificados (pretos/sem informação).
+    const pixel=ctx.getImageData(Math.round((224-w)/2),Math.round((126-h)/2),Math.max(1,w),Math.max(1,h)).data;
+    let bright=0,variation=0,prior=-1,count=0;
+    for(let i=0;i<pixel.length;i+=Math.max(4,Math.floor(pixel.length/3200/4)*4)){
+     const lum=(pixel[i]*.2126+pixel[i+1]*.7152+pixel[i+2]*.0722);
+     bright+=lum;if(prior>=0)variation+=Math.abs(lum-prior);prior=lum;count++;
+    }
+    if(count<3||bright/count<7||variation/count<1.9)return null;
+    return c.toDataURL('image/jpeg',.78)
+   }catch(e){return null}
+  }
+  function next(){
+   if(done)return;
+   if(attempt>=6){finish(null);return}
+   const duration=Number.isFinite(v.duration)&&v.duration>0?v.duration:0;
+   const times=duration>0?[Math.min(.8,duration*.15),Math.min(2,duration*.32),Math.min(4,duration*.53),Math.min(6,duration*.72),Math.min(.1,duration*.04),Math.max(0,duration-.2)]:[.25,.8,1.4,2.3,3.5,5];
+   const target=times[attempt++];
+   if(Math.abs(v.currentTime-target)<.035){onFrame();return}
+   try{v.currentTime=target}catch(e){waiters.push(setTimeout(onFrame,300))}
+   waiters.push(setTimeout(onFrame,900));
+  }
+  function onFrame(){
+   if(done)return;
+   if(v.requestVideoFrameCallback){
+    try{v.requestVideoFrameCallback(()=>{if(done)return;const uri=viableFrame();if(uri)finish(uri);else next()});
+      waiters.push(setTimeout(()=>{if(done)return;const uri=viableFrame();if(uri)finish(uri);else next()},350));return
+    }catch(e){}
+   }
+   const uri=viableFrame();if(uri)finish(uri);else next();
+  }
+  let started=false;
+  function start(){if(done||started)return;started=true;next()}
+  v.addEventListener('loadedmetadata',start,{once:true});
+  v.addEventListener('loadeddata',start,{once:true});
+  v.addEventListener('seeked',onFrame);
+  v.addEventListener('error',()=>finish(null),{once:true});
+  waiters.push(setTimeout(()=>finish(null),14000));
+  v.src=url;v.load();
+ });
+ thumbPending.set(key,task);
+ task.then(uri=>{thumbCache.set(key,uri);thumbPending.delete(key);if(slot.isConnected)showThumb(slot,uri)});
 }
 async function list(){try{const rows=(await window.ReunioesMediaLibrary.all()).filter(x=>x.type==='video'&&x.day==='Fundos de oração').sort((a,b)=>b.addedAt-a.addedAt);const holder=$('f124List');holder.innerHTML=rows.length?'':'<p class="f124NoFiles">Nenhum fundo adicionado. Use “Adicionar vídeos”.</p>';
-for(const row of rows){const card=document.createElement('div');card.className='f124Item'+(selected?.id===row.id?' selected':'');const name=document.createElement('button');name.type='button';name.className='f124Choose';const preview=document.createElement('span');preview.className='f150Thumb';preview.textContent='▶';const title=document.createElement('span');title.className='f150Title';title.textContent=row.name;name.append(preview,title);name.onclick=()=>choose(row.id);if(row.blob)capturePreview(row,preview);const del=document.createElement('button');del.type='button';del.className='f124Delete';del.textContent='✕';del.title='Excluir vídeo';del.onclick=async()=>{if(!confirm('Excluir este vídeo de fundo?'))return;if(selected?.id===row.id){await closeVideo();}await deleteRow(row.id);thumbCache.delete(row.id);list()};card.append(name,del);holder.append(card)}
+for(const row of rows){const card=document.createElement('div');card.className='f124Item'+(selected?.id===row.id?' selected':'');const name=document.createElement('button');name.type='button';name.className='f124Choose';const preview=document.createElement('span');preview.className='f150Thumb';preview.textContent='▶';const title=document.createElement('span');title.className='f150Title';title.textContent=row.name;name.append(preview,title);name.onclick=()=>choose(row.id);const del=document.createElement('button');del.type='button';del.className='f124Delete';del.textContent='✕';del.title='Excluir vídeo';del.onclick=async()=>{if(!confirm('Excluir este vídeo de fundo?'))return;if(selected?.id===row.id){await closeVideo();}await deleteRow(row.id);thumbCache.delete(row.id);thumbPending.delete(row.id);list()};card.append(name,del);holder.append(card);if(row.blob)capturePreview(row,preview);else showThumb(preview,null)}
 }catch(e){status.textContent='Não foi possível abrir a biblioteca de vídeos.'}}
 async function deleteRow(id){const db=await new Promise((ok,no)=>{const req=indexedDB.open('reunioes3-midias-v64',1);req.onsuccess=()=>ok(req.result);req.onerror=()=>no(req.error)});await new Promise((ok,no)=>{const t=db.transaction('files','readwrite');t.objectStore('files').delete(id);t.oncomplete=ok;t.onerror=()=>no(t.error)});db.close()}
 async function choose(id){const token=++loadToken;try{const row=await window.ReunioesMediaLibrary.get(id);if(token!==loadToken||!row?.blob)return;if(live)await finish();resetObject();selected=row;supportToken++;supportImg.hidden=true;releaseSupportImage();objectUrl=URL.createObjectURL(row.blob);video.src=objectUrl;video.style.objectFit='contain';video.style.objectPosition='center center';video.loop=loop;video.volume=Number($('f124Volume').value)/100;empty.hidden=true;$('f124Name').textContent=row.name;status.textContent='Vídeo preparado. Toque em Play para reproduzir no telão.';sync();list()}catch(e){status.textContent='Não foi possível carregar este vídeo.'}}
