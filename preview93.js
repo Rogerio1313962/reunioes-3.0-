@@ -19,7 +19,7 @@
    const pdfOrMediaLive=window.R70?.isLive?.()===true;
    const standardMedia=!!(window.current && !support && !empty);
    // Algumas telas bíblicas são montadas diretamente no preview.
-   const bibleShown=!!preview.querySelector('.verse');
+   const bibleShown=!!preview.querySelector('.verse,.b120Verse');
    const live=!support&&!empty&&(pdfOrMediaLive||standardMedia||bibleShown);
    badge.hidden=false;
    badge.classList.toggle('r108Active',Boolean(live));

@@ -2444,3 +2444,20 @@ button.b121Cell{cursor:pointer}.b121Cell .b121Label{font-size:10px;letter-spacin
 .r134VersionButton:disabled{opacity:.4;cursor:not-allowed}
 .r134VersionButton:not(:disabled):active{background:#fff0bf}
 @media(max-width:600px){.r134Versions{grid-template-columns:1fr}}
+
+
+/* PRÉVIA 135 — indicador AO VIVO amarelo pulsante durante Bíblia no telão */
+#biblia #b119LiveBadge.b119Active{background:#fff0bc!important;border:1px solid #deb04a!important;color:#805916!important;animation:b135LiveBadgePulse 1.2s ease-in-out infinite!important}
+#biblia #b119LiveBadge.b119Active .b119LiveDot{background:#e1a51b!important;box-shadow:0 0 0 2px #e1a51b30!important;animation:b135LiveDotPulse 1.2s ease-in-out infinite!important}
+#agenda #r93LiveIndicator.r108Active{background:#fff0bc!important;border-color:#deb04a!important;color:#805916!important;animation:b135LiveBadgePulse 1.2s ease-in-out infinite!important}
+#agenda #r93LiveIndicator.r108Active .r93LiveDot{background:#e1a51b!important;animation:b135LiveDotPulse 1.2s ease-in-out infinite!important}
+#biblia #b119LiveBadge:not(.b119Active),#agenda #r93LiveIndicator.r108Idle{animation:none!important}
+@keyframes b135LiveBadgePulse{0%,100%{opacity:1;box-shadow:0 0 0 0 #e1a51b20}50%{opacity:.58;box-shadow:0 0 0 4px #e1a51b10}}
+@keyframes b135LiveDotPulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){#biblia #b119LiveBadge.b119Active,#biblia #b119LiveBadge.b119Active .b119LiveDot,#agenda #r93LiveIndicator.r108Active,#agenda #r93LiveIndicator.r108Active .r93LiveDot{animation:none!important;opacity:1!important}}
+
+/* Prévia 136 — Biblioteca musical usada pelo Cronograma sem botão de cadastro */
+#musicas.r136SchedulePicker #newSongGroup,#musicas.r136SchedulePicker .song-row-action,#musicas.r136SchedulePicker [data-edit],#musicas.r136SchedulePicker [data-remove]{display:none!important}
+#musicas #r136ReturnAgenda[hidden]{display:none!important}
+#musicas #r136ReturnAgenda{margin-left:auto;background:#eef5fb;border:1px solid #c9d9e9;color:#315d81;border-radius:12px;font-weight:750;padding:11px 14px}
+#musicas.r136SchedulePicker .song-row-play{cursor:pointer}

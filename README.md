@@ -10,3 +10,7 @@ Nesta atualização:
 
 Para instalar no GitHub Pages, extraia o ZIP e envie o conteúdo à raiz do repositório, não o ZIP. Atualize o Safari após publicar.
 Teste de sintaxe dos scripts efetuado. Funcionamento visual no Safari/iPad e em projeção física ainda não validado.
+
+PRÉVIA 135: indicador AO VIVO da Bíblia e Cronograma em amarelo pulsante somente quando há apresentação, sem piscar na imagem de apoio. A engrenagem do Telão Santuário configura efeito e duração de transições de mídia, não a aparência da Bíblia.
+
+Prévia 136: No Cronograma, Adicionar conteúdo > Música abre a mesma Biblioteca de Músicas, mas oculta o botão + Adicionar música. Ao escolher uma música, ela é adicionada à etapa sem tocar. Fora desse modo, a Biblioteca funciona normalmente.
