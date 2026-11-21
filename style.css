@@ -2901,3 +2901,7 @@ main{background:linear-gradient(145deg,#e9f1f8 0%,#dce7f1 90%)!important}
 
 /* Integração local - painel de contas e estado da sincronização */
 .r170-connect{margin:20px 0;padding:19px;border:1px solid #bdcedc;border-radius:15px;background:#e5edf5;color:#173856}.r170-connect h3{margin:0 0 9px}.r170-connect p{line-height:1.55}.r170-connect input{max-width:480px;width:100%;box-sizing:border-box}.r170-actions{display:flex;flex-wrap:wrap;gap:9px}.r170-actions button,.r170-user button{min-height:38px}.r170-user{display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #bbccdc;padding:9px 0}.r170-user span{flex:1;min-width:125px}#r170SyncStatus{font-weight:700;color:#1d624d}
+
+/* Teste 10: botão fechar vídeo, igual ao PDF. */
+#agenda #r70VideoControls .r70seek #r175VideoClose{background:#f2cf79!important;color:#174574!important;border-color:#cba453!important;display:grid!important;place-items:center!important;align-self:center!important;font-family:Arial,sans-serif!important;font-size:22px!important;line-height:1!important;padding:0!important;}
+#agenda #r70VideoControls .r70seek #r175VideoClose[hidden]{display:none!important}
