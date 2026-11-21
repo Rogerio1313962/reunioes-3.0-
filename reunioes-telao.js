@@ -102,7 +102,7 @@
 
 ;
 (()=>{'use strict';
-const ch=new BroadcastChannel('reunioes3-projetor');const stage=document.getElementById('stage');let seq=0;let active=null;let pdfToken=0;let presentationRequest=0;let volume=.25,muted=false;
+const ch=new BroadcastChannel('reunioes3-telao-local');const stage=document.getElementById('stage');let seq=0;let active=null;let pdfToken=0;let presentationRequest=0;let volume=.25,muted=false;
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function effect(){try{return JSON.parse(localStorage.getItem('reunioes-transition-v70')||'{}')}catch(e){return {}}}
 function markBibleText(raw,ranges,color){const value=String(raw||'');const terms=(Array.isArray(ranges)?ranges:[]).filter(s=>typeof s==='string'&&s.length).sort((a,b)=>b.length-a.length);if(!terms.length)return esc(value);let parts=[{text:value,hit:false}];for(const term of terms){const next=[];for(const part of parts){if(part.hit){next.push(part);continue}let rest=part.text,idx;while((idx=rest.toLocaleLowerCase('pt-BR').indexOf(term.toLocaleLowerCase('pt-BR')))!==-1){if(idx)next.push({text:rest.slice(0,idx),hit:false});next.push({text:rest.slice(idx,idx+term.length),hit:true});rest=rest.slice(idx+term.length)}if(rest)next.push({text:rest,hit:false})}parts=next}return parts.map(p=>p.hit?'<span class="b129Marked" style="color:'+esc(color||'#f0cf72')+'">'+esc(p.text)+'</span>':esc(p.text)).join('')}
@@ -118,6 +118,65 @@ else if(x.type==='imagem'){const im=document.createElement('img');im.src=x.fileU
 else if(x.type==='video'){const v=document.createElement('video');v.src=x.fileUrl||'';v.style.objectFit='contain';v.style.objectPosition='center center';v.playsInline=true;v.autoplay=true;v.loop=!!x.videoLoop;v.controls=false;v.volume=volume;v.muted=muted;layer.append(v);v.play().catch(()=>{v.muted=true;v.play().catch(()=>{})})}
 else if(x.type==='pdf'){const canvas=document.createElement('canvas');canvas.className='r85ProjectorPdf';layer.append(canvas);const token=++pdfToken;(async()=>{try{if(!window.pdfjsLib)throw Error('Leitor PDF indisponível');window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const doc=await window.pdfjsLib.getDocument({url:x.fileUrl}).promise;const page=await doc.getPage(x.pdfPage||1);if(token!==pdfToken||!canvas.isConnected){await doc.destroy();return}const vp=page.getViewport({scale:1});const scale=Math.min(2,Math.max(.2,Math.min((innerWidth*.92)/vp.width,(innerHeight*.92)/vp.height)));const view=page.getViewport({scale});canvas.width=Math.ceil(view.width);canvas.height=Math.ceil(view.height);await page.render({canvasContext:canvas.getContext('2d',{alpha:false}),viewport:view}).promise;page.cleanup();await doc.destroy()}catch(err){if(canvas.isConnected)canvas.replaceWith(document.createTextNode('Não foi possível renderizar esta página do PDF.'))}})()}return layer}
 function transition(x,forceCut){if(x?.type!=='pdf')pdfToken++;const id=++seq;const layer=replace(x);const prev=active;stage.append(layer);const cfg=effect();const how=(x?.type==='versiculo'||forceCut)?'corte':(cfg.effect||'fade');const ms=how==='corte'?0:Math.max(0,Math.min(2500,Number(cfg.duration??300)));if(prev&&ms){layer.style.opacity='0';layer.style.transition='opacity '+ms+'ms ease';if(how==='wipe'){layer.style.transform='translateX(100%)';layer.style.transition+=' ,transform '+ms+'ms ease'}if(how==='merge')prev.style.transition='opacity '+ms+'ms ease';requestAnimationFrame(()=>{layer.style.opacity='1';layer.style.transform='translateX(0)';if(how==='merge')prev.style.opacity='0'})}else{layer.style.opacity='1'}active=layer;setTimeout(()=>{if(id===seq){[...stage.children].filter(e=>e!==layer).forEach(e=>e.remove())}},ms+60)}
-ch.onmessage=e=>{const d=e.data||{};if(d.kind==='volume'){volume=d.volume??volume;muted=!!d.muted;const v=stage.querySelector('video');if(v){v.volume=volume;v.muted=muted}return}if(d.kind==='videoControl'){const v=stage.querySelector('video');if(!v)return;if(d.action==='play')v.play().catch(()=>{});if(d.action==='pause')v.pause();if(d.action==='seek'&&Number.isFinite(d.time))v.currentTime=d.time;if(d.action==='repeat')v.loop=!!d.value;return}if(d.kind==='present'){const request=++presentationRequest;if(Number.isInteger(d.item?.supportDay)){(async()=>{try{const db=await new Promise((resolve,reject)=>{const r=indexedDB.open('reunioes3-apoio-v89',1);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});const row=await new Promise((resolve,reject)=>{const tx=db.transaction('images','readonly');const req=tx.objectStore('images').get(d.item.supportDay);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});db.close();if(request!==presentationRequest)return;if(!row?.blob)throw Error('Imagem indisponível');transition({...d.item,fileUrl:URL.createObjectURL(row.blob)},false)}catch(e){if(request===presentationRequest)transition(null,true)}})();}else if(d.item?.mediaLibraryId){(async()=>{try{const db=await new Promise((res,rej)=>{const req=indexedDB.open('reunioes3-midias-v64',1);req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error)});const row=await new Promise((res,rej)=>{const tx=db.transaction('files');const req=tx.objectStore('files').get(d.item.mediaLibraryId);req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error)});db.close();if(request!==presentationRequest)return;if(!row?.blob)throw Error('Não encontrado nesta biblioteca local');const url=URL.createObjectURL(row.blob);transition({...d.item,fileUrl:url},false)}catch(err){if(request===presentationRequest)stage.textContent='Mídia indisponível neste navegador. Abra o telão na mesma origem da biblioteca.'}})();}else transition(d.item,d.item?.type==='versiculo')}};
+
+// TESTE 8: manter o documento PDF e as páginas próximas prontos no telão.
+// Não descarregar/reabrir o arquivo a cada clique; não retirar o slide atual antes de pintar o próximo.
+let pdfFast={key:null,docPromise:null,pages:new Map(),pending:new Map(),generation:0};
+function pdfKey(item){return item.mediaLibraryId?'lib:'+item.mediaLibraryId:'url:'+String(item.fileUrl||'')}
+async function pdfOpenFast(item){
+ const key=pdfKey(item);
+ if(pdfFast.key!==key){
+  const previous=pdfFast;pdfFast={key,docPromise:null,pages:new Map(),pending:new Map(),generation:previous.generation+1};
+  if(previous.docPromise)previous.docPromise.then(doc=>doc.destroy()).catch(()=>{});
+ }
+ const cache=pdfFast;
+ if(!cache.docPromise){cache.docPromise=(async()=>{
+  if(!window.pdfjsLib)throw Error('Leitor PDF indisponível');
+  const lib=window.pdfjsLib;
+  lib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  let data;
+  if(item.mediaLibraryId){
+   const db=await new Promise((resolve,reject)=>{const req=indexedDB.open('reunioes3-midias-v64',1);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});
+   try{const record=await new Promise((resolve,reject)=>{const tx=db.transaction('files','readonly');const req=tx.objectStore('files').get(item.mediaLibraryId);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});if(!record?.blob)throw Error('PDF não encontrado');data=new Uint8Array(await record.blob.arrayBuffer())}finally{db.close()}
+  }else{const response=await fetch(item.fileUrl);if(!response.ok)throw Error('PDF indisponível');data=new Uint8Array(await response.arrayBuffer())}
+  return lib.getDocument({data,useSystemFonts:true}).promise;
+ })()}
+ return cache;
+}
+async function pdfPaintCached(cache,pageNum){
+ if(cache.pages.has(pageNum))return cache.pages.get(pageNum);
+ if(cache.pending.has(pageNum))return cache.pending.get(pageNum);
+ const job=(async()=>{
+  const doc=await cache.docPromise;
+  if(cache!==pdfFast||pageNum<1||pageNum>doc.numPages)return null;
+  const page=await doc.getPage(pageNum);
+  const vp=page.getViewport({scale:1});
+  const scale=Math.min(2,Math.max(.25,Math.min((innerWidth*.98)/vp.width,(innerHeight*.98)/vp.height)));
+  const view=page.getViewport({scale});const canvas=document.createElement('canvas');
+  canvas.className='r85ProjectorPdf';canvas.width=Math.ceil(view.width);canvas.height=Math.ceil(view.height);
+  const ctx=canvas.getContext('2d',{alpha:false});
+  await page.render({canvasContext:ctx,viewport:view}).promise;
+  if(cache===pdfFast){cache.pages.set(pageNum,canvas);while(cache.pages.size>7){const first=cache.pages.keys().next().value;cache.pages.delete(first)}}
+  return canvas;
+ })();cache.pending.set(pageNum,job);
+ try{return await job}finally{cache.pending.delete(pageNum)}
+}
+async function presentPdfFast(item,request){
+ try{
+  const cache=await pdfOpenFast(item),num=Math.max(1,Number(item.pdfPage)||1);
+  const source=await pdfPaintCached(cache,num);
+  if(request!==presentationRequest||cache!==pdfFast||!source)return;
+  // A tela anterior só é substituída quando o novo slide está pronto.
+  const canvas=document.createElement('canvas');canvas.className='r85ProjectorPdf';canvas.width=source.width;canvas.height=source.height;
+  canvas.getContext('2d',{alpha:false}).drawImage(source,0,0);
+  const layer=document.createElement('div');layer.className='r70layer';layer.append(canvas);
+  const id=++seq;stage.append(layer);layer.style.opacity='1';active=layer;
+  for(const child of [...stage.children])if(child!==layer)child.remove();
+  // Preparar páginas adjacentes com baixa prioridade após a troca.
+  setTimeout(()=>{if(cache!==pdfFast||request!==presentationRequest)return;void pdfPaintCached(cache,num+1).catch(()=>{});void pdfPaintCached(cache,num-1).catch(()=>{})},30);
+ }catch(error){if(request===presentationRequest)console.warn('Falha ao apresentar página PDF',error)}
+}
+
+ch.onmessage=e=>{const d=e.data||{};if(d.kind==='volume'){volume=d.volume??volume;muted=!!d.muted;const v=stage.querySelector('video');if(v){v.volume=volume;v.muted=muted}return}if(d.kind==='videoControl'){const v=stage.querySelector('video');if(!v)return;if(d.action==='play')v.play().catch(()=>{});if(d.action==='pause')v.pause();if(d.action==='seek'&&Number.isFinite(d.time))v.currentTime=d.time;if(d.action==='repeat')v.loop=!!d.value;return}if(d.kind==='present'){const request=++presentationRequest;if(d.item?.type==='pdf'){void presentPdfFast(d.item,request);}else if(Number.isInteger(d.item?.supportDay)){(async()=>{try{const db=await new Promise((resolve,reject)=>{const r=indexedDB.open('reunioes3-apoio-v89',1);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});const row=await new Promise((resolve,reject)=>{const tx=db.transaction('images','readonly');const req=tx.objectStore('images').get(d.item.supportSlot ?? d.item.supportDay);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});db.close();if(request!==presentationRequest)return;if(!row?.blob)throw Error('Imagem indisponível');transition({...d.item,fileUrl:URL.createObjectURL(row.blob)},false)}catch(e){if(request===presentationRequest)transition(null,true)}})();}else if(d.item?.mediaLibraryId){(async()=>{try{const db=await new Promise((res,rej)=>{const req=indexedDB.open('reunioes3-midias-v64',1);req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error)});const row=await new Promise((res,rej)=>{const tx=db.transaction('files');const req=tx.objectStore('files').get(d.item.mediaLibraryId);req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error)});db.close();if(request!==presentationRequest)return;if(!row?.blob)throw Error('Não encontrado nesta biblioteca local');const url=URL.createObjectURL(row.blob);transition({...d.item,fileUrl:url},false)}catch(err){if(request===presentationRequest)stage.textContent='Mídia indisponível neste navegador. Abra o telão na mesma origem da biblioteca.'}})();}else transition(d.item,d.item?.type==='versiculo')}};
 })();
 ;

@@ -1,5 +1,5 @@
 // Fonte consolidada: app.js
-const DAYS=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];const KEY='reunioes3-local-v1';let state=JSON.parse(localStorage.getItem(KEY)||'null')||{day:0,days:Array.from({length:7},()=>[]),pastor:'',accent:'#a7c5ff'};let current=null;/* Prévia 110: abrir o cronograma no dia atual do aparelho. */state.day=new Date().getDay(),editId=null,channel=new BroadcastChannel('reunioes3-projetor');const $=id=>document.getElementById(id);const save=()=>localStorage.setItem(KEY,JSON.stringify(state));const uid=()=>crypto.randomUUID();const escapeHtml=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function setTab(tab){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===tab));document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab))}document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));function drawDays(){$('days').innerHTML=DAYS.map((d,i)=>`<button class="${state.day===i?'selected':''}" data-day="${i}">${d}</button>`).join('');$('days').querySelectorAll('button').forEach(b=>b.onclick=()=>{state.day=+b.dataset.day;save();drawDays();drawItems()});$('dayTitle').textContent=DAYS[state.day]}function itemThumb(x){
+const DAYS=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];const KEY='reunioes3-local-v1'+(window.__REUNIOES_ACCOUNT_ID?':'+window.__REUNIOES_ACCOUNT_ID:'');let state=JSON.parse(localStorage.getItem(KEY)||'null')||{day:0,days:Array.from({length:7},()=>[]),pastor:'',accent:'#a7c5ff'};let current=null;/* Prévia 110: abrir o cronograma no dia atual do aparelho. */state.day=new Date().getDay(),editId=null,channel=new BroadcastChannel('reunioes3-controle-local');const $=id=>document.getElementById(id);const save=()=>{localStorage.setItem(KEY,JSON.stringify(state));window.ReunioesSync?.scheduleSaved?.()};const uid=()=>crypto.randomUUID();const escapeHtml=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function setTab(tab){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===tab));document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab))}document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));function drawDays(){$('days').innerHTML=DAYS.map((d,i)=>`<button class="${state.day===i?'selected':''}" data-day="${i}">${d}</button>`).join('');$('days').querySelectorAll('button').forEach(b=>b.onclick=()=>{state.day=+b.dataset.day;save();drawDays();drawItems()});$('dayTitle').textContent=DAYS[state.day]}function itemThumb(x){
   if(x.type==='texto')return '<div class="item-thumb note-icon" aria-hidden="true">▤</div>';
   if(x.type==='musica')return '<div class="item-thumb audio-icon" aria-hidden="true">♫</div>';
   if(x.type==='versiculo')return '<div class="item-thumb verse-icon verse-book-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.2c-2.6-1.6-5.5-1.9-8.5-1.2v13.8c3.1-.7 5.9-.3 8.5 1.1 2.6-1.4 5.4-1.8 8.5-1.1V5c-3-.7-5.9-.4-8.5 1.2Z"/><path d="M12 6.3v13.6"/><path d="M8.6 9.3h1.8"/><path d="M13.6 9.3h1.8"/><path d="M9.1 12.2h5.8"/></svg></div>';
@@ -185,7 +185,7 @@ async function musicRemove(id){const db=await musicDb();return new Promise((reso
 function refreshMusicSelect(){const sel=$('musicSelect');const prev=sel.value;sel.innerHTML=musicIndex.map(m=>`<option value="${m.id}">${escapeHtml(m.folder)} · ${escapeHtml(m.name)}</option>`).join('');if(musicIndex.some(m=>m.id===prev))sel.value=prev}
 function drawMusic(){const folders=$('musicFolders');folders.innerHTML=MUSIC_FOLDERS.map((f,i)=>`<button type="button" class="music-folder ${f===musicFolder?'chosen':''}" data-folder="${i}"><span>${i>6?'♫':'▦'}</span><b>${escapeHtml(f)}</b><small>${musicIndex.filter(m=>m.folder===f).length} arquivo(s)</small></button>`).join('');folders.querySelectorAll('button').forEach(b=>b.onclick=()=>{musicFolder=MUSIC_FOLDERS[+b.dataset.folder];drawMusic()});$('musicFolderTitle').textContent=musicFolder;const tracks=musicIndex.filter(m=>m.folder===musicFolder);$('musicCount').textContent=tracks.length+' arquivo(s)';$('musicList').innerHTML=tracks.length?tracks.map(m=>`<div class="music-track"><span>♫</span><div><b>${escapeHtml(m.name)}</b><small>MP3 · ${(m.size/1024/1024).toFixed(1)} MB</small></div><button data-play="${m.id}">▶ Ouvir</button><button data-add="${m.id}">+ Cronograma</button><button data-remove="${m.id}">Excluir</button></div>`).join(''):'<div class="empty">Esta pasta está vazia. Toque em “Gerenciar MP3” para adicionar músicas.</div>';$('musicList').querySelectorAll('[data-play]').forEach(b=>b.onclick=()=>playMusic(b.dataset.play));$('musicList').querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const m=musicIndex.find(x=>x.id===b.dataset.add);state.days[state.day].push({id:uid(),type:'musica',title:m.name,musicId:m.id});save();drawItems();setTab('agenda')});$('musicList').querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{if(!confirm('Excluir este MP3 da biblioteca deste aparelho?'))return;await musicRemove(b.dataset.remove);await loadMusic()})}
 async function loadMusic(){try{const all=await musicAll();musicIndex=all.map(({id,name,folder,size})=>({id,name,folder,size}));drawMusic();refreshMusicSelect()}catch(err){$('musicList').textContent='Não foi possível acessar o armazenamento de músicas neste navegador.'}}
-async function playMusic(id){try{const db=await musicDb();const m=await new Promise((resolve,reject)=>{const r=db.transaction('tracks').objectStore('tracks').get(id);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});db.close();if(!m){alert('Este MP3 não está salvo neste aparelho. Adicione-o novamente na aba Músicas.');return}const player=$('musicAudio');
+async function playMusic(id){try{if(typeof id==='string'&&id.startsWith('shared:')){const player=$('musicAudio');const url='/api/media/file/'+encodeURIComponent(id.slice(7));player.pause();if(musicObjectUrl)URL.revokeObjectURL(musicObjectUrl);musicObjectUrl=null;player.src=url;$('musicNow').textContent='♫ Música compartilhada';if(!window.__preview58PrepareOnly)await player.play();return} const db=await musicDb();const m=await new Promise((resolve,reject)=>{const r=db.transaction('tracks').objectStore('tracks').get(id);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});db.close();if(!m){alert('Este MP3 não está salvo neste aparelho. Adicione-o novamente na aba Músicas.');return}const player=$('musicAudio');
 // Prévia 167: o Cronograma já limpou explicitamente o telão antes de preparar o áudio.
 player.pause();if(musicObjectUrl)URL.revokeObjectURL(musicObjectUrl);musicObjectUrl=URL.createObjectURL(m.blob);player.src=musicObjectUrl;$('musicNow').textContent='♫ '+m.name;if(!window.__preview58PrepareOnly)await player.play()}catch(err){alert('Não foi possível iniciar o áudio. Abra a aba Músicas e toque em Ouvir.') }}
 $('musicManage').onclick=()=>{$('musicUploadFolder').value=musicFolder;$('musicUploadDialog').showModal()};$('musicUploadFolder').innerHTML=MUSIC_FOLDERS.map(f=>`<option>${escapeHtml(f)}</option>`).join('');$('musicUploadForm').onsubmit=async e=>{if(e.submitter?.value==='cancel')return;e.preventDefault();const files=[...$('musicFiles').files];if(!files.length)return;const folder=$('musicUploadFolder').value;try{for(const file of files){if(!file.type.startsWith('audio/')&&!/\.mp3$/i.test(file.name))throw Error('Selecione arquivos de áudio.');await musicPut({id:uid(),name:file.name.replace(/\.[^.]+$/,''),folder,size:file.size,blob:file})}musicFolder=folder;$('musicUploadDialog').close();$('musicUploadForm').reset();await loadMusic()}catch(err){alert('Não foi possível salvar o MP3. Verifique o espaço livre no aparelho.')}};
@@ -958,7 +958,7 @@ function renderListOnly(){
    const video=slot?.querySelector('video');
    if(!video){b.textContent='Carregando…';return}
    for(const other of root.querySelectorAll('video'))if(other!==video){other.pause();other.controls=false;other.muted=true}
-   if(video.paused){video.muted=false;video.controls=true;try{await video.play()}catch(_){b.textContent='Formato não compatível'};if(!video.paused)b.textContent='❚❚ Pausar'}
+   if(video.paused){video.muted=!!window.__REUNIOES_ACCOUNT_ID;video.controls=true;try{await video.play()}catch(_){b.textContent='Formato não compatível'};if(!video.paused)b.textContent='❚❚ Pausar'}
    else{video.pause();b.textContent='▶ Ver vídeo'}
  }));
  document.getElementById('m64Count').textContent=list.length+' arquivo(s)';
@@ -1120,20 +1120,50 @@ const settings=holder.querySelector('.r70settings');if(settings){settings.id='r8
 const outerPanel=preview.closest('.preview');if(outerPanel&&!$('r90EndButton')){const end=document.createElement('button');end.id='r90EndButton';end.type='button';end.textContent='■ Encerrar';end.title='Encerrar mídia no telão';end.hidden=true;outerPanel.insertAdjacentElement('afterend',end);end.onclick=()=>{stop();if(ready?.type==='imagem'||ready?.type==='video')void showSupport()}}
 const supportBar=document.createElement('div');supportBar.id='r88SupportBar';supportBar.innerHTML='<button type="button" id="r87Support">▧ Imagem de apoio</button>';const agenda=$('sectionsRoot')||$('items');if(agenda){const outer=agenda.closest('.panel')||agenda.parentElement;const mainHead=outer.querySelector('.panelhead')||outer.querySelector('.section-header');if(mainHead)mainHead.after(supportBar);else agenda.parentElement.insertBefore(supportBar,agenda)}$('r87Support').onclick=supportPicker;document.getElementById('days')?.addEventListener('click',()=>queueMicrotask(()=>{void refreshSupportButton();if(!isLive&&ready?.type==='pdf')void showSupport()}));void refreshSupportButton();
 const reopen=document.createElement('button');reopen.type='button';reopen.id='r71PdfReopen';reopen.hidden=true;reopen.textContent='▤ Páginas do PDF';reopen.title='Reabrir páginas do PDF';document.body.append(reopen);reopen.onclick=()=>minimizePdf(false);
-$('r70Close').onclick=close;$('r70Present').onclick=show;$('r70Play').onclick=()=>{if(!playerVideo)return;if(!isLive){show();return}if(playerVideo.paused)playerVideo.play().catch(()=>{});else playerVideo.pause();updatePlay()};$('r70Restart').onclick=()=>{if(playerVideo){playerVideo.currentTime=0;syncVideo()}};$('r70Repeat').onclick=()=>{repeat=!repeat;if(playerVideo)playerVideo.loop=repeat;$('r70Repeat').classList.toggle('on',repeat);$('r70Repeat').setAttribute('aria-pressed',String(repeat));channel.postMessage({kind:'videoControl',action:'repeat',value:repeat})};$('r70Seek').oninput=e=>{if(!playerVideo?.duration)return;playerVideo.currentTime=Number(e.target.value)>=1000?playerVideo.duration:playerVideo.duration*Number(e.target.value)/1000;channel.postMessage({kind:'videoControl',action:'seek',time:playerVideo.currentTime})};$('r74Volume').oninput=e=>{let n=Number(e.target.value);$('r74VolumeLabel').textContent=n+'%';if(playerVideo)playerVideo.volume=n/100;channel.postMessage({kind:'volume',volume:n/100,muted:n===0})};$('r70Prev').onclick=()=>step(-1);$('r70Next').onclick=()=>step(1);$('r70Gear').onclick=()=>{$('r70Config').hidden=!$('r70Config').hidden};const c=loadSettings();$('r70Effect').value=c.effect;$('r70DurationSelect').value=String(c.duration);for(const id of ['r70Effect','r70DurationSelect'])$(id).onchange=()=>localStorage.setItem('reunioes-transition-v70',JSON.stringify({effect:$('r70Effect').value,duration:Number($('r70DurationSelect').value)}));
+$('r70Close').onclick=close;$('r70Present').onclick=show;$('r70Play').onclick=()=>{if(!playerVideo)return;if(!isLive){show();return}if(playerVideo.paused)playerVideo.play().catch(()=>{});else playerVideo.pause();updatePlay()};$('r70Restart').onclick=()=>{if(playerVideo){playerVideo.currentTime=0;channel.postMessage({kind:'videoControl',action:'seek',time:0});syncVideo()}};$('r70Repeat').onclick=()=>{repeat=!repeat;if(playerVideo)playerVideo.loop=repeat;$('r70Repeat').classList.toggle('on',repeat);$('r70Repeat').setAttribute('aria-pressed',String(repeat));channel.postMessage({kind:'videoControl',action:'repeat',value:repeat})};$('r70Seek').oninput=e=>{if(!playerVideo?.duration)return;const fraction=Number(e.target.value)/1000;const target=fraction>=1?Math.max(0,playerVideo.duration-.035):fraction<=0?0:playerVideo.duration*fraction;playerVideo.currentTime=target;channel.postMessage({kind:'videoControl',action:'seek',time:target});syncVideo()};$('r74Volume').oninput=e=>{let n=Number(e.target.value);$('r74VolumeLabel').textContent=n+'%';if(playerVideo)playerVideo.volume=n/100;channel.postMessage({kind:'volume',volume:n/100,muted:n===0})};$('r70Prev').onclick=()=>step(-1);$('r70Next').onclick=()=>step(1);$('r70Gear').onclick=()=>{$('r70Config').hidden=!$('r70Config').hidden};const c=loadSettings();$('r70Effect').value=c.effect;$('r70DurationSelect').value=String(c.duration);for(const id of ['r70Effect','r70DurationSelect'])$(id).onchange=()=>localStorage.setItem('reunioes-transition-v70',JSON.stringify({effect:$('r70Effect').value,duration:Number($('r70DurationSelect').value)}));
 const nav=$('fileFields');if(nav){const pick=document.createElement('div');pick.className='r70picker';pick.innerHTML=`<button type="button" class="r70PickButton" id="r70OpenPicker">▣ Escolher nas pastas da Biblioteca</button><div id="r70Picker" hidden></div>`;nav.insertBefore(pick,nav.firstChild);$('r70OpenPicker').onclick=()=>pickFolders()}
 }
-const channel=new BroadcastChannel('reunioes3-projetor');
+// Teste 5: fechar vídeo do cronograma direto no canto da prévia.
+// O botão fica FORA dos controles que podem ser escondidos pelo layout.
+function syncVideoCloseButton(){
+ const closeButton=document.getElementById('r175VideoClose');
+ if(!closeButton)return;
+ const visible=!!ready&&ready.type==='video';
+ closeButton.hidden=!visible;
+ closeButton.setAttribute('aria-hidden',String(!visible));
+}
+function ensureVideoCloseButton(){
+ if(document.getElementById('r175VideoClose'))return;
+ const controls=document.querySelector('#r70VideoControls .r70seek');
+ if(!controls)return;
+ const button=document.createElement('button');
+ button.type='button';button.id='r175VideoClose';button.hidden=true;
+ button.textContent='✕';button.title='Fechar vídeo e voltar à imagem de apoio';
+ button.setAttribute('aria-label','Fechar vídeo');
+ button.style.cssText='display:none';
+ // A propriedade hidden deve prevalecer sobre display:grid.
+ button.style.setProperty('display','none');
+ button.addEventListener('click',()=>close());
+ controls.append(button);
+ const observer=new MutationObserver(()=>{
+   syncVideoCloseButton();
+   button.style.setProperty('display',button.hidden?'none':'grid');
+ });
+ observer.observe(document.getElementById('r70MediaControls'),{attributes:true,attributeFilter:['hidden']});
+ syncVideoCloseButton();
+}
+const channel=new BroadcastChannel('reunioes3-controle-local');
 function loadSettings(){try{const v=JSON.parse(localStorage.getItem('reunioes-transition-v70')||'{}');return {effect:v.effect||'fade',duration:Number(v.duration??300)}}catch(e){return {effect:'fade',duration:300}}}
 function minimizePdf(shouldMinimize){if(!ready||ready.type!=='pdf')return;pdfMinimized=!!shouldMinimize;changeWorkspace(true);const b=$('r71PdfReopen');if(b){b.hidden=!pdfMinimized;b.textContent='▤ PDF · Página '+(activePage||'—')} }
 function changeWorkspace(pdf){let host=$('r70PageWorkspace');const right=$('agenda')?.querySelector('.layout > .right');const preview=right?.querySelector('.preview');if(!host){host=document.createElement('div');host.id='r70PageWorkspace';host.hidden=true;}if(preview){const target=preview.closest('.r109PresentationFrame')||right;if(target&&host.parentElement!==target)preview.insertAdjacentElement('afterend',host);}const visible=!!pdf;host.hidden=!visible;pdfMinimized=false;const oldReopen=$('r71PdfReopen');if(oldReopen)oldReopen.hidden=true;const sections=$('sectionsRoot'),items=$('items');if(sections)sections.style.display='';if(items)items.style.display='';const support=$('r88SupportBar');if(support)support.hidden=false;return host}
-function supportKey(){return 'reunioes3-support-v87-day-'+(typeof state!=='undefined'?state.day:0)}
+function supportKey(){return 'reunioes3-support-v172-pastor-'+(window.__REUNIOES_ACCOUNT_ID||'local')+'-day-'+(typeof state!=='undefined'?state.day:0)}
 function supportDay(){return Number(typeof state!=='undefined'?state.day:0)}
+function supportSlot(day){return (window.__REUNIOES_ACCOUNT_ID||'local')+':'+day}
 function chosenSupport(){try{return JSON.parse(localStorage.getItem(supportKey())||'null')}catch(e){return null}}
 function supportDb(){return new Promise((resolve,reject)=>{const r=indexedDB.open('reunioes3-apoio-v89',1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains('images'))r.result.createObjectStore('images',{keyPath:'day'})};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
-async function galleryRow(day){const db=await supportDb();try{return await new Promise((resolve,reject)=>{const tx=db.transaction('images','readonly');const r=tx.objectStore('images').get(day);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}finally{db.close()}}
-async function saveGalleryRow(day,blob,name){const db=await supportDb();try{await new Promise((resolve,reject)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').put({day,blob,name,updatedAt:Date.now()});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)})}finally{db.close()}}
-async function deleteGalleryRow(day){const db=await supportDb();try{await new Promise((resolve,reject)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').delete(day);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)})}finally{db.close()}}
+async function galleryRow(day){const db=await supportDb();try{return await new Promise((resolve,reject)=>{const tx=db.transaction('images','readonly');const r=tx.objectStore('images').get(supportSlot(day));r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}finally{db.close()}}
+async function saveGalleryRow(day,blob,name){const db=await supportDb();try{await new Promise((resolve,reject)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').put({day:supportSlot(day),blob,name,updatedAt:Date.now()});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)})}finally{db.close()}}
+async function deleteGalleryRow(day){const db=await supportDb();try{await new Promise((resolve,reject)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').delete(supportSlot(day));tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)})}finally{db.close()}}
 async function compressSupport(file){if(!file.type.startsWith('image/'))throw Error('Escolha uma foto JPG, PNG, HEIC ou WebP.');if(file.size>45*1024*1024)throw Error('Foto muito grande. Escolha uma com menos de 45 MB.');let url=null;try{url=URL.createObjectURL(file);const img=new Image();img.src=url;await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(Error('Não foi possível ler a imagem.'))});const max=1920;const ratio=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight));const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.naturalWidth*ratio));canvas.height=Math.max(1,Math.round(img.naturalHeight*ratio));canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.84));return blob||file}catch(e){if(file.type==='image/heic'||file.type==='image/heif')throw Error('Não foi possível abrir esta foto HEIC. Escolha outra foto ou converta para JPG.');throw e}finally{if(url)URL.revokeObjectURL(url)}}
 async function setSupport(id){const day=supportDay();if(!id){localStorage.removeItem(supportKey());await deleteGalleryRow(day)}else{const f=await window.ReunioesMediaLibrary.get(id);if(!f?.blob||f.type!=='imagem')throw Error('Foto não encontrada na Biblioteca.');localStorage.setItem(supportKey(),JSON.stringify({id:f.id,name:f.name,source:'library'}));await deleteGalleryRow(day)}await refreshSupportButton();if(!isLive)await showSupport()}
 async function setGallerySupport(file){if(!file)return;const day=supportDay();const blob=await compressSupport(file);await saveGalleryRow(day,blob,file.name);localStorage.setItem(supportKey(),JSON.stringify({source:'gallery',name:file.name}));await refreshSupportButton();if(!isLive)await showSupport()}
@@ -1175,7 +1205,7 @@ async function showSupport(projectorOnly=false){
   let blob=null,item=null;
   if(setting.source==='gallery'){
    const row=await galleryRow(day);blob=row?.blob;
-   item={type:'imagem',title:'Imagem de Apoio',supportDay:day};
+   item={type:'imagem',title:'Imagem de Apoio',supportDay:day,supportSlot:supportSlot(day)};
   }else{
    const row=await window.ReunioesMediaLibrary.get(setting.id);blob=row?.blob;
    item={type:'imagem',title:'Imagem de Apoio',mediaLibraryId:setting.id};
@@ -1200,10 +1230,10 @@ async function showSupport(projectorOnly=false){
   if(!projectorOnly)pv.textContent='Imagem de Apoio indisponível';
  }
 }
-function close(){openGeneration++;releasePdf();stop();ready=null;pdfMinimized=false;if($('r71PdfReopen'))$('r71PdfReopen').hidden=true;if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}playerVideo=null;$('r70MediaControls').hidden=true;changeWorkspace(false);void showSupport()}
+function close(){openGeneration++;releasePdf();stop();ready=null;syncVideoCloseButton();const r175=document.getElementById('r175VideoClose');if(r175)r175.style.display='none';pdfMinimized=false;if($('r71PdfReopen'))$('r71PdfReopen').hidden=true;if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}playerVideo=null;$('r70MediaControls').hidden=true;changeWorkspace(false);void showSupport()}
 function stop(){previewSession++;if($('r90EndButton'))$('r90EndButton').hidden=true;if(isLive){channel.postMessage({kind:'present',item:null});isLive=false;window.dispatchEvent(new Event('r93-live-change'));void showSupport()}if(ready?.type==='pdf')updatePdfSelection();if($('r70Present')){$('r70Present').disabled=false;$('r70Present').textContent='▶ Apresentar'}if(playerVideo){playerVideo.pause();updatePlay()}}
 function format(n){n=Math.max(0,Math.floor(n||0));return Math.floor(n/60)+':'+String(n%60).padStart(2,'0')}
-function updatePlay(){if($('r70Play'))$('r70Play').textContent=playerVideo&&!playerVideo.paused?'Ⅱ':'▶'}
+function updatePlay(){const b=$('r70Play');if(!b)return;const playing=!!playerVideo&&!playerVideo.paused;b.innerHTML=playing?'<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/></svg>':'<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';b.setAttribute('aria-label',playing?'Pausar':'Reproduzir')}
 function syncVideo(){if(!playerVideo)return;$('r70Elapsed').textContent=format(playerVideo.currentTime);$('r70Duration').textContent=format(playerVideo.duration);const fraction=Number.isFinite(playerVideo.duration)&&playerVideo.duration>0?Math.min(1,Math.max(0,playerVideo.currentTime/playerVideo.duration)):0;const seek=$('r70Seek');seek.value=Math.round(fraction*1000);seek.style.setProperty('--seek-pct',(fraction*100)+'%');updatePlay()}
 function releasePdf(){pdfSession++;previewSession++;pdfQueue=[];pdfBusy=false;if(pdfObserver){pdfObserver.disconnect();pdfObserver=null}if(pdfDocument){const old=pdfDocument;pdfDocument=null;try{old.destroy()}catch(e){}}}
 function pdfLibrary(){if(!window.pdfjsLib)throw Error('Leitor PDF indisponível. Conecte o iPad à internet, recarregue e tente novamente.');window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';return window.pdfjsLib}
@@ -1235,21 +1265,20 @@ async function previewPage(){
     preview.replaceChildren(canvas);
     if($('r70PageCount'))$('r70PageCount').textContent=pageAtStart+' / '+pageTotal;
     if($('r71PdfReopen'))$('r71PdfReopen').textContent='▤ PDF · Página '+pageAtStart;
-    // Only send after rendering, never before: prevents an intermediate blank/loading frame.
-    send();
+    // A ordem para o telão é enviada imediatamente no clique; a prévia pode terminar depois.
     return true;
   }catch(e){
     if(id===previewSession&&ready?.type==='pdf')console.warn('Não foi possível desenhar a página '+pageAtStart,e);
     return false;
   }
 }
-function setPage(p){if(p<1||p>pageTotal||skipped.has(p))return;activePage=p;updatePdfSelection();if(isLive)void previewPage()}
-function togglePdfPage(p){if(p<1||p>pageTotal||skipped.has(p)||ready?.type!=='pdf')return;if(isLive&&activePage===p){stop();return}activePage=p;if(!isLive){isLive=true;window.dispatchEvent(new Event('r93-live-change'))}updatePdfSelection();void previewPage()}
+function setPage(p){if(p<1||p>pageTotal||skipped.has(p))return;activePage=p;updatePdfSelection();if(isLive){send();void previewPage()}}
+function togglePdfPage(p){if(p<1||p>pageTotal||skipped.has(p)||ready?.type!=='pdf')return;if(isLive&&activePage===p){stop();return}activePage=p;if(!isLive){isLive=true;window.dispatchEvent(new Event('r93-live-change'))}updatePdfSelection();send();void previewPage()}
 function step(dir){const list=Array.from({length:pageTotal},(_,i)=>i+1).filter(p=>!skipped.has(p));const idx=list.indexOf(activePage);if(idx<0)return;setPage(list[Math.max(0,Math.min(list.length-1,idx+dir))])}
 function send(){if(!ready||!objectUrl)return;const item={...ready,fileUrl:ready.mediaLibraryId?null:objectUrl,videoLoop:repeat};if(ready.type==='pdf')item.pdfPage=activePage;channel.postMessage({kind:'present',item})}
-function show(){if(isLive){stop();return}if(!ready||!objectUrl)return;if(ready.type==='pdf'&&!activePage)return;send();isLive=true;window.dispatchEvent(new Event('r93-live-change'));if(ready.type==='pdf')updatePdfSelection();$('r70Present').textContent='■ Encerrar';$('r70Present').disabled=false;if(ready.type==='video'){const v=playerVideo;channel.postMessage({kind:'videoControl',action:'repeat',value:repeat});channel.postMessage({kind:'volume',volume:Number($('r74Volume').value)/100,muted:false});if(v&&v.paused)v.play().catch(()=>{});updatePlay()}}
+function show(){if(isLive){stop();return}if(!ready||!objectUrl)return;if(ready.type==='pdf'&&!activePage)return;send();isLive=true;window.dispatchEvent(new Event('r93-live-change'));if(ready.type==='pdf')updatePdfSelection();$('r70Present').textContent='■ Encerrar';$('r70Present').disabled=false;if(ready.type==='video'){const v=playerVideo;channel.postMessage({kind:'videoControl',action:'repeat',value:repeat});channel.postMessage({kind:'volume',volume:Number($('r74Volume').value)/100,muted:false});if(v){v.muted=true;if(v.paused)v.play().catch(()=>{});}updatePlay()}}
 let openGeneration=0;
-async function open(item){const myGeneration=++openGeneration;ensure();releasePdf();stop();supportRenderVersion++;if(item.type==='video')void showSupport(true);if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}ready=item;pdfMinimized=false;if($('r71PdfReopen'))$('r71PdfReopen').hidden=true;playerVideo=null;skipped=new Set(item.pdfSkipped||[]);activePage=item.type==='pdf'?0:1;pageTotal=1;const preview=$('preview');$('r70MediaControls').hidden=item.type!=='video';$('r70Name').textContent=item.title;$('r70VideoControls').hidden=item.type!=='video';$('r70PdfControls').hidden=item.type!=='pdf';$('r70Present').hidden=item.type==='pdf';changeWorkspace(item.type==='pdf');if(item.type!=='pdf')preview.innerHTML='<div class="r70Empty">Carregando prévia…</div>';let blob=null;try{if(item.mediaLibraryId){const record=await window.ReunioesMediaLibrary.get(item.mediaLibraryId);if(!record?.blob)throw Error('Arquivo não encontrado');blob=record.blob}else if(item.fileUrl){objectUrl=item.fileUrl}else throw Error('Sem arquivo');if(myGeneration!==openGeneration||ready!==item)return;if(blob){if(item.type==='pdf'&&blob.type!=='application/pdf')blob=new Blob([blob],{type:'application/pdf'});objectUrl=URL.createObjectURL(blob)}
+async function open(item){const myGeneration=++openGeneration;ensure();releasePdf();stop();supportRenderVersion++;if(item.type==='video')void showSupport(true);if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}ready=item;ensureVideoCloseButton();syncVideoCloseButton();const r175=document.getElementById('r175VideoClose');if(r175)r175.style.display=item.type==='video'?'grid':'none';pdfMinimized=false;if($('r71PdfReopen'))$('r71PdfReopen').hidden=true;playerVideo=null;skipped=new Set(item.pdfSkipped||[]);activePage=item.type==='pdf'?0:1;pageTotal=1;const preview=$('preview');$('r70MediaControls').hidden=item.type!=='video';$('r70Name').textContent=item.title;$('r70VideoControls').hidden=item.type!=='video';$('r70PdfControls').hidden=item.type!=='pdf';$('r70Present').hidden=item.type==='pdf';changeWorkspace(item.type==='pdf');if(item.type!=='pdf')preview.innerHTML='<div class="r70Empty">Carregando prévia…</div>';let blob=null;try{if(item.mediaLibraryId){const record=await window.ReunioesMediaLibrary.get(item.mediaLibraryId);if(!record?.blob)throw Error('Arquivo não encontrado');blob=record.blob}else if(item.fileUrl){objectUrl=item.fileUrl}else throw Error('Sem arquivo');if(myGeneration!==openGeneration||ready!==item)return;if(blob){if(item.type==='pdf'&&blob.type!=='application/pdf')blob=new Blob([blob],{type:'application/pdf'});objectUrl=URL.createObjectURL(blob)}
 if(item.type==='video'){changeWorkspace(false);preview.innerHTML='';const video=document.createElement('video');video.className='r70Video';video.style.objectFit='contain';video.style.objectPosition='center center';video.playsInline=true;video.setAttribute('playsinline','');video.preload='auto';video.src=objectUrl;video.controls=false;video.autoplay=false;video.loop=repeat;video.volume=Number($('r74Volume').value)/100;video.addEventListener('loadedmetadata',()=>{video.pause();if(video.duration>0){try{video.currentTime=Math.min(.08,video.duration/4)}catch(e){}}syncVideo()});video.addEventListener('seeked',()=>{if(!isLive)video.pause();syncVideo()});video.addEventListener('timeupdate',syncVideo);video.addEventListener('play',()=>{updatePlay();if(isLive)channel.postMessage({kind:'videoControl',action:'play'})});video.addEventListener('pause',()=>{updatePlay();if(isLive)channel.postMessage({kind:'videoControl',action:'pause'})});video.addEventListener('ended',updatePlay);preview.append(video);playerVideo=video;updatePlay()}
 else if(item.type==='imagem'){changeWorkspace(false);preview.innerHTML='<img class="r70Image" alt="Prévia" src="'+objectUrl+'">'}
 else if(item.type==='pdf'){const source=blob?await blob.arrayBuffer():await(await fetch(objectUrl)).arrayBuffer();const task=pdfLibrary().getDocument({data:new Uint8Array(source),useSystemFonts:true});pdfDocument=await task.promise;pageTotal=pdfDocument.numPages;renderPageGrid();updatePdfSelection();/* PDF só é apresentado ao tocar em uma miniatura */}
@@ -1386,7 +1415,7 @@ window.r136ChooseSong=async function(trackId){
 function folders(){el('r74Title').textContent='Escolher '+({musica:'música',video:'vídeo',imagem:'foto',pdf:'PDF'}[kind]||'arquivo');const days=kind==='musica'?(typeof MUSIC_FOLDERS!=='undefined'?MUSIC_FOLDERS:[]):['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];content('<button type="button" class="r74back">‹ Tipos</button><div class="r74folders">'+days.map((day,i)=>`<button type="button" data-folder="${i}">▣ ${escape(day)}</button>`).join('')+'</div>');el('r74Content').querySelector('.r74back').onclick=choices;el('r74Content').querySelectorAll('[data-folder]').forEach(b=>b.onclick=()=>files(days[Number(b.dataset.folder)]))}
 async function files(day){
  folder=day;el('r74Title').textContent=day==='Todos'?({video:'Vídeos',imagem:'Fotos',pdf:'PDFs'}[kind]||day):day;
- content('<button type="button" class="r74back">‹ Voltar</button>'+ (kind==='musica'?'':'<div class="r105Import"><label class="r105ImportButton" for="r105NewFile">＋ Adicionar do iPad / celular</label><input id="r105NewFile" type="file" accept="'+(kind==='video'?'video/*,.mov,.mp4,.m4v':kind==='imagem'?'image/*,.jpg,.jpeg,.png,.webp,.heic,.heif':'.pdf,application/pdf')+'" aria-label="Escolher arquivo do aparelho"><div id="r105ImportStatus" role="status"></div></div>')+'<div class="r74files r75gallery" aria-live="polite">Carregando arquivos…</div>');
+ content('<button type="button" class="r74back">‹ Voltar</button>'+ (kind==='musica'?'':'<div class="r105Import"><label class="r105ImportButton" for="r105NewFile">＋ '+(/Windows/i.test(navigator.userAgent)?'Adicionar do computador':'Adicionar deste dispositivo')+'</label><input id="r105NewFile" type="file" accept="'+(kind==='video'?'video/*,.mov,.mp4,.m4v':kind==='imagem'?'image/*,.jpg,.jpeg,.png,.webp,.heic,.heif':'.pdf,application/pdf')+'" aria-label="Escolher arquivo do aparelho"><div id="r105ImportStatus" role="status"></div></div>')+'<div class="r74files r75gallery" aria-live="polite">Carregando arquivos…</div>');
  const upload=el('r105NewFile');if(upload)upload.addEventListener('change',async()=>{
   const file=upload.files?.[0];if(!file)return;const status=el('r105ImportStatus');const allowed=kind==='video'?/\.(mov|mp4|m4v)$/i:kind==='imagem'?/\.(jpe?g|png|webp|heic|heif)$/i:/\.pdf$/i;
   if(!allowed.test(file.name)){status.textContent='Formato não aceito nesta pasta.';upload.value='';return}
@@ -1947,7 +1976,15 @@ present=function(item){if(item?.type==='versiculo'){
  const text=first?.text||item.content||'';
  activate(reference,text,item);return;
  }
- active=null;before=null;after=null;window.bibleActivePresentation=null;render();return originalPresent(item)
+ const wasBible=!!active;
+ active=null;before=null;after=null;window.bibleActivePresentation=null;render();
+ const result=originalPresent(item);
+ if(wasBible && item==null){
+   if(window.bibleOpenFromSchedule){window.bibleOpenFromSchedule=false;queueMicrotask(()=>setTab('agenda'));}
+   // A saída do controlador bíblico deve restaurar o apoio do pastor ativo.
+   queueMicrotask(()=>{try{void window.R70?.displaySupport?.()}catch(err){console.warn('Apoio após Bíblia',err)}});
+ }
+ return result
 };
 window.addEventListener('pageshow',render);render();
 })();
@@ -2015,7 +2052,7 @@ async function refreshSupportImage(){
  empty.hidden=false;
  const day=typeof state==='undefined'?0:Number(state.day);
  let data=null;
- try{data=JSON.parse(localStorage.getItem('reunioes3-support-v87-day-'+day)||'null')}catch(_){}
+ try{data=JSON.parse(localStorage.getItem('reunioes3-support-v172-pastor-'+(window.__REUNIOES_ACCOUNT_ID||'local')+'-day-'+day)||'null')}catch(_){}
  if(!data){empty.textContent='Nenhuma imagem de apoio definida para este dia';return}
  try{
    let blob=null;
@@ -2045,7 +2082,7 @@ function syncBadge(){
 }
 syncBadge();
 function sync(){
- $('f124Play').textContent=video.paused?'▶':'Ⅱ';
+ $('f124Play').innerHTML=video.paused?'<svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>':'<svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/></svg>';
  const duration=Number.isFinite(video.duration)?video.duration:0;
  const t=Number.isFinite(video.currentTime)?video.currentTime:0;
  $('f124Current').textContent=pretty(t);$('f124Duration').textContent=pretty(duration);
@@ -2147,7 +2184,7 @@ function refreshSelectedPoster(row, token){
 }
 async function choose(id){const token=++loadToken;try{const row=await window.ReunioesMediaLibrary.get(id);if(token!==loadToken||!row?.blob)return;if(live)await finish();resetObject();selected=row;supportToken++;supportImg.hidden=true;releaseSupportImage();objectUrl=URL.createObjectURL(row.blob);video.preload='auto';video.src=objectUrl;video.style.objectFit='contain';video.style.objectPosition='center center';video.loop=loop;video.volume=Number($('f124Volume').value)/100;video.load();empty.hidden=true;refreshSelectedPoster(row,token);$('f124Name').textContent=row.name;status.textContent='Vídeo preparado no iPad. Toque em Play para reproduzir no telão.';syncBadge();sync();list()}catch(e){status.textContent='Não foi possível carregar este vídeo.'}}
 async function finish(){
- if(live){video.pause();channel.postMessage({kind:'present',item:null});live=false}
+ if(live){video.pause();channel.postMessage({kind:'present',item:null});live=false;video.muted=video.volume===0}
  status.textContent='Apresentação encerrada. O vídeo voltou a ficar apenas no iPad.';
  syncBadge();
  await window.R70?.displaySupport?.();
@@ -2171,6 +2208,7 @@ async function beginLive(){
  if(typeof present==='function'&&window.current?.type==='versiculo')present(null);
  channel.postMessage({kind:'present',item:{type:'video',title:selected.name,mediaLibraryId:selected.id}});
  live=true;
+ video.muted=true; // Prévia visual silenciosa: somente o telão reproduz áudio.
  still.hidden=true;
  syncBadge();
  status.textContent='Vídeo transmitido no telão.';
@@ -2187,7 +2225,7 @@ function setMuteUi(){const muted=video.muted||video.volume===0;f150Mute.classLis
 f150Mute.onclick=()=>{video.muted=!video.muted;setMuteUi();if(live)channel.postMessage({kind:'volume',volume:video.volume,muted:video.muted})};
 $('f124Volume').oninput=e=>{video.volume=Number(e.target.value)/100;video.muted=video.volume===0;setMuteUi();if(live)channel.postMessage({kind:'volume',volume:video.volume,muted:video.muted})};
 setMuteUi();
-$('f124Seek').oninput=e=>{if(!video.duration)return;video.currentTime=Number(e.target.value)>=1000?video.duration:video.duration*Number(e.target.value)/1000;if(live)send('seek',{time:video.currentTime});sync()};
+$('f124Seek').oninput=e=>{if(!video.duration)return;const fraction=Number(e.target.value)/1000;const target=fraction>=1?Math.max(0,video.duration-.035):fraction<=0?0:video.duration*fraction;video.currentTime=target;if(live)send('seek',{time:target});sync()};
 video.onplay=()=>{still.hidden=true;sync();if(live)send('play')};video.onpause=()=>{sync();if(live)send('pause')};video.ontimeupdate=sync;video.onloadedmetadata=()=>{sync();if(selected&&!live&&video.duration>.2){try{video.currentTime=Math.min(.25,video.duration*.08)}catch(_){}}};video.onended=()=>{sync();if(live&&!loop)closeVideo()};
 fundosButton.addEventListener('click',()=>{if(!selected)refreshSupportImage()});
 document.addEventListener('click',e=>{if(e.target.closest('#days [data-day]'))queueMicrotask(()=>{if(!selected)refreshSupportImage()})},true);
@@ -2252,9 +2290,9 @@ window.bibleMarkHTML=markHTML;window.bible129ReadMarks=readMarks;
 // Keep the same controller inside the Bible. On schedule use the Bible, not an overlay above telão.
 const agendaController=$('b121Overlay-agenda');if(agendaController)agendaController.style.setProperty('display','none','important');
 const right=$('b121Overlay-biblia');
-const actions=document.createElement('div');actions.id='b129ModeActions';actions.innerHTML='<div class="b129ModeTop"><strong>Adicionar versículos ao cronograma</strong><button id="b129Cancel" type="button">Cancelar</button></div><p>Toque em um ou mais versículos. Eles ficarão selecionados em amarelo.</p><div class="b129ModeBottom"><span id="b129Count">0 selecionados</span><button id="b129Add" type="button" disabled>+ Adicionar ao cronograma</button></div>';
-$('biblia').querySelector('.b119Editor .bible-stage')?.insertAdjacentElement('afterend',actions);
-function renderMode(){const is=!!window.bibleCronogramaSelect;actions.hidden=!is;$('b129Count').textContent=(typeof selectedVerses!=='undefined'?selectedVerses.length:0)+' selecionado(s)';$('b129Add').disabled=!is||!selectedVerses.length}
+const actions=document.createElement('div');actions.id='b129ModeActions';actions.innerHTML='<div class="b129ModeBottom"><button id="b129Cancel" type="button">Cancelar</button><button id="b129Add" type="button" disabled>+ Adicionar ao cronograma</button></div>';
+const stage=$('biblia').querySelector('.b119Editor .bible-stage');if(stage)stage.insertAdjacentElement('beforebegin',actions);
+function renderMode(){const is=!!window.bibleCronogramaSelect;actions.hidden=!is;$('b129Add').disabled=!is||!selectedVerses.length}
 $('b129Cancel').onclick=()=>{window.bibleCronogramaSelect=null;selectedVerses=[];drawBiblePicker();renderMode();setTab('agenda')};
 $('b129Add').onclick=()=>{if(!window.bibleCronogramaSelect||!selectedVerses.length)return;const bi=Number($('bibleBook').value),ch=Number($('bibleChapter').value),v=$('bibleTranslation').value;const data=importedBibles[v];if(!data){alert('Aguarde a Bíblia carregar.');return}const nums=[...selectedVerses].sort((a,b)=>a-b),verses=nums.map(n=>({reference:BIBLE_BOOKS[bi][0]+' '+ch+':'+n,text:getImportedVerse(data,bi,ch,n)}));if(verses.some(x=>!x.text)){alert('Há versículos indisponíveis nesta tradução.');return}
 const ref=BIBLE_BOOKS[bi][0]+' '+ch+':'+(typeof formatVerseSpan==='function'?formatVerseSpan(nums):nums.join(', ')),mode=window.bibleCronogramaSelect;
